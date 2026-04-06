@@ -27,6 +27,7 @@ const state = {
 
 const mobileViewport = "(max-width: 900px)";
 let viewportQueryList;
+let resizeListenerBound = false;
 
 function renderCurrentSection() {
   switch (state.activeSection) {
@@ -96,16 +97,81 @@ function initializeViewportDetection() {
 }
 
 function scrollActiveMobileNavigationIntoView() {
+  const navigationRail = document.querySelector("[data-mobile-nav]");
   const activeNavItem = document.querySelector(".app-mobile .nav-item.active");
 
-  if (!activeNavItem) {
+  if (!navigationRail || !activeNavItem) {
     return;
   }
 
-  activeNavItem.scrollIntoView({
-    block: "nearest",
-    inline: "center",
+  const railRect = navigationRail.getBoundingClientRect();
+  const activeRect = activeNavItem.getBoundingClientRect();
+  const currentScroll = navigationRail.scrollLeft;
+  const activeCenter = activeRect.left - railRect.left + currentScroll + activeRect.width / 2;
+  const targetScroll =
+    activeCenter - navigationRail.clientWidth / 2;
+
+  navigationRail.scrollTo({
+    left: Math.max(0, targetScroll),
+    behavior: "smooth",
   });
+}
+
+function updateMobileNavigationOverflowState() {
+  const navigationShell = document.querySelector("[data-mobile-nav-shell]");
+  const navigationRail = document.querySelector("[data-mobile-nav]");
+
+  if (!navigationShell || !navigationRail) {
+    return;
+  }
+
+  const tolerance = 6;
+  const maxScrollLeft =
+    navigationRail.scrollWidth - navigationRail.clientWidth;
+  const hasOverflow = maxScrollLeft > tolerance;
+  const hasLeftOverflow = hasOverflow && navigationRail.scrollLeft > tolerance;
+  const hasRightOverflow =
+    hasOverflow && navigationRail.scrollLeft < maxScrollLeft - tolerance;
+
+  navigationShell.classList.toggle("is-overflowing", hasOverflow);
+  navigationShell.classList.toggle("is-overflow-left", hasLeftOverflow);
+  navigationShell.classList.toggle("is-overflow-right", hasRightOverflow);
+}
+
+function bindMobileNavigationUi() {
+  const navigationRail = document.querySelector("[data-mobile-nav]");
+
+  if (!navigationRail) {
+    return;
+  }
+
+  navigationRail.addEventListener(
+    "scroll",
+    () => {
+      updateMobileNavigationOverflowState();
+    },
+    { passive: true },
+  );
+}
+
+function initializeWindowBindings() {
+  if (typeof window === "undefined" || resizeListenerBound) {
+    return;
+  }
+
+  resizeListenerBound = true;
+
+  window.addEventListener(
+    "resize",
+    () => {
+      if (!state.isMobileView) {
+        return;
+      }
+
+      updateMobileNavigationOverflowState();
+    },
+    { passive: true },
+  );
 }
 
 function render() {
@@ -133,11 +199,18 @@ function render() {
   bindUi();
 
   if (state.isMobileView) {
-    scrollActiveMobileNavigationIntoView();
+    bindMobileNavigationUi();
+    requestAnimationFrame(() => {
+      scrollActiveMobileNavigationIntoView();
+      requestAnimationFrame(() => {
+        updateMobileNavigationOverflowState();
+      });
+    });
   }
 }
 
 if (typeof document !== "undefined") {
   initializeViewportDetection();
+  initializeWindowBindings();
   render();
 }

@@ -42,6 +42,22 @@ function renderNavigation(activeSection, options = {}) {
   const { compact = false } = options;
   const navigationClassName = compact ? "mobile-nav" : "nav-list";
 
+  if (compact) {
+    return `<div class="mobile-nav-shell" data-mobile-nav-shell>
+      <div class="mobile-nav-meta">
+        <div class="mobile-nav-title">Navigation</div>
+        <div class="mobile-nav-hint">Balayer pour voir les autres sections</div>
+      </div>
+      <div class="mobile-nav-viewport" data-mobile-nav-viewport>
+        <div class="${navigationClassName}" data-mobile-nav>
+          ${sections
+            .map((section) => renderNavItem(section, activeSection, { compact }))
+            .join("")}
+        </div>
+      </div>
+    </div>`;
+  }
+
   return `<div class="${navigationClassName}">
     ${sections
       .map((section) => renderNavItem(section, activeSection, { compact }))

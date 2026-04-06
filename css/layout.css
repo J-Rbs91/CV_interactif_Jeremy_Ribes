@@ -119,22 +119,97 @@
   top: 0;
   z-index: 20;
   margin: 16px 0 18px;
-  padding: 12px 0 10px;
+  padding: 12px 0 14px;
   background: linear-gradient(
     180deg,
-    rgba(244, 247, 251, 0.96) 0%,
-    rgba(244, 247, 251, 0.9) 76%,
+    rgba(244, 247, 251, 0.98) 0%,
+    rgba(244, 247, 251, 0.94) 78%,
     rgba(244, 247, 251, 0) 100%
   );
   backdrop-filter: blur(10px);
 }
 
+.mobile-nav-shell {
+  position: relative;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.mobile-nav-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+}
+
+.mobile-nav-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.mobile-nav-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mobile-nav-viewport {
+  position: relative;
+  padding: 0 10px 12px;
+}
+
+.mobile-nav-viewport::before,
+.mobile-nav-viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 12px;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+}
+
+.mobile-nav-viewport::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+}
+
+.mobile-nav-viewport::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+}
+
+.mobile-nav-shell.is-overflow-left .mobile-nav-viewport::before {
+  opacity: 1;
+}
+
+.mobile-nav-shell.is-overflow-right .mobile-nav-viewport::after {
+  opacity: 1;
+}
+
+.mobile-nav-shell:not(.is-overflow-right) .mobile-nav-hint {
+  opacity: 0.7;
+}
+
 .mobile-nav {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 .mobile-nav::-webkit-scrollbar {
