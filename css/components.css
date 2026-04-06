@@ -522,6 +522,10 @@
   padding: 28px;
   max-width: 440px;
   width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
 }
@@ -567,6 +571,12 @@
   font-family: inherit;
   background: var(--card);
   transition: border-color 0.15s ease;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  max-height: 45vh;
 }
 
 .contact-form input:focus,
