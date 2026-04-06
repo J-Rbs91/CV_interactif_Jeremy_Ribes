@@ -55,7 +55,7 @@ function renderCompetenceCard(competence, expandedCompetenceId) {
 }
 
 export function renderCompetencesSection(expandedCompetenceId) {
-  return `<div class="grid-2">
+  return `<div class="competences-list">
     ${competences
       .map((competence) => renderCompetenceCard(competence, expandedCompetenceId))
       .join("")}

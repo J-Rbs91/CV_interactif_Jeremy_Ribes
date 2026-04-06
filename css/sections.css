@@ -11,6 +11,12 @@
     box-shadow 0.15s ease;
 }
 
+.competences-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .comp-card:hover {
   border-color: var(--border-active);
   background: var(--card-hover);
