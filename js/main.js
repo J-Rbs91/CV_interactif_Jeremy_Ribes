@@ -22,7 +22,7 @@ import { bindNavigation } from "./ui/navigation.js";
 const state = {
   activeSection: "profil",
   expandedCompetenceId: null,
-  expandedTool: "optiprofit",
+  expandedTool: null,
   isMobileView: false,
   mobileNavScrollLeft: 0,
   pendingMobileAccordionScroll: null,
@@ -171,6 +171,9 @@ function bindUi() {
       preserveMobileNavigationState({ shouldAnimate: true });
     }
 
+    state.expandedCompetenceId = null;
+    state.expandedTool = null;
+    state.pendingMobileAccordionScroll = null;
     state.activeSection = sectionId;
     render();
   });
