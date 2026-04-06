@@ -112,7 +112,7 @@ function findPendingMobileAccordionTarget() {
   return null;
 }
 
-function restoreMobileAccordionScrollPosition() {
+function restoreMobileAccordionScrollPosition({ behavior = "smooth" } = {}) {
   const scrollContainer = document.querySelector("#app.app-mobile");
   const targetElement = findPendingMobileAccordionTarget();
 
@@ -130,7 +130,7 @@ function restoreMobileAccordionScrollPosition() {
 
   scrollContainer.scrollTo({
     top: Math.max(0, targetOffset - comfortMargin),
-    behavior: "smooth",
+    behavior,
   });
 
   return true;
@@ -386,8 +386,6 @@ function finalizeMobileNavigationRender({
   }
 
   requestAnimationFrame(() => {
-    restoreMobileAccordionScrollPosition();
-
     const didStartSmoothScroll = shouldCenterActiveItem
       ? scrollActiveMobileNavigationIntoView({ behavior: scrollBehavior })
       : false;
@@ -450,6 +448,10 @@ function render() {
   bindUi();
 
   if (state.isMobileView) {
+    if (state.pendingMobileAccordionScroll) {
+      restoreMobileAccordionScrollPosition({ behavior: "auto" });
+    }
+
     bindMobileNavigationUi();
     const shouldCenterActiveItem =
       state.shouldAnimateMobileNav || !state.hasInitializedMobileNav;
