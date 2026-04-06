@@ -30,9 +30,14 @@ export function renderBulletList(items) {
   </ul>`;
 }
 
-export function renderSmallCard(item) {
+export function renderSmallCard(item, options = {}) {
+  const { titleSize = "14px", dimText = true } = options;
+  const textClassName = ["card-text", dimText ? "dim" : ""]
+    .filter(Boolean)
+    .join(" ");
+
   return `<div class="card-sm">
-    <div class="card-title" style="font-size:14px"><div class="dot" style="background:${item.color}"></div>${item.title}</div>
-    <div class="card-text dim">${item.text}</div>
+    <div class="card-title" style="font-size:${titleSize}"><div class="dot" style="background:${item.color}"></div>${item.title}</div>
+    <div class="${textClassName}">${item.text}</div>
   </div>`;
 }

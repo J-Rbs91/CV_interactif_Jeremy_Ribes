@@ -1,6 +1,6 @@
 export const projetsTransverses = [
   {
-    title: "L'Ortabels 3.0",
+    title: "L'Ortabels 3.0 🌱",
     subtitle: "Pilotage de production complexe · Projet transverse",
     bullets: [
       "Création d'une architecture complète de gestion pour planifier cultures, rotations, semis et flux de récoltes.",
@@ -32,7 +32,7 @@ export const projetsTransverses = [
     ],
   },
   {
-    title: "Renta Menu 3.0",
+    title: "Renta Menu 3.0 🍽️",
     subtitle: "Pilotage de la rentabilité opérationnelle · Outil décisionnel",
     bullets: [
       "Architecture de gestion des coûts (Food Cost) intégrée, permettant de séquencer chaque composante du menu et d'automatiser le calcul des marges brutes.",

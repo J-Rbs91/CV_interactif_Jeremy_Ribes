@@ -18,7 +18,11 @@ export function renderProfilSection() {
     </div>
 
     <div class="grid-2">
-      ${profileContent.cards.map(renderSmallCard).join("")}
+      ${profileContent.cards
+        .map((card) =>
+          renderSmallCard(card, { titleSize: "16px", dimText: false }),
+        )
+        .join("")}
     </div>
 
     <div class="card">
