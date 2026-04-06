@@ -52,11 +52,37 @@ function renderNavigation(activeSection, options = {}) {
   </div>`;
 }
 
+function renderContactModal() {
+  return `<div id="contact-modal" class="contact-modal-overlay" aria-hidden="true">
+    <div class="contact-modal-body" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+      <button type="button" class="contact-modal-close" data-close-contact aria-label="Fermer">&times;</button>
+      <div class="contact-modal-title" id="contact-modal-title">Me contacter</div>
+      <form class="contact-form">
+        <label class="contact-label">
+          Nom
+          <input type="text" name="from_name" required autocomplete="name" />
+        </label>
+        <label class="contact-label">
+          Email
+          <input type="email" name="from_email" required autocomplete="email" />
+        </label>
+        <label class="contact-label">
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit" class="contact-submit">Envoyer</button>
+      </form>
+      <div class="contact-feedback" data-contact-feedback></div>
+    </div>
+  </div>`;
+}
+
 export function renderSidebar(activeSection) {
   return `<div class="panel-left">
     ${renderIdentity()}
     ${renderIntroStrip()}
     ${renderNavigation(activeSection)}
+    ${renderContactModal()}
   </div>`;
 }
 
@@ -93,5 +119,6 @@ export function renderMobileShell(activeSection, sectionContent) {
         ${sectionContent}
       </div>
     </div>
+    ${renderContactModal()}
   </div>`;
 }

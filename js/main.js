@@ -15,7 +15,7 @@ import {
 } from "./render/renderCompetences.js";
 import { renderProjetSection } from "./render/renderProjets.js";
 import { bindAccordion } from "./ui/accordion.js";
-import { bindContactLinks } from "./ui/contactLinks.js";
+import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
 
@@ -206,7 +206,7 @@ function bindUi() {
     },
   });
 
-  bindContactLinks();
+  bindContactForm();
   initializeModal();
 }
 
