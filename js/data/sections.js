@@ -1,7 +1,7 @@
 export const sections = [
   {
     id: "profil",
-    icon: "◆",
+    icon: "👤",
     label: "Profil",
     sub: "Positionnement & méthode",
     color: "var(--accent2)",
@@ -9,7 +9,7 @@ export const sections = [
   },
   {
     id: "competences",
-    icon: "⚡",
+    icon: "🧰",
     label: "Compétences",
     sub: "6 domaines clés",
     color: "var(--accent)",
@@ -17,7 +17,7 @@ export const sections = [
   },
   {
     id: "realisations",
-    icon: "★",
+    icon: "📈",
     label: "Réalisations",
     sub: "+83% CA · +5,6 pts marge",
     color: "var(--accent3)",
@@ -25,7 +25,7 @@ export const sections = [
   },
   {
     id: "outils",
-    icon: "◈",
+    icon: "🛠️",
     label: "Outils",
     sub: "5 dispositifs détaillés",
     color: "var(--accent3)",
@@ -33,7 +33,7 @@ export const sections = [
   },
   {
     id: "experience",
-    icon: "▸",
+    icon: "🕒",
     label: "Expériences",
     sub: "13 ans · 3 expériences",
     color: "var(--accent4)",
@@ -41,7 +41,7 @@ export const sections = [
   },
   {
     id: "projet",
-    icon: "◎",
+    icon: "🌱",
     label: "Projet transverse",
     sub: "L'Ortabels 3.0",
     color: "var(--accent5)",
@@ -49,7 +49,7 @@ export const sections = [
   },
   {
     id: "formation",
-    icon: "▪",
+    icon: "🎓",
     label: "Formation",
     sub: "BTS OL — 2012",
     color: "var(--accent)",
