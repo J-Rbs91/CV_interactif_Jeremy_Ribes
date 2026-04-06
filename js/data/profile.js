@@ -2,7 +2,7 @@ export const profileContent = {
   quote:
     "« Le pivot de la performance collective : rendre une activité plus lisible, plus fluide et plus pilotable, sans la rigidifier. »",
   intro:
-    "Je ne suis pas un profil sectoriel figé, mais un spécialiste de la structuration d'activités en développement. Avec 13 ans d'expérience de terrain, j'interviens là où l'organisation manque de lisibilité, afin de la transformer en cadre plus fluide, plus fiable et plus pilotable.",
+    "Mon parcours m’a conduit vers un rôle d’interface entre les besoins du terrain et les attentes de la direction. Avec 13 ans d’expérience, j’interviens pour structurer l’activité, fiabiliser les méthodes de travail et améliorer le pilotage collectif.",
   cards: [
     {
       title: "Positionnement",

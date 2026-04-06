@@ -15,6 +15,7 @@ import {
 } from "./render/renderCompetences.js";
 import { renderProjetSection } from "./render/renderProjets.js";
 import { bindAccordion } from "./ui/accordion.js";
+import { bindContactLinks } from "./ui/contactLinks.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
 
@@ -23,11 +24,45 @@ const state = {
   expandedCompetenceId: null,
   expandedTool: "optiprofit",
   isMobileView: false,
+  mobileNavScrollLeft: 0,
+  shouldAnimateMobileNav: false,
+  hasInitializedMobileNav: false,
 };
 
 const mobileViewport = "(max-width: 900px)";
 let viewportQueryList;
 let resizeListenerBound = false;
+
+function getMobileNavigationRail() {
+  return document.querySelector("[data-mobile-nav]");
+}
+
+function clampScrollLeft(value, maxScrollLeft) {
+  return Math.min(Math.max(0, value), Math.max(0, maxScrollLeft));
+}
+
+function setNavigationRailScrollPosition(navigationRail, left) {
+  const previousScrollBehavior = navigationRail.style.scrollBehavior;
+
+  navigationRail.style.scrollBehavior = "auto";
+  navigationRail.scrollLeft = left;
+  navigationRail.style.scrollBehavior = previousScrollBehavior;
+}
+
+function preserveMobileNavigationState({ shouldAnimate = false } = {}) {
+  const navigationRail = getMobileNavigationRail();
+
+  if (navigationRail) {
+    const maxScrollLeft =
+      navigationRail.scrollWidth - navigationRail.clientWidth;
+    state.mobileNavScrollLeft = clampScrollLeft(
+      navigationRail.scrollLeft,
+      maxScrollLeft,
+    );
+  }
+
+  state.shouldAnimateMobileNav = shouldAnimate;
+}
 
 function renderCurrentSection() {
   switch (state.activeSection) {
@@ -52,22 +87,39 @@ function renderCurrentSection() {
 
 function bindUi() {
   bindNavigation((sectionId) => {
+    if (!sectionId || state.activeSection === sectionId) {
+      return;
+    }
+
+    if (state.isMobileView) {
+      preserveMobileNavigationState({ shouldAnimate: true });
+    }
+
     state.activeSection = sectionId;
     render();
   });
 
   bindAccordion({
     onToolToggle: (toolId) => {
+      if (state.isMobileView) {
+        preserveMobileNavigationState();
+      }
+
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
       render();
     },
     onCompetenceToggle: (competenceId) => {
+      if (state.isMobileView) {
+        preserveMobileNavigationState();
+      }
+
       state.expandedCompetenceId =
         state.expandedCompetenceId === competenceId ? null : competenceId;
       render();
     },
   });
 
+  bindContactLinks();
   initializeModal();
 }
 
@@ -85,6 +137,8 @@ function initializeViewportDetection() {
     }
 
     state.isMobileView = event.matches;
+    state.hasInitializedMobileNav = false;
+    state.shouldAnimateMobileNav = false;
     render();
   };
 
@@ -96,8 +150,25 @@ function initializeViewportDetection() {
   viewportQueryList.addListener(handleViewportChange);
 }
 
-function scrollActiveMobileNavigationIntoView() {
-  const navigationRail = document.querySelector("[data-mobile-nav]");
+function restoreMobileNavigationScrollPosition() {
+  const navigationRail = getMobileNavigationRail();
+
+  if (!navigationRail) {
+    return;
+  }
+
+  const maxScrollLeft = navigationRail.scrollWidth - navigationRail.clientWidth;
+  const nextScrollLeft = clampScrollLeft(
+    state.mobileNavScrollLeft,
+    maxScrollLeft,
+  );
+
+  setNavigationRailScrollPosition(navigationRail, nextScrollLeft);
+  state.mobileNavScrollLeft = nextScrollLeft;
+}
+
+function scrollActiveMobileNavigationIntoView({ behavior = "smooth" } = {}) {
+  const navigationRail = getMobileNavigationRail();
   const activeNavItem = document.querySelector(".app-mobile .nav-item.active");
 
   if (!navigationRail || !activeNavItem) {
@@ -108,13 +179,21 @@ function scrollActiveMobileNavigationIntoView() {
   const activeRect = activeNavItem.getBoundingClientRect();
   const currentScroll = navigationRail.scrollLeft;
   const activeCenter = activeRect.left - railRect.left + currentScroll + activeRect.width / 2;
-  const targetScroll =
+  const rawTargetScroll =
     activeCenter - navigationRail.clientWidth / 2;
+  const maxScrollLeft = navigationRail.scrollWidth - navigationRail.clientWidth;
+  const targetScroll = clampScrollLeft(rawTargetScroll, maxScrollLeft);
 
-  navigationRail.scrollTo({
-    left: Math.max(0, targetScroll),
-    behavior: "smooth",
-  });
+  if (behavior === "smooth") {
+    navigationRail.scrollTo({
+      left: targetScroll,
+      behavior,
+    });
+  } else {
+    setNavigationRailScrollPosition(navigationRail, targetScroll);
+  }
+
+  state.mobileNavScrollLeft = targetScroll;
 }
 
 function updateMobileNavigationOverflowState() {
@@ -139,7 +218,7 @@ function updateMobileNavigationOverflowState() {
 }
 
 function bindMobileNavigationUi() {
-  const navigationRail = document.querySelector("[data-mobile-nav]");
+  const navigationRail = getMobileNavigationRail();
 
   if (!navigationRail) {
     return;
@@ -148,6 +227,7 @@ function bindMobileNavigationUi() {
   navigationRail.addEventListener(
     "scroll",
     () => {
+      state.mobileNavScrollLeft = navigationRail.scrollLeft;
       updateMobileNavigationOverflowState();
     },
     { passive: true },
@@ -200,10 +280,20 @@ function render() {
 
   if (state.isMobileView) {
     bindMobileNavigationUi();
+    const shouldCenterActiveItem =
+      state.shouldAnimateMobileNav || !state.hasInitializedMobileNav;
+    const scrollBehavior = state.shouldAnimateMobileNav ? "smooth" : "auto";
+
     requestAnimationFrame(() => {
-      scrollActiveMobileNavigationIntoView();
+      restoreMobileNavigationScrollPosition();
       requestAnimationFrame(() => {
+        if (shouldCenterActiveItem) {
+          scrollActiveMobileNavigationIntoView({ behavior: scrollBehavior });
+        }
+
         updateMobileNavigationOverflowState();
+        state.shouldAnimateMobileNav = false;
+        state.hasInitializedMobileNav = true;
       });
     });
   }

@@ -46,6 +46,13 @@
   text-decoration: none;
 }
 
+.contact-row a {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .contact-row .ic {
   font-size: 11px;
   opacity: 0.6;

@@ -4,12 +4,15 @@ function renderContactItem(item, classAttribute, isMobileView) {
   const content = `<span class="ic">${item.icon}</span> ${item.text}`;
   const shouldRenderLink =
     item.type === "email" || (item.type === "phone" && isMobileView);
+  const linkClassAttribute = classAttribute
+    ? classAttribute.replace('class="', 'class="contact-link ')
+    : ' class="contact-link"';
 
   if (!shouldRenderLink) {
     return `<span${classAttribute}>${content}</span>`;
   }
 
-  return `<a${classAttribute} href="${item.href}">${content}</a>`;
+  return `<a${linkClassAttribute} href="${item.href}">${content}</a>`;
 }
 
 function renderContactItems(itemClassName = "", isMobileView = false) {
