@@ -76,6 +76,7 @@ export function renderMobileShell(activeSection, sectionContent) {
     <div class="mobile-summary">
       ${renderIdentity({
         className: "identity-mobile",
+        isMobileView: true,
         rowClassName: "contact-row-mobile",
         itemClassName: "contact-pill",
       })}
