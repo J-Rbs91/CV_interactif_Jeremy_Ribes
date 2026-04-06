@@ -69,39 +69,6 @@
   color: var(--text);
 }
 
-.kpi-bar {
-  display: flex;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.62);
-}
-
-.kpi-item {
-  flex: 1;
-  text-align: center;
-  padding: 14px 8px;
-  border-right: 1px solid var(--border);
-}
-
-.kpi-item:last-child {
-  border-right: none;
-}
-
-.kpi-value {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--accent3);
-}
-
-.kpi-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-top: 2px;
-}
-
 .nav-item {
   display: flex;
   align-items: center;
@@ -464,23 +431,6 @@
 
 .intro-strip-mobile {
   padding: 14px 20px 18px;
-}
-
-.kpi-bar-mobile {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  padding: 0 12px 12px;
-  border-bottom: none;
-  background: transparent;
-}
-
-.kpi-bar-mobile .kpi-item {
-  padding: 12px 8px;
-  border-right: none;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.82);
 }
 
 .app-mobile .grid-2,

@@ -1,21 +1,8 @@
-import { kpiItems, sections } from "../data/sections.js";
+import { sections } from "../data/sections.js";
 import { renderIdentity, renderIntroStrip } from "./renderContact.js";
 
 function getActiveSection(activeSection) {
   return sections.find(({ id }) => id === activeSection) ?? sections[0];
-}
-
-function renderKpiBar(className = "") {
-  const kpiBarClassName = ["kpi-bar", className].filter(Boolean).join(" ");
-
-  return `<div class="${kpiBarClassName}">
-    ${kpiItems
-      .map(
-        (item) =>
-          `<div class="kpi-item"><div class="kpi-value">${item.value}</div><div class="kpi-label">${item.label}</div></div>`,
-      )
-      .join("")}
-  </div>`;
 }
 
 function renderNavItem(section, activeSection, options = {}) {
@@ -93,7 +80,6 @@ export function renderMobileShell(activeSection, sectionContent) {
         itemClassName: "contact-pill",
       })}
       ${renderIntroStrip({ className: "intro-strip-mobile" })}
-      ${renderKpiBar("kpi-bar-mobile")}
     </div>
 
     <div class="mobile-nav-sticky">
