@@ -117,10 +117,10 @@ export const outils = [
   {
     id: "devflow",
     title: "DeV'Flow",
-    category: "Pilotage de la concrétisation commerciale",
+    category: "Solution SaaS de pilotage de la concrétisation commerciale",
     accent: "var(--accent5)",
-    status: "Hébergement / déploiement en cours",
-    chips: ["SaaS", "KPI causaux", "IFC"],
+    status: "Développement & déploiement en cours",
+    chips: ["SaaS", "KPI causaux", "KPI croisés"],
     summary:
       "Cadre commun de pilotage des devis et du tiers payant visant à rendre visibles les causes réelles de sous-performance commerciale.",
     context:
