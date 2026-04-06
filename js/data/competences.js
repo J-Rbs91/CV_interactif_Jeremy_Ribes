@@ -112,7 +112,7 @@ export const outils = [
     action:
       "Développement d'un algorithme sous Google Apps Script intégrant catalogues fournisseurs et grilles tarifaires mutuelles. L'outil filtre en temps réel les produits compatibles et met en évidence ceux qui dégagent la marge la plus élevée.",
     results:
-      "Dans un magasin en perte de vitesse, cet outil a contribué à un gain de +5,64 points de marge et grace à des actions conjointes une hausse de +83 % du chiffre d'affaires en deux mois.",
+      "Dans un magasin en perte de vitesse, cet outil a contribué à un gain de +5,64 points de marge et grâce à des actions conjointes une hausse de +83 % du chiffre d'affaires en deux mois.",
   },
   {
     id: "devflow",
