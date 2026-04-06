@@ -3,8 +3,7 @@ export const realisations = {
     { value: "+83% CA", label: "en 2 mois", color: "var(--accent3)" },
     { value: "+5,6 pts", label: "de marge", color: "var(--accent2)" },
   ],
-  note:
-    "Le détail méthodologique des dispositifs est disponible dans la section Outils.",
+  note: "Le détail méthodologique des dispositifs est disponible dans la section Outils.",
   items: [
     {
       icon: "📈",
@@ -60,7 +59,6 @@ export const experiences = [
     tags: [
       { label: "+83% CA", className: "tag-orange" },
       { label: "+5,6 pts marge", className: "tag-green" },
-      { label: "2 mois", className: "tag-blue" },
     ],
   },
   {
