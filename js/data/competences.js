@@ -95,6 +95,22 @@ export const competences = [
     resultat:
       "Un pilotage plus factuel, plus réactif et plus utile pour objectiver les actions de coaching et les décisions de management.",
   },
+  {
+    id: "redaction-process",
+    title: "Rédaction de process",
+    summary:
+      "Formaliser des méthodes de travail claires, priorisées et formulées pour être comprises et appliquées du premier coup.",
+    color: "var(--accent2)",
+    tags: ["Kano", "Cadrage", "Fiabilisation"],
+    enjeu:
+      "Transformer des pratiques implicites ou dispersées en process écrits, structurés et réellement utilisés par le terrain.",
+    miseEnPlace:
+      "Je rédige les process avec une logique de priorisation inspirée du modèle de Kano : d'abord sécuriser ce qui génère de l'insatisfaction si c'est absent, puis renforcer ce qui améliore l'expérience, et enfin introduire ce qui crée de la valeur perçue. En parallèle, je soigne le cadrage de chaque étape — la bonne formulation, au bon moment, dans les bons termes — pour que le process soit lisible, rassurant et orienté action.",
+    exemple:
+      "Cette approche m'a permis de structurer des procédures de back-office, des supports de brief quotidien et des guides de traitement des dossiers qui ont été adoptés sans friction par les équipes.",
+    resultat:
+      "La rigueur n'a de valeur que si elle permet de sécuriser et fiabiliser le travail. Les process que je rédige sont utilisés parce qu'ils sont utiles, pas parce qu'ils sont imposés.",
+  },
 ];
 
 export const outils = [
