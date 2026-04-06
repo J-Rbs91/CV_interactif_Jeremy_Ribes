@@ -9,7 +9,7 @@ export const sections = [
   },
   {
     id: "competences",
-    icon: "🧰",
+    icon: "✔",
     label: "Compétences",
     sub: "6 domaines clés",
     color: "var(--accent)",
