@@ -351,14 +351,51 @@
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: 8px;
-        padding: 16px 18px;
         border-left: 3px solid transparent;
         transition: all 0.15s;
+        overflow: hidden;
       }
 
       .comp-card:hover {
         border-color: var(--border-active);
         background: var(--card-hover);
+      }
+
+      .comp-card.is-open {
+        border-color: var(--border-active);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0)
+        );
+      }
+
+      .comp-trigger {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        padding: 16px 18px;
+        cursor: pointer;
+        display: block;
+        font: inherit;
+      }
+
+      .comp-trigger:hover {
+        background: rgba(255, 255, 255, 0.015);
+      }
+
+      .comp-trigger:focus-visible {
+        outline: 2px solid var(--border-active);
+        outline-offset: -2px;
+      }
+
+      .comp-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
       }
 
       .comp-title {
@@ -367,10 +404,75 @@
         margin-bottom: 6px;
       }
 
+      .comp-chevron {
+        font-size: 14px;
+        line-height: 1;
+        color: var(--text-muted);
+        transition: transform 0.18s ease, color 0.18s ease;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .comp-card.is-open .comp-chevron {
+        transform: rotate(180deg);
+        color: var(--text-dim);
+      }
+
       .comp-desc {
         font-size: 13px;
         line-height: 1.55;
         color: var(--text-dim);
+      }
+
+      .comp-meta {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+
+      .comp-tag {
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 3px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .comp-details {
+        padding: 0 18px 18px 18px;
+        border-top: 1px solid var(--border);
+      }
+
+      .comp-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .comp-detail-block {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+      }
+
+      .comp-detail-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+
+      .comp-detail-text {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--text);
       }
 
       /* Timeline */
@@ -890,6 +992,7 @@
 
       let activeSection = "profil";
       let expandedTool = "optiprofit";
+      let expandedCompetence = null;
 
       function render() {
         document.getElementById("app").innerHTML = `
@@ -1024,55 +1127,159 @@
       function renderCompetences() {
         const comps = [
           {
+            id: "pilotage-commercial",
             title: "Pilotage commercial",
-            desc: "Développer le flux clients (visibilité locale, avis Google) tout en sécurisant la rentabilité de chaque vente.",
+            desc: "Développer le flux clients tout en sécurisant la rentabilité de chaque vente.",
             color: "var(--accent)",
             tags: ["Flux clients", "Rentabilité", "Avis Google"],
+            details: {
+              enjeu:
+                "Relancer une activité commerciale dans un magasin en perte de vitesse sans sacrifier la rentabilité.",
+              miseEnPlace:
+                "J'ai travaillé à la fois sur le flux client et sur la qualité économique de chaque vente. J'ai combiné actions locales ciblées, optimisation du référencement local et des avis Google, et création d'un outil d'aide à la décision commerciale utilisé directement en vente.",
+              exemple:
+                "L'outil faisait ressortir le mix produit le plus pertinent selon le budget client, les contraintes techniques, les offres en cours et les réseaux de soins.",
+              resultat:
+                "En 2 mois, +83 % de chiffre d'affaires et +5,64 points de marge par rapport à la période de référence.",
+            },
           },
           {
+            id: "organisation-methodes",
             title: "Organisation & méthodes",
-            desc: "Mise en place de processus de travail clairs (cycles de vente, atelier, back-office) pour supprimer les pertes de temps et d'information.",
+            desc: "Mettre en place des processus de travail clairs pour rendre l'activité plus lisible et réduire les pertes de temps.",
             color: "var(--accent2)",
             tags: ["Processus", "Back-office", "Temps"],
+            details: {
+              enjeu:
+                "Réduire les pertes de temps, les flottements d'organisation et les zones d'incertitude dans le fonctionnement quotidien.",
+              miseEnPlace:
+                "J'ai conçu des méthodes de travail pour rendre l'activité plus lisible : procédure de contrôle et de dispatch back-office, priorisation des dossiers complets / incomplets, organisation J+1 pour les montages et vérifications, et cadrage des rendez-vous de livraison.",
+              exemple:
+                "Le lissage des rendez-vous de livraison a permis de réduire la surcharge du samedi et de mieux répartir la charge de travail sur la semaine.",
+              resultat:
+                "Un fonctionnement plus prévisible, plus fluide et plus sûr, sans rigidifier inutilement l'organisation du magasin.",
+            },
           },
           {
+            id: "outils-aide-decision",
             title: "Outils d'aide à la décision",
-            desc: "Création d'outils simples et automatisés (Google Apps Script) pour fiabiliser les choix de l'équipe, notamment sur le mix produit et la marge.",
+            desc: "Créer des outils simples pour fiabiliser les choix de l'équipe et accélérer la bonne décision.",
             color: "var(--accent3)",
             tags: ["GAS", "Automatisation", "Mix produit"],
+            details: {
+              enjeu:
+                "Donner au terrain des repères concrets quand la bonne décision dépend de multiples contraintes métier.",
+              miseEnPlace:
+                "Je conçois des outils simples quand l'activité manque de lisibilité. J'ai développé un outil d'aide à la vente pour orienter le choix produit selon les contraintes métier et la marge, un outil de calcul pour fiabiliser la dégression de verres techniques, et un système de suivi structuré des devis / tiers payant.",
+              exemple:
+                "Ces outils permettent de savoir plus vite quoi proposer, quoi calculer, quoi traiter, quoi relancer ou quoi surveiller, sans dépendre d'un retraitement manuel lourd.",
+              resultat:
+                "Une décision plus rapide, plus fiable et plus homogène, avec moins d'erreurs, moins de ressaisie et moins d'hésitation dans l'action.",
+            },
           },
           {
+            id: "interface-coordination",
             title: "Interface & coordination",
-            desc: "Pivot entre les attentes de la direction et les besoins concrets des collaborateurs pour aligner tout le monde sur les objectifs.",
+            desc: "Faire le lien entre direction, contraintes opérationnelles et réalité du terrain.",
             color: "var(--accent4)",
             tags: ["Direction", "Terrain", "Alignement"],
+            details: {
+              enjeu:
+                "Aligner des objectifs de performance avec les contraintes réelles du quotidien sans créer de rupture entre pilotage et terrain.",
+              miseEnPlace:
+                "Mon rôle n'est pas seulement de proposer des outils, mais de transformer des objectifs parfois abstraits en méthodes de travail compréhensibles et acceptables par l'équipe. J'interviens comme interface entre direction, contraintes opérationnelles et réalité du terrain.",
+              exemple:
+                "Mise en place de suivis quotidiens et de procédures adoptées par l'équipe pour fiabiliser la remontée d'information et mieux coordonner l'activité.",
+              resultat:
+                "Des priorités mieux partagées, une coordination plus lisible et un pilotage mieux connecté à la réalité opérationnelle.",
+            },
           },
           {
+            id: "management-utilite",
             title: "Management par l'utilité",
-            desc: "Accompagnement au changement en démontrant l'intérêt immédiat des nouvelles méthodes pour le travail quotidien de l'équipe.",
+            desc: "Faire adhérer au changement en démontrant l'intérêt immédiat des outils et des méthodes.",
             color: "var(--accent5)",
             tags: ["Adhésion", "Changement", "Utilité"],
+            details: {
+              enjeu:
+                "Faire adopter des méthodes et des outils dans des environnements où tout ce qui ajoute de la complexité est spontanément rejeté.",
+              miseEnPlace:
+                "Je fais adhérer plus facilement quand une méthode apporte un bénéfice visible tout de suite : moins d'oublis, moins de ressaisie, meilleure priorisation, charge mieux répartie.",
+              exemple:
+                "C'est cette logique qui m'a permis de faire adopter des procédures, des supports de suivi et des outils de coordination dans des contextes où l'adhésion ne peut pas reposer sur la seule injonction.",
+              resultat:
+                "Des usages réellement adoptés, parce que perçus comme utiles au quotidien, et non comme une couche administrative supplémentaire.",
+            },
           },
           {
+            id: "suivi-reporting",
             title: "Suivi & reporting",
-            desc: "Mise en lisibilité des indicateurs clés (concrétisation, délais, marge) pour permettre un pilotage réactif et factuel.",
+            desc: "Rendre visibles les indicateurs qui aident réellement à décider et à agir.",
             color: "var(--accent)",
             tags: ["KPI", "Concrétisation", "Délais"],
+            details: {
+              enjeu:
+                "Passer d'un reporting descriptif à un reporting utile pour comprendre les causes de la sous-performance et agir au bon endroit.",
+              miseEnPlace:
+                "Je conçois le reporting comme un outil d'action. Les indicateurs qui m'intéressent sont les délais de traitement, la discipline de relance, le taux de perte, les pertes évitables, la qualité du suivi et la santé du portefeuille.",
+              exemple:
+                "La logique de pilotage ne consiste pas seulement à voir ce qui s'est passé, mais à comprendre pourquoi la performance se dégrade et sur quel levier agir en priorité.",
+              resultat:
+                "Un pilotage plus factuel, plus réactif et plus utile pour objectiver les actions de coaching et les décisions de management.",
+            },
           },
         ];
         return `<div class="grid-2">
     ${comps
-      .map(
-        (c) => `
-      <div class="comp-card" style="border-left-color:${c.color}">
-        <div class="comp-title" style="color:${c.color}">${c.title}</div>
-        <div class="comp-desc">${c.desc}</div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px">
-          ${c.tags.map((t) => `<span style="font-size:10px;padding:2px 7px;border-radius:3px;background:${c.color}15;color:${c.color};font-weight:600;text-transform:uppercase;letter-spacing:0.5px;border:1px solid ${c.color}25">${t}</span>`).join("")}
-        </div>
+      .map((c) => {
+        const isOpen = expandedCompetence === c.id;
+        return `
+      <div class="comp-card ${isOpen ? "is-open" : ""}" style="border-left-color:${c.color}">
+        <button
+          class="comp-trigger"
+          type="button"
+          data-competence="${c.id}"
+          aria-expanded="${isOpen ? "true" : "false"}"
+          aria-controls="comp-details-${c.id}"
+        >
+          <div class="comp-head">
+            <div class="comp-title" style="color:${c.color}">${c.title}</div>
+            <span class="comp-chevron" aria-hidden="true">⌄</span>
+          </div>
+          <div class="comp-desc">${c.desc}</div>
+          <div class="comp-meta">
+            ${c.tags.map((t) => `<span class="comp-tag" style="background:${c.color}15;color:${c.color};border:1px solid ${c.color}25">${t}</span>`).join("")}
+          </div>
+        </button>
+        ${
+          isOpen
+            ? `
+          <div class="comp-details" id="comp-details-${c.id}">
+            <div class="comp-detail-grid">
+              <div class="comp-detail-block">
+                <div class="comp-detail-label">Enjeu traité</div>
+                <div class="comp-detail-text">${c.details.enjeu}</div>
+              </div>
+              <div class="comp-detail-block">
+                <div class="comp-detail-label">Ce que j'ai mis en place</div>
+                <div class="comp-detail-text">${c.details.miseEnPlace}</div>
+              </div>
+              <div class="comp-detail-block">
+                <div class="comp-detail-label">Exemple concret</div>
+                <div class="comp-detail-text">${c.details.exemple}</div>
+              </div>
+              <div class="comp-detail-block">
+                <div class="comp-detail-label">Résultat observable</div>
+                <div class="comp-detail-text">${c.details.resultat}</div>
+              </div>
+            </div>
+          </div>
+        `
+            : ""
+        }
       </div>
-    `,
-      )
+    `;
+      })
       .join("")}
   </div>`;
       }
@@ -1319,6 +1526,15 @@
           el.addEventListener("click", () => {
             const toolId = el.dataset.tool;
             expandedTool = expandedTool === toolId ? null : toolId;
+            render();
+          });
+        });
+
+        document.querySelectorAll(".comp-trigger").forEach((el) => {
+          el.addEventListener("click", () => {
+            const compId = el.dataset.competence;
+            expandedCompetence =
+              expandedCompetence === compId ? null : compId;
             render();
           });
         });
