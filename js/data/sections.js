@@ -11,7 +11,7 @@ export const sections = [
     id: "competences",
     icon: "✔",
     label: "Compétences",
-    sub: "6 domaines clés",
+    sub: "7 domaines clés",
     color: "var(--accent)",
     bg: "var(--blue-bg)",
   },
