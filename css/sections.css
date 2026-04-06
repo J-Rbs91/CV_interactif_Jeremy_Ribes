@@ -1,15 +1,63 @@
 .comp-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px 18px;
+  border-radius: 10px;
   border-left: 3px solid transparent;
-  transition: all 0.15s;
+  border-left-color: var(--comp-accent, transparent);
+  overflow: hidden;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .comp-card:hover {
   border-color: var(--border-active);
   background: var(--card-hover);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.comp-card.is-open {
+  border-color: var(--border-active);
+  background: var(--card);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.comp-toggle {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 18px 20px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.comp-toggle:focus-visible {
+  outline: 2px solid var(--comp-accent, var(--accent));
+  outline-offset: -2px;
+}
+
+.comp-toggle-main {
+  flex: 1;
+}
+
+.comp-toggle-icon {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-right: 2px solid var(--comp-accent, var(--accent));
+  border-bottom: 2px solid var(--comp-accent, var(--accent));
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.comp-card.is-open .comp-toggle-icon {
+  transform: rotate(225deg);
 }
 
 .comp-title {
@@ -22,6 +70,30 @@
   font-size: 13px;
   line-height: 1.55;
   color: var(--text-dim);
+}
+
+.comp-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.comp-card.is-open .comp-details {
+  grid-template-rows: 1fr;
+}
+
+.comp-details-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 20px 0;
+}
+
+.comp-card.is-open .comp-details-inner {
+  padding-bottom: 18px;
+}
+
+.comp-details .detail-block + .detail-block {
+  margin-top: 10px;
 }
 
 .timeline-item {

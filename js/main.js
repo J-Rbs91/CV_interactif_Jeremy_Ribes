@@ -16,6 +16,7 @@ import { bindNavigation } from "./ui/navigation.js";
 
 const state = {
   activeSection: "profil",
+  expandedCompetenceId: null,
   expandedTool: "optiprofit",
 };
 
@@ -24,7 +25,7 @@ function renderCurrentSection() {
     case "profil":
       return renderProfilSection();
     case "competences":
-      return renderCompetencesSection();
+      return renderCompetencesSection(state.expandedCompetenceId);
     case "realisations":
       return renderRealisationsSection();
     case "outils":
@@ -46,9 +47,16 @@ function bindUi() {
     render();
   });
 
-  bindAccordion((toolId) => {
-    state.expandedTool = state.expandedTool === toolId ? null : toolId;
-    render();
+  bindAccordion({
+    onToolToggle: (toolId) => {
+      state.expandedTool = state.expandedTool === toolId ? null : toolId;
+      render();
+    },
+    onCompetenceToggle: (competenceId) => {
+      state.expandedCompetenceId =
+        state.expandedCompetenceId === competenceId ? null : competenceId;
+      render();
+    },
   });
 
   initializeModal();
