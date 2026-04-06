@@ -97,7 +97,7 @@ export const competences = [
   },
   {
     id: "redaction-process",
-    title: "Rédaction de process",
+    title: "Cadrage & priorisation",
     summary:
       "Formaliser des méthodes de travail claires, priorisées et formulées pour être comprises et appliquées du premier coup.",
     color: "var(--accent2)",
