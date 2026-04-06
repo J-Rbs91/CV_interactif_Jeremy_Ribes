@@ -1,7 +1,7 @@
 .comp-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   border-left: 3px solid transparent;
   border-left-color: var(--comp-accent, transparent);
   overflow: hidden;
@@ -14,13 +14,13 @@
 .comp-card:hover {
   border-color: var(--border-active);
   background: var(--card-hover);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-sm);
 }
 
 .comp-card.is-open {
   border-color: var(--border-active);
   background: var(--card);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-md);
 }
 
 .comp-toggle {
@@ -62,7 +62,7 @@
 
 .comp-title {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 6px;
 }
 
@@ -111,7 +111,7 @@
   height: 10px;
   border-radius: 50%;
   border: 2px solid var(--c, var(--accent));
-  background: var(--bg2);
+  background: #ffffff;
 }
 
 .timeline-item::after {
@@ -128,6 +128,36 @@
   display: none;
 }
 
+.stats-spotlight {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stats-item {
+  min-width: 0;
+}
+
+.stats-value {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stats-label {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.stats-divider {
+  width: 1px;
+  height: 48px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
 .tl-header {
   display: flex;
   align-items: baseline;
@@ -137,12 +167,12 @@
 
 .tl-role {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .tl-company {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent2);
 }
 
@@ -180,11 +210,12 @@
 .real-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 14px 18px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
 .real-icon {
@@ -202,9 +233,10 @@
 .tool-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   transition: all 0.15s;
+  box-shadow: var(--shadow-sm);
 }
 
 .tool-card + .tool-card {
@@ -226,7 +258,7 @@
 .tool-mark {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,13 +281,13 @@
 
 .tool-title {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .tool-category {
   font-size: 13px;
   color: var(--text-dim);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .tool-status {
@@ -278,7 +310,7 @@
   border-top: 1px solid var(--border);
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.01),
+    rgba(37, 99, 235, 0.03),
     rgba(255, 255, 255, 0)
   );
 }
@@ -291,9 +323,9 @@
 }
 
 .detail-block {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   padding: 14px 16px;
 }
 
@@ -311,4 +343,60 @@
   font-size: 14px;
   line-height: 1.6;
   color: var(--text);
+}
+
+.app-mobile .comp-toggle {
+  padding: 16px;
+}
+
+.app-mobile .comp-details-inner {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.app-mobile .stats-spotlight {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.app-mobile .stats-divider {
+  width: 100%;
+  height: 1px;
+}
+
+.app-mobile .timeline-item {
+  padding-left: 22px;
+}
+
+.app-mobile .tl-header {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.app-mobile .tl-date {
+  margin-left: 0;
+  white-space: normal;
+}
+
+.app-mobile .real-card {
+  padding-right: 14px;
+}
+
+.app-mobile .tool-summary {
+  padding: 16px;
+}
+
+.app-mobile .tool-topline {
+  align-items: flex-start;
+}
+
+.app-mobile .tool-status {
+  width: 100%;
+  margin-left: 0;
+}
+
+.app-mobile .tool-details {
+  padding: 0 16px 16px;
 }

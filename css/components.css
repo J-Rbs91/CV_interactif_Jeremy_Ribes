@@ -1,32 +1,31 @@
 .identity {
-  padding: 28px 28px 20px;
+  padding: 32px 28px 22px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
 
 .identity h1 {
-  font-family: "DM Serif Display", serif;
-  font-size: 28px;
-  font-weight: 400;
-  letter-spacing: -0.5px;
-  margin-bottom: 2px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 4px;
 }
 
 .identity .role {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 800;
   color: var(--accent2);
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-bottom: 2px;
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
 }
 
 .identity .role2 {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--accent);
+  font-weight: 600;
+  color: var(--text-dim);
   letter-spacing: 0.5px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .contact-row {
@@ -49,14 +48,18 @@
   opacity: 0.6;
 }
 
+.contact-pill {
+  white-space: normal;
+}
+
 .intro-strip {
   padding: 16px 28px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
   background: linear-gradient(
     135deg,
-    rgba(74, 158, 255, 0.03),
-    rgba(54, 214, 181, 0.03)
+    rgba(37, 99, 235, 0.06),
+    rgba(15, 159, 140, 0.05)
   );
 }
 
@@ -70,13 +73,13 @@
   display: flex;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  background: var(--bg2);
+  background: rgba(255, 255, 255, 0.62);
 }
 
 .kpi-item {
   flex: 1;
   text-align: center;
-  padding: 12px 8px;
+  padding: 14px 8px;
   border-right: 1px solid var(--border);
 }
 
@@ -86,7 +89,7 @@
 
 .kpi-value {
   font-family: "JetBrains Mono", monospace;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--accent3);
 }
@@ -103,19 +106,35 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 28px;
+  padding: 12px 20px;
+  margin: 6px 14px;
+  width: calc(100% - 28px);
   cursor: pointer;
-  border-left: 3px solid transparent;
-  transition: all 0.15s;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  appearance: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  transition: all 0.18s ease;
 }
 
 .nav-item:hover {
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.84);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
 }
 
 .nav-item.active {
-  background: var(--card);
-  border-left-color: var(--accent);
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.16);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-icon {
@@ -124,15 +143,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 15px;
   font-weight: 700;
   flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.nav-copy {
+  min-width: 0;
 }
 
 .nav-label {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .nav-sub {
@@ -141,10 +165,33 @@
   margin-top: 1px;
 }
 
+.nav-item-mobile {
+  width: auto;
+  margin: 0;
+  padding: 10px 14px;
+  gap: 10px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  align-items: center;
+  box-shadow: none;
+}
+
+.nav-item-mobile .nav-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.nav-item-mobile .nav-label {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
 .content-head h2 {
-  font-family: "DM Serif Display", serif;
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 .content-head .badge {
@@ -153,27 +200,39 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.content-head-mobile h2 {
+  font-size: 24px;
+}
+
+.content-head-mobile .badge {
+  white-space: normal;
 }
 
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px 22px;
+  border-radius: var(--radius-md);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
 }
 
 .card-sm {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
 }
 
 .card-title {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -218,42 +277,42 @@
 
 .tag {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.7px;
-  padding: 5px 12px;
-  border-radius: 5px;
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
 .tag-green {
   background: var(--green-bg);
   color: var(--accent2);
-  border: 1px solid rgba(54, 214, 181, 0.15);
+  border: 1px solid rgba(15, 159, 140, 0.15);
 }
 
 .tag-blue {
   background: var(--blue-bg);
   color: var(--accent);
-  border: 1px solid rgba(74, 158, 255, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 }
 
 .tag-orange {
   background: var(--orange-bg);
   color: var(--accent3);
-  border: 1px solid rgba(245, 166, 35, 0.15);
+  border: 1px solid rgba(199, 125, 31, 0.15);
 }
 
 .tag-red {
   background: var(--red-bg);
   color: var(--accent4);
-  border: 1px solid rgba(232, 93, 117, 0.15);
+  border: 1px solid rgba(209, 79, 114, 0.15);
 }
 
 .tag-purple {
   background: var(--purple-bg);
   color: var(--accent5);
-  border: 1px solid rgba(167, 139, 250, 0.15);
+  border: 1px solid rgba(100, 112, 245, 0.15);
 }
 
 .section-label {
@@ -269,52 +328,55 @@
 .punchline-box {
   background: linear-gradient(
     135deg,
-    rgba(74, 158, 255, 0.06),
-    rgba(54, 214, 181, 0.06)
+    rgba(255, 255, 255, 0.9),
+    rgba(242, 248, 255, 0.96)
   );
-  border: 1px solid rgba(54, 214, 181, 0.15);
-  border-radius: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  border-radius: var(--radius-lg);
   padding: 20px 24px;
   text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 
 .punchline-box p {
-  font-family: "DM Serif Display", serif;
-  font-size: 17px;
-  color: var(--accent2);
-  font-style: italic;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
   line-height: 1.6;
+  letter-spacing: -0.02em;
 }
 
 .project-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 22px 24px;
   border-top: 3px solid var(--accent5);
+  box-shadow: var(--shadow-sm);
 }
 
 .project-title {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 4px;
 }
 
 .project-sub {
   font-size: 13px;
   color: var(--accent5);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 12px;
 }
 
 .formation-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 18px 22px;
   display: flex;
   align-items: center;
   gap: 18px;
+  box-shadow: var(--shadow-sm);
 }
 
 .formation-year {
@@ -326,10 +388,86 @@
 
 .formation-title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .formation-sub {
   font-size: 13px;
   color: var(--text-dim);
+}
+
+.identity-mobile {
+  padding: 24px 20px 18px;
+}
+
+.identity-mobile h1 {
+  font-size: 28px;
+}
+
+.identity-mobile .role2 {
+  margin-bottom: 14px;
+}
+
+.contact-row-mobile {
+  gap: 8px;
+}
+
+.contact-row-mobile span {
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.intro-strip-mobile {
+  padding: 14px 20px 18px;
+}
+
+.kpi-bar-mobile {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 12px 12px;
+  border-bottom: none;
+  background: transparent;
+}
+
+.kpi-bar-mobile .kpi-item {
+  padding: 12px 8px;
+  border-right: none;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.app-mobile .grid-2,
+.app-mobile .grid-3 {
+  grid-template-columns: 1fr;
+}
+
+.app-mobile .card,
+.app-mobile .card-sm,
+.app-mobile .project-card,
+.app-mobile .punchline-box,
+.app-mobile .formation-card {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.app-mobile .punchline-box {
+  border-radius: 20px;
+}
+
+.app-mobile .tag-row {
+  gap: 8px;
+}
+
+.app-mobile .tag {
+  white-space: normal;
+}
+
+.app-mobile .formation-card {
+  flex-direction: column;
+  align-items: flex-start;
 }

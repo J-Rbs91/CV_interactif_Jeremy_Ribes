@@ -40,15 +40,15 @@ export function renderRealisationsSection() {
   const [firstStat, secondStat] = realisations.stats;
 
   return `
-    <div class="punchline-box" style="text-align:left;display:flex;align-items:center;gap:20px">
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:${firstStat.color}">${firstStat.value}</div>
-        <div style="font-size:13px;color:var(--text-muted);margin-top:2px">${firstStat.label}</div>
+    <div class="punchline-box stats-spotlight">
+      <div class="stats-item">
+        <div class="stats-value" style="color:${firstStat.color}">${firstStat.value}</div>
+        <div class="stats-label">${firstStat.label}</div>
       </div>
-      <div style="width:1px;height:48px;background:var(--border)"></div>
-      <div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:${secondStat.color}">${secondStat.value}</div>
-        <div style="font-size:13px;color:var(--text-muted);margin-top:2px">${secondStat.label}</div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <div class="stats-value" style="color:${secondStat.color}">${secondStat.value}</div>
+        <div class="stats-label">${secondStat.label}</div>
       </div>
     </div>
     <div class="section-label">Pilotage et redynamisation commerciale</div>

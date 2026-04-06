@@ -1,8 +1,14 @@
 import { kpiItems, sections } from "../data/sections.js";
 import { renderIdentity, renderIntroStrip } from "./renderContact.js";
 
-function renderKpiBar() {
-  return `<div class="kpi-bar">
+function getActiveSection(activeSection) {
+  return sections.find(({ id }) => id === activeSection) ?? sections[0];
+}
+
+function renderKpiBar(className = "") {
+  const kpiBarClassName = ["kpi-bar", className].filter(Boolean).join(" ");
+
+  return `<div class="${kpiBarClassName}">
     ${kpiItems
       .map(
         (item) =>
@@ -12,15 +18,34 @@ function renderKpiBar() {
   </div>`;
 }
 
-function renderNavItem(section, activeSection) {
+function renderNavItem(section, activeSection, options = {}) {
+  const { compact = false } = options;
   const isActive = section.id === activeSection;
+  const navItemClassName = [
+    "nav-item",
+    compact ? "nav-item-mobile" : "",
+    isActive ? "active" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  return `<div class="nav-item ${isActive ? "active" : ""}" data-section="${section.id}">
+  return `<button type="button" class="${navItemClassName}" data-section="${section.id}" aria-pressed="${isActive ? "true" : "false"}">
     <div class="nav-icon" style="background:${section.bg};color:${section.color}">${section.icon}</div>
-    <div>
+    <div class="nav-copy">
       <div class="nav-label">${section.label}</div>
-      <div class="nav-sub">${section.sub}</div>
+      ${compact ? "" : `<div class="nav-sub">${section.sub}</div>`}
     </div>
+  </button>`;
+}
+
+function renderNavigation(activeSection, options = {}) {
+  const { compact = false } = options;
+  const navigationClassName = compact ? "mobile-nav" : "nav-list";
+
+  return `<div class="${navigationClassName}">
+    ${sections
+      .map((section) => renderNavItem(section, activeSection, { compact }))
+      .join("")}
   </div>`;
 }
 
@@ -29,17 +54,42 @@ export function renderSidebar(activeSection) {
     ${renderIdentity()}
     ${renderIntroStrip()}
     ${renderKpiBar()}
-    <div class="nav-list">
-      ${sections.map((section) => renderNavItem(section, activeSection)).join("")}
-    </div>
+    ${renderNavigation(activeSection)}
   </div>`;
 }
 
-export function renderContentHeader(activeSection) {
-  const section = sections.find(({ id }) => id === activeSection) ?? sections[0];
+export function renderContentHeader(activeSection, options = {}) {
+  const { className = "" } = options;
+  const section = getActiveSection(activeSection);
+  const contentHeadClassName = ["content-head", className].filter(Boolean).join(" ");
 
-  return `<div class="content-head">
+  return `<div class="${contentHeadClassName}">
     <h2>${section.label}</h2>
     <span class="badge" style="background:${section.bg};color:${section.color}">${section.sub}</span>
+  </div>`;
+}
+
+export function renderMobileShell(activeSection, sectionContent) {
+  return `<div class="mobile-shell">
+    <div class="mobile-summary">
+      ${renderIdentity({
+        className: "identity-mobile",
+        rowClassName: "contact-row-mobile",
+        itemClassName: "contact-pill",
+      })}
+      ${renderIntroStrip({ className: "intro-strip-mobile" })}
+      ${renderKpiBar("kpi-bar-mobile")}
+    </div>
+
+    <div class="mobile-nav-sticky">
+      ${renderNavigation(activeSection, { compact: true })}
+    </div>
+
+    <div class="mobile-main">
+      ${renderContentHeader(activeSection, { className: "content-head-mobile" })}
+      <div class="content-body content-body-mobile">
+        ${sectionContent}
+      </div>
+    </div>
   </div>`;
 }

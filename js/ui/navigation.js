@@ -1,7 +1,13 @@
 export function bindNavigation(onSectionChange) {
-  document.querySelectorAll(".nav-item").forEach((element) => {
+  document.querySelectorAll("[data-section]").forEach((element) => {
     element.addEventListener("click", () => {
-      onSectionChange(element.dataset.section);
+      const { section } = element.dataset;
+
+      if (!section) {
+        return;
+      }
+
+      onSectionChange(section);
     });
   });
 }
