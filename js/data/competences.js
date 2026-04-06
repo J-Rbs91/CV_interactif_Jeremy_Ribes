@@ -138,7 +138,7 @@ export const outils = [
     status: "Conçu pour le pilotage quotidien",
     chips: ["Coordination", "Back-office", "Priorisation"],
     summary:
-      "Support de brief connecté pour répartir dynamiquement les missions prioritaires et fiabiliser la continuité d'information entre les shifts.",
+      "Support de brief connecté permettant de répartir dynamiquement les missions prioritaires et de fiabiliser la continuité de l'information chaque jour.",
     context:
       "Le manque de coordination quotidienne, la perte d'information entre les shifts et la difficulté à prioriser les tâches de back-office créent des oublis et une lecture floue de l'activité.",
     action:
