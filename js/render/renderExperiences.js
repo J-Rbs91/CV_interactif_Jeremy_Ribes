@@ -17,7 +17,7 @@ export function renderProfilSection() {
       <div class="card-text">${profileContent.intro}</div>
     </div>
 
-    <div class="grid-2">
+    <div class="grid-2 profile-cards">
       ${profileContent.cards
         .map((card) =>
           renderSmallCard(card, { titleSize: "16px", dimText: false }),

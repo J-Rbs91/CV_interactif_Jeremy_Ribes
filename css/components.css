@@ -295,6 +295,15 @@
   gap: 14px;
 }
 
+.profile-cards .card-title {
+  font-size: 16px !important;
+}
+
+.profile-cards .card-text {
+  font-size: 15px !important;
+  color: var(--text) !important;
+}
+
 .grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
