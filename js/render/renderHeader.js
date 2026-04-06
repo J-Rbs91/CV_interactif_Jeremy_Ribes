@@ -69,7 +69,6 @@ export function renderSidebar(activeSection) {
   return `<div class="panel-left">
     ${renderIdentity()}
     ${renderIntroStrip()}
-    ${renderKpiBar()}
     ${renderNavigation(activeSection)}
   </div>`;
 }
