@@ -2,7 +2,7 @@ export const profileContent = {
   quote:
     "« Le pivot de la performance collective : rendre une activité plus lisible, plus fluide et plus pilotable, sans la rigidifier. »",
   intro:
-    "Mon parcours m’a conduit vers un rôle d’interface entre les besoins du terrain et les attentes de la direction. Avec 13 ans d’expérience, j’interviens pour structurer l’activité, fiabiliser les méthodes de travail et améliorer le pilotage collectif.",
+    "J’ai progressivement déplacé ma valeur du face à face client vers l’organisation de l’activité : outils d’aide à la vente, suivi des dossiers, planning, procédures et repères de pilotage.",
   cards: [
     {
       title: "Positionnement",
@@ -12,11 +12,11 @@ export const profileContent = {
     {
       title: "Méthode",
       color: "var(--accent5)",
-      text: "Management par l'utilité : faire adhérer au changement en démontrant l'intérêt immédiat des outils pour le travail quotidien.",
+      text: "Structurer sans alourdir. Outiller sans compliquer. Faire adopter en démontrant l’utilité concrète. Je pars d’un irritant concret, je construis une réponse simple.",
     },
   ],
   expertise:
-    "Conception d'outils d'aide à la décision sous Google Apps Script, structuration de méthodes opérationnelles et mise en place de reporting factuels pour un pilotage réactif et objectivé.",
+    "Créer des outils et des cadres de travail qui améliorent la décision, la coordination et la performance collective.",
   contributionTags: [
     { label: "Structuration", className: "tag-green" },
     { label: "Aide à la décision", className: "tag-blue" },
@@ -26,7 +26,7 @@ export const profileContent = {
     { label: "Adhésion", className: "tag-green" },
   ],
   target:
-    "Un rôle où je peux structurer, coordonner, outiller et améliorer le fonctionnement collectif à plus large échelle, en faisant le lien entre performance, lisibilité opérationnelle et adhésion des équipes.",
+    "Un rôle transverse où je peux prendre en charge la structuration d’une activité existante, fluidifier les interfaces entre équipes et installer des outils utiles à l’exécution comme à la décision.",
 };
 
 export const formationContent = {

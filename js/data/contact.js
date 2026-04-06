@@ -2,7 +2,7 @@ export const contact = {
   name: "Jérémy Ribes",
   role: "Manager de Proximité",
   secondaryRole:
-    "Coordinateur de la Performance Commerciale & appui à la décision",
+    "Coordinateur de la Performance Commerciale & Appui à la Décision",
   intro:
     "Professionnel de terrain · 13 ans en environnement commercial · J'interviens là où l'activité manque de lisibilité ou de coordination, pour la rendre plus fluide, pilotable et durable.",
   items: [
