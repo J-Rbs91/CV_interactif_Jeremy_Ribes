@@ -117,6 +117,7 @@ export function renderOutilsSection(expandedTool) {
     <div class="card">
       <div class="card-title"><div class="dot" style="background:var(--accent3)"></div>Récapitulatif des outils de pilotage</div>
       <div class="card-text">Chaque dispositif ci-dessous démontre ma capacité à structurer une activité,en créant des cadres qui sécurisent l'exécution et clarifient les priorités décisionnelles.</div>
+    </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool)).join("")}
   `;
