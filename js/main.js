@@ -25,13 +25,16 @@ const state = {
   expandedTool: "optiprofit",
   isMobileView: false,
   mobileNavScrollLeft: 0,
+  pendingMobileAccordionScroll: null,
   shouldAnimateMobileNav: false,
   hasInitializedMobileNav: false,
 };
 
 const mobileViewport = "(max-width: 900px)";
+const mobileNavigationScrollSettleDelay = 350;
 let viewportQueryList;
 let resizeListenerBound = false;
+let mobileNavigationOverflowUpdateTimeoutId = 0;
 
 function getMobileNavigationRail() {
   return document.querySelector("[data-mobile-nav]");
@@ -49,6 +52,19 @@ function setNavigationRailScrollPosition(navigationRail, left) {
   navigationRail.style.scrollBehavior = previousScrollBehavior;
 }
 
+function isMobileNavigationRailMeasurable(navigationRail) {
+  return navigationRail.clientWidth > 0 && navigationRail.scrollWidth > 0;
+}
+
+function cancelScheduledMobileNavigationOverflowUpdate() {
+  if (!mobileNavigationOverflowUpdateTimeoutId) {
+    return;
+  }
+
+  window.clearTimeout(mobileNavigationOverflowUpdateTimeoutId);
+  mobileNavigationOverflowUpdateTimeoutId = 0;
+}
+
 function preserveMobileNavigationState({ shouldAnimate = false } = {}) {
   const navigationRail = getMobileNavigationRail();
 
@@ -62,6 +78,62 @@ function preserveMobileNavigationState({ shouldAnimate = false } = {}) {
   }
 
   state.shouldAnimateMobileNav = shouldAnimate;
+}
+
+function queueMobileAccordionScroll(target) {
+  state.pendingMobileAccordionScroll = state.isMobileView ? target : null;
+}
+
+function findPendingMobileAccordionTarget() {
+  const target = state.pendingMobileAccordionScroll;
+
+  if (!target || !state.isMobileView) {
+    return null;
+  }
+
+  const targetId = typeof CSS !== "undefined" && typeof CSS.escape === "function"
+    ? CSS.escape(target.id)
+    : target.id;
+
+  if (target.type === "competence") {
+    return document.querySelector(
+      `.comp-card.is-open [data-competence="${targetId}"]`,
+    );
+  }
+
+  if (target.type === "tool") {
+    const trigger = document.querySelector(`[data-tool="${targetId}"]`);
+
+    if (trigger?.closest(".tool-card")?.querySelector(".tool-details")) {
+      return trigger;
+    }
+  }
+
+  return null;
+}
+
+function restoreMobileAccordionScrollPosition() {
+  const scrollContainer = document.querySelector("#app.app-mobile");
+  const targetElement = findPendingMobileAccordionTarget();
+
+  state.pendingMobileAccordionScroll = null;
+
+  if (!scrollContainer || !targetElement) {
+    return false;
+  }
+
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const targetRect = targetElement.getBoundingClientRect();
+  const targetOffset =
+    targetRect.top - containerRect.top + scrollContainer.scrollTop;
+  const comfortMargin = 12;
+
+  scrollContainer.scrollTo({
+    top: Math.max(0, targetOffset - comfortMargin),
+    behavior: "smooth",
+  });
+
+  return true;
 }
 
 function renderCurrentSection() {
@@ -106,6 +178,9 @@ function bindUi() {
       }
 
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
+      queueMobileAccordionScroll(
+        state.expandedTool ? { type: "tool", id: state.expandedTool } : null,
+      );
       render();
     },
     onCompetenceToggle: (competenceId) => {
@@ -115,6 +190,11 @@ function bindUi() {
 
       state.expandedCompetenceId =
         state.expandedCompetenceId === competenceId ? null : competenceId;
+      queueMobileAccordionScroll(
+        state.expandedCompetenceId
+          ? { type: "competence", id: state.expandedCompetenceId }
+          : null,
+      );
       render();
     },
   });
@@ -153,8 +233,8 @@ function initializeViewportDetection() {
 function restoreMobileNavigationScrollPosition() {
   const navigationRail = getMobileNavigationRail();
 
-  if (!navigationRail) {
-    return;
+  if (!navigationRail || !isMobileNavigationRailMeasurable(navigationRail)) {
+    return false;
   }
 
   const maxScrollLeft = navigationRail.scrollWidth - navigationRail.clientWidth;
@@ -165,14 +245,19 @@ function restoreMobileNavigationScrollPosition() {
 
   setNavigationRailScrollPosition(navigationRail, nextScrollLeft);
   state.mobileNavScrollLeft = nextScrollLeft;
+  return true;
 }
 
 function scrollActiveMobileNavigationIntoView({ behavior = "smooth" } = {}) {
   const navigationRail = getMobileNavigationRail();
   const activeNavItem = document.querySelector(".app-mobile .nav-item.active");
 
-  if (!navigationRail || !activeNavItem) {
-    return;
+  if (
+    !navigationRail ||
+    !activeNavItem ||
+    !isMobileNavigationRailMeasurable(navigationRail)
+  ) {
+    return false;
   }
 
   const railRect = navigationRail.getBoundingClientRect();
@@ -194,6 +279,7 @@ function scrollActiveMobileNavigationIntoView({ behavior = "smooth" } = {}) {
   }
 
   state.mobileNavScrollLeft = targetScroll;
+  return behavior === "smooth";
 }
 
 function updateMobileNavigationOverflowState() {
@@ -217,6 +303,46 @@ function updateMobileNavigationOverflowState() {
   navigationShell.classList.toggle("is-overflow-right", hasRightOverflow);
 }
 
+function scheduleMobileNavigationOverflowUpdateAfterScroll() {
+  const navigationRail = getMobileNavigationRail();
+
+  if (!navigationRail) {
+    return;
+  }
+
+  cancelScheduledMobileNavigationOverflowUpdate();
+
+  let hasUpdatedOverflow = false;
+  let handleScrollEnd;
+
+  const finalizeOverflowUpdate = () => {
+    if (hasUpdatedOverflow) {
+      return;
+    }
+
+    hasUpdatedOverflow = true;
+    cancelScheduledMobileNavigationOverflowUpdate();
+
+    if (handleScrollEnd) {
+      navigationRail.removeEventListener("scrollend", handleScrollEnd);
+    }
+
+    updateMobileNavigationOverflowState();
+  };
+
+  if ("onscrollend" in navigationRail) {
+    handleScrollEnd = () => {
+      finalizeOverflowUpdate();
+    };
+
+    navigationRail.addEventListener("scrollend", handleScrollEnd, { once: true });
+  }
+
+  mobileNavigationOverflowUpdateTimeoutId = window.setTimeout(() => {
+    finalizeOverflowUpdate();
+  }, mobileNavigationScrollSettleDelay);
+}
+
 function bindMobileNavigationUi() {
   const navigationRail = getMobileNavigationRail();
 
@@ -232,6 +358,49 @@ function bindMobileNavigationUi() {
     },
     { passive: true },
   );
+}
+
+function finalizeMobileNavigationRender({
+  shouldCenterActiveItem,
+  scrollBehavior,
+  remainingMeasureAttempts = 4,
+} = {}) {
+  const didRestoreScrollPosition = restoreMobileNavigationScrollPosition();
+
+  if (!didRestoreScrollPosition) {
+    if (remainingMeasureAttempts <= 0) {
+      updateMobileNavigationOverflowState();
+      state.shouldAnimateMobileNav = false;
+      state.hasInitializedMobileNav = true;
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      finalizeMobileNavigationRender({
+        shouldCenterActiveItem,
+        scrollBehavior,
+        remainingMeasureAttempts: remainingMeasureAttempts - 1,
+      });
+    });
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    restoreMobileAccordionScrollPosition();
+
+    const didStartSmoothScroll = shouldCenterActiveItem
+      ? scrollActiveMobileNavigationIntoView({ behavior: scrollBehavior })
+      : false;
+
+    if (didStartSmoothScroll) {
+      scheduleMobileNavigationOverflowUpdateAfterScroll();
+    } else {
+      updateMobileNavigationOverflowState();
+    }
+
+    state.shouldAnimateMobileNav = false;
+    state.hasInitializedMobileNav = true;
+  });
 }
 
 function initializeWindowBindings() {
@@ -261,6 +430,8 @@ function render() {
     return;
   }
 
+  cancelScheduledMobileNavigationOverflowUpdate();
+
   const currentSection = renderCurrentSection();
 
   appElement.className = state.isMobileView ? "app app-mobile" : "app";
@@ -285,15 +456,9 @@ function render() {
     const scrollBehavior = state.shouldAnimateMobileNav ? "smooth" : "auto";
 
     requestAnimationFrame(() => {
-      restoreMobileNavigationScrollPosition();
-      requestAnimationFrame(() => {
-        if (shouldCenterActiveItem) {
-          scrollActiveMobileNavigationIntoView({ behavior: scrollBehavior });
-        }
-
-        updateMobileNavigationOverflowState();
-        state.shouldAnimateMobileNav = false;
-        state.hasInitializedMobileNav = true;
+      finalizeMobileNavigationRender({
+        shouldCenterActiveItem,
+        scrollBehavior,
       });
     });
   }
