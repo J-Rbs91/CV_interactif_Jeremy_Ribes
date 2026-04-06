@@ -130,7 +130,7 @@ function restoreMobileAccordionScrollPosition({ behavior = "smooth" } = {}) {
   const navHeight = navShell
     ? navShell.getBoundingClientRect().bottom - containerRect.top
     : 0;
-  const comfortMargin = navHeight + 12;
+  const comfortMargin = navHeight + 20;
 
   scrollContainer.scrollTo({
     top: Math.max(0, targetOffset - comfortMargin),

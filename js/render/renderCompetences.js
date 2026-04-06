@@ -57,7 +57,9 @@ function renderCompetenceCard(competence, expandedCompetenceId) {
 export function renderCompetencesSection(expandedCompetenceId) {
   return `<div class="competences-list">
     ${competences
-      .map((competence) => renderCompetenceCard(competence, expandedCompetenceId))
+      .map((competence) =>
+        renderCompetenceCard(competence, expandedCompetenceId),
+      )
       .join("")}
   </div>`;
 }
@@ -114,8 +116,7 @@ export function renderOutilsSection(expandedTool) {
   return `
     <div class="card">
       <div class="card-title"><div class="dot" style="background:var(--accent3)"></div>Récapitulatif des outils de pilotage</div>
-      <div class="card-text">Chaque dispositif ci-dessous peut être ouvert au clic pour afficher le contexte, l'action mise en œuvre et les résultats obtenus. Pour DeV'Flow, la nuance sur l'état d'avancement est explicitée : la solution est structurée et en cours d'hébergement / déploiement, mais n'est pas encore en production.</div>
-    </div>
+      <div class="card-text">Chaque dispositif ci-dessous démontre ma capacité à structurer une activité,en créant des cadres qui sécurisent l'exécution et clarifient les priorités décisionnelles.</div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool)).join("")}
   `;
