@@ -68,7 +68,7 @@ function renderOutilCard(outil, index, expandedTool) {
   const isExpanded = expandedTool === outil.id;
 
   return `
-    <div class="tool-card">
+    <div class="tool-card${isExpanded ? " is-open" : ""}">
       <div class="tool-summary" data-tool="${outil.id}">
         <div class="tool-mark" style="background:${outil.accent}15;color:${outil.accent};border-color:${outil.accent}30">${index + 1}</div>
         <div class="tool-main">
@@ -85,6 +85,7 @@ function renderOutilCard(outil, index, expandedTool) {
             marginTop: "10px",
           })}
         </div>
+        <span class="tool-toggle-icon" aria-hidden="true"></span>
       </div>
       ${
         isExpanded
