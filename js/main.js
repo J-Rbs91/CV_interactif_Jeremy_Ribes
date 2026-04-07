@@ -11,8 +11,8 @@ import {
 } from "./render/renderExperiences.js";
 import {
   renderCompetencesSection,
-  renderOutilsSection,
 } from "./render/renderCompetences.js";
+import { renderOutilsSection } from "./render/renderOutils.js";
 import { renderProjetSection } from "./render/renderProjets.js";
 import { bindAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
