@@ -23,6 +23,7 @@ const state = {
   activeSection: "profil",
   expandedCompetenceId: null,
   expandedTool: null,
+  desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
   pendingMobileAccordionScroll: null,
@@ -78,6 +79,22 @@ function preserveMobileNavigationState({ shouldAnimate = false } = {}) {
   }
 
   state.shouldAnimateMobileNav = shouldAnimate;
+}
+
+function preserveDesktopScrollPosition() {
+  const contentBody = document.querySelector(".content-body");
+
+  if (contentBody) {
+    state.desktopScrollTop = contentBody.scrollTop;
+  }
+}
+
+function restoreDesktopScrollPosition() {
+  const contentBody = document.querySelector(".content-body");
+
+  if (contentBody) {
+    contentBody.scrollTop = state.desktopScrollTop;
+  }
 }
 
 function queueMobileAccordionScroll(target) {
@@ -174,6 +191,7 @@ function bindUi() {
     state.expandedCompetenceId = null;
     state.expandedTool = null;
     state.pendingMobileAccordionScroll = null;
+    state.desktopScrollTop = 0;
     state.activeSection = sectionId;
     render();
   });
@@ -182,6 +200,8 @@ function bindUi() {
     onToolToggle: (toolId) => {
       if (state.isMobileView) {
         preserveMobileNavigationState();
+      } else {
+        preserveDesktopScrollPosition();
       }
 
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
@@ -193,6 +213,8 @@ function bindUi() {
     onCompetenceToggle: (competenceId) => {
       if (state.isMobileView) {
         preserveMobileNavigationState();
+      } else {
+        preserveDesktopScrollPosition();
       }
 
       state.expandedCompetenceId =
@@ -453,6 +475,10 @@ function render() {
       `;
 
   bindUi();
+
+  if (!state.isMobileView) {
+    restoreDesktopScrollPosition();
+  }
 
   if (state.isMobileView) {
     if (state.pendingMobileAccordionScroll) {
