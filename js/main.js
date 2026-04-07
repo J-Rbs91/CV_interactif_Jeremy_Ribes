@@ -26,6 +26,7 @@ const state = {
   desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
+  pendingDesktopAccordionScroll: null,
   pendingMobileAccordionScroll: null,
   shouldAnimateMobileNav: false,
   hasInitializedMobileNav: false,
@@ -95,6 +96,66 @@ function restoreDesktopScrollPosition() {
   if (contentBody) {
     contentBody.scrollTop = state.desktopScrollTop;
   }
+}
+
+function scrollDesktopAccordionIntoView() {
+  const target = state.pendingDesktopAccordionScroll;
+
+  state.pendingDesktopAccordionScroll = null;
+
+  if (!target) {
+    return;
+  }
+
+  const contentBody = document.querySelector(".content-body");
+
+  if (!contentBody) {
+    return;
+  }
+
+  const targetId =
+    typeof CSS !== "undefined" && typeof CSS.escape === "function"
+      ? CSS.escape(target.id)
+      : target.id;
+  let accordionElement = null;
+
+  if (target.type === "competence") {
+    const toggle = contentBody.querySelector(
+      `.comp-card.is-open [data-competence="${targetId}"]`,
+    );
+
+    accordionElement = toggle?.closest(".comp-card");
+  } else if (target.type === "tool") {
+    const trigger = contentBody.querySelector(`[data-tool="${targetId}"]`);
+
+    accordionElement = trigger?.closest(".tool-card");
+  }
+
+  if (!accordionElement) {
+    return;
+  }
+
+  const containerRect = contentBody.getBoundingClientRect();
+  const elementRect = accordionElement.getBoundingClientRect();
+  const elementTopRelative = elementRect.top - containerRect.top;
+  const elementBottomRelative = elementRect.bottom - containerRect.top;
+  const containerVisibleHeight = contentBody.clientHeight;
+  const comfortMargin = 16;
+
+  if (
+    elementTopRelative >= 0 &&
+    elementBottomRelative <= containerVisibleHeight
+  ) {
+    return;
+  }
+
+  const targetScrollTop =
+    contentBody.scrollTop + elementTopRelative - comfortMargin;
+
+  contentBody.scrollTo({
+    top: Math.max(0, targetScrollTop),
+    behavior: "smooth",
+  });
 }
 
 function queueMobileAccordionScroll(target) {
@@ -190,6 +251,7 @@ function bindUi() {
 
     state.expandedCompetenceId = null;
     state.expandedTool = null;
+    state.pendingDesktopAccordionScroll = null;
     state.pendingMobileAccordionScroll = null;
     state.desktopScrollTop = 0;
     state.activeSection = sectionId;
@@ -205,6 +267,16 @@ function bindUi() {
       }
 
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
+
+      if (!state.isMobileView && state.expandedTool) {
+        state.pendingDesktopAccordionScroll = {
+          type: "tool",
+          id: state.expandedTool,
+        };
+      } else if (!state.isMobileView) {
+        state.pendingDesktopAccordionScroll = null;
+      }
+
       queueMobileAccordionScroll(
         state.expandedTool ? { type: "tool", id: state.expandedTool } : null,
       );
@@ -219,6 +291,16 @@ function bindUi() {
 
       state.expandedCompetenceId =
         state.expandedCompetenceId === competenceId ? null : competenceId;
+
+      if (!state.isMobileView && state.expandedCompetenceId) {
+        state.pendingDesktopAccordionScroll = {
+          type: "competence",
+          id: state.expandedCompetenceId,
+        };
+      } else if (!state.isMobileView) {
+        state.pendingDesktopAccordionScroll = null;
+      }
+
       queueMobileAccordionScroll(
         state.expandedCompetenceId
           ? { type: "competence", id: state.expandedCompetenceId }
@@ -478,6 +560,10 @@ function render() {
 
   if (!state.isMobileView) {
     restoreDesktopScrollPosition();
+
+    requestAnimationFrame(() => {
+      scrollDesktopAccordionIntoView();
+    });
   }
 
   if (state.isMobileView) {
