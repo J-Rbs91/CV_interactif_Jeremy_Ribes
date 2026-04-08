@@ -1,9 +1,5 @@
 import { sections } from "../data/sections.js";
-import {
-  renderIdentity,
-  renderIntroStrip,
-  renderReadingNote,
-} from "./renderContact.js";
+import { renderIdentity, renderIntroStrip } from "./renderContact.js";
 
 function getActiveSection(activeSection) {
   return sections.find(({ id }) => id === activeSection) ?? sections[0];
@@ -84,7 +80,6 @@ function renderContactModal() {
 export function renderSidebar(activeSection) {
   return `<div class="panel-left">
     ${renderIdentity()}
-    ${renderReadingNote({ titleId: "reading-note-title-desktop" })}
     ${renderIntroStrip()}
     ${renderNavigation(activeSection)}
     ${renderContactModal()}
@@ -110,10 +105,6 @@ export function renderMobileShell(activeSection, sectionContent) {
         isMobileView: true,
         rowClassName: "contact-row-mobile",
         itemClassName: "contact-pill",
-      })}
-      ${renderReadingNote({
-        className: "reading-note-mobile",
-        titleId: "reading-note-title-mobile",
       })}
       ${renderIntroStrip({ className: "intro-strip-mobile" })}
     </div>
