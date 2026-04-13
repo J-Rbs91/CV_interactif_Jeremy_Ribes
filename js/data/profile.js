@@ -7,7 +7,7 @@ export const profileContent = {
     {
       title: "Positionnement",
       color: "var(--accent)",
-      text: "Interface entre la direction, qui porte les objectifs stratégiques, et le terrain, qui exprime les besoins opérationnels réels.",
+      text: "<strong>Interface entre la direction</strong>, qui porte les objectifs stratégiques, et le terrain, qui exprime les besoins opérationnels réels.",
     },
     {
       title: "Méthode",
