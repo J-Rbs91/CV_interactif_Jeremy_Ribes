@@ -4,7 +4,7 @@ export const contact = {
   secondaryRole:
     "Outils métiers | Appui à la Décision | Pilotage terrain | Structuration de l'activité",
   intro:
-    "Professionnel de terrain, avec 13 ans d’expérience en environnement commercial, je me suis spécialisé dans la conception de méthodes et d'outils pour réduire ce qui dégrade la rentabilité, la fluidité et la satisfaction client.",
+    "Professionnel de terrain avec 13 ans d’expérience en environnement commercial, j’ai progressivement orienté mon parcours vers ce qui me mobilise le plus : concevoir des outils concrets pour fiabiliser les décisions, structurer l’activité et fluidifier le travail au quotidien.",
   items: [
     { icon: "📍", text: "Montferrier-sur-Lez (34)" },
     { icon: "🎂", text: "24 juin 1991" },
