@@ -34,10 +34,10 @@ export const outils = [
   {
     id: "briefmaker",
     title: "Brief'Maker",
-    category: "Support d'organisation quotidienne",
+    category: "Support connecté d'organisation quotidienne",
     accent: "var(--accent2)",
     status: "Conçu pour le pilotage quotidien",
-    chips: ["Coordination", "Back-office", "Priorisation"],
+    chips: ["Coordination", "Back-office", "Priorisation", "Google"],
     summary:
       "Support de brief connecté permettant de répartir dynamiquement les missions prioritaires et de fiabiliser la continuité de l'information chaque jour.",
     context:
