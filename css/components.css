@@ -514,6 +514,50 @@
   color: var(--accent);
 }
 
+.share-trigger {
+  position: relative;
+}
+
+.share-trigger .ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-trigger .ic svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.share-feedback {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--green-bg);
+  color: var(--accent2);
+  border: 1px solid rgba(15, 159, 140, 0.18);
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+  z-index: 5;
+}
+
+.share-trigger.is-copied .share-feedback {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 @keyframes contact-pulse {
   0%,
   100% {

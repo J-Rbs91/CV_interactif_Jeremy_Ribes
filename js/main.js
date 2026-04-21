@@ -18,6 +18,7 @@ import { bindAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
+import { bindShare } from "./ui/share.js";
 
 const state = {
   activeSection: "profil",
@@ -311,6 +312,7 @@ function bindUi() {
   });
 
   bindContactForm();
+  bindShare();
   initializeModal();
 }
 

@@ -4,9 +4,30 @@ function buildClassName(baseClassName, itemClassName) {
   return [baseClassName, itemClassName].filter(Boolean).join(" ");
 }
 
+function renderShareIcon() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M10 14 20 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>`;
+}
+
+function renderShareButton(itemClassName) {
+  return `<button
+      type="button"
+      class="${buildClassName("contact-form-trigger share-trigger", itemClassName)}"
+      data-share
+      aria-label="Partager ce CV"
+      title="Partager"
+    >
+      <span class="ic">${renderShareIcon()}</span> Partager
+      <span class="share-feedback" data-share-feedback role="status" aria-live="polite">Lien copi\u00e9 !</span>
+    </button>`;
+}
+
 function renderContactItem(item, itemClassName) {
   if (item.type === "contact-form") {
-    return `<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
+    return `${renderShareButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
       <span class="ic">${item.icon}</span> ${item.text}
     </button>`;
   }
