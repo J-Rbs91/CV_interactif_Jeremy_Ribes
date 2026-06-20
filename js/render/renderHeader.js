@@ -60,15 +60,15 @@ function renderContactModal() {
       <form class="contact-form">
         <label class="contact-label">
           Nom
-          <input type="text" name="from_name" required autocomplete="name" />
+          <input type="text" name="from_name" required autocomplete="name" minlength="2" maxlength="100" />
         </label>
         <label class="contact-label">
           Email
-          <input type="email" name="from_email" required autocomplete="email" />
+          <input type="email" name="from_email" required autocomplete="email" maxlength="150" />
         </label>
         <label class="contact-label">
           Message
-          <textarea name="message" rows="5" required></textarea>
+          <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
         </label>
         <button type="submit" class="contact-submit">Envoyer</button>
       </form>

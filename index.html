@@ -2,6 +2,11 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://j-rbs.goatcounter.com; connect-src https://api.emailjs.com https://j-rbs.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CV Interactif &mdash; J&eacute;r&eacute;my Ribes</title>
     <script type="application/ld+json">
@@ -435,13 +440,17 @@
         </ul>
       </article>
     </noscript>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
+      integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="./js/main.js"></script>
     <!-- GoatCounter analytics -->
     <script
       data-goatcounter="https://j-rbs.goatcounter.com/count"
       async
-      src="//gc.zgo.at/count.js"
+      src="https://gc.zgo.at/count.js"
     ></script>
   </body>
 </html>

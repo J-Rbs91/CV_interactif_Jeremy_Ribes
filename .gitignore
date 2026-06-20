@@ -1,0 +1,24 @@
+# Dépendances / artefacts (le projet est statique, mais on protège l'avenir)
+node_modules/
+dist/
+build/
+
+# Variables d'environnement et secrets — ne jamais committer
+.env
+.env.*
+*.local
+secrets.*
+*.pem
+*.key
+
+# Fichiers système / éditeur
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs
+*.log
+npm-debug.log*
