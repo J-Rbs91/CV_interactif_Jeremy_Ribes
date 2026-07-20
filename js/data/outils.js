@@ -16,20 +16,21 @@ export const outils = [
       "Dans un magasin en perte de vitesse, cet outil a contribué à un gain de +5,64 points de marge et grâce à des actions conjointes une hausse de +83 % du chiffre d'affaires en deux mois.",
   },
   {
-    id: "devflow",
-    title: "DeV'Flow",
-    category: "Solution SaaS de pilotage de la concrétisation commerciale",
+    id: "panum",
+    title: "PANUM",
+    category: "Suivi commercial & pilotage de la performance",
     accent: "var(--accent5)",
     status: "Développement & déploiement en cours",
-    chips: ["SaaS", "KPI causaux", "KPI croisés"],
+    chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
+    link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
     summary:
-      "Cadre commun de pilotage des devis et du tiers payant visant à rendre visibles les causes réelles de sous-performance commerciale.",
+      "Solution de suivi commercial et de pilotage de la performance permettant de centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
     context:
       "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées et impossibilité pour le management de comprendre précisément pourquoi des ventes sont perdues.",
     action:
-      "Centralisation des flux dans un cadre commun et conception d'un moteur de KPI causal incluant l'Indice de Fiabilité Commerciale (IFC), afin d'analyser non seulement les résultats, mais aussi les mécanismes de sous-performance : vitesse de traitement, intensité des relances, pertes évitables et instabilité des parcours.",
+      "Conception d'indicateurs de suivi en temps réel, de tableaux de bord multi-niveaux et de mécanismes d'aide à la décision adaptés aux collaborateurs, managers et responsables de réseau.",
     results:
-      "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique. Identification des pertes évitables et objectivation du coaching commercial. La solution SaaS n'est pas encore hébergée ni déployée en production à ce stade ; cette phase est en cours.",
+      "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique. Identification des pertes évitables et objectivation du coaching commercial. La solution n'est pas encore déployée en production à ce stade ; cette phase est en cours.",
   },
   {
     id: "briefmaker",
@@ -65,18 +66,19 @@ export const outils = [
   },
   {
     id: "ortabels",
-    title: "L'Ortabels 3.0",
-    category: "Pilotage de production complexe",
+    title: "L'Ortabels — Aide à la décision maraîchère",
+    category: "Modèles de croissance thermique",
     accent: "var(--accent)",
-    status: "Projet transverse structurant",
-    chips: ["Gantt dynamiques", "Prévision", "Coordination"],
+    status: "Projet en développement",
+    chips: ["Degrés-jours", "Modèles de croissance", "Fenêtres de semis"],
+    link: { label: "Découvrir L'Ortabels", url: "https://app.ortabels.fr/" },
     summary:
-      "Architecture de gestion complète pour piloter une exploitation maraîchère pédagogique impliquant plusieurs intervenants.",
+      "Application d'aide à la décision exploitant les températures locales, les degrés-jours et les modèles de croissance thermique pour anticiper les fenêtres de semis, suivre le développement des cultures et estimer les dates de récolte.",
     context:
-      "La planification de cultures maraîchères implique rotations, semis, récoltes, météo et coordination de multiples intervenants dans un cadre associatif.",
+      "Anticiper les dates de semis et de récolte suppose de croiser en continu la météo locale, les températures propres à chaque parcelle et les seuils thermiques propres à chaque culture — un suivi difficile à tenir manuellement.",
     action:
-      "Création d'une architecture complète de gestion combinant diagrammes de Gantt dynamiques, modèles prédictifs fondés sur les données météo locales et outils de coordination collective.",
+      "Conception d'un système traduisant les données météorologiques et les seuils propres à chaque culture en repères opérationnels directement utilisables sur le terrain.",
     results:
-      "Structuration complète de l'exploitation, permettant une planification rigoureuse et un pilotage agile des projets pédagogiques.",
+      "Application en cours de développement, aujourd'hui au stade d'une page de présentation et d'inscription à une liste d'attente. L'objectif : traduire des modèles de croissance et des données météorologiques en estimations d'aide à la décision, sans garantie de résultat.",
   },
 ];

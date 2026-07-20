@@ -43,6 +43,7 @@ export const experiences = [
       "Normalisation opérationnelle : procédures de gestion back-office (contrôle, dispatch, retards) et lissage des flux de livraison (RDV livraison).",
       "Pilotage : outils de suivi quotidien pour fiabiliser la remontée d'informations et coordonner l'équipe.",
       "Interface opérationnelle : traduction des objectifs de la direction en méthodes de travail, facilitant l'adhésion de l'équipe.",
+      "Développement commercial & CRM : conception et déploiement d'une campagne e-mail automatisée auprès de plus d'un millier de clients, incluant la segmentation de la base, le contrôle des consentements, la personnalisation des communications et le suivi des conversions.",
       "Développement d'outils Desktop et Web d'aide à la vente.",
     ],
   },

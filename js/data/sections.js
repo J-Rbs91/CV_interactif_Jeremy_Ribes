@@ -43,7 +43,7 @@ export const sections = [
     id: "projet",
     icon: "🌱",
     label: "Projets transverses",
-    sub: "2 projets détaillés",
+    sub: "3 projets détaillés",
     color: "var(--accent5)",
     bg: "var(--purple-bg)",
   },

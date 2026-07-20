@@ -327,6 +327,37 @@
   color: var(--text);
 }
 
+.tool-link,
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.tool-link:hover,
+.project-link:hover {
+  text-decoration: underline;
+  filter: brightness(0.96);
+}
+
+.tool-link:focus-visible,
+.project-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.tool-link-icon {
+  font-weight: 700;
+}
+
 .tool-details {
   padding: 0 20px 18px;
   border-top: 1px solid var(--border);

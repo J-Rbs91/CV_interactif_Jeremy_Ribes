@@ -21,6 +21,11 @@ function renderOutilCard(outil, index, expandedTool) {
             gap: "6px",
             marginTop: "10px",
           })}
+          ${
+            outil.link
+              ? `<a class="tool-link" href="${outil.link.url}" target="_blank" rel="noopener noreferrer" style="color:${outil.accent};background:${outil.accent}12;border-color:${outil.accent}30">${outil.link.label}<span class="tool-link-icon" aria-hidden="true">↗</span></a>`
+              : ""
+          }
         </div>
         <span class="tool-toggle-icon" aria-hidden="true"></span>
       </div>

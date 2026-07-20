@@ -1,6 +1,10 @@
 export function bindAccordion({ onToolToggle, onCompetenceToggle }) {
   document.querySelectorAll(".tool-summary").forEach((element) => {
-    element.addEventListener("click", () => {
+    element.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        return;
+      }
+
       onToolToggle?.(element.dataset.tool);
     });
   });

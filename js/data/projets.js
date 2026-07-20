@@ -1,11 +1,44 @@
 export const projetsTransverses = [
   {
-    title: "L'Ortabels 3.0 🌱",
-    subtitle: "Pilotage de production complexe · Projet transverse",
+    title: "KuT — Logiciel de gestion pour salons et activités de bien-être",
+    subtitle:
+      "Conception produit & pilotage transverse · Projet en développement continu",
+    bullets: [
+      "Conception produit de bout en bout : transformation des besoins d'un salon de bien-être ou de toute activité à prestations récurrentes cherchant à fidéliser, en parcours, règles métier et fonctionnalités directement exploitables.",
+      "Structuration d'un logiciel de gestion complet : clients, réservations, planning, fidélité, campagnes commerciales, indicateurs de performance, exports comptables et encaissements.",
+      "Pilotage transverse du projet : cadrage fonctionnel, priorisation des évolutions, coordination du développement, validation des usages et préparation du déploiement.",
+    ],
+    link: { label: "Découvrir KuT", url: "https://kut.panum.fr/" },
+    transferableSkills: [
+      {
+        title: "Conception produit",
+        color: "var(--accent5)",
+        text: "Partir d'un besoin métier réel et le traduire en parcours, règles fonctionnelles et priorités claires.",
+      },
+      {
+        title: "Pilotage transverse",
+        color: "var(--accent)",
+        text: "Coordonner les dimensions métier, fonctionnelles et organisationnelles d'un même projet.",
+      },
+      {
+        title: "Priorisation",
+        color: "var(--accent3)",
+        text: "Arbitrer les évolutions et faire progresser une solution complète par étapes maîtrisées.",
+      },
+      {
+        title: "Vision d'ensemble",
+        color: "var(--accent2)",
+        text: "Relier les enjeux opérationnels, commerciaux et réglementaires jusqu'à l'usage terrain.",
+      },
+    ],
+  },
+  {
+    title: "Projet maraîcher L'Ortabels 🌱",
+    subtitle: "Structuration d'une exploitation maraîchère · Projet transverse",
     bullets: [
       "Création d'une architecture complète de gestion pour planifier cultures, rotations, semis et flux de récoltes.",
-      "Développement de diagrammes de Gantt dynamiques et de modèles prédictifs fondés sur les données météo locales.",
-      "Traduction des contraintes agronomiques en outils numériques agiles, pensés pour l'usage terrain et le pilotage collectif.",
+      "Développement de diagrammes de Gantt dynamiques pour ordonnancer les séries culturales et fiabiliser la planification.",
+      "Traduction des contraintes agronomiques et calendaires en repères de planification partagés, pensés pour l'usage terrain et le pilotage collectif.",
       "Coordination multi-parties : production, pédagogie, communication, financement et structuration globale du projet.",
     ],
     transferableSkills: [
