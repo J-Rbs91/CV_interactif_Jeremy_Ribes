@@ -54,6 +54,16 @@ export const formationContent = {
       color: "var(--accent5)",
       text: "Formalisation de méthodes et procédures opérationnelles.",
     },
+    {
+      title: "Orchestration de workflows IA multi-agents",
+      color: "var(--accent4)",
+      text: "Conception de workflows reposant sur plusieurs agents spécialisés : exploration, analyse contradictoire, vérification factuelle, contrôle des sources, consolidation et validation humaine des livrables. Définition des rôles, des entrées, des critères de sortie, des mécanismes de contrôle croisé et des étapes de validation avant utilisation opérationnelle.",
+    },
+    {
+      title: "Mise en production de produits numériques",
+      color: "var(--accent)",
+      text: "Coordination des environnements, des contrôles qualité, des déploiements automatisés et des vérifications post-déploiement nécessaires à la publication et à l'évolution d'applications métiers.",
+    },
   ],
   quote:
     "« Mon apprentissage est continu et toujours orienté vers la résolution de problèmes concrets du terrain. »",

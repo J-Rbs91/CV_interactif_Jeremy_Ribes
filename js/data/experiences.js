@@ -44,6 +44,7 @@ export const experiences = [
       "Pilotage : outils de suivi quotidien pour fiabiliser la remontée d'informations et coordonner l'équipe.",
       "Interface opérationnelle : traduction des objectifs de la direction en méthodes de travail, facilitant l'adhésion de l'équipe.",
       "Développement commercial & CRM : conception et déploiement d'une campagne e-mail automatisée auprès de plus d'un millier de clients, incluant la segmentation de la base, le contrôle des consentements, la personnalisation des communications et le suivi des conversions.",
+      "Fiabilisation des données commerciales : conception de contrôles automatisés rapprochant les données du logiciel métier et les suivis internes afin d'identifier les dossiers non tracés, quantifier les écarts et orienter les actions correctives.",
       "Développement d'outils Desktop et Web d'aide à la vente.",
     ],
   },

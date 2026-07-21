@@ -97,11 +97,11 @@ export const competences = [
   },
   {
     id: "redaction-process",
-    title: "Cadrage & priorisation",
+    title: "Cadrage & sécurisation des décisions",
     summary:
-      "Formaliser des méthodes de travail claires, priorisées et formulées pour être comprises et appliquées du premier coup.",
+      "Transformation de contraintes métier, réglementaires et techniques en règles explicites, priorisées, testables et directement exploitables par les équipes.",
     color: "var(--accent2)",
-    tags: ["Kano", "Cadrage", "Fiabilisation"],
+    tags: ["Cadrage", "Priorisation", "Critères de validation"],
     enjeu:
       "Transformer des pratiques implicites ou dispersées en process écrits, structurés et réellement utilisés par le terrain.",
     miseEnPlace:
