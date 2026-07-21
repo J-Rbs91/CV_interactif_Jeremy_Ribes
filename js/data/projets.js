@@ -5,7 +5,7 @@ export const projetsTransverses = [
       "Conception produit & pilotage transverse · Projet en développement continu",
     bullets: [
       "Conception produit de bout en bout : transformation des besoins d'un salon de bien-être ou de toute activité à prestations récurrentes cherchant à fidéliser, en parcours, règles métier et fonctionnalités directement exploitables.",
-      "Structuration d'un logiciel de gestion complet : clients, réservations, planning, fidélité, campagnes commerciales, indicateurs de performance, exports comptables et encaissements.",
+      "Structuration d'un logiciel de gestion complet : clients, réservations, planning, fidélité, campagnes commerciales et indicateurs de performance. Module de caisse et exports comptables et fiscaux en cours de développement.",
       "Sécurisation fonctionnelle : formalisation des règles métier, des invariants, des scénarios limites et des plans de tests nécessaires au contrôle déterministe des fonctionnalités sensibles.",
       "Pilotage transverse du projet : cadrage fonctionnel, priorisation des évolutions, coordination du développement, validation des usages et préparation du déploiement.",
     ],
