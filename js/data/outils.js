@@ -64,21 +64,4 @@ export const outils = [
     results:
       "Résolution de conflits d'organisation et optimisation du coût du personnel par rapport au flux d'activité.",
   },
-  {
-    id: "ortabels",
-    title: "L'Ortabels — Aide à la décision maraîchère",
-    category: "Modèles de croissance thermique",
-    accent: "var(--accent)",
-    status: "Projet en développement",
-    chips: ["Degrés-jours", "Modèles de croissance", "Fenêtres de semis"],
-    link: { label: "Découvrir L'Ortabels", url: "https://app.ortabels.fr/" },
-    summary:
-      "Application d'aide à la décision exploitant les températures locales, les degrés-jours et les modèles de croissance thermique pour anticiper les fenêtres de semis, suivre le développement des cultures et estimer les dates de récolte.",
-    context:
-      "Anticiper les dates de semis et de récolte suppose de croiser en continu la météo locale, les températures propres à chaque parcelle et les seuils thermiques propres à chaque culture — un suivi difficile à tenir manuellement.",
-    action:
-      "Conception d'un système traduisant les données météorologiques et les seuils propres à chaque culture en repères opérationnels directement utilisables sur le terrain.",
-    results:
-      "Application en cours de développement, aujourd'hui au stade d'une page de présentation et d'inscription à une liste d'attente. L'objectif : traduire des modèles de croissance et des données météorologiques en estimations d'aide à la décision, sans garantie de résultat.",
-  },
 ];

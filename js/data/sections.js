@@ -27,7 +27,7 @@ export const sections = [
     id: "outils",
     icon: "🛠️",
     label: "Outils",
-    sub: "5 dispositifs détaillés",
+    sub: "4 dispositifs détaillés",
     color: "var(--accent3)",
     bg: "var(--orange-bg)",
   },

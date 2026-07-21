@@ -34,14 +34,15 @@ export const projetsTransverses = [
     ],
   },
   {
-    title: "Projet maraîcher L'Ortabels 🌱",
-    subtitle: "Structuration d'une exploitation maraîchère · Projet transverse",
+    title: "L'Ortabels — Projet maraîcher et outil d'aide à la décision",
+    subtitle:
+      "Structuration maraîchère & outil d'aide à la décision · Projet en développement",
     bullets: [
-      "Création d'une architecture complète de gestion pour planifier cultures, rotations, semis et flux de récoltes.",
-      "Développement de diagrammes de Gantt dynamiques pour ordonnancer les séries culturales et fiabiliser la planification.",
-      "Traduction des contraintes agronomiques et calendaires en repères de planification partagés, pensés pour l'usage terrain et le pilotage collectif.",
-      "Coordination multi-parties : production, pédagogie, communication, financement et structuration globale du projet.",
+      "Structuration du projet maraîcher : planification des cultures, organisation des rotations, suivi des séries et coordination des dimensions opérationnelles.",
+      "Conception de l'outil d'aide à la décision : exploitation des températures locales, des degrés-jours et des modèles de croissance thermique pour estimer les fenêtres de semis, les stades de développement et les périodes de récolte.",
+      "Transformation des données en décisions terrain : traduction des informations météorologiques et agronomiques en repères directement utilisables pour la planification culturale.",
     ],
+    link: { label: "Découvrir L'Ortabels", url: "https://app.ortabels.fr/" },
     transferableSkills: [
       {
         title: "Architecture de gestion",
