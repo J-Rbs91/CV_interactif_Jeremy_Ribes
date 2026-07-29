@@ -124,9 +124,127 @@
     <link rel="stylesheet" href="./css/layout.css" />
     <link rel="stylesheet" href="./css/components.css" />
     <link rel="stylesheet" href="./css/sections.css" />
+    <link rel="stylesheet" href="./css/intro.css" />
+    <script src="./js/ui/intro.js"></script>
   </head>
   <body>
     <div class="app" id="app"></div>
+
+    <div class="intro" data-intro>
+      <div class="intro-halo"></div>
+      <div class="intro-floor"></div>
+      <div class="intro-stage" aria-hidden="true">
+        <div class="intro-camera">
+          <div class="intro-beat" data-beat="1">
+            <div class="intro-kicker">
+              Faits d&rsquo;armes &middot; s&eacute;quence d&rsquo;ouverture
+            </div>
+            <div class="intro-title">J&eacute;r&eacute;my Ribes</div>
+            <div class="intro-sub">
+              Coordinateur de la performance commerciale
+            </div>
+          </div>
+
+          <div class="intro-beat" data-beat="2">
+            <div class="intro-line intro-line-1">13 ans sur le terrain.</div>
+            <div class="intro-line intro-line-2">
+              Puis j&rsquo;ai outill&eacute; le terrain.
+            </div>
+            <div class="intro-foot">
+              Vente &middot; management &middot; back-office &middot;
+              organisation
+            </div>
+          </div>
+
+          <div class="intro-beat" data-beat="3">
+            <div class="intro-stats">
+              <div class="intro-stat">
+                <span
+                  class="intro-stat-value"
+                  data-count-to="83"
+                  data-count-prefix="+"
+                  data-count-suffix="&nbsp;%"
+                  >+83&nbsp;%</span
+                >
+                <span class="intro-stat-label">de chiffre d&rsquo;affaires</span>
+              </div>
+              <div class="intro-stat">
+                <span
+                  class="intro-stat-value"
+                  data-count-to="5.6"
+                  data-count-decimals="1"
+                  data-count-prefix="+"
+                  data-count-suffix="&nbsp;pts"
+                  >+5,6&nbsp;pts</span
+                >
+                <span class="intro-stat-label">de marge</span>
+              </div>
+            </div>
+            <div class="intro-stamp">en 2 mois</div>
+            <div class="intro-foot">
+              Magasin en perte de vitesse &middot; redressement pilot&eacute;
+            </div>
+          </div>
+
+          <div class="intro-beat" data-beat="4">
+            <div class="intro-line intro-line-1">
+              4 outils m&eacute;tiers con&ccedil;us
+            </div>
+            <div class="intro-cards">
+              <div class="intro-card">
+                <div class="intro-card-name">Opti&rsquo;Profit</div>
+                <div class="intro-card-role">Aide &agrave; la d&eacute;cision</div>
+              </div>
+              <div class="intro-card">
+                <div class="intro-card-name">PANUM</div>
+                <div class="intro-card-role">Pilotage de la performance</div>
+              </div>
+              <div class="intro-card">
+                <div class="intro-card-name">Brief&rsquo;Maker</div>
+                <div class="intro-card-role">Coordination quotidienne</div>
+              </div>
+              <div class="intro-card">
+                <div class="intro-card-name">Planning</div>
+                <div class="intro-card-role">Optimisation RH</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="intro-beat" data-beat="5">
+            <div class="intro-line intro-line-1">3 plateformes en ligne</div>
+            <div class="intro-chips">
+              <span class="intro-chip">PANUM</span>
+              <span class="intro-chip">KuT</span>
+              <span class="intro-chip">L&rsquo;Ortabels</span>
+            </div>
+            <div class="intro-foot">
+              Con&ccedil;ues, structur&eacute;es et mises en ligne &middot;
+              d&eacute;veloppement continu
+            </div>
+          </div>
+
+          <div class="intro-beat" data-beat="6">
+            <div class="intro-signature">
+              Structurer sans alourdir.<br />
+              <em>Outiller sans compliquer.</em>
+            </div>
+            <div class="intro-name-small">
+              J&eacute;r&eacute;my Ribes &mdash; le CV commence ici
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="intro-flash"></div>
+      <div class="intro-progress"><span></span></div>
+      <button
+        type="button"
+        class="intro-skip"
+        data-intro-skip
+        aria-label="Passer l&rsquo;introduction anim&eacute;e"
+      >
+        Passer
+      </button>
+    </div>
     <noscript>
       <article
         lang="fr"
