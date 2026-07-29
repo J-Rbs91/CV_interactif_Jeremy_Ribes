@@ -8,7 +8,7 @@
 
   var STORAGE_KEY = "cv-intro-played";
   var TOTAL_DURATION = 7900;
-  var COUNTER_START = 2300;
+  var COUNTER_START = 3000;
   var COUNTER_DURATION = 900;
   var FADE_OUT_DURATION = 420;
   var FONT_WAIT_LIMIT = 1200;

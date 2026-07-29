@@ -117,7 +117,7 @@
     <meta property="profile:first_name" content="J&eacute;r&eacute;my" />
     <meta property="profile:last_name" content="Ribes" />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
@@ -131,111 +131,184 @@
     <div class="app" id="app"></div>
 
     <div class="intro" data-intro>
-      <div class="intro-halo"></div>
-      <div class="intro-floor"></div>
+      <div class="intro-sheet">
+        <div class="intro-grid"></div>
+        <div class="intro-plate"></div>
+        <div class="intro-grain"></div>
+      </div>
+
+      <div class="intro-frame">
+        <span class="intro-frame-line is-top"></span>
+        <span class="intro-frame-line is-right"></span>
+        <span class="intro-frame-line is-bottom"></span>
+        <span class="intro-frame-line is-left"></span>
+        <span class="intro-mark is-tl"></span>
+        <span class="intro-mark is-tr"></span>
+        <span class="intro-mark is-bl"></span>
+        <span class="intro-mark is-br"></span>
+        <span class="intro-meta is-tl">Fiche de profil &mdash; J. Ribes</span>
+        <span class="intro-meta is-bl">&Eacute;chelle 1:1</span>
+        <span class="intro-index"
+          ><span>Planche 01/05</span><span>Planche 02/05</span
+          ><span>Planche 03/05</span><span>Planche 04/05</span
+          ><span>Planche 05/05</span></span
+        >
+        <span class="intro-progress"></span>
+      </div>
+
       <div class="intro-stage" aria-hidden="true">
         <div class="intro-camera">
-          <div class="intro-beat" data-beat="1">
-            <div class="intro-kicker">
-              Faits d&rsquo;armes &middot; s&eacute;quence d&rsquo;ouverture
+          <section class="intro-plan" data-plan="1">
+            <div class="plan-tag"><b>01</b> Identification <i></i></div>
+            <div class="plan-display id-name">
+              <span class="reveal"><span>J&eacute;r&eacute;my</span></span>
+              <span class="reveal"><span>Ribes</span></span>
             </div>
-            <div class="intro-title">J&eacute;r&eacute;my Ribes</div>
-            <div class="intro-sub">
-              Coordinateur de la performance commerciale
+            <div class="id-rule"></div>
+            <div class="id-foot">
+              <span class="plan-note">Coordinateur de la performance commerciale</span>
+              <span class="plan-note">Montferrier-sur-Lez &middot; H&eacute;rault</span>
             </div>
-          </div>
+          </section>
 
-          <div class="intro-beat" data-beat="2">
-            <div class="intro-line intro-line-1">13 ans sur le terrain.</div>
-            <div class="intro-line intro-line-2">
-              Puis j&rsquo;ai outill&eacute; le terrain.
+          <section class="intro-plan" data-plan="2">
+            <div class="plan-tag"><b>02</b> Nature du profil <i></i></div>
+            <div class="hybrid">
+              <div class="hybrid-col is-left">
+                <div class="hybrid-num">13 ans</div>
+                <div class="hybrid-word">Terrain</div>
+                <div class="hybrid-sub plan-note">
+                  Vente &middot; management &middot; back-office
+                </div>
+              </div>
+              <div class="hybrid-axis"><i></i><b>&times;</b></div>
+              <div class="hybrid-col is-right">
+                <div class="hybrid-num">7 outils</div>
+                <div class="hybrid-word">Con&ccedil;us</div>
+                <div class="hybrid-sub plan-note">
+                  Donn&eacute;es &middot; produit &middot; mise en ligne
+                </div>
+              </div>
             </div>
-            <div class="intro-foot">
-              Vente &middot; management &middot; back-office &middot;
-              organisation
+            <div class="hybrid-claim">
+              <div class="plan-claim">
+                Interface entre la direction qui d&eacute;cide et le terrain qui
+                <em>ex&eacute;cute.</em>
+              </div>
+              <div class="plan-note">
+                Profil hybride &mdash; les deux, jamais l&rsquo;un sans l&rsquo;autre
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div class="intro-beat" data-beat="3">
-            <div class="intro-stats">
-              <div class="intro-stat">
+          <section class="intro-plan" data-plan="3">
+            <div class="plan-tag"><b>03</b> R&eacute;sultat mesur&eacute; <i></i></div>
+            <div class="proof">
+              <div class="proof-main">
                 <span
-                  class="intro-stat-value"
+                  class="proof-value"
                   data-count-to="83"
                   data-count-prefix="+"
-                  data-count-suffix="&nbsp;%"
-                  >+83&nbsp;%</span
+                  data-count-suffix="&#8239;%"
+                  >+83&#8239;%</span
                 >
-                <span class="intro-stat-label">de chiffre d&rsquo;affaires</span>
+                <span class="proof-unit plan-note">de chiffre d&rsquo;affaires</span>
               </div>
-              <div class="intro-stat">
-                <span
-                  class="intro-stat-value"
-                  data-count-to="5.6"
-                  data-count-decimals="1"
-                  data-count-prefix="+"
-                  data-count-suffix="&nbsp;pts"
-                  >+5,6&nbsp;pts</span
+              <div class="proof-side">
+                <div class="proof-second">+5,6 <em>pts</em></div>
+                <div class="proof-label plan-note">de marge</div>
+              </div>
+            </div>
+            <div class="dim"><i></i><b>2 mois</b></div>
+            <div class="proof-foot plan-note">
+              Magasin en perte de vitesse &middot; redressement pilot&eacute; &middot;
+              G&eacute;n&eacute;rale d&rsquo;Optique
+            </div>
+          </section>
+
+          <section class="intro-plan" data-plan="4">
+            <div class="plan-tag"><b>04</b> Ce que je livre <i></i></div>
+            <div class="sys">
+              <span class="sys-spine"></span>
+              <div class="sys-row">
+                <span class="sys-n">01</span>
+                <span class="sys-name">Opti&rsquo;Profit</span>
+                <span class="sys-role">Aide &agrave; la d&eacute;cision commerciale</span>
+              </div>
+              <div class="sys-row">
+                <span class="sys-n">02</span>
+                <span class="sys-name">PANUM</span>
+                <span class="sys-role">Pilotage de la performance</span>
+              </div>
+              <div class="sys-row">
+                <span class="sys-n">03</span>
+                <span class="sys-name">Brief&rsquo;Maker</span>
+                <span class="sys-role">Coordination quotidienne</span>
+              </div>
+              <div class="sys-row">
+                <span class="sys-n">04</span>
+                <span class="sys-name">Planning</span>
+                <span class="sys-role">Optimisation des effectifs</span>
+              </div>
+              <div class="sys-foot">
+                <strong>3 plateformes en ligne</strong>
+                <span class="plan-note"
+                  >PANUM &middot; KuT &middot; L&rsquo;Ortabels &mdash;
+                  d&eacute;veloppement continu</span
                 >
-                <span class="intro-stat-label">de marge</span>
               </div>
             </div>
-            <div class="intro-stamp">en 2 mois</div>
-            <div class="intro-foot">
-              Magasin en perte de vitesse &middot; redressement pilot&eacute;
-            </div>
-          </div>
+          </section>
 
-          <div class="intro-beat" data-beat="4">
-            <div class="intro-line intro-line-1">
-              4 outils m&eacute;tiers con&ccedil;us
+          <section class="intro-plan" data-plan="5">
+            <div class="plan-tag"><b>05</b> Sommaire du dossier <i></i></div>
+            <ol class="toc">
+              <li>
+                <span class="toc-n">01</span><span class="toc-t">Profil</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">Positionnement &amp; m&eacute;thode</span>
+              </li>
+              <li>
+                <span class="toc-n">02</span><span class="toc-t">Comp&eacute;tences</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">7 domaines cl&eacute;s</span>
+              </li>
+              <li>
+                <span class="toc-n">03</span><span class="toc-t">R&eacute;alisations</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">Le d&eacute;tail des chiffres</span>
+              </li>
+              <li>
+                <span class="toc-n">04</span><span class="toc-t">Outils</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">4 dispositifs d&eacute;taill&eacute;s</span>
+              </li>
+              <li>
+                <span class="toc-n">05</span><span class="toc-t">Exp&eacute;riences</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">13 ans &middot; 3 enseignes</span>
+              </li>
+              <li>
+                <span class="toc-n">06</span><span class="toc-t">Projets</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">KuT &middot; L&rsquo;Ortabels &middot; Renta Menu</span>
+              </li>
+              <li>
+                <span class="toc-n">07</span><span class="toc-t">Formation</span>
+                <span class="toc-d"></span>
+                <span class="toc-s">Apprentissage continu</span>
+              </li>
+            </ol>
+            <div class="toc-cta">
+              <span class="plan-claim"
+                >Structurer sans alourdir. <em>Outiller sans compliquer.</em></span
+              >
+              <span class="plan-note">Le dossier commence ici &darr;</span>
             </div>
-            <div class="intro-cards">
-              <div class="intro-card">
-                <div class="intro-card-name">Opti&rsquo;Profit</div>
-                <div class="intro-card-role">Aide &agrave; la d&eacute;cision</div>
-              </div>
-              <div class="intro-card">
-                <div class="intro-card-name">PANUM</div>
-                <div class="intro-card-role">Pilotage de la performance</div>
-              </div>
-              <div class="intro-card">
-                <div class="intro-card-name">Brief&rsquo;Maker</div>
-                <div class="intro-card-role">Coordination quotidienne</div>
-              </div>
-              <div class="intro-card">
-                <div class="intro-card-name">Planning</div>
-                <div class="intro-card-role">Optimisation RH</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="intro-beat" data-beat="5">
-            <div class="intro-line intro-line-1">3 plateformes en ligne</div>
-            <div class="intro-chips">
-              <span class="intro-chip">PANUM</span>
-              <span class="intro-chip">KuT</span>
-              <span class="intro-chip">L&rsquo;Ortabels</span>
-            </div>
-            <div class="intro-foot">
-              Con&ccedil;ues, structur&eacute;es et mises en ligne &middot;
-              d&eacute;veloppement continu
-            </div>
-          </div>
-
-          <div class="intro-beat" data-beat="6">
-            <div class="intro-signature">
-              Structurer sans alourdir.<br />
-              <em>Outiller sans compliquer.</em>
-            </div>
-            <div class="intro-name-small">
-              J&eacute;r&eacute;my Ribes &mdash; le CV commence ici
-            </div>
-          </div>
+          </section>
         </div>
       </div>
-      <div class="intro-flash"></div>
-      <div class="intro-progress"><span></span></div>
+
       <button
         type="button"
         class="intro-skip"
