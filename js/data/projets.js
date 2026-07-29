@@ -13,22 +13,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Conception produit",
-        color: "var(--accent5)",
+        nature: "exploration",
         text: "Partir d'un besoin métier réel et le traduire en parcours, règles fonctionnelles et priorités claires.",
       },
       {
         title: "Pilotage transverse",
-        color: "var(--accent)",
+        nature: "coordination",
         text: "Coordonner les dimensions métier, fonctionnelles et organisationnelles d'un même projet.",
       },
       {
         title: "Priorisation",
-        color: "var(--accent3)",
+        nature: "decision",
         text: "Arbitrer les évolutions et faire progresser une solution complète par étapes maîtrisées.",
       },
       {
         title: "Vision d'ensemble",
-        color: "var(--accent2)",
+        nature: "structure",
         text: "Relier les enjeux opérationnels, commerciaux et réglementaires jusqu'à l'usage terrain.",
       },
     ],
@@ -46,22 +46,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Architecture de gestion",
-        color: "var(--accent5)",
+        nature: "structure",
         text: "Même logique qu'un back-office structuré : séquencer, planifier, rendre visible et coordonner.",
       },
       {
         title: "Modèles prédictifs",
-        color: "var(--accent)",
+        nature: "decision",
         text: "Analyse de données pour anticiper les besoins et piloter avec davantage de fiabilité.",
       },
       {
         title: "Outils terrain",
-        color: "var(--accent2)",
+        nature: "exploration",
         text: "Concevoir des outils à partir des usages réels pour qu'ils soient compris, adoptés et réellement utiles.",
       },
       {
         title: "Coordination",
-        color: "var(--accent3)",
+        nature: "coordination",
         text: "Faire tenir ensemble plusieurs contraintes et plusieurs acteurs dans un cadre pilotable.",
       },
     ],
@@ -78,22 +78,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Ingénierie de la donnée",
-        color: "var(--accent)",
+        nature: "decision",
         text: "Traduire des flux de données hétérogènes en indicateurs de performance immédiatement actionnables.",
       },
       {
         title: "Automatisation & Pilotage",
-        color: "var(--accent2)",
+        nature: "structure",
         text: "Transformer des processus manuels chronophages en systèmes automatisés sous Google Apps Script.",
       },
       {
         title: "Optimisation de la rentabilité",
-        color: "var(--accent3)",
+        nature: "performance",
         text: "Identifier les leviers de profitabilité pour sécuriser la marge sans dégrader la compétitivité commerciale.",
       },
       {
         title: "Interface opérationnelle",
-        color: "var(--accent5)",
+        nature: "coordination",
         text: "Créer des outils numériques agiles pensés pour l'usage terrain et les exigences de pilotage de la direction.",
       },
     ],

@@ -1,5 +1,5 @@
 import { competences } from "../data/competences.js";
-import { renderAccentTags } from "./renderUtils.js";
+import { natureClass, renderAccentTags } from "./renderUtils.js";
 
 function renderCompetenceCard(competence, expandedCompetenceId) {
   const isExpanded = expandedCompetenceId === competence.id;
@@ -7,7 +7,7 @@ function renderCompetenceCard(competence, expandedCompetenceId) {
   const buttonId = `competence-toggle-${competence.id}`;
 
   return `
-    <article class="comp-card ${isExpanded ? "is-open" : ""}" style="--comp-accent:${competence.color}">
+    <article class="comp-card ${natureClass(competence.nature)} ${isExpanded ? "is-open" : ""}">
       <button
         type="button"
         id="${buttonId}"
@@ -17,9 +17,9 @@ function renderCompetenceCard(competence, expandedCompetenceId) {
         aria-controls="${panelId}"
       >
         <span class="comp-toggle-main">
-          <span class="comp-title" style="color:${competence.color}">${competence.title}</span>
+          <span class="comp-title">${competence.title}</span>
           <span class="comp-desc">${competence.summary}</span>
-          ${renderAccentTags(competence.tags, competence.color)}
+          ${renderAccentTags(competence.tags)}
         </span>
         <span class="comp-toggle-icon" aria-hidden="true"></span>
       </button>

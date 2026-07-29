@@ -1,29 +1,153 @@
+/* =========================================================================
+   CHARTE COLORIMÉTRIQUE — CV Jérémy Ribes
+   -------------------------------------------------------------------------
+   Principe : la couleur ne décore pas, elle classe.
+   Chaque élément du CV porte la couleur de sa NATURE D'ACTIVITÉ.
+
+   5 natures (les 5 verbes du parcours) :
+     structure     bleu ardoise  · organiser, cadrer, écrire les process
+     decision      ambre         · outiller, calculer, éclairer un choix
+     performance   émeraude      · le résultat mesuré (CA, marge, KPI)
+     coordination  corail        · l'humain : interface, adhésion, équipe
+     exploration   indigo        · ce qui est construit hors mandat
+
+   2 neutres de hiérarchie :
+     graphite      encre         · l'identité, la voix (Profil)
+     socle         gris-ardoise  · le prérequis, volontairement en retrait
+
+   Règle de rareté : l'émeraude est réservée à la preuve chiffrée.
+   Plus une couleur est rare, plus elle pèse.
+
+   3 intensités par nature :
+     -ink   texte      (contraste ≥ 4.5:1 sur blanc — WCAG AA)
+     -mark  pastille, filet, puce
+     -surf  aplat 10 %
+     -line  bordure
+   ========================================================================= */
+
 :root {
+  /* --- Surfaces & neutres --------------------------------------------- */
   --bg: #f4f7fb;
   --bg2: #fbfdff;
   --card: rgba(255, 255, 255, 0.88);
   --card-hover: #ffffff;
   --border: rgba(15, 23, 42, 0.08);
   --border-strong: rgba(15, 23, 42, 0.12);
-  --border-active: #4f7cff;
   --text: #172033;
   --text-dim: #52607a;
-  --text-muted: #7d8aa5;
-  --accent: #2563eb;
-  --accent2: #0f9f8c;
-  --accent3: #c77d1f;
-  --accent4: #d14f72;
-  --accent5: #6470f5;
-  --green-bg: rgba(15, 159, 140, 0.1);
-  --blue-bg: rgba(37, 99, 235, 0.1);
-  --orange-bg: rgba(199, 125, 31, 0.1);
-  --red-bg: rgba(209, 79, 114, 0.1);
-  --purple-bg: rgba(100, 112, 245, 0.1);
+  --text-muted: #63708b; /* remonté de #7d8aa5 : 3.47:1 → 4.98:1 */
+
+  /* --- Nature : STRUCTURE — organiser, cadrer ------------------------- */
+  --structure-ink: #1a4e8f;
+  --structure-mark: #2e6fd4;
+  --structure-surf: rgba(46, 111, 212, 0.1);
+  --structure-line: rgba(46, 111, 212, 0.24);
+
+  /* --- Nature : DÉCISION — outiller, éclairer un choix ---------------- */
+  --decision-ink: #8f5300;
+  --decision-mark: #c07c12;
+  --decision-surf: rgba(192, 124, 18, 0.12);
+  --decision-line: rgba(192, 124, 18, 0.26);
+
+  /* --- Nature : PERFORMANCE — la preuve chiffrée ---------------------- */
+  --performance-ink: #0b6e5a;
+  --performance-mark: #0e8a72;
+  --performance-surf: rgba(14, 138, 114, 0.1);
+  --performance-line: rgba(14, 138, 114, 0.24);
+
+  /* --- Nature : COORDINATION — l'humain, le terrain ------------------- */
+  --coordination-ink: #ad3651;
+  --coordination-mark: #d2506e;
+  --coordination-surf: rgba(210, 80, 110, 0.1);
+  --coordination-line: rgba(210, 80, 110, 0.24);
+
+  /* --- Nature : EXPLORATION — ce qui est construit à côté ------------- */
+  --exploration-ink: #5442c4;
+  --exploration-mark: #6e5cea;
+  --exploration-surf: rgba(110, 92, 234, 0.1);
+  --exploration-line: rgba(110, 92, 234, 0.24);
+
+  /* --- Neutre : GRAPHITE — l'identité, la voix ------------------------ */
+  --graphite-ink: #2e3a55;
+  --graphite-mark: #46557a;
+  --graphite-surf: rgba(70, 85, 122, 0.09);
+  --graphite-line: rgba(70, 85, 122, 0.2);
+
+  /* --- Neutre : SOCLE — le prérequis, en retrait ---------------------- */
+  --socle-ink: #5a6880;
+  --socle-mark: #8695ac;
+  --socle-surf: rgba(134, 149, 172, 0.12);
+  --socle-line: rgba(134, 149, 172, 0.26);
+
+  /* --- Nature par défaut (héritée si aucune n'est posée) --------------- */
+  --n-ink: var(--graphite-ink);
+  --n-mark: var(--graphite-mark);
+  --n-surf: var(--graphite-surf);
+  --n-line: var(--graphite-line);
+
+  /* --- Timeline : l'intensité encode la récence ----------------------- */
+  --recency-now: var(--coordination-mark);
+  --recency-recent: var(--graphite-mark);
+  --recency-past: var(--socle-mark);
+
+  /* --- Élévation & rayons --------------------------------------------- */
   --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.1);
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-sm: 14px;
+}
+
+/* Porteurs de nature : une classe pose les 4 intensités d'un coup.
+   Tout composant consomme ensuite --n-ink / --n-mark / --n-surf / --n-line
+   sans jamais connaître la couleur qu'il porte. */
+.n-structure {
+  --n-ink: var(--structure-ink);
+  --n-mark: var(--structure-mark);
+  --n-surf: var(--structure-surf);
+  --n-line: var(--structure-line);
+}
+
+.n-decision {
+  --n-ink: var(--decision-ink);
+  --n-mark: var(--decision-mark);
+  --n-surf: var(--decision-surf);
+  --n-line: var(--decision-line);
+}
+
+.n-performance {
+  --n-ink: var(--performance-ink);
+  --n-mark: var(--performance-mark);
+  --n-surf: var(--performance-surf);
+  --n-line: var(--performance-line);
+}
+
+.n-coordination {
+  --n-ink: var(--coordination-ink);
+  --n-mark: var(--coordination-mark);
+  --n-surf: var(--coordination-surf);
+  --n-line: var(--coordination-line);
+}
+
+.n-exploration {
+  --n-ink: var(--exploration-ink);
+  --n-mark: var(--exploration-mark);
+  --n-surf: var(--exploration-surf);
+  --n-line: var(--exploration-line);
+}
+
+.n-graphite {
+  --n-ink: var(--graphite-ink);
+  --n-mark: var(--graphite-mark);
+  --n-surf: var(--graphite-surf);
+  --n-line: var(--graphite-line);
+}
+
+.n-socle {
+  --n-ink: var(--socle-ink);
+  --n-mark: var(--socle-mark);
+  --n-surf: var(--socle-surf);
+  --n-line: var(--socle-line);
 }
 
 * {
@@ -36,9 +160,19 @@ html,
 body {
   min-height: 100vh;
   width: 100%;
+  /* Le fond rejoue les deux pôles du parcours : structurer (haut gauche),
+     prouver (haut droite). Volontairement au seuil du perceptible. */
   background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 159, 140, 0.08), transparent 24%),
+    radial-gradient(
+      circle at top left,
+      rgba(46, 111, 212, 0.07),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(14, 138, 114, 0.06),
+      transparent 24%
+    ),
     linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
   color: var(--text);
   font-family: "Manrope", sans-serif;

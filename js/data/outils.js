@@ -3,7 +3,7 @@ export const outils = [
     id: "optiprofit",
     title: "Opti'Profit",
     category: "Aide à la décision commerciale",
-    accent: "var(--accent3)",
+    nature: "decision",
     status: "Déployé en situation réelle",
     chips: ["Google Apps Script", "Rentabilité", "Temps réel"],
     summary:
@@ -19,7 +19,7 @@ export const outils = [
     id: "panum",
     title: "PANUM",
     category: "Suivi commercial & pilotage de la performance",
-    accent: "var(--accent5)",
+    nature: "performance",
     status: "Développement & déploiement en cours",
     chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
     link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
@@ -36,7 +36,7 @@ export const outils = [
     id: "briefmaker",
     title: "Brief'Maker",
     category: "Support connecté d'organisation quotidienne",
-    accent: "var(--accent2)",
+    nature: "coordination",
     status: "Conçu pour le pilotage quotidien",
     chips: ["Coordination", "Back-office", "Priorisation", "Google"],
     summary:
@@ -52,7 +52,7 @@ export const outils = [
     id: "planning",
     title: "Gestionnaire de Planning",
     category: "Optimisation RH",
-    accent: "var(--accent4)",
+    nature: "structure",
     status: "Outil d'optimisation organisationnelle",
     chips: ["Planification", "Ressources", "Flux client"],
     summary:
