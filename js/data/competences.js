@@ -4,7 +4,7 @@ export const competences = [
     title: "Pilotage commercial",
     summary:
       "Développer le flux clients tout en sécurisant la rentabilité de chaque vente.",
-    nature: "performance",
+    nature: "produit",
     tags: ["Flux clients", "Rentabilité", "Avis Google"],
     enjeu:
       "Relancer une activité commerciale dans un magasin en perte de vitesse sans sacrifier la rentabilité.",
@@ -20,7 +20,7 @@ export const competences = [
     title: "Organisation & méthodes",
     summary:
       "Mettre en place des processus de travail clairs pour rendre l’activité plus lisible et réduire les pertes de temps.",
-    nature: "structure",
+    nature: "cadre",
     tags: ["Processus", "Back-office", "Temps"],
     enjeu:
       "Réduire les pertes de temps, les flottements d’organisation et les zones d’incertitude dans le fonctionnement quotidien.",
@@ -36,7 +36,7 @@ export const competences = [
     title: "Outils d'aide à la décision",
     summary:
       "Créer des outils simples pour fiabiliser les choix de l’équipe et accélérer la bonne décision.",
-    nature: "decision",
+    nature: "produit",
     tags: ["GAS", "Automatisation", "Mix produit"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de multiples contraintes métier.",
@@ -52,7 +52,7 @@ export const competences = [
     title: "Interface & coordination",
     summary:
       "Faire le lien entre direction, contraintes opérationnelles et réalité du terrain.",
-    nature: "coordination",
+    nature: "cadre",
     tags: ["Direction", "Terrain", "Alignement"],
     enjeu:
       "Aligner des objectifs de performance avec les contraintes réelles du quotidien sans créer de rupture entre pilotage et terrain.",
@@ -68,7 +68,7 @@ export const competences = [
     title: "Management par l'utilité",
     summary:
       "Faire adhérer au changement en démontrant l’intérêt immédiat des outils et des méthodes.",
-    nature: "coordination",
+    nature: "cadre",
     tags: ["Adhésion", "Changement", "Utilité"],
     enjeu:
       "Faire adopter des méthodes et des outils dans des environnements où tout ce qui ajoute de la complexité est spontanément rejeté.",
@@ -84,7 +84,7 @@ export const competences = [
     title: "Suivi & reporting",
     summary:
       "Rendre visibles les indicateurs qui aident réellement à décider et à agir.",
-    nature: "decision",
+    nature: "produit",
     tags: ["KPI", "Concrétisation", "Délais"],
     enjeu:
       "Passer d’un reporting descriptif à un reporting utile pour comprendre les causes de la sous-performance et agir au bon endroit.",
@@ -100,7 +100,7 @@ export const competences = [
     title: "Cadrage & sécurisation des décisions",
     summary:
       "Transformation de contraintes métier, réglementaires et techniques en règles explicites, priorisées, testables et directement exploitables par les équipes.",
-    nature: "structure",
+    nature: "cadre",
     tags: ["Cadrage", "Priorisation", "Critères de validation"],
     enjeu:
       "Transformer des pratiques implicites ou dispersées en process écrits, structurés et réellement utilisés par le terrain.",

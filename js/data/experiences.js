@@ -8,27 +8,27 @@ export const realisations = {
     {
       icon: "trending-up",
       text: "Déploiement d'une politique commerciale offensive et développement du trafic par actions locales ciblées, optimisation du référencement local et valorisation des avis Google (Uberall/Yext).",
-      nature: "performance",
+      nature: "produit",
     },
     {
       icon: "wrench",
       text: "Création d'un outil d'aide à la décision (Google Apps Script) identifiant en temps réel le meilleur mix produit selon les contraintes métier et le budget client.",
-      nature: "decision",
+      nature: "produit",
     },
     {
       icon: "coins",
       text: "Sécurisation de la marge, suppression des ressaisies administratives chronophages et fluidification du parcours client.",
-      nature: "performance",
+      nature: "produit",
     },
     {
       icon: "clipboard",
       text: "Système de suivi automatisé des devis, améliorant la concrétisation, les délais et la coordination entre collaborateurs.",
-      nature: "decision",
+      nature: "produit",
     },
     {
       icon: "calendar",
       text: "Outil de planning permettant d'adapter les effectifs aux besoins réels et de résoudre les tensions organisationnelles.",
-      nature: "structure",
+      nature: "produit",
     },
   ],
 };
@@ -60,8 +60,8 @@ export const experiences = [
       "Contribution à l'amélioration de l'organisation, de la lisibilité de l'activité et du pilotage.",
     ],
     tags: [
-      { label: "+83% CA", nature: "performance" },
-      { label: "+5,6 pts marge", nature: "performance" },
+      { label: "+83% CA", nature: "preuve" },
+      { label: "+5,6 pts marge", nature: "preuve" },
     ],
   },
   {

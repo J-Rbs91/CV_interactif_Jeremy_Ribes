@@ -1,96 +1,87 @@
 /* =========================================================================
    CHARTE COLORIMÉTRIQUE — CV Jérémy Ribes
    -------------------------------------------------------------------------
-   Principe : la couleur ne décore pas, elle classe.
-   Chaque élément du CV porte la couleur de sa NATURE D'ACTIVITÉ.
+   Deux couleurs porteuses et un accent. Rien d'autre.
+   Un système qui a besoin de sa notice pour être lu a raté : celui-ci
+   s'énonce en une phrase.
 
-   5 natures (les 5 verbes du parcours) :
-     structure     bleu ardoise  · organiser, cadrer, écrire les process
-     decision      ambre         · outiller, calculer, éclairer un choix
-     performance   émeraude      · le résultat mesuré (CA, marge, KPI)
-     coordination  corail        · l'humain : interface, adhésion, équipe
-     exploration   indigo        · ce qui est construit hors mandat
+     ENCRE   bleu profond   · ce qui CADRE
+                              identité, titres, structure, process
+     FORÊT   vert profond   · ce qui PRODUIT
+                              compétences, outils, projets, coordination
+     FLAMME  orange         · ce qui PROUVE
+                              les chiffres et les produits en ligne
 
-   2 neutres de hiérarchie :
-     graphite      encre         · l'identité, la voix (Profil)
-     socle         gris-ardoise  · le prérequis, volontairement en retrait
+   La hiérarchie ne vient pas de la teinte mais de la NUANCE : chaque
+   couleur a sa gamme (900 → 50), du texte le plus dense au filet le plus
+   ténu. Deux teintes, beaucoup de niveaux.
 
-   Règle de rareté : l'émeraude est réservée à la preuve chiffrée.
-   Plus une couleur est rare, plus elle pèse.
+   Règle de rareté : la flamme n'apparaît que sur la preuve. Sur une page,
+   trois taches d'orange au maximum. C'est ce qui leur donne leur poids.
 
-   3 intensités par nature :
-     -ink   texte      (contraste ≥ 4.5:1 sur blanc — WCAG AA)
-     -mark  pastille, filet, puce
-     -surf  aplat 10 %
-     -line  bordure
+   Vocabulaire des données : chaque contenu déclare `nature: "cadre"`,
+   "produit", "preuve" ou "socle". Le rendu pose la classe .n-<nature>, qui
+   définit --n-ink / --n-mark / --n-surf / --n-line. Les composants
+   consomment ces variables sans jamais connaître la couleur qu'ils portent.
+
+   Tous les tons employés en texte passent WCAG AA (≥ 4.5:1 sur blanc).
    ========================================================================= */
 
 :root {
-  /* --- Surfaces & neutres --------------------------------------------- */
-  --bg: #f4f7fb;
+  /* --- ENCRE — ce qui cadre -------------------------------------------- */
+  --ink-900: #0c2740;
+  --ink-800: #123553;
+  --ink-700: #1a4874;
+  --ink-600: #255e92;
+  --ink-500: #3d7bae;
+  --ink-300: #8fb2ce;
+  --ink-200: #c2d6e6;
+  --ink-100: #dee9f2;
+  --ink-50: #f1f6fa;
+
+  /* --- FORÊT — ce qui produit ------------------------------------------ */
+  --forest-900: #0b3527;
+  --forest-800: #0f4634;
+  --forest-700: #155e45;
+  --forest-600: #1c7756;
+  --forest-500: #2e9670;
+  --forest-300: #84c3ab;
+  --forest-200: #bcded0;
+  --forest-100: #dbede5;
+  --forest-50: #f0f8f4;
+
+  /* --- FLAMME — ce qui prouve (rare) ----------------------------------- */
+  --flame-700: #9c3a06;
+  --flame-600: #bf4a08;
+  --flame-500: #de5e0e;
+  --flame-400: #f07a22;
+  --flame-200: #f8c9a8;
+  --flame-100: #fce4d4;
+  --flame-50: #fef3ea;
+
+  /* --- Texte & surfaces (dérivés de l'encre) --------------------------- */
+  --text: #0c2740;
+  --text-dim: #455c72;
+  --text-muted: #5d7186;
+  --bg: #f2f6fa;
   --bg2: #fbfdff;
   --card: rgba(255, 255, 255, 0.88);
   --card-hover: #ffffff;
-  --border: rgba(15, 23, 42, 0.08);
-  --border-strong: rgba(15, 23, 42, 0.12);
-  --text: #172033;
-  --text-dim: #52607a;
-  --text-muted: #63708b; /* remonté de #7d8aa5 : 3.47:1 → 4.98:1 */
+  --border: rgba(12, 39, 64, 0.1);
+  --border-strong: rgba(12, 39, 64, 0.16);
 
-  /* --- Nature : STRUCTURE — organiser, cadrer ------------------------- */
-  --structure-ink: #1a4e8f;
-  --structure-mark: #2e6fd4;
-  --structure-surf: rgba(46, 111, 212, 0.1);
-  --structure-line: rgba(46, 111, 212, 0.24);
+  /* --- Rôle par défaut (hérité si aucun n'est posé) --------------------- */
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
 
-  /* --- Nature : DÉCISION — outiller, éclairer un choix ---------------- */
-  --decision-ink: #8f5300;
-  --decision-mark: #c07c12;
-  --decision-surf: rgba(192, 124, 18, 0.12);
-  --decision-line: rgba(192, 124, 18, 0.26);
+  /* --- Timeline : la récence se lit en nuance, pas en teinte ------------ */
+  --recency-now: var(--ink-700);
+  --recency-recent: var(--ink-500);
+  --recency-past: var(--ink-300);
 
-  /* --- Nature : PERFORMANCE — la preuve chiffrée ---------------------- */
-  --performance-ink: #0b6e5a;
-  --performance-mark: #0e8a72;
-  --performance-surf: rgba(14, 138, 114, 0.1);
-  --performance-line: rgba(14, 138, 114, 0.24);
-
-  /* --- Nature : COORDINATION — l'humain, le terrain ------------------- */
-  --coordination-ink: #ad3651;
-  --coordination-mark: #d2506e;
-  --coordination-surf: rgba(210, 80, 110, 0.1);
-  --coordination-line: rgba(210, 80, 110, 0.24);
-
-  /* --- Nature : EXPLORATION — ce qui est construit à côté ------------- */
-  --exploration-ink: #5442c4;
-  --exploration-mark: #6e5cea;
-  --exploration-surf: rgba(110, 92, 234, 0.1);
-  --exploration-line: rgba(110, 92, 234, 0.24);
-
-  /* --- Neutre : GRAPHITE — l'identité, la voix ------------------------ */
-  --graphite-ink: #2e3a55;
-  --graphite-mark: #46557a;
-  --graphite-surf: rgba(70, 85, 122, 0.09);
-  --graphite-line: rgba(70, 85, 122, 0.2);
-
-  /* --- Neutre : SOCLE — le prérequis, en retrait ---------------------- */
-  --socle-ink: #5a6880;
-  --socle-mark: #8695ac;
-  --socle-surf: rgba(134, 149, 172, 0.12);
-  --socle-line: rgba(134, 149, 172, 0.26);
-
-  /* --- Nature par défaut (héritée si aucune n'est posée) --------------- */
-  --n-ink: var(--graphite-ink);
-  --n-mark: var(--graphite-mark);
-  --n-surf: var(--graphite-surf);
-  --n-line: var(--graphite-line);
-
-  /* --- Timeline : l'intensité encode la récence ----------------------- */
-  --recency-now: var(--coordination-mark);
-  --recency-recent: var(--graphite-mark);
-  --recency-past: var(--socle-mark);
-
-  /* --- Échelle typographique ------------------------------------------ */
+  /* --- Échelle typographique ------------------------------------------- */
   --fs-display: 28px;
   --fs-lead: 18px;
   --fs-title: 16px;
@@ -99,70 +90,49 @@
   --fs-xs: 13px;
   --fs-label: 11px;
 
-  /* --- Rythme : l'espace encode le lien logique ------------------------ */
-  --space-1: 8px; /* éléments d'un même bloc */
-  --space-2: 16px; /* blocs d'un même groupe */
-  --space-3: 24px; /* changement de groupe */
-  --space-4: 32px; /* changement de propos */
+  /* --- Rythme : l'espace encode le lien logique ------------------------- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
 
-  /* --- Élévation & rayons --------------------------------------------- */
-  --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.1);
+  /* --- Élévation & rayons ---------------------------------------------- */
+  --shadow-sm: 0 10px 30px rgba(12, 39, 64, 0.06);
+  --shadow-md: 0 18px 45px rgba(12, 39, 64, 0.1);
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-sm: 14px;
 }
 
-/* Porteurs de nature : une classe pose les 4 intensités d'un coup.
-   Tout composant consomme ensuite --n-ink / --n-mark / --n-surf / --n-line
-   sans jamais connaître la couleur qu'il porte. */
-.n-structure {
-  --n-ink: var(--structure-ink);
-  --n-mark: var(--structure-mark);
-  --n-surf: var(--structure-surf);
-  --n-line: var(--structure-line);
+/* Les trois familles, plus le retrait. */
+.n-cadre {
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
 }
 
-.n-decision {
-  --n-ink: var(--decision-ink);
-  --n-mark: var(--decision-mark);
-  --n-surf: var(--decision-surf);
-  --n-line: var(--decision-line);
+.n-produit {
+  --n-ink: var(--forest-700);
+  --n-mark: var(--forest-600);
+  --n-surf: var(--forest-50);
+  --n-line: var(--forest-200);
 }
 
-.n-performance {
-  --n-ink: var(--performance-ink);
-  --n-mark: var(--performance-mark);
-  --n-surf: var(--performance-surf);
-  --n-line: var(--performance-line);
+.n-preuve {
+  --n-ink: var(--flame-700);
+  --n-mark: var(--flame-600);
+  --n-surf: var(--flame-50);
+  --n-line: var(--flame-200);
 }
 
-.n-coordination {
-  --n-ink: var(--coordination-ink);
-  --n-mark: var(--coordination-mark);
-  --n-surf: var(--coordination-surf);
-  --n-line: var(--coordination-line);
-}
-
-.n-exploration {
-  --n-ink: var(--exploration-ink);
-  --n-mark: var(--exploration-mark);
-  --n-surf: var(--exploration-surf);
-  --n-line: var(--exploration-line);
-}
-
-.n-graphite {
-  --n-ink: var(--graphite-ink);
-  --n-mark: var(--graphite-mark);
-  --n-surf: var(--graphite-surf);
-  --n-line: var(--graphite-line);
-}
-
+/* Le socle : même encre, une nuance en retrait. La Formation ne doit pas
+   peser autant que ce qui a été construit. */
 .n-socle {
-  --n-ink: var(--socle-ink);
-  --n-mark: var(--socle-mark);
-  --n-surf: var(--socle-surf);
-  --n-line: var(--socle-line);
+  --n-ink: var(--text-muted);
+  --n-mark: var(--ink-300);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-100);
 }
 
 .icon {
@@ -182,20 +152,20 @@ html,
 body {
   min-height: 100vh;
   width: 100%;
-  /* Le fond rejoue les deux pôles du parcours : structurer (haut gauche),
-     prouver (haut droite). Volontairement au seuil du perceptible. */
+  /* Les deux porteuses, au seuil du perceptible : encre à gauche,
+     forêt à droite. */
   background:
     radial-gradient(
       circle at top left,
-      rgba(46, 111, 212, 0.07),
-      transparent 28%
+      rgba(26, 72, 116, 0.07),
+      transparent 30%
     ),
     radial-gradient(
       circle at top right,
-      rgba(14, 138, 114, 0.06),
-      transparent 24%
+      rgba(21, 94, 69, 0.06),
+      transparent 26%
     ),
-    linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    linear-gradient(180deg, #f8fbfd 0%, var(--bg) 100%);
   color: var(--text);
   font-family: "Manrope", sans-serif;
   font-size: 15px;

@@ -13,22 +13,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Conception produit",
-        nature: "exploration",
+        nature: "produit",
         text: "Partir d'un besoin métier réel et le traduire en parcours, règles fonctionnelles et priorités claires.",
       },
       {
         title: "Pilotage transverse",
-        nature: "coordination",
+        nature: "cadre",
         text: "Coordonner les dimensions métier, fonctionnelles et organisationnelles d'un même projet.",
       },
       {
         title: "Priorisation",
-        nature: "decision",
+        nature: "produit",
         text: "Arbitrer les évolutions et faire progresser une solution complète par étapes maîtrisées.",
       },
       {
         title: "Vision d'ensemble",
-        nature: "structure",
+        nature: "cadre",
         text: "Relier les enjeux opérationnels, commerciaux et réglementaires jusqu'à l'usage terrain.",
       },
     ],
@@ -46,22 +46,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Architecture de gestion",
-        nature: "structure",
+        nature: "cadre",
         text: "Même logique qu'un back-office structuré : séquencer, planifier, rendre visible et coordonner.",
       },
       {
         title: "Modèles prédictifs",
-        nature: "decision",
+        nature: "produit",
         text: "Analyse de données pour anticiper les besoins et piloter avec davantage de fiabilité.",
       },
       {
         title: "Outils terrain",
-        nature: "exploration",
+        nature: "produit",
         text: "Concevoir des outils à partir des usages réels pour qu'ils soient compris, adoptés et réellement utiles.",
       },
       {
         title: "Coordination",
-        nature: "coordination",
+        nature: "cadre",
         text: "Faire tenir ensemble plusieurs contraintes et plusieurs acteurs dans un cadre pilotable.",
       },
     ],
@@ -78,22 +78,22 @@ export const projetsTransverses = [
     transferableSkills: [
       {
         title: "Ingénierie de la donnée",
-        nature: "decision",
+        nature: "produit",
         text: "Traduire des flux de données hétérogènes en indicateurs de performance immédiatement actionnables.",
       },
       {
         title: "Automatisation & Pilotage",
-        nature: "structure",
+        nature: "cadre",
         text: "Transformer des processus manuels chronophages en systèmes automatisés sous Google Apps Script.",
       },
       {
         title: "Optimisation de la rentabilité",
-        nature: "performance",
+        nature: "produit",
         text: "Identifier les leviers de profitabilité pour sécuriser la marge sans dégrader la compétitivité commerciale.",
       },
       {
         title: "Interface opérationnelle",
-        nature: "coordination",
+        nature: "cadre",
         text: "Créer des outils numériques agiles pensés pour l'usage terrain et les exigences de pilotage de la direction.",
       },
     ],

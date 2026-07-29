@@ -2,7 +2,11 @@
    --n-ink / --n-mark / --n-surf / --n-line sans connaître la couleur portée.
    (charte détaillée en tête de css/base.css) */
 export function natureClass(nature) {
-  return `n-${nature ?? "graphite"}`;
+  return `n-${nature ?? "cadre"}`;
+}
+
+export function linkHost(url) {
+  return new URL(url).host.replace(/^www\./, "");
 }
 
 export function renderAccentTags(tags, options = {}) {

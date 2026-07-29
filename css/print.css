@@ -4,6 +4,10 @@
    Le SPA ne monte que la section active : imprimer #app perdrait les 7/8 du
    contenu. js/ui/print.js monte #print-view (document linéaire, tout déplié)
    au moment de l'impression et le retire ensuite.
+
+   Le papier n'est pas un écran rétréci. Ici : pas de cartes, pas de rayons,
+   pas de pastilles. Une colonne de libellés à gauche, la matière à droite,
+   des sections numérotées, et la flamme uniquement sur la preuve.
    ========================================================================= */
 
 #print-view {
@@ -12,7 +16,8 @@
 
 @media print {
   @page {
-    margin: 14mm 13mm;
+    size: A4;
+    margin: 16mm 15mm 15mm;
   }
 
   html,
@@ -21,8 +26,9 @@
     overflow: visible;
     padding: 0;
     background: #ffffff;
-    font-size: 10.5pt;
-    color: #000000;
+    color: var(--ink-900);
+    font-size: 9.5pt;
+    line-height: 1.45;
   }
 
   #app {
@@ -33,84 +39,162 @@
     display: block;
   }
 
-  /* Les filets de nature portent la hiérarchie : ils doivent survivre au
-     pilote d'impression, y compris en niveaux de gris. */
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    background-image: none !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
-    text-shadow: none !important;
+    border-radius: 0 !important;
   }
 
-  /* --- En-tête ---------------------------------------------------------- */
+  /* =====================================================================
+     BANDEAU — identité à gauche, preuve à droite
+     ===================================================================== */
   .print-head {
-    padding-bottom: 10pt;
-    margin-bottom: 14pt;
-    border-bottom: 1.5pt solid var(--graphite-ink);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    column-gap: 10mm;
+    padding-bottom: 3mm;
+    border-bottom: 2.5pt solid var(--ink-900);
   }
 
   .print-head h1 {
-    font-size: 22pt;
+    font-size: 25pt;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--ink-900);
   }
 
   .print-role {
-    margin-top: 2pt;
-    font-size: 9pt;
+    margin-top: 2.5mm;
+    font-size: 8.5pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--performance-ink);
+    letter-spacing: 0.18em;
+    color: var(--forest-700);
   }
 
   .print-role2 {
-    margin-top: 3pt;
-    font-size: 9.5pt;
+    margin-top: 1.5mm;
+    font-size: 9pt;
     font-weight: 600;
-    color: var(--text-dim);
+    color: var(--ink-600);
   }
 
   .print-facts {
-    margin-top: 5pt;
-    font-size: 9pt;
-    color: var(--text-dim);
+    margin-top: 1.5mm;
+    font-size: 8.5pt;
+    color: var(--text-muted);
+  }
+
+  .print-proof {
+    display: flex;
+    gap: 7mm;
+    padding-bottom: 1mm;
+  }
+
+  .print-proof-value {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17pt;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--n-ink);
+  }
+
+  .print-proof-label {
+    margin-top: 1mm;
+    font-size: 6.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  /* Les adresses en ligne : une seule fois, en tête, pas après chaque lien. */
+  .print-live {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding: 2mm 0;
+    border-bottom: 0.5pt solid var(--ink-200);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8pt;
+  }
+
+  .print-live-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  .print-live-item {
+    color: var(--flame-700);
+    font-weight: 500;
+  }
+
+  .print-live-item + .print-live-item::before {
+    content: "·";
+    margin-right: 3mm;
+    color: var(--ink-300);
   }
 
   .print-intro {
-    margin-top: 8pt;
+    margin-top: 4mm;
     font-size: 10pt;
     line-height: 1.5;
+    color: var(--ink-800);
   }
 
-  /* --- Sections --------------------------------------------------------- */
+  /* =====================================================================
+     SECTIONS — numérotées, titre sur filet
+     ===================================================================== */
+  .print-doc {
+    counter-reset: print-section;
+  }
+
   .print-section {
-    margin-top: 16pt;
-    break-inside: auto;
+    margin-top: 8mm;
+    counter-increment: print-section;
   }
 
   .print-section-title {
-    font-size: 13pt;
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+    padding-bottom: 1.5mm;
+    margin-bottom: 3.5mm;
+    border-bottom: 1pt solid var(--ink-900);
+    font-size: 11pt;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    padding-bottom: 3pt;
-    margin-bottom: 8pt;
-    border-bottom: 1pt solid var(--n-mark);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-900);
     break-after: avoid;
+  }
+
+  .print-section-title::before {
+    content: counter(print-section, decimal-leading-zero);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9pt;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--n-mark);
   }
 
   .print-section-body {
     display: flex;
     flex-direction: column;
-    gap: 8pt;
+    gap: 3.5mm;
   }
 
-  .print-section-body > .project-card:not(:first-child) {
-    margin-top: 6pt;
-  }
-
-  /* --- Blocs : à plat. Le papier n'a pas besoin de cartes. --------------- */
+  /* =====================================================================
+     CORPS — grille libellé / matière. Aucune boîte.
+     ===================================================================== */
   .card,
   .card-sm,
   .comp-card,
@@ -121,68 +205,46 @@
   .punchline-box,
   .timeline-item,
   .detail-block {
-    background: #ffffff !important;
-    border-radius: 0;
+    background: transparent !important;
+    border: none;
+    padding: 0;
+    margin: 0;
     break-inside: avoid;
   }
 
-  .card,
-  .card-sm,
-  .punchline-box,
-  .formation-card {
-    border: none;
-    border-left: 2pt solid var(--n-mark);
-    padding: 1pt 0 1pt 8pt;
+  .card-title .dot,
+  .comp-toggle-icon,
+  .tool-toggle-icon,
+  .real-icon,
+  .timeline-item::before,
+  .timeline-item::after,
+  .stats-divider {
+    display: none !important;
   }
 
-  .punchline-box {
-    text-align: left;
+  /* La grille du document : libellé à gauche, matière à droite. */
+  .detail-block,
+  .card {
+    display: grid;
+    grid-template-columns: 30mm 1fr;
+    column-gap: 5mm;
+    align-items: baseline;
   }
 
-  .punchline-box p {
-    font-size: 10.5pt;
+  .detail-label,
+  .card .card-title {
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
   }
 
-  .comp-card,
-  .tool-card,
-  .real-card {
-    border: none;
-    border-left: 2pt solid var(--n-mark);
-    padding: 0 0 0 8pt;
-    margin-bottom: 4pt;
-  }
-
-  .comp-toggle,
-  .tool-summary {
-    padding: 0;
-    gap: 8pt;
-  }
-
-  .comp-details-inner,
-  .tool-details {
-    padding: 3pt 0 0;
-    border: none;
-    background: none !important;
-  }
-
-  .tool-detail-grid {
-    margin-top: 3pt;
-    gap: 3pt;
-  }
-
+  .detail-block + .detail-block,
   .comp-details .detail-block + .detail-block {
-    margin-top: 3pt;
-  }
-
-  .detail-block {
-    border: none;
-    border-left: 1pt solid var(--border-strong);
-    padding: 0 0 0 7pt;
-  }
-
-  .detail-label {
-    margin-bottom: 1pt;
-    font-size: 7.5pt;
+    margin-top: 1.5mm;
   }
 
   .detail-text,
@@ -191,46 +253,294 @@
   .tool-summary-text,
   .real-text {
     font-size: 9.5pt;
-    line-height: 1.42;
+    line-height: 1.45;
+    color: var(--ink-800);
   }
 
-  .tl-bullets li {
-    font-size: 9.5pt;
-    line-height: 1.42;
-    padding: 1pt 0 1pt 10pt;
+  /* --- Compétences ------------------------------------------------------ */
+  .competences-list {
+    display: block;
+  }
+
+  .comp-card {
+    padding-bottom: 3mm;
+    margin-bottom: 3mm;
+    border-bottom: 0.5pt solid var(--ink-100);
+  }
+
+  .comp-card:last-child {
+    border-bottom: none;
+  }
+
+  .comp-toggle,
+  .comp-details-inner,
+  .tool-details {
+    display: block;
+    padding: 0;
+    border: none;
+    overflow: visible !important;
+  }
+
+  /* Le numéro d'outil tombe dans la colonne des libellés : une seule grille
+     pour tout le document. */
+  .tool-summary {
+    display: grid;
+    grid-template-columns: 30mm 1fr;
+    column-gap: 5mm;
+    padding: 0;
+    border: none;
+  }
+
+  .comp-details {
+    display: block !important;
+    margin-top: 2mm;
   }
 
   .comp-title,
   .tool-title,
-  .card-title,
   .project-title {
+    display: block;
     font-size: 10.5pt;
-    margin-bottom: 2pt;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--n-ink);
+  }
+
+  .comp-desc {
+    margin-top: 0.5mm;
+  }
+
+  /* --- Outils ----------------------------------------------------------- */
+  .tool-card {
+    padding-bottom: 3mm;
+    margin-bottom: 3mm;
+    border-bottom: 0.5pt solid var(--ink-100);
+  }
+
+  .tool-card:last-child {
+    border-bottom: none;
+  }
+
+  .tool-mark {
+    display: inline;
+    width: auto;
+    height: auto;
+    border: none;
+    background: none !important;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9pt;
+    color: var(--ink-300);
+  }
+
+  .tool-topline {
+    display: block;
+    margin-bottom: 0.5mm;
+  }
+
+  .tool-category {
+    font-size: 9pt;
+    color: var(--ink-600);
+  }
+
+  .tool-status {
+    display: block;
+    margin: 0.5mm 0 1mm;
+    font-size: 7pt;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .tool-detail-grid {
+    display: block;
+    margin-top: 2mm;
+  }
+
+  /* --- Expériences : la date fait colonne ------------------------------- */
+  .timeline-item {
+    padding: 0 0 3mm;
+    margin-bottom: 3mm;
+    border-bottom: 0.5pt solid var(--ink-100);
+  }
+
+  .timeline-item:last-child {
+    border-bottom: none;
+  }
+
+  .tl-header {
+    display: flex;
+    align-items: baseline;
+    gap: 5mm;
+    margin-bottom: 1mm;
+  }
+
+  .tl-date {
+    order: -1;
+    width: 30mm;
+    flex: none;
+    margin: 0;
+    font-size: 8pt;
+    color: var(--text-muted);
+  }
+
+  .tl-role {
+    font-size: 10.5pt;
+    font-weight: 800;
+    color: var(--ink-900);
+  }
+
+  .tl-company {
+    font-size: 9.5pt;
+    color: var(--ink-600);
+  }
+
+  .tl-bullets {
+    margin-left: 35mm;
+  }
+
+  .tl-bullets li {
+    font-size: 9.5pt;
+    line-height: 1.45;
+    padding: 0.4mm 0 0.4mm 4mm;
+    color: var(--ink-800);
+  }
+
+  .tl-bullets li::before {
+    color: var(--n-mark);
+  }
+
+  .tl-tags {
+    margin: 1mm 0 0 35mm;
+  }
+
+  /* --- Réalisations ----------------------------------------------------- */
+  .stats-spotlight {
+    display: flex;
+    gap: 10mm;
+    padding: 0 0 2mm;
+  }
+
+  .stats-value {
+    font-size: 15pt;
+    color: var(--n-ink);
+  }
+
+  .stats-label {
+    font-size: 8pt;
+  }
+
+  .real-card {
+    display: block;
+    padding: 0 0 0 4mm;
+    border-left: 1pt solid var(--n-line);
+    margin-bottom: 2mm;
+  }
+
+  .note {
+    padding-left: 4mm;
+    font-size: 9pt;
+    border-left: 1pt solid var(--ink-200);
+  }
+
+  /* --- Projets & formation ---------------------------------------------- */
+  .project-card {
+    padding-bottom: 1mm;
+  }
+
+  .print-section-body > .project-card:not(:first-child) {
+    margin-top: 4mm;
+  }
+
+  .project-sub {
+    margin-bottom: 1.5mm;
+    font-size: 9pt;
+    color: var(--n-ink);
+  }
+
+  .project-card .tl-bullets {
+    margin-left: 0;
+  }
+
+  .formation-card {
+    display: flex;
+    align-items: baseline;
+    gap: 5mm;
+  }
+
+  .formation-year {
+    width: 30mm;
+    flex: none;
+    font-size: 11pt;
+    color: var(--text-muted);
+  }
+
+  .formation-title {
+    font-size: 10.5pt;
+  }
+
+  .formation-sub {
+    font-size: 9pt;
   }
 
   .grid-2,
   .grid-3 {
-    gap: 6pt;
+    gap: 3mm 8mm;
   }
 
-  .tool-mark {
-    width: 14pt;
-    height: 14pt;
-    font-size: 8pt;
-    border-radius: 3pt;
+  .card-sm .card-title {
+    font-size: 9.5pt !important;
+    font-weight: 800;
+    color: var(--n-ink);
+    margin-bottom: 0.5mm;
   }
 
-  .timeline-item {
-    padding-bottom: 3pt;
+  .punchline-box {
+    text-align: left;
+    padding-left: 4mm;
+    border-left: 2pt solid var(--n-mark);
   }
 
-  /* --- Tout déplié ------------------------------------------------------ */
-  .comp-details {
-    display: block !important;
+  .punchline-box p {
+    font-size: 10pt;
+    font-weight: 600;
+    color: var(--ink-800);
   }
 
-  .comp-details-inner {
-    overflow: visible !important;
+  .section-label {
+    margin: 2mm 0 0;
+    font-size: 7pt;
+    letter-spacing: 0.1em;
+  }
+
+  /* --- Étiquettes : du texte, pas des pastilles ------------------------- */
+  .chip-row,
+  .tag-row {
+    display: block;
+    margin-top: 1mm;
+  }
+
+  .chip,
+  .tag {
+    display: inline;
+    padding: 0;
+    border: none;
+    background: none !important;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .chip {
+    color: var(--text-muted);
+  }
+
+  .tag {
+    color: var(--n-ink);
+  }
+
+  .chip + .chip::before,
+  .tag + .tag::before {
+    content: " · ";
+    color: var(--ink-300);
   }
 
   /* --- Ce qui n'a pas de sens sur papier -------------------------------- */
@@ -239,32 +549,29 @@
   .contact-modal-overlay,
   .contact-form-trigger,
   .share-trigger,
-  .comp-toggle-icon,
-  .tool-toggle-icon,
-  .live-products-label {
+  .live-products,
+  .icon {
     display: none !important;
   }
 
-  .comp-toggle {
-    padding: 0;
-  }
-
-  /* --- Les URLs doivent être lisibles hors écran ------------------------- */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-family: "JetBrains Mono", monospace;
-    font-size: 8pt;
-    font-weight: 400;
-    color: var(--text-dim);
-    word-break: break-all;
-  }
-
+  /* Les liens produits sont déjà en tête : dans le corps, on garde le nom. */
   .tool-link,
-  .project-link,
-  .live-product {
-    border: none;
-    background: transparent !important;
+  .project-link {
+    display: inline;
     padding: 0;
+    border: none;
+    background: none !important;
+    color: var(--flame-700);
+    font-size: 8.5pt;
     text-decoration: none;
+  }
+
+  .tool-link::after,
+  .project-link::after {
+    content: " · " attr(data-host);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: var(--text-muted);
   }
 }

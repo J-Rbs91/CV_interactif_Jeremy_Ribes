@@ -57,21 +57,21 @@ function renderProofStrip() {
 
 /* Produits réellement en ligne, dérivés des données existantes : c'est
    l'argument le plus fort du dossier, il ne doit pas coûter deux clics. */
-function getLiveProducts() {
+export function getLiveProducts() {
   return [
     ...outils
       .filter((outil) => outil.link)
       .map((outil) => ({
         name: outil.title,
         url: outil.link.url,
-        nature: outil.nature,
+        nature: "preuve",
       })),
     ...projetsTransverses
       .filter((projet) => projet.link)
       .map((projet) => ({
         name: projet.title.split(" — ")[0],
         url: projet.link.url,
-        nature: "exploration",
+        nature: "preuve",
       })),
   ];
 }

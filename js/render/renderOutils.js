@@ -1,6 +1,7 @@
 import { outils } from "../data/outils.js";
 import { natureClass, renderAccentTags } from "./renderUtils.js";
 import { icon } from "../ui/icons.js";
+import { linkHost } from "./renderUtils.js";
 
 function renderOutilCard(outil, index, expandedTool, expandAll) {
   const isExpanded = expandAll || expandedTool === outil.id;
@@ -19,7 +20,7 @@ function renderOutilCard(outil, index, expandedTool, expandAll) {
           ${renderAccentTags(outil.chips, { className: "chip-row-lg" })}
           ${
             outil.link
-              ? `<a class="tool-link" href="${outil.link.url}" target="_blank" rel="noopener noreferrer">${outil.link.label}${icon("arrow-up-right")}</a>`
+              ? `<a class="tool-link" href="${outil.link.url}" data-host="${linkHost(outil.link.url)}" target="_blank" rel="noopener noreferrer">${outil.link.label}${icon("arrow-up-right")}</a>`
               : ""
           }
         </div>
@@ -55,7 +56,7 @@ export function renderOutilsSection(expandedTool, options = {}) {
   const { expandAll = false } = options;
 
   return `
-    <div class="card n-decision">
+    <div class="card n-produit">
       <div class="card-title"><div class="dot"></div>Récapitulatif des outils de pilotage</div>
       <div class="card-text">Les outils présentés ici font partie d'une selection de solutions que j’ai conçues pour répondre à des besoins opérationnels concrets, clarifier les priorités et fiabiliser l’exécution au quotidien.</div>
     </div>

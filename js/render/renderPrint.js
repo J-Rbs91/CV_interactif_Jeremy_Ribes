@@ -1,8 +1,11 @@
 /* Vue d'impression : le SPA ne monte que la section active, donc imprimer
    la page telle quelle perd les 7/8 du contenu. On construit ici un document
-   linéaire, tout déplié, monté à la demande par js/ui/print.js. */
+   linéaire, tout déplié, monté à la demande par js/ui/print.js.
+
+   Ce n'est pas la page à plat : c'est une mise en page de document — bandeau
+   à deux colonnes, preuve dans l'en-tête, sections numérotées. */
 import { contact } from "../data/contact.js";
-import { sections } from "../data/sections.js";
+import { kpiItems, sections } from "../data/sections.js";
 import { renderCompetencesSection } from "./renderCompetences.js";
 import {
   renderExperiencesSection,
@@ -12,7 +15,8 @@ import {
 } from "./renderExperiences.js";
 import { renderOutilsSection } from "./renderOutils.js";
 import { renderProjetSection } from "./renderProjets.js";
-import { natureClass } from "./renderUtils.js";
+import { getLiveProducts } from "./renderContact.js";
+import { linkHost, natureClass } from "./renderUtils.js";
 
 function renderSectionBody(sectionId) {
   switch (sectionId) {
@@ -39,18 +43,58 @@ function renderFacts() {
   return contact.items
     .filter((item) => !item.type)
     .map((item) => item.text)
-    .join(" · ");
+    .join("&nbsp;· ");
+}
+
+/* Les trois adresses en ligne, une fois, en tête. Les répéter à chaque lien
+   dans le corps du document est exactement ce qui fait « photocopie ». */
+function renderLiveLine() {
+  const products = getLiveProducts();
+
+  if (!products.length) {
+    return "";
+  }
+
+  return `<div class="print-live">
+    <span class="print-live-label">En ligne</span>
+    ${products
+      .map(
+        (product) =>
+          `<span class="print-live-item">${linkHost(product.url)}</span>`,
+      )
+      .join("")}
+  </div>`;
+}
+
+function renderProof() {
+  return `<div class="print-proof">
+    ${kpiItems
+      .map(
+        (kpi) => `<div class="print-proof-item ${natureClass(kpi.nature)}">
+          <div class="print-proof-value">${kpi.value}</div>
+          <div class="print-proof-label">${kpi.label}</div>
+        </div>`,
+      )
+      .join("")}
+  </div>`;
 }
 
 export function renderPrintDocument() {
   return `<div class="print-doc">
     <header class="print-head">
-      <h1>${contact.name}</h1>
-      <div class="print-role">${contact.role}</div>
-      <div class="print-role2">${contact.secondaryRole}</div>
-      <div class="print-facts">${renderFacts()}</div>
-      <p class="print-intro">${contact.intro}</p>
+      <div class="print-identity">
+        <h1>${contact.name}</h1>
+        <div class="print-role">${contact.role}</div>
+        <div class="print-role2">${contact.secondaryRole}</div>
+        <div class="print-facts">${renderFacts()}</div>
+      </div>
+      ${renderProof()}
     </header>
+
+    ${renderLiveLine()}
+
+    <p class="print-intro">${contact.intro}</p>
+
     ${sections
       .map(
         (

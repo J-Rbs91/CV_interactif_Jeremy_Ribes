@@ -14,7 +14,7 @@
 .identity .role {
   font-size: 12px;
   font-weight: 800;
-  color: var(--performance-ink);
+  color: var(--forest-700);
   text-transform: uppercase;
   letter-spacing: 0.16em;
   margin-bottom: 5px;
@@ -160,11 +160,7 @@
   padding: 13px 26px;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
-  background: linear-gradient(
-    135deg,
-    var(--structure-surf),
-    var(--performance-surf)
-  );
+  background: linear-gradient(135deg, var(--ink-50), var(--forest-50));
 }
 
 .intro-strip p {
@@ -613,8 +609,8 @@
 }
 
 .contact-form-trigger:hover {
-  border-color: var(--structure-mark);
-  color: var(--structure-ink);
+  border-color: var(--ink-600);
+  color: var(--ink-700);
 }
 
 .share-trigger {
@@ -640,9 +636,9 @@
   transform: translate(-50%, -4px);
   padding: 6px 10px;
   border-radius: var(--radius-sm);
-  background: var(--performance-surf);
-  color: var(--performance-ink);
-  border: 1px solid var(--performance-line);
+  background: var(--forest-50);
+  color: var(--forest-700);
+  border: 1px solid var(--forest-200);
   box-shadow: var(--shadow-sm);
   font-size: 12px;
   font-weight: 700;
@@ -747,11 +743,11 @@
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: var(--structure-mark);
+  border-color: var(--ink-600);
 }
 
 .contact-submit {
-  background: var(--structure-ink);
+  background: var(--ink-800);
   color: white;
   border: none;
   border-radius: var(--radius-sm);
@@ -776,13 +772,13 @@
 }
 
 .contact-feedback.is-success {
-  color: var(--performance-ink);
+  color: var(--forest-700);
   font-size: 13px;
   margin-top: 8px;
 }
 
 .contact-feedback.is-error {
-  color: var(--coordination-ink);
+  color: var(--flame-700);
   font-size: 13px;
   margin-top: 8px;
 }

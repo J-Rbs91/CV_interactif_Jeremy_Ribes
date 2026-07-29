@@ -10,11 +10,11 @@ import {
 
 export function renderProfilSection() {
   return `
-    <div class="punchline-box n-graphite">
+    <div class="punchline-box n-cadre">
       <p>${profileContent.quote}</p>
     </div>
 
-    <div class="card n-graphite">
+    <div class="card n-cadre">
       <div class="card-title"><div class="dot"></div>Profil professionnel</div>
       <div class="card-text">${profileContent.intro}</div>
     </div>
@@ -27,7 +27,7 @@ export function renderProfilSection() {
         .join("")}
     </div>
 
-    <div class="card n-decision">
+    <div class="card n-produit">
       <div class="card-title"><div class="dot"></div>Expertise clé</div>
       <div class="card-text">${profileContent.expertise}</div>
     </div>
@@ -35,7 +35,7 @@ export function renderProfilSection() {
     <div class="section-label">Ce que j'apporte</div>
     ${renderTagRow(profileContent.contributionTags)}
 
-    <div class="card n-structure">
+    <div class="card n-cadre">
       <div class="card-title"><div class="dot"></div>Ce que je vise</div>
       <div class="card-text">${profileContent.target}</div>
     </div>
@@ -46,7 +46,7 @@ export function renderRealisationsSection() {
   const [firstStat, secondStat] = realisations.stats;
 
   return `
-    <div class="punchline-box stats-spotlight n-performance">
+    <div class="punchline-box stats-spotlight n-preuve">
       <div class="stats-item">
         <div class="stats-value">${firstStat.value}</div>
         <div class="stats-label">${firstStat.label}</div>
