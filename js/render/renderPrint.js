@@ -1,0 +1,65 @@
+/* Vue d'impression : le SPA ne monte que la section active, donc imprimer
+   la page telle quelle perd les 7/8 du contenu. On construit ici un document
+   linéaire, tout déplié, monté à la demande par js/ui/print.js. */
+import { contact } from "../data/contact.js";
+import { sections } from "../data/sections.js";
+import { renderCompetencesSection } from "./renderCompetences.js";
+import {
+  renderExperiencesSection,
+  renderFormationSection,
+  renderProfilSection,
+  renderRealisationsSection,
+} from "./renderExperiences.js";
+import { renderOutilsSection } from "./renderOutils.js";
+import { renderProjetSection } from "./renderProjets.js";
+import { natureClass } from "./renderUtils.js";
+
+function renderSectionBody(sectionId) {
+  switch (sectionId) {
+    case "profil":
+      return renderProfilSection();
+    case "competences":
+      return renderCompetencesSection(null, { expandAll: true });
+    case "realisations":
+      return renderRealisationsSection();
+    case "outils":
+      return renderOutilsSection(null, { expandAll: true });
+    case "experience":
+      return renderExperiencesSection();
+    case "projet":
+      return renderProjetSection();
+    case "formation":
+      return renderFormationSection();
+    default:
+      return "";
+  }
+}
+
+function renderFacts() {
+  return contact.items
+    .filter((item) => !item.type)
+    .map((item) => item.text)
+    .join(" · ");
+}
+
+export function renderPrintDocument() {
+  return `<div class="print-doc">
+    <header class="print-head">
+      <h1>${contact.name}</h1>
+      <div class="print-role">${contact.role}</div>
+      <div class="print-role2">${contact.secondaryRole}</div>
+      <div class="print-facts">${renderFacts()}</div>
+      <p class="print-intro">${contact.intro}</p>
+    </header>
+    ${sections
+      .map(
+        (
+          section,
+        ) => `<section class="print-section ${natureClass(section.nature)}">
+          <h2 class="print-section-title">${section.label}</h2>
+          <div class="print-section-body">${renderSectionBody(section.id)}</div>
+        </section>`,
+      )
+      .join("")}
+  </div>`;
+}

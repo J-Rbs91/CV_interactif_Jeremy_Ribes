@@ -1,6 +1,11 @@
 import { sections } from "../data/sections.js";
 import { natureClass } from "./renderUtils.js";
-import { renderIdentity, renderIntroStrip } from "./renderContact.js";
+import {
+  renderIdentity,
+  renderIntroStrip,
+  renderLiveProducts,
+} from "./renderContact.js";
+import { icon } from "../ui/icons.js";
 
 function getActiveSection(activeSection) {
   return sections.find(({ id }) => id === activeSection) ?? sections[0];
@@ -19,10 +24,9 @@ function renderNavItem(section, activeSection, options = {}) {
     .join(" ");
 
   return `<button type="button" class="${navItemClassName}" data-section="${section.id}" aria-pressed="${isActive ? "true" : "false"}">
-    <div class="nav-icon">${section.icon}</div>
+    <div class="nav-icon">${icon(section.icon)}</div>
     <div class="nav-copy">
       <div class="nav-label">${section.label}</div>
-      ${compact ? "" : `<div class="nav-sub">${section.sub}</div>`}
     </div>
   </button>`;
 }
@@ -84,8 +88,9 @@ function renderContactModal() {
 export function renderSidebar(activeSection) {
   return `<div class="panel-left">
     ${renderIdentity()}
-    ${renderIntroStrip()}
+    ${renderLiveProducts()}
     ${renderNavigation(activeSection)}
+    ${renderIntroStrip()}
     ${renderContactModal()}
   </div>`;
 }
@@ -112,6 +117,7 @@ export function renderMobileShell(activeSection, sectionContent) {
         rowClassName: "contact-row-mobile",
         itemClassName: "contact-pill",
       })}
+      ${renderLiveProducts({ className: "live-products-mobile" })}
       ${renderIntroStrip({ className: "intro-strip-mobile" })}
     </div>
 

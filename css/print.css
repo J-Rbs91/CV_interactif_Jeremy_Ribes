@@ -1,0 +1,270 @@
+/* =========================================================================
+   IMPRESSION / EXPORT PDF
+   -------------------------------------------------------------------------
+   Le SPA ne monte que la section active : imprimer #app perdrait les 7/8 du
+   contenu. js/ui/print.js monte #print-view (document linéaire, tout déplié)
+   au moment de l'impression et le retire ensuite.
+   ========================================================================= */
+
+#print-view {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 14mm 13mm;
+  }
+
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+    padding: 0;
+    background: #ffffff;
+    font-size: 10.5pt;
+    color: #000000;
+  }
+
+  #app {
+    display: none !important;
+  }
+
+  #print-view {
+    display: block;
+  }
+
+  /* Les filets de nature portent la hiérarchie : ils doivent survivre au
+     pilote d'impression, y compris en niveaux de gris. */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    text-shadow: none !important;
+  }
+
+  /* --- En-tête ---------------------------------------------------------- */
+  .print-head {
+    padding-bottom: 10pt;
+    margin-bottom: 14pt;
+    border-bottom: 1.5pt solid var(--graphite-ink);
+  }
+
+  .print-head h1 {
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .print-role {
+    margin-top: 2pt;
+    font-size: 9pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--performance-ink);
+  }
+
+  .print-role2 {
+    margin-top: 3pt;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+
+  .print-facts {
+    margin-top: 5pt;
+    font-size: 9pt;
+    color: var(--text-dim);
+  }
+
+  .print-intro {
+    margin-top: 8pt;
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  /* --- Sections --------------------------------------------------------- */
+  .print-section {
+    margin-top: 16pt;
+    break-inside: auto;
+  }
+
+  .print-section-title {
+    font-size: 13pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    padding-bottom: 3pt;
+    margin-bottom: 8pt;
+    border-bottom: 1pt solid var(--n-mark);
+    break-after: avoid;
+  }
+
+  .print-section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8pt;
+  }
+
+  .print-section-body > .project-card:not(:first-child) {
+    margin-top: 6pt;
+  }
+
+  /* --- Blocs : à plat. Le papier n'a pas besoin de cartes. --------------- */
+  .card,
+  .card-sm,
+  .comp-card,
+  .tool-card,
+  .real-card,
+  .project-card,
+  .formation-card,
+  .punchline-box,
+  .timeline-item,
+  .detail-block {
+    background: #ffffff !important;
+    border-radius: 0;
+    break-inside: avoid;
+  }
+
+  .card,
+  .card-sm,
+  .punchline-box,
+  .formation-card {
+    border: none;
+    border-left: 2pt solid var(--n-mark);
+    padding: 1pt 0 1pt 8pt;
+  }
+
+  .punchline-box {
+    text-align: left;
+  }
+
+  .punchline-box p {
+    font-size: 10.5pt;
+  }
+
+  .comp-card,
+  .tool-card,
+  .real-card {
+    border: none;
+    border-left: 2pt solid var(--n-mark);
+    padding: 0 0 0 8pt;
+    margin-bottom: 4pt;
+  }
+
+  .comp-toggle,
+  .tool-summary {
+    padding: 0;
+    gap: 8pt;
+  }
+
+  .comp-details-inner,
+  .tool-details {
+    padding: 3pt 0 0;
+    border: none;
+    background: none !important;
+  }
+
+  .tool-detail-grid {
+    margin-top: 3pt;
+    gap: 3pt;
+  }
+
+  .comp-details .detail-block + .detail-block {
+    margin-top: 3pt;
+  }
+
+  .detail-block {
+    border: none;
+    border-left: 1pt solid var(--border-strong);
+    padding: 0 0 0 7pt;
+  }
+
+  .detail-label {
+    margin-bottom: 1pt;
+    font-size: 7.5pt;
+  }
+
+  .detail-text,
+  .card-text,
+  .comp-desc,
+  .tool-summary-text,
+  .real-text {
+    font-size: 9.5pt;
+    line-height: 1.42;
+  }
+
+  .tl-bullets li {
+    font-size: 9.5pt;
+    line-height: 1.42;
+    padding: 1pt 0 1pt 10pt;
+  }
+
+  .comp-title,
+  .tool-title,
+  .card-title,
+  .project-title {
+    font-size: 10.5pt;
+    margin-bottom: 2pt;
+  }
+
+  .grid-2,
+  .grid-3 {
+    gap: 6pt;
+  }
+
+  .tool-mark {
+    width: 14pt;
+    height: 14pt;
+    font-size: 8pt;
+    border-radius: 3pt;
+  }
+
+  .timeline-item {
+    padding-bottom: 3pt;
+  }
+
+  /* --- Tout déplié ------------------------------------------------------ */
+  .comp-details {
+    display: block !important;
+  }
+
+  .comp-details-inner {
+    overflow: visible !important;
+  }
+
+  /* --- Ce qui n'a pas de sens sur papier -------------------------------- */
+  .nav-list,
+  .mobile-nav-sticky,
+  .contact-modal-overlay,
+  .contact-form-trigger,
+  .share-trigger,
+  .comp-toggle-icon,
+  .tool-toggle-icon,
+  .live-products-label {
+    display: none !important;
+  }
+
+  .comp-toggle {
+    padding: 0;
+  }
+
+  /* --- Les URLs doivent être lisibles hors écran ------------------------- */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8pt;
+    font-weight: 400;
+    color: var(--text-dim);
+    word-break: break-all;
+  }
+
+  .tool-link,
+  .project-link,
+  .live-product {
+    border: none;
+    background: transparent !important;
+    padding: 0;
+    text-decoration: none;
+  }
+}

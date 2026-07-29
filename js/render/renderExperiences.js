@@ -1,5 +1,6 @@
 import { experiences, realisations } from "../data/experiences.js";
 import { formationContent, profileContent } from "../data/profile.js";
+import { icon } from "../ui/icons.js";
 import {
   natureClass,
   renderBulletList,
@@ -57,12 +58,12 @@ export function renderRealisationsSection() {
       </div>
     </div>
     <div class="section-label">Pilotage et redynamisation commerciale</div>
-    <div class="card-sm" style="margin-bottom:2px"><div class="card-text dim">${realisations.note.replace("Outils", "<strong>Outils</strong>")}</div></div>
+    <p class="note">${realisations.note.replace("Outils", "<strong>Outils</strong>")}</p>
     ${realisations.items
       .map(
         (item) => `
           <div class="real-card ${natureClass(item.nature)}">
-            <div class="real-icon">${item.icon}</div>
+            <div class="real-icon">${icon(item.icon)}</div>
             <div class="real-text">${item.text}</div>
           </div>
         `,
@@ -82,7 +83,7 @@ export function renderExperiencesSection() {
             <span class="tl-date">${experience.date}</span>
           </div>
           ${renderBulletList(experience.bullets)}
-          ${experience.tags ? `<div style="margin-top:8px">${renderTagRow(experience.tags)}</div>` : ""}
+          ${experience.tags ? `<div class="tl-tags">${renderTagRow(experience.tags)}</div>` : ""}
         </div>
       `,
     )
@@ -99,12 +100,12 @@ export function renderFormationSection() {
       </div>
     </div>
 
-    <div class="section-label" style="margin-top:12px">Compétences développées en continu</div>
+    <div class="section-label">Compétences développées en continu</div>
     <div class="grid-2">
       ${formationContent.continuousSkills.map(renderSmallCard).join("")}
     </div>
 
-    <div class="punchline-box n-socle" style="margin-top:8px">
+    <div class="punchline-box n-socle">
       <p>${formationContent.quote}</p>
     </div>
   `;

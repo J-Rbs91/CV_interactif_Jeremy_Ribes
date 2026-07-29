@@ -1,5 +1,6 @@
 import { projetsTransverses } from "../data/projets.js";
 import { renderBulletList, renderSmallCard } from "./renderUtils.js";
+import { icon } from "../ui/icons.js";
 
 function renderProjet(projet) {
   return `
@@ -9,12 +10,12 @@ function renderProjet(projet) {
       ${renderBulletList(projet.bullets)}
       ${
         projet.link
-          ? `<a class="project-link" href="${projet.link.url}" target="_blank" rel="noopener noreferrer">${projet.link.label}<span class="tool-link-icon" aria-hidden="true">↗</span></a>`
+          ? `<a class="project-link" href="${projet.link.url}" target="_blank" rel="noopener noreferrer">${projet.link.label}${icon("arrow-up-right")}</a>`
           : ""
       }
     </div>
 
-    <div class="section-label" style="margin-top:8px">Compétences transférables</div>
+    <div class="section-label">Compétences transférables</div>
     <div class="grid-2">
       ${projet.transferableSkills.map(renderSmallCard).join("")}
     </div>
@@ -22,7 +23,5 @@ function renderProjet(projet) {
 }
 
 export function renderProjetSection() {
-  return projetsTransverses
-    .map(renderProjet)
-    .join('<div style="margin-top:24px"></div>');
+  return projetsTransverses.map(renderProjet).join("");
 }

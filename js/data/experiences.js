@@ -6,27 +6,27 @@ export const realisations = {
   note: "Le détail méthodologique des dispositifs est disponible dans la section Outils.",
   items: [
     {
-      icon: "📈",
+      icon: "trending-up",
       text: "Déploiement d'une politique commerciale offensive et développement du trafic par actions locales ciblées, optimisation du référencement local et valorisation des avis Google (Uberall/Yext).",
       nature: "performance",
     },
     {
-      icon: "🛠️",
+      icon: "wrench",
       text: "Création d'un outil d'aide à la décision (Google Apps Script) identifiant en temps réel le meilleur mix produit selon les contraintes métier et le budget client.",
       nature: "decision",
     },
     {
-      icon: "💰",
+      icon: "coins",
       text: "Sécurisation de la marge, suppression des ressaisies administratives chronophages et fluidification du parcours client.",
       nature: "performance",
     },
     {
-      icon: "📋",
+      icon: "clipboard",
       text: "Système de suivi automatisé des devis, améliorant la concrétisation, les délais et la coordination entre collaborateurs.",
       nature: "decision",
     },
     {
-      icon: "📆",
+      icon: "calendar",
       text: "Outil de planning permettant d'adapter les effectifs aux besoins réels et de résoudre les tensions organisationnelles.",
       nature: "structure",
     },

@@ -231,6 +231,10 @@
   top: 1px;
 }
 
+.tl-tags {
+  margin-top: var(--space-1);
+}
+
 .real-card {
   background: var(--card);
   border: 1px solid var(--border);

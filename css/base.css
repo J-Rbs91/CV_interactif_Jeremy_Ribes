@@ -90,6 +90,21 @@
   --recency-recent: var(--graphite-mark);
   --recency-past: var(--socle-mark);
 
+  /* --- Échelle typographique ------------------------------------------ */
+  --fs-display: 28px;
+  --fs-lead: 18px;
+  --fs-title: 16px;
+  --fs-body: 15px;
+  --fs-sm: 14px;
+  --fs-xs: 13px;
+  --fs-label: 11px;
+
+  /* --- Rythme : l'espace encode le lien logique ------------------------ */
+  --space-1: 8px; /* éléments d'un même bloc */
+  --space-2: 16px; /* blocs d'un même groupe */
+  --space-3: 24px; /* changement de groupe */
+  --space-4: 32px; /* changement de propos */
+
   /* --- Élévation & rayons --------------------------------------------- */
   --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.1);
@@ -150,6 +165,13 @@
   --n-line: var(--socle-line);
 }
 
+.icon {
+  width: 1em;
+  height: 1em;
+  display: block;
+  flex-shrink: 0;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -185,4 +207,15 @@ body {
   overflow: hidden;
   overflow-x: hidden;
   padding: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

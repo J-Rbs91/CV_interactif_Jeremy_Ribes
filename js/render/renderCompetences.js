@@ -1,8 +1,8 @@
 import { competences } from "../data/competences.js";
 import { natureClass, renderAccentTags } from "./renderUtils.js";
 
-function renderCompetenceCard(competence, expandedCompetenceId) {
-  const isExpanded = expandedCompetenceId === competence.id;
+function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
+  const isExpanded = expandAll || expandedCompetenceId === competence.id;
   const panelId = `competence-panel-${competence.id}`;
   const buttonId = `competence-toggle-${competence.id}`;
 
@@ -54,11 +54,13 @@ function renderCompetenceCard(competence, expandedCompetenceId) {
   `;
 }
 
-export function renderCompetencesSection(expandedCompetenceId) {
+export function renderCompetencesSection(expandedCompetenceId, options = {}) {
+  const { expandAll = false } = options;
+
   return `<div class="competences-list">
     ${competences
       .map((competence) =>
-        renderCompetenceCard(competence, expandedCompetenceId),
+        renderCompetenceCard(competence, expandedCompetenceId, expandAll),
       )
       .join("")}
   </div>`;
