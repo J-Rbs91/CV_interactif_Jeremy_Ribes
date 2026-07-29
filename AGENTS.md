@@ -9,8 +9,9 @@
 - `assets/img/` : ressources image du projet.
 
 ## Landing animée (séquence d'ouverture)
-- Direction : planche technique. Papier, encre noire, un seul rouge de
-  repère, grille millimétrée, filets capillaires, repères d'angle et cotes.
+- Direction : planche technique. Papier (matière et lumière, sans motif
+  répété), encre noire, un seul rouge de repère, cadre, marge tracée,
+  filets capillaires, repères d'angle et cotes.
   Display en Archivo 125 % (chasse élargie), annotations en JetBrains Mono.
   Ne pas ajouter de dégradés, de halos ni de couleurs supplémentaires.
 - Balisage : bloc `.intro` dans `index.html`, un `.intro-plan` par planche
