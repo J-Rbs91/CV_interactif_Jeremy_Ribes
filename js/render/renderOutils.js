@@ -1,29 +1,26 @@
 import { outils } from "../data/outils.js";
-import { renderAccentTags } from "./renderUtils.js";
+import { natureClass, renderAccentTags } from "./renderUtils.js";
+import { icon } from "../ui/icons.js";
+import { linkHost } from "./renderUtils.js";
 
-function renderOutilCard(outil, index, expandedTool) {
-  const isExpanded = expandedTool === outil.id;
+function renderOutilCard(outil, index, expandedTool, expandAll) {
+  const isExpanded = expandAll || expandedTool === outil.id;
 
   return `
-    <div class="tool-card${isExpanded ? " is-open" : ""}">
+    <div class="tool-card ${natureClass(outil.nature)}${isExpanded ? " is-open" : ""}">
       <div class="tool-summary" data-tool="${outil.id}">
-        <div class="tool-mark" style="background:${outil.accent}15;color:${outil.accent};border-color:${outil.accent}30">${index + 1}</div>
+        <div class="tool-mark">${index + 1}</div>
         <div class="tool-main">
           <div class="tool-topline">
-            <span class="tool-title" style="color:${outil.accent}">${outil.title}</span>
+            <span class="tool-title">${outil.title}</span>
             <span class="tool-category">${outil.category}</span>
             <span class="tool-status">${outil.status}</span>
           </div>
           <div class="tool-summary-text">${outil.summary}</div>
-          ${renderAccentTags(outil.chips, outil.accent, {
-            padding: "3px 8px",
-            radius: "999px",
-            gap: "6px",
-            marginTop: "10px",
-          })}
+          ${renderAccentTags(outil.chips, { className: "chip-row-lg" })}
           ${
             outil.link
-              ? `<a class="tool-link" href="${outil.link.url}" target="_blank" rel="noopener noreferrer" style="color:${outil.accent};background:${outil.accent}12;border-color:${outil.accent}30">${outil.link.label}<span class="tool-link-icon" aria-hidden="true">↗</span></a>`
+              ? `<a class="tool-link" href="${outil.link.url}" data-host="${linkHost(outil.link.url)}" target="_blank" rel="noopener noreferrer">${outil.link.label}${icon("arrow-up-right")}</a>`
               : ""
           }
         </div>
@@ -55,13 +52,15 @@ function renderOutilCard(outil, index, expandedTool) {
   `;
 }
 
-export function renderOutilsSection(expandedTool) {
+export function renderOutilsSection(expandedTool, options = {}) {
+  const { expandAll = false } = options;
+
   return `
-    <div class="card">
-      <div class="card-title"><div class="dot" style="background:var(--accent3)"></div>Récapitulatif des outils de pilotage</div>
+    <div class="card n-produit">
+      <div class="card-title"><div class="dot"></div>Récapitulatif des outils de pilotage</div>
       <div class="card-text">Les outils présentés ici font partie d'une selection de solutions que j’ai conçues pour répondre à des besoins opérationnels concrets, clarifier les priorités et fiabiliser l’exécution au quotidien.</div>
     </div>
 
-    ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool)).join("")}
+    ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}
   `;
 }

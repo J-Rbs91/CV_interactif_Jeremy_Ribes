@@ -2,8 +2,7 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  border-left: 3px solid transparent;
-  border-left-color: var(--comp-accent, transparent);
+  border-left: 3px solid var(--n-mark);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition:
@@ -19,13 +18,13 @@
 }
 
 .comp-card:hover {
-  border-color: var(--border-active);
+  border-color: var(--n-line);
   background: var(--card-hover);
   box-shadow: var(--shadow-sm);
 }
 
 .comp-card.is-open {
-  border-color: var(--border-active);
+  border-color: var(--n-line);
   background: var(--card);
   box-shadow: var(--shadow-md);
 }
@@ -44,7 +43,7 @@
 }
 
 .comp-toggle:focus-visible {
-  outline: 2px solid var(--comp-accent, var(--accent));
+  outline: 2px solid var(--n-mark);
   outline-offset: -2px;
 }
 
@@ -56,8 +55,8 @@
   width: 12px;
   height: 12px;
   margin-top: 6px;
-  border-right: 2px solid var(--comp-accent, var(--accent));
-  border-bottom: 2px solid var(--comp-accent, var(--accent));
+  border-right: 2px solid var(--n-mark);
+  border-bottom: 2px solid var(--n-mark);
   transform: rotate(45deg);
   transition: transform 0.18s ease;
   flex-shrink: 0;
@@ -68,6 +67,7 @@
 }
 
 .comp-title {
+  color: var(--n-ink);
   font-size: 16px;
   font-weight: 800;
   margin-bottom: 6px;
@@ -103,7 +103,23 @@
   margin-top: 10px;
 }
 
+/* Les expériences ne changent pas de nature : elles changent d'intensité.
+   Plus c'est récent, plus la pastille est vive. */
+.tl-now {
+  --tl-dot: var(--recency-now);
+}
+
+.tl-recent {
+  --tl-dot: var(--recency-recent);
+}
+
+.tl-past {
+  --tl-dot: var(--recency-past);
+}
+
 .timeline-item {
+  /* puce, filet et chevrons de puces suivent le même cran d'intensité */
+  --n-mark: var(--tl-dot, var(--recency-past));
   position: relative;
   padding-left: 24px;
   padding-bottom: 6px;
@@ -117,7 +133,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 2px solid var(--c, var(--accent));
+  border: 2px solid var(--tl-dot, var(--recency-past));
   background: #ffffff;
 }
 
@@ -147,6 +163,7 @@
 }
 
 .stats-value {
+  color: var(--n-ink);
   font-family: "JetBrains Mono", monospace;
   font-size: 28px;
   font-weight: 700;
@@ -180,7 +197,7 @@
 .tl-company {
   font-size: 14px;
   font-weight: 700;
-  color: var(--accent2);
+  color: var(--ink-800);
 }
 
 .tl-date {
@@ -208,15 +225,20 @@
   content: "›";
   position: absolute;
   left: 0;
-  color: var(--accent);
+  color: var(--n-mark);
   font-weight: 700;
   font-size: 16px;
   top: 1px;
 }
 
+.tl-tags {
+  margin-top: var(--space-1);
+}
+
 .real-card {
   background: var(--card);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--n-mark);
   border-radius: var(--radius-sm);
   padding: 14px 18px;
   display: flex;
@@ -278,6 +300,9 @@
 }
 
 .tool-mark {
+  background: var(--n-surf);
+  color: var(--n-ink);
+  border: 1px solid var(--n-line);
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -286,7 +311,6 @@
   justify-content: center;
   font-weight: 700;
   flex-shrink: 0;
-  border: 1px solid transparent;
 }
 
 .tool-main {
@@ -302,6 +326,7 @@
 }
 
 .tool-title {
+  color: var(--n-ink);
   font-size: 16px;
   font-weight: 800;
 }
@@ -329,12 +354,14 @@
 
 .tool-link,
 .project-link {
+  background: var(--n-surf);
+  color: var(--n-ink);
+  border: 1px solid var(--n-line);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   margin-top: 12px;
   padding: 6px 12px;
-  border: 1px solid transparent;
   border-radius: 999px;
   font-size: 13px;
   font-weight: 700;
@@ -361,11 +388,7 @@
 .tool-details {
   padding: 0 20px 18px;
   border-top: 1px solid var(--border);
-  background: linear-gradient(
-    180deg,
-    rgba(37, 99, 235, 0.03),
-    rgba(255, 255, 255, 0)
-  );
+  background: linear-gradient(180deg, var(--n-surf), rgba(255, 255, 255, 0));
 }
 
 .tool-detail-grid {

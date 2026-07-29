@@ -1,20 +1,21 @@
 import { projetsTransverses } from "../data/projets.js";
-import { renderBulletList, renderSmallCard } from "./renderUtils.js";
+import { linkHost, renderBulletList, renderSmallCard } from "./renderUtils.js";
+import { icon } from "../ui/icons.js";
 
 function renderProjet(projet) {
   return `
-    <div class="project-card">
+    <div class="project-card n-produit">
       <div class="project-title">${projet.title}</div>
       <div class="project-sub">${projet.subtitle}</div>
       ${renderBulletList(projet.bullets)}
       ${
         projet.link
-          ? `<a class="project-link" href="${projet.link.url}" target="_blank" rel="noopener noreferrer" style="color:var(--accent5);background:var(--accent5)12;border-color:var(--accent5)30">${projet.link.label}<span class="tool-link-icon" aria-hidden="true">↗</span></a>`
+          ? `<a class="project-link" href="${projet.link.url}" data-host="${linkHost(projet.link.url)}" target="_blank" rel="noopener noreferrer">${projet.link.label}${icon("arrow-up-right")}</a>`
           : ""
       }
     </div>
 
-    <div class="section-label" style="margin-top:8px">Compétences transférables</div>
+    <div class="section-label">Compétences transférables</div>
     <div class="grid-2">
       ${projet.transferableSkills.map(renderSmallCard).join("")}
     </div>
@@ -22,7 +23,5 @@ function renderProjet(projet) {
 }
 
 export function renderProjetSection() {
-  return projetsTransverses
-    .map(renderProjet)
-    .join('<div style="margin-top:24px"></div>');
+  return projetsTransverses.map(renderProjet).join("");
 }

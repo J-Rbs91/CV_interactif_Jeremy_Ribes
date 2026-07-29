@@ -1,29 +1,145 @@
+/* =========================================================================
+   CHARTE COLORIMÉTRIQUE — CV Jérémy Ribes
+   -------------------------------------------------------------------------
+   Deux couleurs porteuses et un accent. Rien d'autre.
+   Un système qui a besoin de sa notice pour être lu a raté : celui-ci
+   s'énonce en une phrase.
+
+     ENCRE   bleu profond   · ce qui CADRE
+                              identité, titres, structure, process
+     FORÊT   vert profond   · ce qui PRODUIT
+                              compétences, outils, projets, coordination
+     FLAMME  orange         · ce qui PROUVE
+                              les chiffres et les produits en ligne
+
+   La hiérarchie ne vient pas de la teinte mais de la NUANCE : chaque
+   couleur a sa gamme (900 → 50), du texte le plus dense au filet le plus
+   ténu. Deux teintes, beaucoup de niveaux.
+
+   Règle de rareté : la flamme n'apparaît que sur la preuve. Sur une page,
+   trois taches d'orange au maximum. C'est ce qui leur donne leur poids.
+
+   Vocabulaire des données : chaque contenu déclare `nature: "cadre"`,
+   "produit", "preuve" ou "socle". Le rendu pose la classe .n-<nature>, qui
+   définit --n-ink / --n-mark / --n-surf / --n-line. Les composants
+   consomment ces variables sans jamais connaître la couleur qu'ils portent.
+
+   Tous les tons employés en texte passent WCAG AA (≥ 4.5:1 sur blanc).
+   ========================================================================= */
+
 :root {
-  --bg: #f4f7fb;
+  /* --- ENCRE — ce qui cadre -------------------------------------------- */
+  --ink-900: #0c2740;
+  --ink-800: #123553;
+  --ink-700: #1a4874;
+  --ink-600: #255e92;
+  --ink-500: #3d7bae;
+  --ink-300: #8fb2ce;
+  --ink-200: #c2d6e6;
+  --ink-100: #dee9f2;
+  --ink-50: #f1f6fa;
+
+  /* --- FORÊT — ce qui produit ------------------------------------------ */
+  --forest-900: #0b3527;
+  --forest-800: #0f4634;
+  --forest-700: #155e45;
+  --forest-600: #1c7756;
+  --forest-500: #2e9670;
+  --forest-300: #84c3ab;
+  --forest-200: #bcded0;
+  --forest-100: #dbede5;
+  --forest-50: #f0f8f4;
+
+  /* --- FLAMME — ce qui prouve (rare) ----------------------------------- */
+  --flame-700: #9c3a06;
+  --flame-600: #bf4a08;
+  --flame-500: #de5e0e;
+  --flame-400: #f07a22;
+  --flame-200: #f8c9a8;
+  --flame-100: #fce4d4;
+  --flame-50: #fef3ea;
+
+  /* --- Texte & surfaces (dérivés de l'encre) --------------------------- */
+  --text: #0c2740;
+  --text-dim: #455c72;
+  --text-muted: #5d7186;
+  --bg: #f2f6fa;
   --bg2: #fbfdff;
   --card: rgba(255, 255, 255, 0.88);
   --card-hover: #ffffff;
-  --border: rgba(15, 23, 42, 0.08);
-  --border-strong: rgba(15, 23, 42, 0.12);
-  --border-active: #4f7cff;
-  --text: #172033;
-  --text-dim: #52607a;
-  --text-muted: #7d8aa5;
-  --accent: #2563eb;
-  --accent2: #0f9f8c;
-  --accent3: #c77d1f;
-  --accent4: #d14f72;
-  --accent5: #6470f5;
-  --green-bg: rgba(15, 159, 140, 0.1);
-  --blue-bg: rgba(37, 99, 235, 0.1);
-  --orange-bg: rgba(199, 125, 31, 0.1);
-  --red-bg: rgba(209, 79, 114, 0.1);
-  --purple-bg: rgba(100, 112, 245, 0.1);
-  --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.1);
+  --border: rgba(12, 39, 64, 0.1);
+  --border-strong: rgba(12, 39, 64, 0.16);
+
+  /* --- Rôle par défaut (hérité si aucun n'est posé) --------------------- */
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
+
+  /* --- Timeline : la récence se lit en nuance, pas en teinte ------------ */
+  --recency-now: var(--ink-700);
+  --recency-recent: var(--ink-500);
+  --recency-past: var(--ink-300);
+
+  /* --- Échelle typographique ------------------------------------------- */
+  --fs-display: 28px;
+  --fs-lead: 18px;
+  --fs-title: 16px;
+  --fs-body: 15px;
+  --fs-sm: 14px;
+  --fs-xs: 13px;
+  --fs-label: 11px;
+
+  /* --- Rythme : l'espace encode le lien logique ------------------------- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+
+  /* --- Élévation & rayons ---------------------------------------------- */
+  --shadow-sm: 0 10px 30px rgba(12, 39, 64, 0.06);
+  --shadow-md: 0 18px 45px rgba(12, 39, 64, 0.1);
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-sm: 14px;
+}
+
+/* Les trois familles, plus le retrait. */
+.n-cadre {
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
+}
+
+.n-produit {
+  --n-ink: var(--forest-700);
+  --n-mark: var(--forest-600);
+  --n-surf: var(--forest-50);
+  --n-line: var(--forest-200);
+}
+
+.n-preuve {
+  --n-ink: var(--flame-700);
+  --n-mark: var(--flame-600);
+  --n-surf: var(--flame-50);
+  --n-line: var(--flame-200);
+}
+
+/* Le socle : même encre, une nuance en retrait. La Formation ne doit pas
+   peser autant que ce qui a été construit. */
+.n-socle {
+  --n-ink: var(--text-muted);
+  --n-mark: var(--ink-300);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-100);
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  display: block;
+  flex-shrink: 0;
 }
 
 * {
@@ -36,10 +152,20 @@ html,
 body {
   min-height: 100vh;
   width: 100%;
+  /* Les deux porteuses, au seuil du perceptible : encre à gauche,
+     forêt à droite. */
   background:
-    radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(15, 159, 140, 0.08), transparent 24%),
-    linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    radial-gradient(
+      circle at top left,
+      rgba(26, 72, 116, 0.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(21, 94, 69, 0.06),
+      transparent 26%
+    ),
+    linear-gradient(180deg, #f8fbfd 0%, var(--bg) 100%);
   color: var(--text);
   font-family: "Manrope", sans-serif;
   font-size: 15px;
@@ -51,4 +177,15 @@ body {
   overflow: hidden;
   overflow-x: hidden;
   padding: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

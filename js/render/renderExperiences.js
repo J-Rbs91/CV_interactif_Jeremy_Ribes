@@ -1,6 +1,8 @@
 import { experiences, realisations } from "../data/experiences.js";
 import { formationContent, profileContent } from "../data/profile.js";
+import { icon } from "../ui/icons.js";
 import {
+  natureClass,
   renderBulletList,
   renderSmallCard,
   renderTagRow,
@@ -8,12 +10,12 @@ import {
 
 export function renderProfilSection() {
   return `
-    <div class="punchline-box">
+    <div class="punchline-box n-cadre">
       <p>${profileContent.quote}</p>
     </div>
 
-    <div class="card">
-      <div class="card-title"><div class="dot" style="background:var(--accent2)"></div>Profil professionnel</div>
+    <div class="card n-cadre">
+      <div class="card-title"><div class="dot"></div>Profil professionnel</div>
       <div class="card-text">${profileContent.intro}</div>
     </div>
 
@@ -25,16 +27,16 @@ export function renderProfilSection() {
         .join("")}
     </div>
 
-    <div class="card">
-      <div class="card-title"><div class="dot" style="background:var(--accent3)"></div>Expertise clé</div>
+    <div class="card n-produit">
+      <div class="card-title"><div class="dot"></div>Expertise clé</div>
       <div class="card-text">${profileContent.expertise}</div>
     </div>
 
     <div class="section-label">Ce que j'apporte</div>
     ${renderTagRow(profileContent.contributionTags)}
 
-    <div class="card">
-      <div class="card-title"><div class="dot" style="background:var(--accent)"></div>Ce que je vise</div>
+    <div class="card n-cadre">
+      <div class="card-title"><div class="dot"></div>Ce que je vise</div>
       <div class="card-text">${profileContent.target}</div>
     </div>
   `;
@@ -44,24 +46,24 @@ export function renderRealisationsSection() {
   const [firstStat, secondStat] = realisations.stats;
 
   return `
-    <div class="punchline-box stats-spotlight">
+    <div class="punchline-box stats-spotlight n-preuve">
       <div class="stats-item">
-        <div class="stats-value" style="color:${firstStat.color}">${firstStat.value}</div>
+        <div class="stats-value">${firstStat.value}</div>
         <div class="stats-label">${firstStat.label}</div>
       </div>
       <div class="stats-divider"></div>
       <div class="stats-item">
-        <div class="stats-value" style="color:${secondStat.color}">${secondStat.value}</div>
+        <div class="stats-value">${secondStat.value}</div>
         <div class="stats-label">${secondStat.label}</div>
       </div>
     </div>
     <div class="section-label">Pilotage et redynamisation commerciale</div>
-    <div class="card-sm" style="margin-bottom:2px"><div class="card-text dim">${realisations.note.replace("Outils", "<strong>Outils</strong>")}</div></div>
+    <p class="note">${realisations.note.replace("Outils", "<strong>Outils</strong>")}</p>
     ${realisations.items
       .map(
         (item) => `
-          <div class="real-card" style="border-left:3px solid ${item.accent}">
-            <div class="real-icon">${item.icon}</div>
+          <div class="real-card ${natureClass(item.nature)}">
+            <div class="real-icon">${icon(item.icon)}</div>
             <div class="real-text">${item.text}</div>
           </div>
         `,
@@ -74,14 +76,14 @@ export function renderExperiencesSection() {
   return experiences
     .map(
       (experience) => `
-        <div class="timeline-item"${experience.accent ? ` style="--c:${experience.accent}"` : ""}>
+        <div class="timeline-item tl-${experience.recency}">
           <div class="tl-header">
             <span class="tl-role">${experience.role}</span>
             <span class="tl-company">${experience.company}</span>
             <span class="tl-date">${experience.date}</span>
           </div>
           ${renderBulletList(experience.bullets)}
-          ${experience.tags ? `<div style="margin-top:8px">${renderTagRow(experience.tags)}</div>` : ""}
+          ${experience.tags ? `<div class="tl-tags">${renderTagRow(experience.tags)}</div>` : ""}
         </div>
       `,
     )
@@ -90,7 +92,7 @@ export function renderExperiencesSection() {
 
 export function renderFormationSection() {
   return `
-    <div class="formation-card">
+    <div class="formation-card n-socle">
       <div class="formation-year">${formationContent.year}</div>
       <div>
         <div class="formation-title">${formationContent.title}</div>
@@ -98,12 +100,12 @@ export function renderFormationSection() {
       </div>
     </div>
 
-    <div class="section-label" style="margin-top:12px">Compétences développées en continu</div>
+    <div class="section-label">Compétences développées en continu</div>
     <div class="grid-2">
       ${formationContent.continuousSkills.map(renderSmallCard).join("")}
     </div>
 
-    <div class="punchline-box" style="margin-top:8px">
+    <div class="punchline-box n-socle">
       <p>${formationContent.quote}</p>
     </div>
   `;

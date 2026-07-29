@@ -1,64 +1,62 @@
+/* Chaque section porte la nature de ce qu'elle démontre : cadre (encre),
+   produit (forêt), preuve (flamme). La Formation est en socle — retrait
+   assumé, l'argument du dossier n'est pas le diplôme de 2012. */
 export const sections = [
   {
     id: "profil",
-    icon: "👤",
+    icon: "user",
     label: "Profil",
     sub: "Positionnement & méthode",
-    color: "var(--accent2)",
-    bg: "var(--green-bg)",
+    nature: "cadre",
   },
   {
     id: "competences",
-    icon: "✔",
+    icon: "check",
     label: "Compétences",
     sub: "7 domaines clés",
-    color: "var(--accent)",
-    bg: "var(--blue-bg)",
+    nature: "cadre",
   },
   {
     id: "realisations",
-    icon: "📈",
+    icon: "trending-up",
     label: "Réalisations",
     sub: "+83% CA · +5,6 pts marge",
-    color: "var(--accent3)",
-    bg: "var(--orange-bg)",
+    nature: "preuve",
   },
   {
     id: "outils",
-    icon: "🛠️",
+    icon: "wrench",
     label: "Outils",
     sub: "4 dispositifs détaillés",
-    color: "var(--accent3)",
-    bg: "var(--orange-bg)",
+    nature: "produit",
   },
   {
     id: "experience",
-    icon: "🕒",
+    icon: "clock",
     label: "Expériences",
     sub: "13 ans · 3 expériences",
-    color: "var(--accent4)",
-    bg: "var(--red-bg)",
+    nature: "cadre",
   },
   {
     id: "projet",
-    icon: "🌱",
+    icon: "sprout",
     label: "Projets transverses",
     sub: "3 projets détaillés",
-    color: "var(--accent5)",
-    bg: "var(--purple-bg)",
+    nature: "produit",
   },
   {
     id: "formation",
-    icon: "🎓",
+    icon: "cap",
     label: "Formation",
     sub: "BTS OL — 2012",
-    color: "var(--accent)",
-    bg: "var(--blue-bg)",
+    nature: "socle",
   },
 ];
 
+/* Bandeau de preuve du panneau gauche. « 13 ans » est un fait (encre) ;
+   les deux deltas sont mesurés, donc en flamme — règle de rareté. */
 export const kpiItems = [
-  { value: "13", label: "Ans terrain" },
-  { value: "+83%", label: "CA" },
-  { value: "+5,6", label: "Pts marge" },
+  { value: "13", label: "Ans terrain", nature: "cadre" },
+  { value: "+83%", label: "CA", nature: "preuve" },
+  { value: "+5,6", label: "Pts marge", nature: "preuve" },
 ];
