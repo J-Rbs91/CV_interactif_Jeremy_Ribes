@@ -82,13 +82,27 @@
   --recency-past: var(--ink-300);
 
   /* --- Échelle typographique ------------------------------------------- */
-  --fs-display: 28px;
-  --fs-lead: 18px;
-  --fs-title: 16px;
-  --fs-body: 15px;
-  --fs-sm: 14px;
-  --fs-xs: 13px;
-  --fs-label: 11px;
+  /* Echelle typographique. Elle avait dix valeurs approximatives dont
+     soixante-douze elements au meme corps : un titre de bloc, sa
+     description et ses etiquettes se lisaient au meme poids, et la
+     hierarchie retombait entierement sur les cadres. Huit paliers, un
+     role chacun, aucune valeur en dur ailleurs. */
+  --fs-display: 38px; /* titre de section */
+  --fs-metric: 30px; /* chiffre de preuve */
+  --fs-lead: 22px; /* nom, titre de fenetre, annee */
+  --fs-title: 18px; /* titre de bloc */
+  --fs-body: 15px; /* texte courant, seule taille de lecture */
+  --fs-sm: 13.5px; /* texte secondaire */
+  --fs-xs: 12px; /* mention */
+  --fs-label: 11px; /* libelle en mono */
+
+  /* --- Familles ---------------------------------------------------- */
+  /* Archivo a chasse elargie porte l'identite et les titres de section :
+     c'est le lien visuel avec la sequence d'ouverture. La mono porte la
+     seconde couche — tout ce qui donne du contexte sans etre le message. */
+  --font-display: "Archivo", "Manrope", sans-serif;
+  --font-sans: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* --- Rythme : l'espace encode le lien logique ------------------------- */
   --space-1: 8px;
@@ -167,7 +181,7 @@ body {
     ),
     linear-gradient(180deg, #f8fbfd 0%, var(--bg) 100%);
   color: var(--text);
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.55;
   -webkit-text-size-adjust: 100%;

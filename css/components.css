@@ -5,14 +5,18 @@
 }
 
 .identity h1 {
-  font-size: 28px;
+  font-family: var(--font-display);
+  font-stretch: expanded;
+  letter-spacing: -0.022em;
+  font-size: var(--fs-lead);
   font-weight: 800;
   letter-spacing: -0.04em;
   margin-bottom: 4px;
 }
 
 .identity .role {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
   font-weight: 800;
   color: var(--forest-700);
   text-transform: uppercase;
@@ -21,7 +25,7 @@
 }
 
 .identity .role2 {
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-dim);
   letter-spacing: 0.3px;
@@ -41,8 +45,8 @@
 
 .proof-value {
   color: var(--n-ink);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 22px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-lead);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -67,7 +71,7 @@
 
 .live-products-label {
   margin-bottom: var(--space-1);
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
@@ -97,7 +101,7 @@
 }
 
 .live-product .icon {
-  font-size: 12px;
+  font-size: var(--fs-xs);
   opacity: 0.75;
 }
 
@@ -120,7 +124,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--text-dim);
 }
 
@@ -148,7 +152,7 @@
 
 .contact-row .ic {
   display: inline-flex;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   opacity: 0.75;
 }
 
@@ -215,7 +219,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-size: 17px;
+  font-size: var(--fs-title);
   font-weight: 700;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
@@ -226,13 +230,14 @@
 }
 
 .nav-label {
-  font-size: 14.5px;
+  font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.3;
 }
 
 .nav-sub {
-  font-size: 11.5px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
   color: var(--text-muted);
   line-height: 1.35;
 }
@@ -256,7 +261,7 @@
   width: 32px;
   height: 32px;
   border-radius: 11px;
-  font-size: 16px;
+  font-size: var(--fs-title);
   background: rgba(255, 255, 255, 0.88);
   color: var(--text-dim);
   box-shadow:
@@ -265,7 +270,7 @@
 }
 
 .nav-item-mobile .nav-label {
-  font-size: 14px;
+  font-size: var(--fs-body);
   white-space: nowrap;
   color: var(--text-dim);
   letter-spacing: -0.01em;
@@ -301,7 +306,10 @@
 }
 
 .content-head h2 {
-  font-size: 28px;
+  font-family: var(--font-display);
+  font-stretch: expanded;
+  letter-spacing: -0.022em;
+  font-size: var(--fs-display);
   font-weight: 800;
   letter-spacing: -0.04em;
 }
@@ -309,8 +317,8 @@
 .content-head .badge {
   background: var(--n-surf);
   color: var(--n-ink);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -320,7 +328,10 @@
 }
 
 .content-head-mobile h2 {
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-stretch: expanded;
+  letter-spacing: -0.022em;
+  font-size: var(--fs-lead);
 }
 
 .content-head-mobile .badge {
@@ -346,7 +357,7 @@
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: var(--fs-title);
   font-weight: 800;
   margin-bottom: 10px;
   display: flex;
@@ -363,14 +374,14 @@
 }
 
 .card-text {
-  font-size: 15px;
+  font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text);
 }
 
 .card-text.dim {
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: var(--fs-sm);
 }
 
 .grid-2 {
@@ -380,11 +391,11 @@
 }
 
 .profile-cards .card-title {
-  font-size: 16px !important;
+  font-size: var(--fs-title) !important;
 }
 
 .profile-cards .card-text {
-  font-size: 15px !important;
+  font-size: var(--fs-body) !important;
   color: var(--text) !important;
 }
 
@@ -401,7 +412,8 @@
 }
 
 .tag {
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -430,12 +442,13 @@
 }
 
 .chip {
+  font-family: var(--font-mono);
   background: var(--n-surf);
   color: var(--n-ink);
   border: 1px solid var(--n-line);
   border-radius: 4px;
   padding: 2px 7px;
-  font-size: 10px;
+  font-size: var(--fs-label);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -448,7 +461,7 @@
 
 /* Un label de groupe ouvre un nouveau propos : il porte la respiration. */
 .section-label {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 700;
   text-transform: uppercase;
@@ -497,13 +510,13 @@
 }
 
 .project-title {
-  font-size: 16px;
+  font-size: var(--fs-title);
   font-weight: 800;
   margin-bottom: 4px;
 }
 
 .project-sub {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--n-ink);
   font-weight: 600;
   margin-bottom: 12px;
@@ -521,19 +534,19 @@
 }
 
 .formation-year {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 22px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-lead);
   font-weight: 700;
   color: var(--n-ink);
 }
 
 .formation-title {
-  font-size: 16px;
+  font-size: var(--fs-title);
   font-weight: 700;
 }
 
 .formation-sub {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   color: var(--text-dim);
 }
 
@@ -542,7 +555,10 @@
 }
 
 .identity-mobile h1 {
-  font-size: 28px;
+  font-family: var(--font-display);
+  font-stretch: expanded;
+  letter-spacing: -0.022em;
+  font-size: var(--fs-lead);
 }
 
 .identity-mobile .role2 {
@@ -640,7 +656,7 @@
   color: var(--forest-700);
   border: 1px solid var(--forest-200);
   box-shadow: var(--shadow-sm);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -697,12 +713,12 @@
   right: 12px;
   border: none;
   background: transparent;
-  font-size: 24px;
+  font-size: var(--fs-lead);
   cursor: pointer;
 }
 
 .contact-modal-title {
-  font-size: 22px;
+  font-size: var(--fs-lead);
   font-weight: 800;
   letter-spacing: -0.03em;
   margin-bottom: 18px;
@@ -715,10 +731,11 @@
 }
 
 .contact-label {
+  font-family: var(--font-mono);
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 13px;
+  font-size: var(--fs-label);
   font-weight: 600;
   color: var(--text-dim);
 }
@@ -728,7 +745,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
-  font-size: 14px;
+  font-size: var(--fs-body);
   font-family: inherit;
   background: var(--card);
   transition: border-color 0.15s ease;
@@ -753,7 +770,7 @@
   border-radius: var(--radius-sm);
   padding: 12px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   cursor: pointer;
   transition: filter 0.15s ease;
 }
@@ -773,12 +790,12 @@
 
 .contact-feedback.is-success {
   color: var(--forest-700);
-  font-size: 13px;
+  font-size: var(--fs-sm);
   margin-top: 8px;
 }
 
 .contact-feedback.is-error {
   color: var(--flame-700);
-  font-size: 13px;
+  font-size: var(--fs-sm);
   margin-top: 8px;
 }

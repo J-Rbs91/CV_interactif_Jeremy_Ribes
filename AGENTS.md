@@ -76,6 +76,21 @@
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
 - Privilégier des changements minimaux et sûrs.
 
+## Typographie
+- Huit paliers déclarés en tête de `css/base.css` (`--fs-display` →
+  `--fs-label`), un rôle chacun. **Aucune taille en dur** dans
+  `layout.css`, `components.css` ni `sections.css` : toute nouvelle règle
+  consomme un palier. Le CV avait dix valeurs approximatives dont
+  soixante-douze éléments au même corps — la hiérarchie retombait sur les
+  cadres au lieu de l'échelle.
+- Trois familles, trois rôles : `--font-display` (Archivo à chasse
+  élargie) pour l'identité et les titres de section, c'est le lien visuel
+  avec la séquence d'ouverture ; `--font-sans` (Manrope) pour la lecture ;
+  `--font-mono` (JetBrains Mono) pour la seconde couche — libellés,
+  étiquettes, dates, statuts, catégories. Tout ce qui donne du contexte
+  sans être le message passe en mono.
+- `css/print.css` a son propre système : il ne consomme pas ces paliers.
+
 ## Couleur
 - Deux porteuses et un accent : encre (ce qui cadre), forêt (ce qui produit),
   flamme (ce qui prouve). La hiérarchie se fait en nuances, pas en teintes.
