@@ -1,32 +1,28 @@
+/* Sept compétences de même nature : un tableau. Le rail portait déjà la
+   nature (border-left 3 px) — on lui retire la boîte qui l'entourait et il
+   suffit. L'état ouvert ne se dit plus par une ombre plus lourde mais par
+   un rail plus dense, et par le contenu qui apparaît. */
 .comp-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  border-left: 3px solid var(--n-mark);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition:
-    border-color 0.15s ease,
-    background 0.15s ease,
-    box-shadow 0.15s ease;
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  transition: border-color 0.15s ease;
 }
 
+/* Le blanc reprend le travail que faisaient les cadres : sans lui, sept
+   rails contigus se lisent comme un seul bloc rayé. */
 .competences-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--space-3);
 }
 
-.comp-card:hover {
-  border-color: var(--n-line);
-  background: var(--card-hover);
-  box-shadow: var(--shadow-sm);
-}
-
+.comp-card:hover,
 .comp-card.is-open {
-  border-color: var(--n-line);
-  background: var(--card);
-  box-shadow: var(--shadow-md);
+  border-left-color: var(--n-ink);
 }
 
 .comp-toggle {
@@ -34,7 +30,7 @@
   border: 0;
   background: transparent;
   color: inherit;
-  padding: 18px 20px;
+  padding: 2px 0 2px var(--space-2);
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -89,18 +85,20 @@
   grid-template-rows: 1fr;
 }
 
+/* Retrait et filet ne se posent qu'à l'ouverture : la ligne de grille est à
+   0fr quand le panneau est replié, mais un padding ou une bordure verticale
+   s'ajouteraient quand même à sa hauteur. */
 .comp-details-inner {
   min-height: 0;
   overflow: hidden;
-  padding: 0 20px 0;
+  margin-left: var(--space-2);
+  padding: 0;
 }
 
 .comp-card.is-open .comp-details-inner {
-  padding-bottom: 18px;
-}
-
-.comp-details .detail-block + .detail-block {
-  margin-top: 10px;
+  border-top: 1px solid var(--n-line);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-1);
 }
 
 /* Les expériences ne changent pas de nature : elles changent d'intensité.
@@ -137,14 +135,19 @@
   background: #ffffff;
 }
 
+/* L'axe du temps est continu ou n'est pas : il s'arrêtait au bas de chaque
+   poste et reprenait au suivant, ce qui donnait trois segments et non une
+   ligne. Il traverse maintenant l'espace inter-blocs, et consomme --n-line
+   comme les autres filets du CV — à var(--border) il passait sous le seuil
+   de visibilité que ce filet doit tenir. */
 .timeline-item::after {
   content: "";
   position: absolute;
   left: 9px;
   top: 22px;
   width: 2px;
-  bottom: 0;
-  background: var(--border);
+  bottom: calc(-1 * var(--space-3));
+  background: var(--n-line);
 }
 
 .timeline-item:last-child::after {
@@ -236,16 +239,18 @@
   margin-top: var(--space-1);
 }
 
+/* Cinq réalisations de même nature : même traitement que les compétences.
+   L'icône reste, elle nomme le type d'action ; c'est le cadre qui part. */
 .real-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--n-mark);
-  border-radius: var(--radius-sm);
-  padding: 14px 18px;
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  padding: 2px 0 2px var(--space-2);
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .real-icon {
@@ -261,28 +266,34 @@
 }
 
 .tool-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: all 0.15s;
-  box-shadow: var(--shadow-sm);
+  /* Le numéro tient une colonne en drapeau : rail, chiffre, puis matière.
+     Le détail s'aligne sur la matière, pas sur le rail — sinon trois bords
+     gauches se succèdent et l'œil ne sait plus lequel structure. */
+  --tool-indent: calc(var(--space-2) + var(--space-3) + var(--space-2));
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  overflow: visible;
+  transition: border-color 0.15s ease;
+  box-shadow: none;
 }
 
 .tool-card + .tool-card {
-  margin-top: 12px;
+  margin-top: var(--space-3);
+}
+
+.tool-card:hover,
+.tool-card.is-open {
+  border-left-color: var(--n-ink);
 }
 
 .tool-summary {
-  padding: 18px 20px;
+  padding: 2px 0 2px var(--space-2);
   cursor: pointer;
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-}
-
-.tool-summary:hover {
-  background: var(--card-hover);
+  gap: var(--space-2);
 }
 
 .tool-toggle-icon {
@@ -300,17 +311,24 @@
   transform: rotate(225deg);
 }
 
+/* Le numéro d'ordre était une pastille carrée de 36 px : une boîte pour un
+   seul caractère. Il redevient ce qu'il est — un chiffre, qui se distingue
+   par son corps et sa chasse, comme dans la séquence. */
 .tool-mark {
-  background: var(--n-surf);
-  color: var(--n-ink);
-  border: 1px solid var(--n-line);
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  background: none;
+  color: var(--n-mark);
+  border: 0;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  min-width: var(--space-3);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  justify-content: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--fs-lead);
   font-weight: 700;
+  line-height: 1.15;
   flex-shrink: 0;
 }
 
@@ -389,24 +407,37 @@
   font-weight: 700;
 }
 
+/* Le filet est décalé du rail : posé au ras, il refermait l'angle et le
+   bloc redevenait une boîte à deux côtés. Le dégradé de fond partait dans
+   le même sens — il servait à délimiter, le filet le fait mieux. */
 .tool-details {
-  padding: 0 20px 18px;
-  border-top: 1px solid var(--border);
-  background: linear-gradient(180deg, var(--n-surf), rgba(255, 255, 255, 0));
+  margin-left: var(--tool-indent);
+  padding: var(--space-2) 0 var(--space-1);
+  border-top: 1px solid var(--n-line);
+  background: none;
 }
 
 .tool-detail-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 0;
+  margin-top: 0;
 }
 
+/* Le pire cas : quatre boîtes dans une cinquième. Une paire libellé /
+   matière n'est pas un objet, c'est une ligne de tableau — et deux lignes
+   se séparent par un filet. */
 .detail-block {
-  background: rgba(248, 250, 252, 0.9);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.detail-block + .detail-block {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--n-line);
 }
 
 .detail-label {
@@ -425,13 +456,10 @@
   color: var(--text);
 }
 
+/* En étroit, le rail et son retrait suffisent : les marges intérieures de
+   carte n'ont plus d'objet et grignotaient la mesure de lecture. */
 .app-mobile .comp-toggle {
-  padding: 16px;
-}
-
-.app-mobile .comp-details-inner {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 2px 0 2px var(--space-2);
 }
 
 .app-mobile .stats-spotlight {
@@ -460,12 +488,8 @@
   white-space: normal;
 }
 
-.app-mobile .real-card {
-  padding-right: 14px;
-}
-
 .app-mobile .tool-summary {
-  padding: 16px;
+  padding: 2px 0 2px var(--space-2);
 }
 
 .app-mobile .tool-topline {
@@ -478,5 +502,5 @@
 }
 
 .app-mobile .tool-details {
-  padding: 0 16px 16px;
+  padding: var(--space-2) 0 var(--space-1);
 }

@@ -27,7 +27,7 @@ export const sections = [
     id: "outils",
     icon: "wrench",
     label: "Outils",
-    sub: "4 dispositifs détaillés",
+    sub: "5 dispositifs détaillés",
     nature: "produit",
   },
   {

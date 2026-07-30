@@ -338,22 +338,45 @@
   white-space: normal;
 }
 
+/* =========================================================================
+   DÉ-CARTAGE — la séparation passe du cadre au filet
+   -------------------------------------------------------------------------
+   Le CV hiérarchisait par l'encadrement : tout était posé dans une boîte à
+   coins arrondis, jusqu'à quatre boîtes imbriquées dans une cinquième. La
+   séquence d'ouverture, elle, ne cadre rien : elle sépare par la position,
+   l'échelle et un filet d'un pixel. Deux sections du projet parlaient déjà
+   cette langue — les Expériences (.timeline-item) à l'écran et tout
+   css/print.css sur papier. C'est celle-là qu'on généralise.
+
+   Deux outils, deux rôles :
+     RAIL   2 px --n-mark · à gauche du bloc, il porte la nature
+     FILET  1 px --n-line · entre deux éléments de même nature
+   Plus le blanc, qui fait le reste du travail.
+
+   Une carte ne survit que si son élévation porte un sens — un objet
+   réellement détaché du flux. Il en reste deux : .punchline-box (la
+   citation) et le bandeau de preuve (.stats-spotlight).
+   ========================================================================= */
+
+/* Un propos : titre + matière. Le rail dit la nature, la puce du titre
+   ferait doublon (elle est masquée plus bas, comme à l'impression). */
 .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 22px 24px;
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(12px);
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  padding: 2px 0 2px var(--space-2);
+  box-shadow: none;
 }
 
-/* Niveau 2 : carte de support. Pas d'ombre — elle ne doit pas peser autant
-   qu'une carte de propos. */
+/* Niveau 2 : bloc de support. Même rail, même absence de boîte — il ne se
+   distingue plus par un cadre plus fin mais par son corps de titre. */
 .card-sm {
-  background: var(--card);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 16px 18px;
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  padding: 2px 0 2px var(--space-2);
 }
 
 .card-title {
@@ -365,12 +388,11 @@
   gap: 10px;
 }
 
+/* La puce marquait la nature quand le bloc était une boîte. Le rail le fait
+   maintenant, en plus structurel : deux marques pour la même information
+   se contredisent. css/print.css la masque déjà pour la même raison. */
 .card-title .dot {
-  background: var(--n-mark);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
+  display: none;
 }
 
 .card-text {
@@ -475,6 +497,10 @@
   margin-top: 0;
 }
 
+/* Gardée en carte, seule avec le bandeau de preuve : une citation n'est pas
+   un élément de liste, c'est un objet détaché du flux. Son élévation dit
+   exactement ça, et elle ne le dit que parce que plus rien d'autre ne la
+   porte dans la zone de contenu. */
 .punchline-box {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), var(--n-surf));
   border: 1px solid var(--n-line);
@@ -500,13 +526,17 @@
   letter-spacing: -0.02em;
 }
 
+/* Trois projets de même nature : un tableau, pas trois objets détachés.
+   Le liseré passe du haut à la gauche pour tenir le même rail que le reste
+   de la colonne — un trait qui change de côté selon le bloc se lit comme
+   une décoration, pas comme une structure. */
 .project-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 22px 24px;
-  border-top: 3px solid var(--n-mark);
-  box-shadow: var(--shadow-sm);
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  padding: 2px 0 2px var(--space-2);
+  box-shadow: none;
 }
 
 .project-title {
@@ -522,15 +552,18 @@
   margin-bottom: 12px;
 }
 
+/* Le socle est déjà en retrait par sa nuance : lui laisser en plus une
+   ombre le faisait peser plus lourd que les compétences dé-cartées. */
 .formation-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 18px 22px;
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--n-mark);
+  border-radius: 0;
+  padding: 2px 0 2px var(--space-2);
   display: flex;
   align-items: center;
   gap: 18px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
 }
 
 .formation-year {
@@ -588,11 +621,9 @@
   grid-template-columns: 1fr;
 }
 
-.app-mobile .card,
-.app-mobile .card-sm,
-.app-mobile .project-card,
-.app-mobile .punchline-box,
-.app-mobile .formation-card {
+/* Seule la carte survivante a encore des marges intérieures à reprendre en
+   étroit : les blocs à rail tirent la leur du rail lui-même. */
+.app-mobile .punchline-box {
   padding-left: 18px;
   padding-right: 18px;
 }
