@@ -7,7 +7,7 @@
   "use strict";
 
   var STORAGE_KEY = "cv-intro-played";
-  var TOTAL_DURATION = 7900;
+  var TOTAL_DURATION = 9100;
   var COUNTER_START = 3700;
   var COUNTER_DURATION = 900;
   var FADE_OUT_DURATION = 420;

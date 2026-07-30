@@ -4,8 +4,9 @@
    une fois pour toutes sur un plan unique, et une seule camera le
    traverse sans jamais couper. Les mots deja lus ne disparaissent
    pas, la camera les quitte ; le recul final les revele alignes.
-   Duree 7,9 s. Le rythme est dicte par la lecture : ~1,9 s d'arret
-   par mention, ~0,6 s de deplacement.
+   Duree 9,1 s. Le rythme est dicte par la lecture : ~1,9 s d'arret
+   par enonce, ~0,55 s de deplacement, puis 1,5 s de pause sur le recul
+   final avant le fondu — le temps de parcourir l'ensemble d'un regard.
    Geometrie en vmin : la composition est proportionnelle a l'ecran,
    donc aucune typographie responsive a regler. Le portrait a ses
    propres coordonnees et sa propre camera.
@@ -43,7 +44,7 @@ html.intro-armed .intro {
     radial-gradient(120% 90% at 22% 8%, rgba(255, 255, 255, 0.72), transparent 58%),
     linear-gradient(168deg, var(--ink-50, #f1f6fa) 0%, #eaf1f8 56%, #dde8f2 100%);
   color: var(--encre);
-  animation: intro-off 0.45s ease var(--t-end, 7.5s) forwards;
+  animation: intro-off 0.45s ease var(--t-end, 8.65s) forwards;
 }
 
 html.intro-armed.intro-lock,
@@ -90,7 +91,7 @@ html.intro-armed .intro.is-playing * {
   position: relative;
   width: 0;
   height: 0;
-  animation: intro-camera 7.9s var(--e-move) both;
+  animation: intro-camera 9.1s var(--e-move) both;
 }
 
 /* ---------- les mots porteurs ---------- */
@@ -388,7 +389,7 @@ html.intro-armed .intro.is-playing * {
   opacity: 0.28;
   transform: scaleX(0);
   transform-origin: 0 50%;
-  animation: intro-trace-x 7.9s linear both;
+  animation: intro-trace-x 9.1s linear both;
 }
 
 .intro .intro-skip {
@@ -499,32 +500,32 @@ html.intro-armed .intro.is-playing * {
     transform: scale(1.18) translate(20vmin, 37vmin);
     animation-timing-function: linear;
   }
-  23.42% {
+  20.33% {
     transform: scale(1.12) translate(20vmin, 37vmin);
     animation-timing-function: var(--e-move);
   }
-  30.38% {
+  26.37% {
     transform: scale(1.11) translate(-16vmin, 0vmin);
     animation-timing-function: linear;
   }
-  54.43% {
+  47.25% {
     transform: scale(1.05) translate(-16vmin, 0vmin);
     animation-timing-function: var(--e-move);
   }
-  61.39% {
+  53.30% {
     transform: scale(1.21) translate(20vmin, -40vmin);
     animation-timing-function: linear;
   }
-  83.54% {
+  72.53% {
     transform: scale(1.15) translate(20vmin, -40vmin);
     animation-timing-function: var(--e-move);
   }
-  90.51% {
+  78.57% {
     transform: scale(0.61) translate(14.5vmin, -12vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.59) translate(14.5vmin, -12vmin);
+    transform: scale(0.585) translate(14.5vmin, -12vmin);
   }
 }
 
@@ -702,32 +703,32 @@ html.intro-armed .intro.is-playing * {
     transform: scale(1.32) translate(0vmin, 58vmin);
     animation-timing-function: linear;
   }
-  23.42% {
+  20.33% {
     transform: scale(1.26) translate(0vmin, 58vmin);
     animation-timing-function: var(--e-move);
   }
-  30.38% {
+  26.37% {
     transform: scale(1.32) translate(0vmin, 6vmin);
     animation-timing-function: linear;
   }
-  54.43% {
+  47.25% {
     transform: scale(1.26) translate(0vmin, 6vmin);
     animation-timing-function: var(--e-move);
   }
-  61.39% {
+  53.30% {
     transform: scale(1.32) translate(0vmin, -44vmin);
     animation-timing-function: linear;
   }
-  83.54% {
+  72.53% {
     transform: scale(1.26) translate(0vmin, -44vmin);
     animation-timing-function: var(--e-move);
   }
-  90.51% {
+  78.57% {
     transform: scale(0.56) translate(0vmin, -5vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.545) translate(0vmin, -5vmin);
+    transform: scale(0.54) translate(0vmin, -5vmin);
   }
 }
 

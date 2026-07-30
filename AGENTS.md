@@ -39,6 +39,15 @@
 - Rythme dicté par la lecture : arrêts de 1,75 à 1,95 s, déplacements de
   0,55 à 0,65 s. Les arrêts dérivent lentement (timing linéaire) pour que
   la caméra ne soit jamais figée ; les déplacements utilisent `--e-move`.
+- **Pause finale de 1,5 s** entre la fin du recul (7,15 s) et le début du
+  fondu (8,65 s). Le recul révèle les trois énoncés alignés : sans ce
+  temps d'arrêt, la révélation passe sans être vue. Durée totale 9,1 s,
+  au-delà des 8 s d'origine — c'est un arbitrage assumé en faveur du
+  temps de lecture, le bouton Passer reste disponible à tout moment.
+- Les instants sont absolus dans le CSS (`--entre`, `--sin`, `--trace`…)
+  mais la caméra est en pourcentages de 9,1 s : toute modification de la
+  durée totale impose de recalculer ses deux jeux de keyframes ET
+  `TOTAL_DURATION` dans `js/ui/intro.js`.
 - Couleur : la séquence ne définit aucune teinte, elle consomme la charte
   (`--ink-*`, `--forest-*`). Encre pour ce qui cadre, forêt pour ce qui
   produit — l'énoncé sur les solutions et outils est le seul en forêt.
