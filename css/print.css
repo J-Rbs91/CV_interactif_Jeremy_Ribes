@@ -212,6 +212,29 @@
     break-inside: avoid;
   }
 
+  /* L'écran sépare désormais ses listes par des rails et des filets. Le
+     document a déjà sa grille et ses règles de section : ces séparateurs y
+     feraient doublon, et leur retrait vertical l'allongeait d'une page.
+     Sélecteurs assez spécifiques pour reprendre la main sur les règles
+     combinées de sections.css — les marges du document, elles, sont
+     rétablies plus bas, à leur place. */
+  .detail-block + .detail-block,
+  .comp-details .detail-block + .detail-block,
+  .comp-card.is-open .comp-details-inner {
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .tool-card + .tool-card {
+    margin-top: 0;
+  }
+
+  .comp-details-inner,
+  .tool-details {
+    margin-left: 0;
+  }
+
   .card-title .dot,
   .comp-toggle-icon,
   .tool-toggle-icon,
