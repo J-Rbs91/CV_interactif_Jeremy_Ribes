@@ -60,7 +60,7 @@ function renderProofStrip() {
 export function getLiveProducts() {
   return [
     ...outils
-      .filter((outil) => outil.link)
+      .filter((outil) => outil.link && outil.liveProduct !== false)
       .map((outil) => ({
         name: outil.title,
         url: outil.link.url,

@@ -64,4 +64,27 @@ export const outils = [
     results:
       "Résolution de conflits d'organisation et optimisation du coût du personnel par rapport au flux d'activité.",
   },
+  {
+    id: "hub-opticien",
+    title: "Hub Outils Opticien",
+    category: "Outillage du quotidien en magasin",
+    nature: "produit",
+    status: "En usage quotidien en magasin",
+    chips: ["Application web", "Standardisation", "Données locales"],
+    /* Volontairement hors du bandeau « Produits en ligne » : le hub sert
+       la démonstration d'utilité, pas la vitrine produit. */
+    liveProduct: false,
+    link: {
+      label: "Découvrir le hub",
+      url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
+    },
+    summary:
+      "Point d'entrée unique regroupant les outils récurrents du magasin — demande au médecin, clôture de caisse, calcul d'épaisseur de verres — paramétrés une seule fois et utilisables sans formation.",
+    context:
+      "Les tâches courtes et répétées du magasin s'appuyaient sur des documents dispersés, des calculs refaits à la main et les mêmes informations ressaisies à chaque fois. Prises isolément elles paraissent mineures ; répétées chaque jour, elles consomment du temps de vente et laissent passer des erreurs.",
+    action:
+      "Conception et développement d'un hub web réunissant ces usages : demandes et comptes rendus au médecin normalisés avec export PDF et envoi par mail, clôture de caisse avec reprise du comptage de la veille et contrôle de l'écart avec le logiciel métier, calcul d'épaisseur et de décentrement des verres avec visualisation. Les coordonnées du magasin sont saisies une fois et alimentent tous les outils ; les données restent sur le poste, sans transmission serveur.",
+    results:
+      "Dispositif adopté et utilisé quotidiennement : documents homogènes quel que soit le collaborateur, calculs fiabilisés et ressaisies supprimées. Illustration directe de la méthode appliquée aux projets plus lourds — partir d'un irritant concret et livrer une réponse simple, dont l'utilité se vérifie dès le premier usage.",
+  },
 ];
