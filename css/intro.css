@@ -43,7 +43,7 @@ html.intro-armed .intro {
     radial-gradient(120% 90% at 22% 8%, rgba(255, 255, 255, 0.72), transparent 58%),
     linear-gradient(168deg, var(--ink-50, #f1f6fa) 0%, #eaf1f8 56%, #dde8f2 100%);
   color: var(--encre);
-  animation: intro-off 0.45s ease var(--t-end, 7.45s) forwards;
+  animation: intro-off 0.45s ease var(--t-end, 7.5s) forwards;
 }
 
 html.intro-armed.intro-lock,
@@ -93,91 +93,242 @@ html.intro-armed .intro.is-playing * {
   animation: intro-camera 7.9s var(--e-move) both;
 }
 
-/* ---------- le contenu, pose une fois pour toutes ---------- */
+/* ---------- les mots porteurs ---------- */
 
-.intro .intro-bloc {
+/* Quatre mots, quatre bords d'entree : chacun arrive par un cote different
+   (--wx / --wy), reste en place, puis passe au second plan quand la camera
+   le quitte. Rien ne sort : le recul final les revele tous alignes. */
+.intro .intro-mot {
   position: absolute;
   left: var(--bx);
   top: var(--by);
-  white-space: nowrap;
   font-family: var(--display);
   font-weight: 800;
   font-stretch: expanded;
-  line-height: 0.94;
+  font-size: 5vmin;
+  line-height: 1.06;
   letter-spacing: -0.028em;
+  white-space: nowrap;
+  color: var(--encre);
   transform: translateY(-50%);
   animation:
-    intro-apparait 0.55s ease var(--apparait) both,
-    intro-recule 0.6s ease var(--recule, 60s) forwards;
+    intro-mot-entre 0.62s var(--e-move) var(--entre) both,
+    intro-mot-recule 0.55s ease var(--recule, 60s) forwards;
 }
 
-.intro .intro-bloc.is-a {
-  --bx: -82vmin;
-  --by: -33vmin;
-  --apparait: 0.1s;
-  --recule: 1.8s;
-  font-size: 8.6vmin;
-  color: var(--encre);
+.intro .intro-mot.is-1 {
+  --bx: -70vmin;
+  --by: -40vmin;
+  --wx: 0vmin;
+  --wy: 7vmin;
+  --entre: 0.10s;
+  --recule: 2.40s;
 }
 
-.intro .intro-bloc.is-b {
-  --bx: -4vmin;
-  --by: -9vmin;
-  --apparait: 1.6s;
-  --recule: 3.65s;
-  font-size: 8.6vmin;
+.intro .intro-mot.is-2 {
+  --bx: -34vmin;
+  --by: 0vmin;
+  --wx: 9vmin;
+  --wy: 0vmin;
+  --entre: 2.45s;
+  --recule: 4.85s;
   color: var(--foret);
 }
 
-.intro .intro-bloc.is-c {
-  --bx: -82vmin;
-  --by: 24vmin;
-  --apparait: 3.45s;
-  --recule: 5.9s;
-  font-size: 18vmin;
-  letter-spacing: -0.035em;
-  color: var(--encre);
+.intro .intro-mot.is-3 {
+  --bx: -70vmin;
+  --by: 40vmin;
+  --wx: -9vmin;
+  --wy: 0vmin;
+  --entre: 4.90s;
+  --recule: 7.15s;
 }
 
-/* La chute est portee par les deux couleurs porteuses a la fois : c'est
-   ce que « les deux » veut dire. */
-.intro .intro-bloc.is-c .est-foret {
-  color: var(--foret);
-}
-
-.intro .intro-bloc.is-e {
-  --bx: -4vmin;
-  --by: 50vmin;
-  --apparait: 5.75s;
-  font-size: 7.4vmin;
-  color: var(--encre);
-}
-
-/* Legende de la chute : elle nomme ce que le mot vient de dire. */
-.intro .intro-legende {
-  display: block;
-  margin-top: 2.2vmin;
-  font-family: var(--mono);
-  font-size: 0.2em;
-  font-weight: 500;
-  font-stretch: normal;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--encre-doux);
-  animation: intro-apparait 0.5s ease 3.9s both;
+.intro .intro-mot.is-nom {
+  --bx: -34vmin;
+  --by: 66vmin;
+  --wx: 0;
+  --wy: 4vmin;
+  --entre: 6.85s;
+  font-size: 6.4vmin;
 }
 
 .intro .intro-role {
   display: block;
   margin-top: 1.6vmin;
   font-family: var(--mono);
-  font-size: 0.3em;
+  font-size: 0.33em;
   font-weight: 500;
   font-stretch: normal;
   letter-spacing: 0.16em;
   line-height: 1.3;
   text-transform: uppercase;
   color: var(--encre-doux);
+}
+
+/* ---------- l'habillage ---------- */
+
+/* Matiere secondaire : elle remplit le cadre autour du mot porteur et
+   donne son contexte, mais sa taille, sa graisse et son ton disent
+   qu'elle n'est pas ce qu'il faut lire. Elle entre et ressort avec son
+   mot — c'est elle qui fait la circulation a l'ecran.
+   Volontairement en retrait (4,2:1) : ce n'est pas du contenu, la scene
+   entiere est aria-hidden et le CV porte l'information. */
+.intro .intro-sat {
+  position: absolute;
+  left: var(--bx);
+  top: var(--by);
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 1.9vmin;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-500, #3d7bae);
+  opacity: 0;
+  transform: translate(var(--sx, 0), var(--sy, 0));
+  animation:
+    intro-sat-entre 0.55s var(--e-move) var(--sin) forwards,
+    intro-sat-sort 0.45s var(--e-move) var(--sout) forwards;
+}
+
+.intro .intro-sat.est-foret {
+  color: var(--foret-tenue);
+}
+
+.intro .intro-sat.s01 {
+  --bx: -70vmin;
+  --by: -60vmin;
+  --sx: 0vmin;
+  --sy: -5vmin;
+  --sin: 0.35s;
+  --sout: 1.70s;
+}
+
+.intro .intro-sat.s02 {
+  --bx: -70vmin;
+  --by: -54vmin;
+  --sx: -7vmin;
+  --sy: 0vmin;
+  --sin: 0.47s;
+  --sout: 1.75s;
+}
+
+.intro .intro-sat.s03 {
+  --bx: -24vmin;
+  --by: -60vmin;
+  --sx: 7vmin;
+  --sy: 0vmin;
+  --sin: 0.59s;
+  --sout: 1.80s;
+}
+
+.intro .intro-sat.s04 {
+  --bx: -70vmin;
+  --by: -26vmin;
+  --sx: -8vmin;
+  --sy: 0vmin;
+  --sin: 0.71s;
+  --sout: 1.85s;
+}
+
+.intro .intro-sat.s05 {
+  --bx: -70vmin;
+  --by: -20vmin;
+  --sx: 0vmin;
+  --sy: 6vmin;
+  --sin: 0.83s;
+  --sout: 1.90s;
+}
+
+.intro .intro-sat.s06 {
+  --bx: -34vmin;
+  --by: -20vmin;
+  --sx: 0vmin;
+  --sy: -5vmin;
+  --sin: 2.55s;
+  --sout: 4.15s;
+}
+
+.intro .intro-sat.s07 {
+  --bx: -34vmin;
+  --by: -14vmin;
+  --sx: -7vmin;
+  --sy: 0vmin;
+  --sin: 2.67s;
+  --sout: 4.20s;
+}
+
+.intro .intro-sat.s08 {
+  --bx: -34vmin;
+  --by: 14vmin;
+  --sx: -8vmin;
+  --sy: 0vmin;
+  --sin: 2.79s;
+  --sout: 4.25s;
+}
+
+.intro .intro-sat.s09 {
+  --bx: -34vmin;
+  --by: 20vmin;
+  --sx: 0vmin;
+  --sy: 6vmin;
+  --sin: 2.91s;
+  --sout: 4.30s;
+}
+
+.intro .intro-sat.s10 {
+  --bx: 48vmin;
+  --by: -14vmin;
+  --sx: 7vmin;
+  --sy: 0vmin;
+  --sin: 3.03s;
+  --sout: 4.35s;
+}
+
+.intro .intro-sat.s11 {
+  --bx: 48vmin;
+  --by: 8vmin;
+  --sx: 7vmin;
+  --sy: 0vmin;
+  --sin: 3.15s;
+  --sout: 4.40s;
+}
+
+.intro .intro-sat.s12 {
+  --bx: -70vmin;
+  --by: 20vmin;
+  --sx: 0vmin;
+  --sy: -5vmin;
+  --sin: 5.00s;
+  --sout: 6.55s;
+}
+
+.intro .intro-sat.s13 {
+  --bx: -24vmin;
+  --by: 20vmin;
+  --sx: 7vmin;
+  --sy: 0vmin;
+  --sin: 5.12s;
+  --sout: 6.60s;
+}
+
+.intro .intro-sat.s14 {
+  --bx: -70vmin;
+  --by: 54vmin;
+  --sx: -8vmin;
+  --sy: 0vmin;
+  --sin: 5.24s;
+  --sout: 6.65s;
+}
+
+.intro .intro-sat.s15 {
+  --bx: -70vmin;
+  --by: 60vmin;
+  --sx: 0vmin;
+  --sy: 6vmin;
+  --sin: 5.36s;
+  --sout: 6.70s;
 }
 
 /* ---------- la structure, revelee au recul ---------- */
@@ -197,31 +348,31 @@ html.intro-armed .intro.is-playing * {
   width: 1px;
   transform-origin: 50% 0;
   transform: scaleY(0);
-  animation: intro-trace-y 0.75s var(--e-move) var(--trace) forwards;
+  animation: intro-trace-y 0.6s var(--e-move) var(--trace) forwards;
 }
 
 .intro .intro-axis.is-a {
-  --trace: 5.95s;
-  left: -87vmin;
-  top: -39vmin;
-  height: 82vmin;
+  --trace: 6.85s;
+  left: -75vmin;
+  top: -50vmin;
+  height: 126vmin;
 }
 
 .intro .intro-axis.is-b {
-  --trace: 6.15s;
-  left: -9vmin;
-  top: -15vmin;
-  height: 77vmin;
+  --trace: 7.00s;
+  left: -39vmin;
+  top: -12vmin;
+  height: 26vmin;
 }
 
 .intro .intro-rule {
-  left: -9vmin;
-  top: 58vmin;
+  left: -39vmin;
+  top: 76vmin;
   width: 58vmin;
   height: 1px;
   transform-origin: 0 50%;
   transform: scaleX(0);
-  animation: intro-trace-x 0.6s var(--e-move) 6.4s forwards;
+  animation: intro-trace-x 0.5s var(--e-move) 7.1s forwards;
 }
 
 /* ---------- reperes ecran ---------- */
@@ -287,10 +438,10 @@ html.intro-armed .intro.is-playing * {
   }
 }
 
-@keyframes intro-apparait {
+@keyframes intro-mot-entre {
   from {
     opacity: 0;
-    transform: translateY(calc(-50% + 2.2vmin));
+    transform: translate(var(--wx, 0), calc(-50% + var(--wy, 0)));
   }
   to {
     opacity: 1;
@@ -298,11 +449,34 @@ html.intro-armed .intro.is-playing * {
   }
 }
 
+@keyframes intro-sat-entre {
+  from {
+    opacity: 0;
+    transform: translate(var(--sx, 0), var(--sy, 0));
+  }
+  to {
+    opacity: 0.92;
+    transform: translate(0, 0);
+  }
+}
+
+/* Elle repart par ou elle est venue, en sens inverse. */
+@keyframes intro-sat-sort {
+  from {
+    opacity: 0.92;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(var(--sx, 0) * -0.8), calc(var(--sy, 0) * -0.8));
+  }
+}
+
 /* Les mentions deja lues ne sortent pas : elles passent au second plan
    pour que le recul final reste hierarchise. */
-@keyframes intro-recule {
+@keyframes intro-mot-recule {
   to {
-    opacity: 0.28;
+    opacity: 0.26;
   }
 }
 
@@ -322,69 +496,190 @@ html.intro-armed .intro.is-playing * {
    (deplacement lineaire tres lent), les transitions sont des glissements. */
 @keyframes intro-camera {
   0% {
-    transform: scale(2) translate(54.5vmin, 33vmin);
+    transform: scale(1.18) translate(20vmin, 37vmin);
     animation-timing-function: linear;
   }
-  15.82% {
-    transform: scale(1.9) translate(54.5vmin, 33vmin);
+  23.42% {
+    transform: scale(1.12) translate(20vmin, 37vmin);
     animation-timing-function: var(--e-move);
   }
-  22.78% {
-    transform: scale(1.15) translate(-43.5vmin, 9vmin);
+  30.38% {
+    transform: scale(1.11) translate(-16vmin, 0vmin);
     animation-timing-function: linear;
   }
-  39.24% {
-    transform: scale(1.11) translate(-43.5vmin, 9vmin);
+  54.43% {
+    transform: scale(1.05) translate(-16vmin, 0vmin);
     animation-timing-function: var(--e-move);
   }
-  46.2% {
-    transform: scale(1.02) translate(26.5vmin, -27vmin);
+  61.39% {
+    transform: scale(1.21) translate(20vmin, -40vmin);
     animation-timing-function: linear;
   }
-  66.46% {
-    transform: scale(0.98) translate(26.5vmin, -27vmin);
+  83.54% {
+    transform: scale(1.15) translate(20vmin, -40vmin);
     animation-timing-function: var(--e-move);
   }
-  74.68% {
-    transform: scale(0.66) translate(-4.5vmin, -11vmin);
+  90.51% {
+    transform: scale(0.61) translate(14.5vmin, -12vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.635) translate(-4.5vmin, -11vmin);
+    transform: scale(0.59) translate(14.5vmin, -12vmin);
   }
 }
 
 /* ---------- portrait : autre composition, autre camera ---------- */
 
 @media (max-aspect-ratio: 1/1) {
-  .intro .intro-bloc.is-a {
-    --bx: -33vmin;
-    --by: -56vmin;
-    font-size: 8.4vmin;
+  /* Portrait : colonne unique. Les enonces se replient d'eux-memes sur une
+     largeur fixe — les retours forces du paysage sont neutralises. */
+  .intro .intro-mot {
+    width: 68vmin;
+    white-space: normal;
+    font-size: 6.4vmin;
   }
 
-  .intro .intro-bloc.is-b {
-    --bx: -33vmin;
-    --by: -33vmin;
-    font-size: 7vmin;
+  .intro .intro-mot br {
+    display: none;
   }
 
-  .intro .intro-bloc.is-c {
-    --bx: -33vmin;
-    --by: 2vmin;
-    font-size: 14vmin;
+  .intro .intro-mot.is-1 {
+    --bx: -34vmin;
+    --by: -58vmin;
   }
 
-  .intro .intro-bloc.is-e {
-    --bx: -33vmin;
-    --by: 40vmin;
-    font-size: 6.6vmin;
+  .intro .intro-mot.is-2 {
+    --bx: -34vmin;
+    --by: -6vmin;
+  }
+
+  .intro .intro-mot.is-3 {
+    --bx: -34vmin;
+    --by: 44vmin;
+  }
+
+  .intro .intro-mot.is-nom {
+    --bx: -34vmin;
+    --by: 88vmin;
+    width: auto;
+    font-size: 6.4vmin;
+  }
+
+  /* A 1,9vmin la matiere secondaire tomberait sous les 8 px sur un
+     telephone : elle est agrandie sans changer sa place dans la hierarchie. */
+  .intro .intro-sat {
+    font-size: 3vmin;
+  }
+
+  .intro .intro-sat.s01 {
+    --bx: -34vmin;
+    --by: -86vmin;
+    --sx: 0vmin;
+    --sy: -5vmin;
+  }
+
+  .intro .intro-sat.s02 {
+    --bx: -34vmin;
+    --by: -80vmin;
+    --sx: -7vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s03 {
+    --bx: -34vmin;
+    --by: -74vmin;
+    --sx: 7vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s04 {
+    --bx: -34vmin;
+    --by: -40vmin;
+    --sx: -8vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s05 {
+    --bx: -34vmin;
+    --by: -34vmin;
+    --sx: 0vmin;
+    --sy: 6vmin;
+  }
+
+  .intro .intro-sat.s06 {
+    --bx: -34vmin;
+    --by: -28vmin;
+    --sx: 0vmin;
+    --sy: -5vmin;
+  }
+
+  .intro .intro-sat.s07 {
+    --bx: -34vmin;
+    --by: -22vmin;
+    --sx: -7vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s08 {
+    --bx: -34vmin;
+    --by: 12vmin;
+    --sx: -8vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s09 {
+    --bx: -34vmin;
+    --by: 18vmin;
+    --sx: 0vmin;
+    --sy: 6vmin;
+  }
+
+  .intro .intro-sat.s10 {
+    --bx: -34vmin;
+    --by: 24vmin;
+    --sx: 7vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s11 {
+    --bx: -34vmin;
+    --by: 30vmin;
+    --sx: -6vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s12 {
+    --bx: -34vmin;
+    --by: 22vmin;
+    --sx: 0vmin;
+    --sy: -5vmin;
+  }
+
+  .intro .intro-sat.s13 {
+    --bx: -34vmin;
+    --by: 28vmin;
+    --sx: 7vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s14 {
+    --bx: -34vmin;
+    --by: 66vmin;
+    --sx: -8vmin;
+    --sy: 0vmin;
+  }
+
+  .intro .intro-sat.s15 {
+    --bx: -34vmin;
+    --by: 72vmin;
+    --sx: 0vmin;
+    --sy: 6vmin;
   }
 
   .intro .intro-axis.is-a {
-    left: -38vmin;
-    top: -62vmin;
-    height: 78vmin;
+    left: -39vmin;
+    top: -88vmin;
+    height: 190vmin;
   }
 
   .intro .intro-axis.is-b {
@@ -392,9 +687,9 @@ html.intro-armed .intro.is-playing * {
   }
 
   .intro .intro-rule {
-    left: -33vmin;
-    top: 50vmin;
-    width: 46vmin;
+    left: -34vmin;
+    top: 98vmin;
+    width: 52vmin;
   }
 
   .intro .intro-plane {
@@ -404,35 +699,35 @@ html.intro-armed .intro.is-playing * {
 
 @keyframes intro-camera-portrait {
   0% {
-    transform: scale(1.58) translate(6vmin, 56vmin);
+    transform: scale(1.32) translate(0vmin, 58vmin);
     animation-timing-function: linear;
   }
-  15.82% {
-    transform: scale(1.5) translate(6vmin, 56vmin);
+  23.42% {
+    transform: scale(1.26) translate(0vmin, 58vmin);
     animation-timing-function: var(--e-move);
   }
-  22.78% {
-    transform: scale(1.12) translate(-5.5vmin, 33vmin);
+  30.38% {
+    transform: scale(1.32) translate(0vmin, 6vmin);
     animation-timing-function: linear;
   }
-  39.24% {
-    transform: scale(1.08) translate(-5.5vmin, 33vmin);
+  54.43% {
+    transform: scale(1.26) translate(0vmin, 6vmin);
     animation-timing-function: var(--e-move);
   }
-  46.2% {
-    transform: scale(0.98) translate(-10.5vmin, -6vmin);
+  61.39% {
+    transform: scale(1.32) translate(0vmin, -44vmin);
     animation-timing-function: linear;
   }
-  66.46% {
-    transform: scale(0.95) translate(-10.5vmin, -6vmin);
+  83.54% {
+    transform: scale(1.26) translate(0vmin, -44vmin);
     animation-timing-function: var(--e-move);
   }
-  74.68% {
-    transform: scale(0.9) translate(-10.5vmin, 5vmin);
+  90.51% {
+    transform: scale(0.56) translate(0vmin, -5vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.87) translate(-10.5vmin, 5vmin);
+    transform: scale(0.545) translate(0vmin, -5vmin);
   }
 }
 

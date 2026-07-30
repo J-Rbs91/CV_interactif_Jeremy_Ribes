@@ -24,16 +24,26 @@
   vaut rien, et le contexte ne tient pas dans le budget de texte : les
   chiffres restent dans le CV, où ils sont expliqués. La séquence porte
   le point fort du profil — son caractère hybride — pas la performance.
-- Budget de texte : **~10 mots au total**. Un visiteur lit environ 2 mots
-  par seconde sur un texte qu'il découvre ; au-delà, il décroche. Toute
-  mention ajoutée doit en remplacer une autre.
-- Rythme dicté par la lecture : arrêts de 1,25 à 2 s, déplacements de
+- Registre : des **énoncés de compétence**, pas des slogans. « L'expérience
+  de 14 années de terrain », pas « Le terrain ». Chaque énoncé se suffit et
+  reprend le vocabulaire du CV.
+- Deux couches, jamais une seule. L'**énoncé** est ce qu'on lit : grand,
+  encre ou forêt, contrasté. L'**habillage** (`.intro-sat`) est la matière
+  qui l'entoure et le documente : mono, petit, en retrait, entrant et
+  sortant par des bords variés. Sa taille et son ton doivent dire d'eux-mêmes
+  qu'il n'est pas à lire. Un énoncé seul sur fond vide ne tient pas.
+- Budget de lecture : **3 énoncés** d'environ 6 mots, ~1,8 s d'arrêt chacun.
+  Un visiteur lit environ 2 mots par seconde sur un texte qu'il découvre.
+  L'habillage ne compte pas dans ce budget, justement parce qu'on ne le lit
+  pas — mais il ne doit jamais recouvrir l'énoncé.
+- Rythme dicté par la lecture : arrêts de 1,75 à 1,95 s, déplacements de
   0,55 à 0,65 s. Les arrêts dérivent lentement (timing linéaire) pour que
   la caméra ne soit jamais figée ; les déplacements utilisent `--e-move`.
 - Couleur : la séquence ne définit aucune teinte, elle consomme la charte
   (`--ink-*`, `--forest-*`). Encre pour ce qui cadre, forêt pour ce qui
-  produit ; la chute « Les deux. » porte les deux porteuses à la fois, et
-  chaque axe reprend la couleur de sa colonne. La flamme reste hors champ :
+  produit — l'énoncé sur les solutions et outils est le seul en forêt.
+  Un habillage reprend la couleur de l'énoncé qu'il documente.
+  La flamme reste hors champ :
   sa règle de rareté la réserve aux chiffres, absents de la séquence.
   Ne pas réintroduire de palette propre à la séquence — une landing d'un
   ton étranger à son CV se lit comme un modèle plaqué.
@@ -50,9 +60,16 @@
   utilise des noms voisins (`.proof-value`, `.dim`) et les écraserait.
 - La séquence est ignorée si `prefers-reduced-motion: reduce` est actif ou
   si elle a déjà été jouée dans la session ; `#intro` force la relecture.
-- Vérification : `cadrage.js` contrôle qu'à chaque arrêt le texte à lire
-  tient dans l'écran, sur huit formats. Un contrôle de débordement global
-  n'a pas de sens ici, une partie du plan est volontairement hors champ.
+- Vérification, trois contrôles complémentaires : `cadrage.js` (l'énoncé
+  tient dans l'écran à chaque arrêt, huit formats), `sats.js` (aucun
+  élément d'habillage hors champ pendant son arrêt) et `chevauche.js`
+  (aucun habillage ne recouvre l'énoncé). Un contrôle de débordement
+  global n'a pas de sens ici : une partie du plan est volontairement hors
+  champ.
+- L'habillage est volontairement à 4,2:1 et 3,4:1, sous le seuil AA pour
+  du petit texte. C'est un choix : ce n'est pas du contenu, la scène est
+  `aria-hidden` et le CV porte l'information. Les énoncés, eux, restent
+  au-dessus de 7:1.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
