@@ -16,11 +16,17 @@
 }
 
 html.intro-armed .intro {
-  --paper: #eae7e0;
-  --ink: #16150f;
-  --ink-soft: rgba(22, 21, 15, 0.64);
-  --ink-faint: rgba(22, 21, 15, 0.46);
-  --red: #bf3318;
+  /* La sequence ne definit aucune couleur : elle consomme la charte du CV
+     (docs/charte-couleurs.md). Encre = ce qui cadre, foret = ce qui produit.
+     Les deux porteuses disent litteralement l'hybridite du profil.
+     La flamme reste hors champ : sa regle de rarete la reserve aux chiffres,
+     qui ne sont plus dans la sequence. */
+  --fond: var(--ink-50, #f1f6fa);
+  --encre: var(--ink-900, #0c2740);
+  --encre-doux: var(--ink-600, #255e92);
+  --encre-tenue: var(--ink-300, #8fb2ce);
+  --foret: var(--forest-700, #155e45);
+  --foret-tenue: var(--forest-500, #2e9670);
   --display: "Archivo", "Manrope", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 
@@ -34,9 +40,9 @@ html.intro-armed .intro {
   display: block;
   overflow: hidden;
   background:
-    radial-gradient(120% 90% at 22% 8%, rgba(255, 255, 255, 0.6), transparent 58%),
-    linear-gradient(168deg, #f0ede6 0%, #e9e5dd 56%, #ded9cf 100%);
-  color: var(--ink);
+    radial-gradient(120% 90% at 22% 8%, rgba(255, 255, 255, 0.72), transparent 58%),
+    linear-gradient(168deg, var(--ink-50, #f1f6fa) 0%, #eaf1f8 56%, #dde8f2 100%);
+  color: var(--encre);
   animation: intro-off 0.45s ease var(--t-end, 7.45s) forwards;
 }
 
@@ -111,6 +117,7 @@ html.intro-armed .intro.is-playing * {
   --apparait: 0.1s;
   --recule: 1.8s;
   font-size: 8.6vmin;
+  color: var(--encre);
 }
 
 .intro .intro-bloc.is-b {
@@ -119,6 +126,7 @@ html.intro-armed .intro.is-playing * {
   --apparait: 1.6s;
   --recule: 3.65s;
   font-size: 8.6vmin;
+  color: var(--foret);
 }
 
 .intro .intro-bloc.is-c {
@@ -128,6 +136,13 @@ html.intro-armed .intro.is-playing * {
   --recule: 5.9s;
   font-size: 18vmin;
   letter-spacing: -0.035em;
+  color: var(--encre);
+}
+
+/* La chute est portee par les deux couleurs porteuses a la fois : c'est
+   ce que « les deux » veut dire. */
+.intro .intro-bloc.is-c .est-foret {
+  color: var(--foret);
 }
 
 .intro .intro-bloc.is-e {
@@ -135,6 +150,7 @@ html.intro-armed .intro.is-playing * {
   --by: 50vmin;
   --apparait: 5.75s;
   font-size: 7.4vmin;
+  color: var(--encre);
 }
 
 /* Legende de la chute : elle nomme ce que le mot vient de dire. */
@@ -147,7 +163,7 @@ html.intro-armed .intro.is-playing * {
   font-stretch: normal;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--encre-doux);
   animation: intro-apparait 0.5s ease 3.9s both;
 }
 
@@ -161,7 +177,7 @@ html.intro-armed .intro.is-playing * {
   letter-spacing: 0.16em;
   line-height: 1.3;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--encre-doux);
 }
 
 /* ---------- la structure, revelee au recul ---------- */
@@ -169,8 +185,12 @@ html.intro-armed .intro.is-playing * {
 .intro .intro-axis,
 .intro .intro-rule {
   position: absolute;
-  background: var(--red);
-  opacity: 0.85;
+  background: var(--encre-tenue);
+}
+
+/* Chaque axe porte la couleur de la colonne qu'il structure. */
+.intro .intro-axis.is-b {
+  background: var(--foret-tenue);
 }
 
 .intro .intro-axis {
@@ -213,8 +233,8 @@ html.intro-armed .intro.is-playing * {
   z-index: 3;
   width: 100%;
   height: 1px;
-  background: var(--ink);
-  opacity: 0.32;
+  background: var(--encre);
+  opacity: 0.28;
   transform: scaleX(0);
   transform-origin: 0 50%;
   animation: intro-trace-x 7.9s linear both;
@@ -229,7 +249,7 @@ html.intro-armed .intro.is-playing * {
   border: 1px solid transparent;
   border-radius: 2px;
   background: transparent;
-  color: var(--ink-faint);
+  color: var(--encre-doux);
   font-family: var(--mono);
   font-size: 9px;
   font-weight: 500;
@@ -248,12 +268,12 @@ html.intro-armed .intro.is-playing * {
 
 .intro .intro-skip:hover,
 .intro .intro-skip:focus-visible {
-  color: var(--ink);
-  border-color: rgba(22, 21, 15, 0.22);
+  color: var(--encre);
+  border-color: var(--encre-tenue);
 }
 
 .intro .intro-skip:focus-visible {
-  outline: 1px solid var(--red);
+  outline: 1px solid var(--encre-doux);
   outline-offset: 3px;
 }
 

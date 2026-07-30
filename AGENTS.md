@@ -30,6 +30,13 @@
 - Rythme dicté par la lecture : arrêts de 1,25 à 2 s, déplacements de
   0,55 à 0,65 s. Les arrêts dérivent lentement (timing linéaire) pour que
   la caméra ne soit jamais figée ; les déplacements utilisent `--e-move`.
+- Couleur : la séquence ne définit aucune teinte, elle consomme la charte
+  (`--ink-*`, `--forest-*`). Encre pour ce qui cadre, forêt pour ce qui
+  produit ; la chute « Les deux. » porte les deux porteuses à la fois, et
+  chaque axe reprend la couleur de sa colonne. La flamme reste hors champ :
+  sa règle de rareté la réserve aux chiffres, absents de la séquence.
+  Ne pas réintroduire de palette propre à la séquence — une landing d'un
+  ton étranger à son CV se lit comme un modèle plaqué.
 - Géométrie en `vmin` : la composition est proportionnelle à l'écran,
   donc aucune typographie responsive à régler. Le portrait a ses propres
   coordonnées et sa propre passe de caméra.
