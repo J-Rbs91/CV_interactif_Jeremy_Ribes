@@ -64,8 +64,55 @@ html.intro-armed .intro.is-playing * {
   animation-play-state: running;
 }
 
-.intro.is-done {
+/* Specificite : la regle de base est `html.intro-armed .intro` (0,2,1).
+   `.intro.is-done` (0,2,0) perdait, et le fondu du bouton Passer ne se
+   jouait donc jamais — l'overlay restait entier puis disparaissait d'un
+   coup au bout de ses 420 ms. */
+html.intro-armed .intro.is-done {
   animation: intro-off 0.36s ease forwards;
+}
+
+/* ---------- le raccord ---------- */
+
+/* La sequence se terminait sur un fondu : deux plans sans rien qui les
+   relie. Le nom, dernier objet lu, rejoint desormais sa place dans le CV
+   pendant que le reste s'efface — un raccord, au sens du montage.
+   Le deplacement lui-meme est porte par js/ui/intro.js, qui seul peut
+   mesurer les deux boites. Ici : ce qui s'efface, et le sosie qui voyage. */
+html.intro-armed .intro.is-handoff {
+  animation: intro-off 0.58s var(--e-move) 0.14s forwards;
+}
+
+/* L'original cede la place a son sosie, qui n'est plus dans le plan et ne
+   subit donc ni la camera ni le fondu. */
+html.intro-armed .intro.is-handoff .intro-mot.is-nom {
+  opacity: 0;
+}
+
+.intro-nom {
+  display: inline-block;
+}
+
+/* Le sosie vit hors de l'overlay, au-dessus de lui. Sa taille est celle
+   que la camera donnait a l'original au moment du depart, calculee en JS. */
+.intro-ghost {
+  position: fixed;
+  z-index: 10000;
+  margin: 0;
+  font-family: "Archivo", "Manrope", sans-serif;
+  font-weight: 800;
+  font-stretch: expanded;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+  white-space: nowrap;
+  color: var(--ink-900, #0c2740);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+/* Le h1 du CV attend, invisible, que le sosie arrive a sa place. */
+html.intro-handoff .identity h1 {
+  opacity: 0;
 }
 
 .intro .intro-grain {

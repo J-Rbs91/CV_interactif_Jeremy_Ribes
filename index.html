@@ -168,8 +168,12 @@
           <span class="intro-sat s14">Structurer sans alourdir</span>
           <span class="intro-sat s15">D&eacute;montrer l&rsquo;utilit&eacute; concr&egrave;te</span>
 
+          <!-- Le nom est isole dans son propre span : c'est lui, et lui
+               seul, que le raccord mesure puis deplace vers le h1 du CV.
+               Mesurer `.intro-mot.is-nom` donnerait la boite du bloc entier,
+               dont la largeur est celle du sous-titre, plus long. -->
           <div class="intro-mot is-nom">
-            J&eacute;r&eacute;my Ribes
+            <span class="intro-nom">J&eacute;r&eacute;my Ribes</span>
             <span class="intro-role"
               >Coordinateur de la performance commerciale</span
             >

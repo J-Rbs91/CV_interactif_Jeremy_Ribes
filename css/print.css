@@ -522,7 +522,10 @@
     border-left: 2pt solid var(--n-mark);
   }
 
+  /* L'ecran borne la mesure de la citation pour lui donner sa forme de bloc
+     detache ; le papier a deja sa grille et veut toute la colonne. */
   .punchline-box p {
+    max-width: none;
     font-size: 10pt;
     font-weight: 600;
     color: var(--ink-800);
@@ -560,9 +563,12 @@
     color: var(--n-ink);
   }
 
+  /* L'ecran separe desormais lui aussi par un point median, avec sa propre
+     gouttiere : sur le papier, seule l'espace du contenu doit compter. */
   .chip + .chip::before,
   .tag + .tag::before {
     content: " · ";
+    margin-right: 0;
     color: var(--ink-300);
   }
 

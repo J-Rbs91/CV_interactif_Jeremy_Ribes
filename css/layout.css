@@ -1,15 +1,23 @@
+/* =========================================================================
+   LE CADRE — supprime
+   -------------------------------------------------------------------------
+   C'etait le premier ecart, avant meme le style : la sequence est plein
+   ecran, bord a bord, sans contour ; le CV etait enferme dans une fenetre
+   a coins arrondis de 30 px, avec ombre portee, bordure, flou d'arriere-
+   plan et 20 px de marge tout autour. On ne passait pas d'un style a un
+   autre, on passait d'une affiche a une application posee sur un fond.
+
+   Il ne reste que la separation des deux colonnes, en filet d'un pixel —
+   le meme outil que l'axe de la sequence.
+   ========================================================================= */
 .app {
   display: flex;
   width: 100%;
-  height: calc(100vh - 40px);
-  max-width: 1480px;
+  height: 100vh;
+  max-width: 1600px;
   margin: 0 auto;
-  border: 1px solid var(--border);
-  border-radius: 30px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.52);
-  box-shadow: var(--shadow-md);
-  backdrop-filter: blur(18px);
+  background: transparent;
 }
 
 .app-mobile {
@@ -18,44 +26,61 @@
   overflow-y: auto;
   overflow-x: hidden;
   background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
 }
 
+/* La marge laterale se tient ici, une fois, plutot que d'etre reprise par
+   chaque bloc : sinon le trait de section active de la navigation se
+   retrouve colle au bord de l'ecran. */
 .panel-left {
-  width: 340px;
-  min-width: 300px;
+  width: 356px;
+  min-width: 316px;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  border-right: 1px solid var(--border);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.92),
-    rgba(248, 251, 255, 0.96)
-  );
+  padding: 0 var(--space-3);
+  border-right: 1px solid var(--ink-200);
+  background: transparent;
   flex-shrink: 0;
 }
 
+/* L'axe. La sequence ne separe rien par des cadres : elle pose un trait
+   d'un pixel, long, unique, et fait tenir la composition dessus. Le CV
+   repondait par huit rails de 2 px colores, un par bloc — repetes, courts
+   et teintes, ils se lisaient comme une decoration, pas comme une
+   structure. Un seul axe les remplace ; la couleur de nature qu'ils
+   portaient passe au titre de chaque bloc, exactement comme un enonce de
+   la sequence est lui-meme encre ou foret. */
 .panel-right {
+  --axis: 40px;
+  /* Ecart entre l'axe et la matiere. Declare ici parce que la frise des
+     experiences en a besoin pour venir poser ses jalons sur l'axe. */
+  --rail-gap: var(--space-3);
+  position: relative;
   flex: 1;
   height: 100%;
   min-width: 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    180deg,
-    rgba(251, 253, 255, 0.98),
-    rgba(244, 247, 251, 0.92)
-  );
+  background: transparent;
   overflow: hidden;
+}
+
+.panel-right::before {
+  content: "";
+  position: absolute;
+  left: var(--axis);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--ink-200);
+  pointer-events: none;
 }
 
 .nav-list {
   flex-shrink: 0;
-  padding: 10px 0;
+  padding: var(--space-2) 0;
 }
 
 .panel-left::-webkit-scrollbar {
@@ -84,15 +109,18 @@
   border-radius: 999px;
 }
 
+/* Le titre de section devient un evenement : il lui faut le vide autour
+   qu'il n'avait pas. Plus de fond translucide ni de flou — le titre se
+   detache par son corps, pas par un bandeau. */
 .content-head {
-  padding: 28px 36px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-5) var(--space-4) var(--space-3)
+    calc(var(--axis) + var(--rail-gap));
+  border-bottom: 1px solid var(--ink-200);
   flex-shrink: 0;
   display: flex;
   align-items: baseline;
-  gap: 16px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
+  gap: var(--space-2);
+  background: transparent;
 }
 
 /* Le blanc a repris le travail des cadres : deux rails séparés de 16 px se
@@ -101,16 +129,17 @@
 .content-body {
   flex: 1;
   min-height: 0;
-  padding: 28px 36px 36px;
+  padding: var(--space-4) var(--space-4) var(--space-6)
+    calc(var(--axis) + var(--rail-gap));
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 /* Chaque projet ouvre un nouveau propos : il lui faut plus qu'un interligne. */
 .content-body > .project-card:not(:first-child) {
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 .panel-right .content-body > * {
@@ -138,57 +167,52 @@
     max(16px, env(safe-area-inset-left));
 }
 
+/* En etroit aussi : plus de cartes flottantes. Le resume et la navigation
+   se separent du reste par un filet, comme partout ailleurs. */
 .mobile-summary {
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ink-200);
+  background: transparent;
 }
 
+/* Le bandeau doit masquer ce qui defile dessous, donc etre opaque — mais
+   toute couleur pleine dessinait un rectangle sur le degrade de la page.
+   Il reprend le fond du document en `fixed` : les deux se resolvent sur la
+   fenetre et se superposent exactement. */
 .mobile-nav-sticky {
   position: sticky;
   top: 0;
   z-index: 20;
-  margin: 16px 0 18px;
-  padding: 12px 0 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(244, 247, 251, 0.98) 0%,
-    rgba(244, 247, 251, 0.94) 78%,
-    rgba(244, 247, 251, 0) 100%
-  );
-  backdrop-filter: blur(10px);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) 0 0;
+  background: var(--fond-page);
+  background-attachment: fixed;
 }
 
 .mobile-nav-shell {
   position: relative;
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
+  border-bottom: 1px solid var(--ink-200);
+  background: transparent;
 }
 
 .mobile-nav-meta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px 10px;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-1);
 }
 
 .mobile-nav-title {
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--text-muted);
 }
 
 .mobile-nav-hint {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
   color: var(--text-muted);
   white-space: nowrap;
   transition:
@@ -198,46 +222,46 @@
 
 .mobile-nav-viewport {
   position: relative;
-  padding: 0 10px 12px;
+  padding: 0;
 }
 
-.mobile-nav-viewport::before,
-.mobile-nav-viewport::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 12px;
-  width: 28px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 2;
+/* Le debord se signalait par deux rectangles de couleur poses au-dessus du
+   rail. Sur un fond uni ils passaient ; sur un degrade ils se voyaient.
+   Un masque fait disparaitre le rail lui-meme sur ses bords, quelle que
+   soit la couleur derriere — il n'y a plus rien a accorder. */
+.mobile-nav-shell.is-overflow-left .mobile-nav {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 44px);
+  mask-image: linear-gradient(90deg, transparent 0, #000 44px);
 }
 
-.mobile-nav-viewport::before {
-  left: 0;
-  background: linear-gradient(
+.mobile-nav-shell.is-overflow-right .mobile-nav {
+  -webkit-mask-image: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0)
+    #000 calc(100% - 44px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 calc(100% - 44px),
+    transparent 100%
   );
 }
 
-.mobile-nav-viewport::after {
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 255, 255, 0)
+.mobile-nav-shell.is-overflow-left.is-overflow-right .mobile-nav {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 44px,
+    #000 calc(100% - 44px),
+    transparent 100%
   );
-}
-
-.mobile-nav-shell.is-overflow-left .mobile-nav-viewport::before {
-  opacity: 1;
-}
-
-.mobile-nav-shell.is-overflow-right .mobile-nav-viewport::after {
-  opacity: 1;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 44px,
+    #000 calc(100% - 44px),
+    transparent 100%
+  );
 }
 
 .mobile-nav-shell:not(.is-overflow-right) .mobile-nav-hint {
@@ -246,7 +270,7 @@
 
 .mobile-nav {
   display: flex;
-  gap: 12px;
+  gap: var(--space-4);
   overflow-x: auto;
   padding-bottom: 2px;
   scrollbar-width: none;
@@ -256,53 +280,66 @@
   display: none;
 }
 
+/* Le meme axe qu'en large, resserre. Ici il court sur toute la hauteur du
+   contenu, qui defile avec la page : `.mobile-main` est le bloc englobant,
+   donc `bottom: 0` atteint bien le bas du document et non le bas de
+   l'ecran. */
 .mobile-main {
+  --axis: 3px;
+  --rail-gap: var(--space-2);
+  position: relative;
   min-width: 0;
 }
 
+.mobile-main::before {
+  content: "";
+  position: absolute;
+  left: var(--axis);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--ink-200);
+  pointer-events: none;
+}
+
 .content-head-mobile {
-  padding: 0;
+  padding: 0 0 0 calc(var(--axis) + var(--rail-gap));
   border-bottom: none;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
   background: transparent;
-  backdrop-filter: none;
 }
 
 .content-body-mobile {
   flex: unset;
-  padding: 0;
-  gap: var(--space-3);
+  padding: 0 0 0 calc(var(--axis) + var(--rail-gap));
+  gap: var(--space-4);
   overflow: visible;
 }
 
+/* Le rendu bascule sur `.app-mobile` a 900 px via matchMedia : ce bloc ne
+   couvre que la fenetre etroite avant bascule et les cas ou le script n'a
+   pas encore mesure. On y resserre l'axe au lieu d'ecraser les retraits,
+   sinon le trait et les blocs se decrochent. */
 @media (max-width: 900px) {
-  body {
-    padding: 0;
-  }
-
   .app {
     height: 100vh;
-    border-radius: 0;
-    border: none;
+    flex-direction: column;
   }
 
   .panel-left {
     width: 100%;
     min-width: unset;
     border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--ink-200);
     height: 42vh;
   }
 
   .panel-right {
+    --axis: 8px;
     height: 58vh;
-  }
-
-  .app {
-    flex-direction: column;
   }
 
   .grid-2 {
@@ -315,7 +352,6 @@
 
   .content-head,
   .content-body {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-right: var(--space-2);
   }
 }

@@ -48,6 +48,23 @@
   mais la caméra est en pourcentages de 9,1 s : toute modification de la
   durée totale impose de recalculer ses deux jeux de keyframes ET
   `TOTAL_DURATION` dans `js/ui/intro.js`.
+- **Raccord final** (`startHandoff` dans `js/ui/intro.js`). La séquence se
+  terminait sur un fondu : le nom disparaissait à 6,4 vmin au centre et
+  réapparaissait à 22 px en haut à gauche du CV. Ni la taille, ni la
+  position, ni le rythme ne se répondaient — un faux raccord, au sens du
+  montage, et c'est lui qu'on voyait quand on disait « il y a une rupture ».
+  À 8,65 s, un sosie du nom (`.intro-ghost`, posé sur le document, hors du
+  plan donc hors caméra et hors fondu) rejoint la boîte de `.identity h1`
+  en 780 ms, pendant que l'overlay s'efface et que le CV monte
+  (`.app.is-entering`).
+- Les deux boîtes se mesurent au `Range`, pas au `getBoundingClientRect` de
+  l'élément : le `h1` du CV est un bloc, sa boîte fait toute la largeur de
+  la colonne et le nom atterrissait à plus du double de sa taille.
+- Le raccord renvoie `false` et laisse le fondu d'origine reprendre la main
+  si le nom, le plan ou le `h1` manquent, ou en `prefers-reduced-motion`.
+  Ne jamais le rendre obligatoire : le CV doit rester lisible sans lui.
+- Le nom vit dans son propre `<span class="intro-nom">` : mesurer
+  `.intro-mot.is-nom` donnerait la largeur du sous-titre, plus long.
 - Couleur : la séquence ne définit aucune teinte, elle consomme la charte
   (`--ink-*`, `--forest-*`). Encre pour ce qui cadre, forêt pour ce qui
   produit — l'énoncé sur les solutions et outils est le seul en forêt.
@@ -80,6 +97,38 @@
   `aria-hidden` et le CV porte l'information. Les énoncés, eux, restent
   au-dessus de 7:1.
 
+## Le CV parle la langue de la séquence
+La séquence était une composition, le CV une interface : c'est ce qui
+créait la rupture, bien avant les questions de style. Sept décisions la
+referment, et aucune ne doit être défaite isolément — c'est leur ensemble
+qui tient.
+
+- **Aucun cadre.** `.app` n'a plus ni rayon, ni ombre, ni bordure, ni
+  `backdrop-filter`, et `body` n'a plus de marge : le CV occupe la page
+  comme la séquence occupe l'écran. Ne pas remettre le CV dans une fenêtre.
+- **Un axe, pas des rails.** Un filet d'un pixel (`--ink-200`) court sur
+  toute la hauteur, posé par `.panel-right::before` en large et
+  `.mobile-main::before` en étroit. Les blocs s'y accrochent à
+  `--axis + --rail-gap`. Les huit rails de 2 px colorés ont disparu : un
+  trait qui se répète est une décoration, pas une structure.
+- **La nature se dit par le texte.** Ce que portait le rail passe à la
+  couleur du titre (`--n-ink`), comme un énoncé de la séquence est
+  lui-même encre ou forêt. Un composant ne pose plus de barre teintée.
+- **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
+  plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
+  séparées par un point médian — la règle que `css/print.css` appliquait
+  déjà au papier. La couleur est de l'encre, jamais une surface.
+- **Une seule voix pour les titres.** Archivo à chasse élargie sur tous les
+  titres de bloc, plus seulement sur le nom et les titres de section.
+- **Un seul grain.** `--grain`, posé sur `body::after` et consommé aussi
+  par `.intro-grain`. C'est la seule matière commune aux deux moitiés, et
+  elle suffit à les faire tenir sur le même support. Le fond lui-même est
+  déclaré une fois (`--fond-page`) et repris à l'identique par la séquence.
+- **Un seul mouvement.** `--e-move` est la courbe de la caméra ; tout ce
+  qui bouge dans le CV l'utilise. Au changement de section, les blocs
+  entrent décalés (`playSectionEntry` dans `js/main.js`) — au changement
+  de section seulement, jamais sur l'ouverture d'un accordéon.
+
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
@@ -92,6 +141,14 @@
   consomme un palier. Le CV avait dix valeurs approximatives dont
   soixante-douze éléments au même corps — la hiérarchie retombait sur les
   cadres au lieu de l'échelle.
+- Le titre de section est à 54 px, contre 38 auparavant. L'échelle était
+  déclarée mais pas visible : 90 % de la surface tenait entre 11 et 18 px.
+  La séquence oppose 45 px à 17 px sur un écran vide — le titre de section
+  reprend ce rapport. Ne pas le redescendre sans redescendre aussi
+  `--space-5` / `--space-6`, qui lui donnent le vide dont il a besoin.
+- Une seule graisse forte à la fois. Il y avait jusqu'à douze objets en 800
+  sur un même écran : plus rien ne hiérarchisait. La seconde couche (mono)
+  est en 500, pas en 700.
 - Trois familles, trois rôles : `--font-display` (Archivo à chasse
   élargie) pour l'identité et les titres de section, c'est le lien visuel
   avec la séquence d'ouverture ; `--font-sans` (Manrope) pour la lecture ;
@@ -116,6 +173,10 @@
 ## Impression
 - `css/print.css` recompose le document, il ne rétrécit pas la page : bandeau
   à deux colonnes, sections numérotées, grille libellé (30 mm) / matière.
+- L'écran a rejoint le papier sur les étiquettes et les cadres : ces deux
+  systèmes se ressemblent désormais beaucoup, mais restent séparés. Une
+  règle d'écran n'a pas à être répétée ici, et `print.css` garde ses
+  propres tailles en points.
 - Toute nouvelle section doit être ajoutée à `renderSectionBody()` dans
   `js/render/renderPrint.js`, sinon elle disparaît du PDF.
 - Un accordéon doit accepter `{ expandAll: true }` pour être imprimable.

@@ -32,7 +32,13 @@ const state = {
   pendingMobileAccordionScroll: null,
   shouldAnimateMobileNav: false,
   hasInitializedMobileNav: false,
+  shouldAnimateSection: true,
 };
+
+/* Le decalage d'entree est plafonne : au-dela de huit blocs, le dernier
+   arriverait apres que l'oeil a fini de parcourir la page, et le rythme se
+   lirait comme une lenteur. */
+const maxSectionEntryStagger = 8;
 
 const mobileViewport = "(max-width: 900px)";
 const mobileNavigationScrollSettleDelay = 350;
@@ -220,6 +226,40 @@ function restoreMobileAccordionScrollPosition({ behavior = "smooth" } = {}) {
   return true;
 }
 
+/* Le rythme de la sequence, importe dans le CV : au changement de section,
+   les blocs entrent decales, avec la meme courbe. Uniquement au changement
+   de section — un accordeon qui se deplie re-rend la meme page, et faire
+   rejouer l'entree a chaque ouverture donnerait une interface nerveuse.
+   Le respect de `prefers-reduced-motion` est porte par css/base.css, qui
+   ramene toutes les durees a 0,01 ms sans changer l'etat d'arrivee. */
+function playSectionEntry() {
+  if (!state.shouldAnimateSection) {
+    return;
+  }
+
+  state.shouldAnimateSection = false;
+
+  const contentHead = document.querySelector(".content-head");
+  const contentBody = document.querySelector(".content-body");
+
+  if (contentHead) {
+    contentHead.classList.add("is-entering");
+  }
+
+  if (!contentBody) {
+    return;
+  }
+
+  Array.from(contentBody.children).forEach((block, index) => {
+    block.style.setProperty(
+      "--i",
+      String(Math.min(index, maxSectionEntryStagger)),
+    );
+  });
+
+  contentBody.classList.add("is-entering");
+}
+
 function renderCurrentSection() {
   switch (state.activeSection) {
     case "profil":
@@ -257,6 +297,7 @@ function bindUi() {
     state.pendingMobileAccordionScroll = null;
     state.desktopScrollTop = 0;
     state.activeSection = sectionId;
+    state.shouldAnimateSection = true;
     render();
   });
 
@@ -560,6 +601,7 @@ function render() {
       `;
 
   bindUi();
+  playSectionEntry();
 
   if (!state.isMobileView) {
     restoreDesktopScrollPosition();

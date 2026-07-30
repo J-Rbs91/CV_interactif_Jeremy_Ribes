@@ -1,28 +1,20 @@
-/* Sept compétences de même nature : un tableau. Le rail portait déjà la
-   nature (border-left 3 px) — on lui retire la boîte qui l'entourait et il
-   suffit. L'état ouvert ne se dit plus par une ombre plus lourde mais par
-   un rail plus dense, et par le contenu qui apparaît. */
+/* Sept compétences de même nature : un tableau. Le rail de 2 px qui portait
+   la nature disparait avec les sept autres — c'est le titre qui la porte
+   maintenant, par sa couleur. L'etat ouvert se dit par le filet qui
+   apparait et par le contenu qui se deplie. */
 .comp-card {
   background: none;
   border: 0;
-  border-left: 2px solid var(--n-mark);
   border-radius: 0;
   overflow: visible;
   box-shadow: none;
-  transition: border-color 0.15s ease;
 }
 
-/* Le blanc reprend le travail que faisaient les cadres : sans lui, sept
-   rails contigus se lisent comme un seul bloc rayé. */
+/* Le blanc reprend le travail que faisaient les cadres. */
 .competences-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-}
-
-.comp-card:hover,
-.comp-card.is-open {
-  border-left-color: var(--n-ink);
+  gap: var(--space-4);
 }
 
 .comp-toggle {
@@ -30,17 +22,17 @@
   border: 0;
   background: transparent;
   color: inherit;
-  padding: 2px 0 2px var(--space-2);
+  padding: 0;
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: var(--space-2);
   text-align: left;
   cursor: pointer;
 }
 
 .comp-toggle:focus-visible {
   outline: 2px solid var(--n-mark);
-  outline-offset: -2px;
+  outline-offset: 3px;
 }
 
 .comp-toggle-main {
@@ -48,13 +40,13 @@
 }
 
 .comp-toggle-icon {
-  width: 12px;
-  height: 12px;
-  margin-top: 6px;
-  border-right: 2px solid var(--n-mark);
-  border-bottom: 2px solid var(--n-mark);
+  width: 9px;
+  height: 9px;
+  margin-top: 8px;
+  border-right: 1px solid var(--n-mark);
+  border-bottom: 1px solid var(--n-mark);
   transform: rotate(45deg);
-  transition: transform 0.18s ease;
+  transition: transform 0.18s var(--e-move);
   flex-shrink: 0;
 }
 
@@ -64,9 +56,12 @@
 
 .comp-title {
   color: var(--n-ink);
+  font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-title);
-  font-weight: 800;
-  margin-bottom: 6px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
 }
 
 .comp-desc {
@@ -78,7 +73,7 @@
 .comp-details {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease;
+  transition: grid-template-rows 0.28s var(--e-move);
 }
 
 .comp-card.is-open .comp-details {
@@ -91,7 +86,7 @@
 .comp-details-inner {
   min-height: 0;
   overflow: hidden;
-  margin-left: var(--space-2);
+  margin-left: 0;
   padding: 0;
 }
 
@@ -115,43 +110,33 @@
   --tl-dot: var(--recency-past);
 }
 
+/* L'axe du temps et l'axe de la composition étaient deux traits verticaux
+   parallèles à trente pixels l'un de l'autre : exactement le doublon qu'on
+   retire partout ailleurs. Il n'en reste qu'un — celui de la colonne — et
+   la frise vient y poser ses jalons. C'est ce que fait la séquence quand
+   elle greffe son axe secondaire sur le principal.
+
+   Le décalage se calcule depuis `--rail-gap` (layout.css) : le bloc
+   commence à `--axis + --rail-gap`, donc l'axe est à `-(--rail-gap)` de son
+   bord, moins la moitié de la pastille pour la centrer dessus. */
 .timeline-item {
-  /* puce, filet et chevrons de puces suivent le même cran d'intensité */
+  /* puce et chevrons de puces suivent le même cran d'intensité */
   --n-mark: var(--tl-dot, var(--recency-past));
   position: relative;
-  padding-left: 24px;
+  padding-left: 0;
   padding-bottom: 6px;
 }
 
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 10px;
-  width: 10px;
-  height: 10px;
+  left: calc(-1 * var(--rail-gap, var(--space-3)) - 5px);
+  top: 9px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  border: 2px solid var(--tl-dot, var(--recency-past));
-  background: #ffffff;
-}
-
-/* L'axe du temps est continu ou n'est pas : il s'arrêtait au bas de chaque
-   poste et reprenait au suivant, ce qui donnait trois segments et non une
-   ligne. Il traverse maintenant l'espace inter-blocs, et consomme --n-line
-   comme les autres filets du CV — à var(--border) il passait sous le seuil
-   de visibilité que ce filet doit tenir. */
-.timeline-item::after {
-  content: "";
-  position: absolute;
-  left: 9px;
-  top: 22px;
-  width: 2px;
-  bottom: calc(-1 * var(--space-3));
-  background: var(--n-line);
-}
-
-.timeline-item:last-child::after {
-  display: none;
+  border: 1px solid var(--tl-dot, var(--recency-past));
+  background: var(--ink-50);
 }
 
 .stats-spotlight {
@@ -169,38 +154,48 @@
   color: var(--n-ink);
   font-family: var(--font-mono);
   font-size: var(--fs-metric);
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .stats-label {
-  margin-top: 2px;
+  margin-top: 4px;
+  font-family: var(--font-mono);
   font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
   color: var(--text-muted);
 }
 
 .stats-divider {
   width: 1px;
-  height: 48px;
-  background: var(--border);
+  height: var(--space-5);
+  background: var(--ink-200);
   flex-shrink: 0;
 }
 
 .tl-header {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  margin-bottom: 6px;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 
 .tl-role {
+  font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-title);
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
 }
 
+/* L'employeur etait en 700 juste a cote d'un titre en 800 : deux gras
+   contigus, aucun des deux ne ressortait. */
 .tl-company {
   font-size: var(--fs-sm);
-  font-weight: 700;
-  color: var(--ink-800);
+  font-weight: 500;
+  color: var(--text-dim);
 }
 
 .tl-date {
@@ -230,30 +225,30 @@
   position: absolute;
   left: 0;
   color: var(--n-mark);
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--fs-title);
   top: 1px;
 }
 
 .tl-tags {
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
 }
 
 /* Cinq réalisations de même nature : même traitement que les compétences.
-   L'icône reste, elle nomme le type d'action ; c'est le cadre qui part. */
+   L'icône reste, elle nomme le type d'action ; c'est le rail qui part. */
 .real-card {
   background: none;
   border: 0;
-  border-left: 2px solid var(--n-mark);
   border-radius: 0;
-  padding: 2px 0 2px var(--space-2);
+  padding: 0;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: var(--space-2);
   box-shadow: none;
 }
 
 .real-icon {
+  color: var(--n-mark);
   font-size: var(--fs-title);
   flex-shrink: 0;
   margin-top: 2px;
@@ -266,30 +261,23 @@
 }
 
 .tool-card {
-  /* Le numéro tient une colonne en drapeau : rail, chiffre, puis matière.
-     Le détail s'aligne sur la matière, pas sur le rail — sinon trois bords
-     gauches se succèdent et l'œil ne sait plus lequel structure. */
-  --tool-indent: calc(var(--space-2) + var(--space-3) + var(--space-2));
+  /* Le numéro tient une colonne en drapeau : chiffre, puis matière. Le
+     détail s'aligne sur la matière — sinon deux bords gauches se succèdent
+     et l'œil ne sait plus lequel structure. */
+  --tool-indent: calc(var(--space-3) + var(--space-2));
   background: none;
   border: 0;
-  border-left: 2px solid var(--n-mark);
   border-radius: 0;
   overflow: visible;
-  transition: border-color 0.15s ease;
   box-shadow: none;
 }
 
 .tool-card + .tool-card {
-  margin-top: var(--space-3);
-}
-
-.tool-card:hover,
-.tool-card.is-open {
-  border-left-color: var(--n-ink);
+  margin-top: var(--space-4);
 }
 
 .tool-summary {
-  padding: 2px 0 2px var(--space-2);
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: flex-start;
@@ -297,13 +285,13 @@
 }
 
 .tool-toggle-icon {
-  width: 12px;
-  height: 12px;
-  margin-top: 6px;
-  border-right: 2px solid var(--text-muted);
-  border-bottom: 2px solid var(--text-muted);
+  width: 9px;
+  height: 9px;
+  margin-top: 8px;
+  border-right: 1px solid var(--text-muted);
+  border-bottom: 1px solid var(--text-muted);
   transform: rotate(45deg);
-  transition: transform 0.18s ease;
+  transition: transform 0.18s var(--e-move);
   flex-shrink: 0;
 }
 
@@ -327,7 +315,7 @@
   justify-content: flex-start;
   font-family: var(--font-mono);
   font-size: var(--fs-lead);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.15;
   flex-shrink: 0;
 }
@@ -339,31 +327,36 @@
 .tool-topline {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: var(--space-2);
   flex-wrap: wrap;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .tool-title {
   color: var(--n-ink);
+  font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-title);
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .tool-category {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  color: var(--text-dim);
-  font-weight: 600;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
 }
 
 .tool-status {
   font-family: var(--font-mono);
   margin-left: auto;
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.7px;
+  letter-spacing: 0.16em;
   color: var(--text-muted);
 }
 
@@ -373,38 +366,42 @@
   color: var(--text);
 }
 
+/* Un lien est un lien : du texte souligne. La gelule cerclee en faisait un
+   bouton, et trois boutons par section faisaient de la page un formulaire. */
 .tool-link,
 .project-link {
   font-family: var(--font-mono);
-  background: var(--n-surf);
+  background: none;
   color: var(--n-ink);
-  border: 1px solid var(--n-line);
+  border: 0;
+  border-bottom: 1px solid var(--n-line);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
-  padding: 6px 12px;
-  border-radius: 999px;
+  margin-top: var(--space-2);
+  padding: 0 0 2px;
+  border-radius: 0;
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
   text-decoration: none;
-  transition: all 0.15s;
+  transition: border-color 0.15s ease;
 }
 
 .tool-link:hover,
 .project-link:hover {
-  text-decoration: underline;
-  filter: brightness(0.96);
+  border-bottom-color: var(--n-mark);
 }
 
 .tool-link:focus-visible,
 .project-link:focus-visible {
   outline: 2px solid currentColor;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 .tool-link-icon {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 /* Le filet est décalé du rail : posé au ras, il refermait l'angle et le
@@ -443,11 +440,11 @@
 .detail-label {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.18em;
   color: var(--text-muted);
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 }
 
 .detail-text {
@@ -456,10 +453,10 @@
   color: var(--text);
 }
 
-/* En étroit, le rail et son retrait suffisent : les marges intérieures de
+/* En étroit, l'axe et son retrait suffisent : les marges intérieures de
    carte n'ont plus d'objet et grignotaient la mesure de lecture. */
 .app-mobile .comp-toggle {
-  padding: 2px 0 2px var(--space-2);
+  padding: 0;
 }
 
 .app-mobile .stats-spotlight {
@@ -474,7 +471,7 @@
 }
 
 .app-mobile .timeline-item {
-  padding-left: 22px;
+  padding-left: 0;
 }
 
 .app-mobile .tl-header {
@@ -489,7 +486,7 @@
 }
 
 .app-mobile .tool-summary {
-  padding: 2px 0 2px var(--space-2);
+  padding: 0;
 }
 
 .app-mobile .tool-topline {

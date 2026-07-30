@@ -86,11 +86,18 @@
      soixante-douze elements au meme corps : un titre de bloc, sa
      description et ses etiquettes se lisaient au meme poids, et la
      hierarchie retombait entierement sur les cadres. Huit paliers, un
-     role chacun, aucune valeur en dur ailleurs. */
-  --fs-display: 38px; /* titre de section */
-  --fs-metric: 30px; /* chiffre de preuve */
+     role chacun, aucune valeur en dur ailleurs.
+
+     Le titre de section etait a 38 px : le seul objet de la page a cette
+     taille, immediatement suivi de 15 px partout. Entre les deux, deux
+     paliers servaient une fois chacun — l'echelle existait dans le
+     fichier, pas a l'ecran. La sequence, elle, oppose 45 px a 17 px sur
+     un ecran vide. Le titre de section reprend ce rapport : il redevient
+     un evenement, pas une etiquette. */
+  --fs-display: 54px; /* titre de section */
+  --fs-metric: 32px; /* enonce detache : chiffre de preuve, citation */
   --fs-lead: 22px; /* nom, titre de fenetre, annee */
-  --fs-title: 18px; /* titre de bloc */
+  --fs-title: 19px; /* titre de bloc */
   --fs-body: 15px; /* texte courant, seule taille de lecture */
   --fs-sm: 13.5px; /* texte secondaire */
   --fs-xs: 12px; /* mention */
@@ -105,10 +112,42 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* --- Rythme : l'espace encode le lien logique ------------------------- */
+  /* Quatre paliers s'arretaient a 32 px, et le contenu se separait presque
+     partout au meme cran de 24 px : deux blocs d'une meme liste et deux
+     propos differents etaient a la meme distance. Le blanc ne groupait
+     plus rien. Les deux paliers hauts ouvrent ce que la sequence obtient
+     par le vide — un changement de sujet se voit avant d'etre lu. */
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;
   --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 72px;
+
+  /* --- Mouvement : une seule courbe pour tout le projet ----------------- */
+  /* Celle de la camera de la sequence. Le CV n'avait aucune keyframe : au
+     moment ou la sequence s'eteignait, le mouvement passait a zero. Ce qui
+     bouge ici bouge desormais dans la meme langue. */
+  --e-move: cubic-bezier(0.62, 0, 0.24, 1);
+
+  /* --- Matiere : le grain de la sequence, partage ----------------------- */
+  /* La sequence est de la pellicule, le CV etait du verre (backdrop-filter,
+     degrades blancs translucides). Deux materiaux opposes de part et
+     d'autre du raccord. Un seul trace, consomme aux deux endroits. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* --- Le fond, declare une fois ---------------------------------------- */
+  /* Exactement celui de la sequence d'ouverture. Il est aussi repris par la
+     navigation collante en etroit : associe a `background-attachment: fixed`,
+     ses pourcentages se resolvent sur la fenetre et non sur l'element, donc
+     le bandeau se confond avec la page au lieu d'y dessiner un rectangle. */
+  --fond-page:
+    radial-gradient(
+      120% 90% at 22% 8%,
+      rgba(255, 255, 255, 0.72),
+      transparent 58%
+    ),
+    linear-gradient(168deg, var(--ink-50) 0%, #eaf1f8 56%, #dde8f2 100%);
 
   /* --- Élévation & rayons ---------------------------------------------- */
   --shadow-sm: 0 10px 30px rgba(12, 39, 64, 0.06);
@@ -166,20 +205,13 @@ html,
 body {
   min-height: 100vh;
   width: 100%;
-  /* Les deux porteuses, au seuil du perceptible : encre à gauche,
-     forêt à droite. */
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(26, 72, 116, 0.07),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at top right,
-      rgba(21, 94, 69, 0.06),
-      transparent 26%
-    ),
-    linear-gradient(180deg, #f8fbfd 0%, var(--bg) 100%);
+  /* Exactement le fond de la sequence d'ouverture. Le CV avait le sien —
+     deux teintes d'angle et un degre vertical different — si bien que le
+     fondu final changeait de papier en meme temps que de contenu. Un seul
+     fond de part et d'autre du raccord : ce qui disparait, c'est ce qui
+     est ecrit dessus, pas la surface. */
+  background: var(--fond-page);
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -187,10 +219,78 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Le CV n'est plus une fenetre posee sur un fond : il occupe la page. */
 body {
   overflow: hidden;
   overflow-x: hidden;
-  padding: 20px;
+  padding: 0;
+}
+
+/* Le grain de la sequence, etendu a tout le document. C'est le seul
+   element de matiere que les deux moities partagent, et il suffit a les
+   faire tenir sur le meme support.
+
+   Il doit passer AU-DESSUS de la navigation collante en etroit (z-index
+   20) : en dessous, le bandeau restait la seule surface lisse de la page
+   et s'y dessinait comme un rectangle. Et rester SOUS la modale (1000) et
+   la sequence (9999), qui sont des plans a part entiere.
+
+   Il disparait a l'impression : la regle `*` de print.css coupe toutes les
+   images de fond. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 0.055;
+  pointer-events: none;
+  background-image: var(--grain);
+}
+
+/* =========================================================================
+   MOUVEMENT
+   -------------------------------------------------------------------------
+   Le CV ne contenait aucune keyframe : seulement des survols de 0,15 s et
+   l'accordeon. A la seconde ou la sequence s'eteignait, tout mouvement
+   cessait d'exister — c'est une part de la rupture, invisible parce qu'on
+   ne voit pas ce qui manque.
+
+   Deux mouvements, pas trois. La montee du CV, qui referme le raccord ;
+   et l'entree des blocs au changement de section, qui importe le rythme
+   de la sequence : un decalage court, la meme courbe, jamais de rebond.
+
+   `backwards` et non `both` : l'etat d'arrivee doit redevenir le style
+   naturel de l'element, sinon un `transform` fige survivrait a
+   l'animation et bloquerait les survols.
+   ========================================================================= */
+
+@keyframes cv-entre {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes bloc-monte {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.app.is-entering {
+  animation: cv-entre 0.72s var(--e-move) backwards;
+}
+
+.content-head.is-entering {
+  animation: bloc-monte 0.5s var(--e-move) backwards;
+}
+
+/* Le decalage est plafonne dans main.js : au-dela de huit blocs, le
+   dernier arriverait apres que l'oeil a fini de parcourir la page. */
+.content-body.is-entering > * {
+  animation: bloc-monte 0.5s var(--e-move) backwards;
+  animation-delay: calc(60ms + var(--i, 0) * 45ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
