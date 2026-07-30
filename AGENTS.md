@@ -13,27 +13,33 @@
 - `docs/charte-couleurs.md` : charte colorimétrique sémantique.
 
 ## Landing animée (séquence d'ouverture)
-- Direction : planche technique. Papier (matière et lumière, sans motif
-  répété), encre noire, un seul rouge de repère, cadre, marge tracée,
-  filets capillaires, repères d'angle et cotes.
-  Display en Archivo 125 % (chasse élargie), annotations en JetBrains Mono.
-  Ne pas ajouter de dégradés, de halos ni de couleurs supplémentaires.
-- Balisage : bloc `.intro` dans `index.html`, un `.intro-plan` par planche
-  (5 planches). Le contenu est statique pour éviter tout clignotement.
-- Chronologie : `css/intro.css` porte tout le déroulé (7,9 s) via les
-  variables `--in` / `--out` de chaque planche. Une planche doit être
-  totalement sortie avant l'entrée de la suivante : `--in` de la planche
-  N+1 = `--out` de la planche N + `--out-dur`.
-- La plaque encrée de la planche 03 laisse deux bandes de papier
-  (`--band`) en haut et en bas du cadre : elles portent les métadonnées et
-  le bouton, qui restent donc lisibles. Toute modification de `--band` doit
-  garder ces éléments hors de la plaque.
+- Principe : **plan-séquence**. Il n'y a pas d'écrans qui se succèdent.
+  Tout le contenu est posé une fois pour toutes sur un plan unique
+  (`.intro-plane`) et une seule caméra le traverse sans jamais couper.
+  Les mentions déjà lues ne disparaissent pas : la caméra les quitte, et
+  le recul final les révèle alignées sur deux axes.
+- Ne jamais réintroduire d'écrans qui se remplacent : c'est le défaut
+  qu'on a corrigé, il se voit immédiatement.
+- Budget de texte : **~15 mots au total**. Un visiteur lit environ 2 mots
+  par seconde sur un texte qu'il découvre ; au-delà, il décroche. Toute
+  mention ajoutée doit en remplacer une autre.
+- Rythme dicté par la lecture : arrêts de 1,25 à 2 s, déplacements de
+  0,55 à 0,65 s. Les arrêts dérivent lentement (timing linéaire) pour que
+  la caméra ne soit jamais figée ; les déplacements utilisent `--e-move`.
+- Géométrie en `vmin` : la composition est proportionnelle à l'écran,
+  donc aucune typographie responsive à régler. Le portrait a ses propres
+  coordonnées et sa propre passe de caméra.
 - Pilotage : `js/ui/intro.js` est le seul script classique bloquant du
-  projet (décision avant premier rendu, donc sans clignotement). Il arme la
-  séquence, lance la lecture après chargement des polices, anime les
-  compteurs, gère le skip et retire l'overlay.
+  projet (décision avant premier rendu, donc sans clignotement). Il arme
+  la séquence, lance la lecture après chargement des polices, anime le
+  compteur, gère le skip et retire l'overlay.
+- Toutes les classes de la séquence sont cantonnées sous `.intro` : le CV
+  utilise des noms voisins (`.proof-value`, `.dim`) et les écraserait.
 - La séquence est ignorée si `prefers-reduced-motion: reduce` est actif ou
   si elle a déjà été jouée dans la session ; `#intro` force la relecture.
+- Vérification : `cadrage.js` contrôle qu'à chaque arrêt le texte à lire
+  tient dans l'écran, sur huit formats. Un contrôle de débordement global
+  n'a pas de sens ici, une partie du plan est volontairement hors champ.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
