@@ -34,7 +34,7 @@ export const sections = [
     id: "experience",
     icon: "clock",
     label: "Expériences",
-    sub: "13 ans · 3 expériences",
+    sub: "14 ans · 3 expériences",
     nature: "cadre",
   },
   {
@@ -53,10 +53,10 @@ export const sections = [
   },
 ];
 
-/* Bandeau de preuve du panneau gauche. « 13 ans » est un fait (encre) ;
+/* Bandeau de preuve du panneau gauche. « 14 ans » est un fait (encre) ;
    les deux deltas sont mesurés, donc en flamme — règle de rareté. */
 export const kpiItems = [
-  { value: "13", label: "Ans terrain", nature: "cadre" },
+  { value: "14", label: "Ans terrain", nature: "cadre" },
   { value: "+83%", label: "CA", nature: "preuve" },
   { value: "+5,6", label: "Pts marge", nature: "preuve" },
 ];
