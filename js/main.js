@@ -18,6 +18,7 @@ import { bindAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
+import { bindPrint } from "./ui/print.js";
 import { bindShare } from "./ui/share.js";
 
 const state = {
@@ -590,5 +591,6 @@ function render() {
 if (typeof document !== "undefined") {
   initializeViewportDetection();
   initializeWindowBindings();
+  bindPrint();
   render();
 }
