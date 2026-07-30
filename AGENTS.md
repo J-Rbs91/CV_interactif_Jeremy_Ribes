@@ -20,7 +20,11 @@
   le recul final les révèle alignées sur deux axes.
 - Ne jamais réintroduire d'écrans qui se remplacent : c'est le défaut
   qu'on a corrigé, il se voit immédiatement.
-- Budget de texte : **~15 mots au total**. Un visiteur lit environ 2 mots
+- Pas de chiffres dans la séquence. Un résultat sans son contexte ne
+  vaut rien, et le contexte ne tient pas dans le budget de texte : les
+  chiffres restent dans le CV, où ils sont expliqués. La séquence porte
+  le point fort du profil — son caractère hybride — pas la performance.
+- Budget de texte : **~10 mots au total**. Un visiteur lit environ 2 mots
   par seconde sur un texte qu'il découvre ; au-delà, il décroche. Toute
   mention ajoutée doit en remplacer une autre.
 - Rythme dicté par la lecture : arrêts de 1,25 à 2 s, déplacements de
@@ -31,8 +35,10 @@
   coordonnées et sa propre passe de caméra.
 - Pilotage : `js/ui/intro.js` est le seul script classique bloquant du
   projet (décision avant premier rendu, donc sans clignotement). Il arme
-  la séquence, lance la lecture après chargement des polices, anime le
-  compteur, gère le skip et retire l'overlay.
+  la séquence, lance la lecture après chargement des polices, gère le
+  skip et retire l'overlay. Il sait aussi animer un compteur
+  (`data-count-to`), capacité inutilisée depuis que les chiffres sont
+  sortis de la séquence.
 - Toutes les classes de la séquence sont cantonnées sous `.intro` : le CV
   utilise des noms voisins (`.proof-value`, `.dim`) et les écraserait.
 - La séquence est ignorée si `prefers-reduced-motion: reduce` est actif ou

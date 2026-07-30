@@ -110,7 +110,7 @@ html.intro-armed .intro.is-playing * {
   --by: -33vmin;
   --apparait: 0.1s;
   --recule: 1.8s;
-  font-size: 9.2vmin;
+  font-size: 8.6vmin;
 }
 
 .intro .intro-bloc.is-b {
@@ -118,33 +118,37 @@ html.intro-armed .intro.is-playing * {
   --by: -9vmin;
   --apparait: 1.6s;
   --recule: 3.65s;
-  font-size: 9.2vmin;
+  font-size: 8.6vmin;
 }
 
 .intro .intro-bloc.is-c {
   --bx: -82vmin;
-  --by: 21vmin;
+  --by: 24vmin;
   --apparait: 3.45s;
   --recule: 5.9s;
-  font-size: 30vmin;
-  letter-spacing: -0.045em;
-  font-variant-numeric: tabular-nums;
-}
-
-.intro .intro-bloc.is-d {
-  --bx: -82vmin;
-  --by: 40vmin;
-  --apparait: 3.95s;
-  --recule: 5.9s;
-  font-size: 6.2vmin;
-  letter-spacing: -0.015em;
+  font-size: 18vmin;
+  letter-spacing: -0.035em;
 }
 
 .intro .intro-bloc.is-e {
   --bx: -4vmin;
-  --by: 48vmin;
+  --by: 50vmin;
   --apparait: 5.75s;
   font-size: 7.4vmin;
+}
+
+/* Legende de la chute : elle nomme ce que le mot vient de dire. */
+.intro .intro-legende {
+  display: block;
+  margin-top: 2.2vmin;
+  font-family: var(--mono);
+  font-size: 0.2em;
+  font-weight: 500;
+  font-stretch: normal;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  animation: intro-apparait 0.5s ease 3.9s both;
 }
 
 .intro .intro-role {
@@ -180,19 +184,19 @@ html.intro-armed .intro.is-playing * {
   --trace: 5.95s;
   left: -87vmin;
   top: -39vmin;
-  height: 84vmin;
+  height: 82vmin;
 }
 
 .intro .intro-axis.is-b {
   --trace: 6.15s;
   left: -9vmin;
   top: -15vmin;
-  height: 74vmin;
+  height: 77vmin;
 }
 
 .intro .intro-rule {
   left: -9vmin;
-  top: 56vmin;
+  top: 58vmin;
   width: 58vmin;
   height: 1px;
   transform-origin: 0 50%;
@@ -298,35 +302,35 @@ html.intro-armed .intro.is-playing * {
    (deplacement lineaire tres lent), les transitions sont des glissements. */
 @keyframes intro-camera {
   0% {
-    transform: scale(1.95) translate(52.5vmin, 33vmin);
+    transform: scale(2) translate(54.5vmin, 33vmin);
     animation-timing-function: linear;
   }
   15.82% {
-    transform: scale(1.86) translate(52.5vmin, 33vmin);
+    transform: scale(1.9) translate(54.5vmin, 33vmin);
     animation-timing-function: var(--e-move);
   }
   22.78% {
-    transform: scale(1.35) translate(-38.5vmin, 9vmin);
+    transform: scale(1.15) translate(-43.5vmin, 9vmin);
     animation-timing-function: linear;
   }
   39.24% {
-    transform: scale(1.29) translate(-38.5vmin, 9vmin);
+    transform: scale(1.11) translate(-43.5vmin, 9vmin);
     animation-timing-function: var(--e-move);
   }
   46.2% {
-    transform: scale(1.1) translate(32vmin, -25vmin);
+    transform: scale(1.02) translate(26.5vmin, -27vmin);
     animation-timing-function: linear;
   }
   66.46% {
-    transform: scale(1.05) translate(32vmin, -25vmin);
+    transform: scale(0.98) translate(26.5vmin, -27vmin);
     animation-timing-function: var(--e-move);
   }
   74.68% {
-    transform: scale(0.72) translate(0.5vmin, -10vmin);
+    transform: scale(0.66) translate(-4.5vmin, -11vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.69) translate(0.5vmin, -10vmin);
+    transform: scale(0.635) translate(-4.5vmin, -11vmin);
   }
 }
 
@@ -336,37 +340,31 @@ html.intro-armed .intro.is-playing * {
   .intro .intro-bloc.is-a {
     --bx: -33vmin;
     --by: -56vmin;
-    font-size: 8.6vmin;
+    font-size: 8.4vmin;
   }
 
   .intro .intro-bloc.is-b {
     --bx: -33vmin;
     --by: -33vmin;
-    font-size: 8.6vmin;
+    font-size: 7vmin;
   }
 
   .intro .intro-bloc.is-c {
     --bx: -33vmin;
-    --by: -3vmin;
-    font-size: 25vmin;
-  }
-
-  .intro .intro-bloc.is-d {
-    --bx: -33vmin;
-    --by: 18vmin;
-    font-size: 5.4vmin;
+    --by: 2vmin;
+    font-size: 14vmin;
   }
 
   .intro .intro-bloc.is-e {
     --bx: -33vmin;
-    --by: 42vmin;
+    --by: 40vmin;
     font-size: 6.6vmin;
   }
 
   .intro .intro-axis.is-a {
     left: -38vmin;
     top: -62vmin;
-    height: 82vmin;
+    height: 78vmin;
   }
 
   .intro .intro-axis.is-b {
@@ -375,7 +373,7 @@ html.intro-armed .intro.is-playing * {
 
   .intro .intro-rule {
     left: -33vmin;
-    top: 52vmin;
+    top: 50vmin;
     width: 46vmin;
   }
 
@@ -386,35 +384,35 @@ html.intro-armed .intro.is-playing * {
 
 @keyframes intro-camera-portrait {
   0% {
-    transform: scale(1.6) translate(5.5vmin, 56vmin);
+    transform: scale(1.58) translate(6vmin, 56vmin);
     animation-timing-function: linear;
   }
   15.82% {
-    transform: scale(1.52) translate(5.5vmin, 56vmin);
+    transform: scale(1.5) translate(6vmin, 56vmin);
     animation-timing-function: var(--e-move);
   }
   22.78% {
-    transform: scale(1.1) translate(-7vmin, 33vmin);
+    transform: scale(1.12) translate(-5.5vmin, 33vmin);
     animation-timing-function: linear;
   }
   39.24% {
-    transform: scale(1.06) translate(-7vmin, 33vmin);
+    transform: scale(1.08) translate(-5.5vmin, 33vmin);
     animation-timing-function: var(--e-move);
   }
   46.2% {
-    transform: scale(1) translate(-9.5vmin, 2vmin);
+    transform: scale(0.98) translate(-10.5vmin, -6vmin);
     animation-timing-function: linear;
   }
   66.46% {
-    transform: scale(0.96) translate(-9.5vmin, 2vmin);
+    transform: scale(0.95) translate(-10.5vmin, -6vmin);
     animation-timing-function: var(--e-move);
   }
   74.68% {
-    transform: scale(0.95) translate(-7vmin, 4vmin);
+    transform: scale(0.9) translate(-10.5vmin, 5vmin);
     animation-timing-function: linear;
   }
   100% {
-    transform: scale(0.92) translate(-7vmin, 4vmin);
+    transform: scale(0.87) translate(-10.5vmin, 5vmin);
   }
 }
 
