@@ -63,7 +63,7 @@ export const outils = [
        cette même section — et l'agenda de l'enseigne. C'est ce qui fait
        système plutôt que collection. */
     action:
-      "Conception d'un support de brief agrégeant automatiquement les sources du jour : planning des effectifs, rendez-vous de l'agenda Google et suivi des dossiers, devis et tiers payant. S'y ajoutent une attribution des tâches par collaborateur, pour dispatcher et hiérarchiser le back-office, et des espaces de saisie libre pour les indicateurs de performance et les informations managériales.",
+      "Conception d'un support de brief agrégeant automatiquement les sources du jour : planning de l'équipe, rendez-vous de l'agenda Google et suivi des dossiers, devis et tiers payant. S'y ajoutent une attribution des tâches par collaborateur, pour dispatcher et hiérarchiser le back-office, et des espaces de saisie libre pour les indicateurs de performance et les informations managériales.",
     results:
       "Amélioration de la coordination d'équipe, réduction drastique des oublis administratifs et meilleure lisibilité de l'activité pour la direction. Conçu pour piloter un point de vente, il est resté en service quotidien au-delà de ce contexte et sert encore aujourd'hui dans mon poste actuel.",
   },
@@ -72,7 +72,11 @@ export const outils = [
     title: "Gestionnaire de Planning",
     category: "Optimisation RH",
     nature: "produit",
-    status: "Outil d'optimisation organisationnelle",
+    /* Les quatre autres fiches annoncent un état ; celle-ci répétait une
+       catégorie, ce qui la faisait passer pour la seule jamais sortie du
+       papier. Elle a servi en point de vente — c'est ce qu'il faut dire. Son
+       sort actuel, plus nuancé, revient aux résultats. */
+    status: "Déployé en point de vente",
     chips: ["Planification", "Ressources", "Flux client"],
     summary:
       "Outil de planification permettant d'adapter les ressources aux besoins réels et de limiter les tensions d'organisation.",
@@ -81,7 +85,7 @@ export const outils = [
     action:
       "Développement d'un outil de planification automatisé capable d'ajuster les ressources aux besoins réels et de fluidifier le parcours client à partir des contraintes d'activité.",
     results:
-      "Résolution de conflits d'organisation et optimisation du coût du personnel par rapport au flux d'activité.",
+      "Résolution de conflits d'organisation et optimisation du coût du personnel par rapport au flux d'activité. L'outil n'assure plus la construction des plannings aujourd'hui, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief'Maker pour afficher le planning du jour.",
   },
   {
     id: "hub-opticien",
