@@ -8,10 +8,14 @@ export const realisations = {
     { value: "+83% CA", label: "en 2 mois à peine" },
     { value: "+5,6 pts", label: "de marge" },
   ],
-  /* La note fait le contrepoids du titre : elle dit explicitement que ce cas
-     est un exemple et non le total, et renvoie vers les deux sections qui
-     portent le reste de ce qui a été conçu et mené. */
-  note: "Ce cas n'est qu'un exemple. Le détail méthodologique des dispositifs est dans la section Outils ; les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
+  /* La note fait le contrepoids du titre ET de l'étiquette. Du titre : ce cas
+     est un exemple, pas le total. De l'étiquette : « deux mois » cadre la
+     redynamisation du point de vente, pas la durée de vie des dispositifs.
+     Trois des cinq cartes décrivent des outils qui existent hors de ce poste
+     — PANUM a son propre site et son propre déploiement — et les enfermer
+     dans une expérience passée les ferait passer pour des bricolages de
+     circonstance. */
+  note: "Ce cas n'est qu'un exemple, et les dispositifs qu'il présente ne s'y limitent pas : plusieurs ont continué à servir et à évoluer au-delà de ce poste. Leur détail est dans la section Outils ; les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
   items: [
     {
       icon: "trending-up",
