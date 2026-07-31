@@ -20,7 +20,12 @@ export const outils = [
     title: "PANUM",
     category: "Suivi commercial & pilotage de la performance",
     nature: "produit",
-    status: "Développement & déploiement en cours",
+    /* Le statut disait « développement en cours » là où le produit est
+       fonctionnellement abouti : ce qui manque est la structure juridique
+       permettant de contractualiser avec des points de vente, pas du code.
+       Un blocage administratif annoncé comme un chantier technique fait
+       passer un produit fini pour un prototype. */
+    status: "Abouti · en attente de déploiement pilote",
     chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
     link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
     summary:
@@ -30,7 +35,7 @@ export const outils = [
     action:
       "Conception d'indicateurs de suivi en temps réel, de tableaux de bord multi-niveaux et de mécanismes d'aide à la décision adaptés aux collaborateurs, managers et responsables de réseau.",
     results:
-      "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique. Identification des pertes évitables et objectivation du coaching commercial. La solution n'est pas encore déployée en production à ce stade ; cette phase est en cours.",
+      "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique : identification des pertes évitables et objectivation du coaching commercial. L'outil est aujourd'hui fonctionnellement abouti et éprouvé en conditions de test. Son déploiement en points de vente pilotes, qui permettra les derniers ajustements, constitue la prochaine étape.",
   },
   {
     id: "briefmaker",
