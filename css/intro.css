@@ -579,6 +579,20 @@ html.intro-handoff .identity h1 {
 /* ---------- portrait : autre composition, autre camera ---------- */
 
 @media (max-aspect-ratio: 1/1) {
+  /* La taille du nom sur ce dernier plan, declaree ici parce qu'elle sert
+     deux fois : au nom lui-meme, et au trait qui vient se poser sous lui.
+
+     Elle est plafonnee. Le reste de la sequence est en vmin, donc pilote
+     par la largeur en portrait ; mais ce que le nom doit rejoindre — le h1
+     du CV — vaut 32 px quel que soit l'ecran. Passe le telephone, suivre la
+     largeur eloignait le nom de sa cible au lieu de l'en rapprocher : sur
+     une tablette il arrivait au double, et le raccord le retrecissait.
+     55 px rendus par la camera a 0,585 donnent ces 32 px ; sur telephone
+     14vmin les vaut deja, le plafond ne s'y voit pas. */
+  .intro {
+    --nom-fs: min(14vmin, 55px);
+  }
+
   /* Portrait : colonne unique. Les enonces se replient d'eux-memes sur une
      largeur fixe — les retours forces du paysage sont neutralises. */
   .intro .intro-mot {
@@ -625,7 +639,7 @@ html.intro-handoff .identity h1 {
     --bx: -34vmin;
     --by: 88vmin;
     width: auto;
-    font-size: 14vmin;
+    font-size: var(--nom-fs);
   }
 
   /* Le rapport du CV entre le nom et son role — 12 px sur 32 — plutot que
@@ -770,12 +784,18 @@ html.intro-handoff .identity h1 {
   }
 
   /* Le trait ferme la composition sous le nom : sa place se compte depuis
-     le bas du bloc, pas depuis un nombre fixe. Le bloc ayant repris la
-     taille du CV, il descend de 88vmin +/- 18 au lieu de +/- 7, et le trait
-     le traversait a hauteur de la deuxieme ligne du role. */
+     le bas du bloc, pas depuis un nombre fixe — il le traversait a hauteur
+     de la deuxieme ligne du role.
+
+     Le bloc vaut environ deux fois et demie le nom (le nom, l'ecart, puis
+     sa ligne repliee) et il est centre sur 88vmin : son bas est donc a
+     88 + 1,26 fois le nom, et le trait se pose deux crans dessous. Ce
+     calcul remplace le nombre fixe parce que le nom est plafonne en
+     pixels : sa hauteur exprimee en vmin change desormais avec l'ecran, et
+     une valeur ecrite pour le telephone decrochait sur tablette. */
   .intro .intro-rule {
     left: -34vmin;
-    top: 110vmin;
+    top: calc(90.8vmin + 1.26 * var(--nom-fs));
     width: 52vmin;
   }
 
