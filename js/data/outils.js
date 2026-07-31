@@ -46,7 +46,12 @@ export const outils = [
     title: "Brief'Maker",
     category: "Support connecté d'organisation quotidienne",
     nature: "produit",
-    status: "Conçu pour le pilotage quotidien",
+    /* « Conçu pour » décrivait une intention de conception là où l'outil est
+       en service tous les jours, dans un autre point de vente que celui où
+       il a été construit. Un usage qui survit au contexte d'origine est la
+       seule preuve d'utilité qu'un lecteur ne peut pas mettre en doute — la
+       taire pour annoncer une intention était le plus mauvais échange. */
+    status: "En usage quotidien depuis sa conception",
     chips: ["Coordination", "Back-office", "Priorisation", "Google"],
     summary:
       "Support de brief connecté permettant de répartir dynamiquement les missions prioritaires et de fiabiliser la continuité de l'information chaque jour.",
@@ -55,7 +60,7 @@ export const outils = [
     action:
       "Conception d'un support de brief connecté permettant une répartition dynamique des missions prioritaires et un suivi des indicateurs de performance en temps réel : chiffre d'affaires, objectifs journaliers, SAV, relances, vérifications.",
     results:
-      "Amélioration de la coordination d'équipe, réduction drastique des oublis administratifs et meilleure lisibilité de l'activité pour la direction.",
+      "Amélioration de la coordination d'équipe, réduction drastique des oublis administratifs et meilleure lisibilité de l'activité pour la direction. Conçu pour piloter un point de vente, il est resté en service quotidien au-delà de ce contexte et sert encore aujourd'hui dans mon poste actuel.",
   },
   {
     id: "planning",

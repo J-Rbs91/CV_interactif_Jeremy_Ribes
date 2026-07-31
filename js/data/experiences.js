@@ -46,7 +46,7 @@ export const realisations = {
     },
     {
       icon: "check",
-      text: "Brief'Maker, support de brief connecté répartissant les missions prioritaires et suivant les indicateurs du jour — chiffre d'affaires, objectifs, SAV, relances : coordination d'équipe renforcée et oublis administratifs fortement réduits.",
+      text: "Brief'Maker, support de brief connecté répartissant les missions prioritaires et suivant les indicateurs du jour — chiffre d'affaires, objectifs, SAV, relances : coordination d'équipe renforcée et oublis administratifs fortement réduits. Toujours en usage dans mon poste actuel.",
       nature: "produit",
     },
     {
