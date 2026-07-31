@@ -59,7 +59,31 @@
   (`.app.is-entering`).
 - Les deux boîtes se mesurent au `Range`, pas au `getBoundingClientRect` de
   l'élément : le `h1` du CV est un bloc, sa boîte fait toute la largeur de
-  la colonne et le nom atterrissait à plus du double de sa taille.
+  la colonne et le nom atterrissait à plus du double de sa taille. On prend
+  la **première ligne** (`getClientRects()[0]`) et non l'union : sur un
+  texte replié, l'union donne la largeur de la ligne la plus longue et la
+  hauteur de toutes, ce qui ne décrit plus aucune boîte réelle.
+- Le rapport d'échelle se mesure **sur le sosie**, pas sur l'original :
+  c'est le sosie qui voyage, lui seul dit ce qui sera réellement dessiné,
+  et la largeur d'arrivée devient celle du `h1` par construction. Le
+  comparer à l'original supposait que les deux aient la même forme —
+  hypothèse fausse dès que la composition en replie un et pas l'autre.
+- L'échelle s'applique au coin de la boîte de bordure du sosie, pas à son
+  texte : l'écart entre les deux se dilate avec elle et doit être reporté
+  sur la translation, sinon le nom rate sa place d'autant.
+- **Le nom ne se replie jamais** (`.intro-mot.is-nom .intro-nom` en
+  `nowrap` en portrait). C'est la seule forme commune aux deux plans. Il
+  héritait du `white-space: normal` de la règle portrait et sa boîte de
+  référence est un plan de largeur nulle : il se coupait en
+  « Jérémy » / « Ribes », soit la moitié de sa largeur réelle, et le
+  raccord arrivait à plus de quatre fois la taille du `h1`, hors écran par
+  la droite, avant de sauter à sa place. Les trois autres énoncés se
+  replient, eux, et le doivent.
+- L'espace avant chaque `<br />` des énoncés n'est pas une coquille : le
+  portrait retire la coupure forcée (`.intro-mot br { display: none }`) et
+  c'est cette espace qui reste pour séparer les deux mots. Sans elle on
+  lisait « 14 annéesde terrain ». En paysage elle tombe en fin de ligne,
+  où elle ne se voit pas.
 - Le raccord renvoie `false` et laisse le fondu d'origine reprendre la main
   si le nom, le plan ou le `h1` manquent, ou en `prefers-reduced-motion`.
   Ne jamais le rendre obligatoire : le CV doit rester lisible sans lui.

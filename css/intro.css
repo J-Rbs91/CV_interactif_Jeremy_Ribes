@@ -613,6 +613,18 @@ html.intro-handoff .identity h1 {
     font-size: 6.4vmin;
   }
 
+  /* Le nom est le seul enonce qui n'a pas le droit de se replier. Les trois
+     autres se lisent aussi bien sur deux ou trois lignes ; lui doit rester
+     la meme forme d'un plan a l'autre, puisque c'est cette forme-la qui
+     rejoint le h1 du CV. `.is-nom` reprenait `width: auto` mais heritait du
+     `white-space: normal` de la regle portrait, et sa boite de reference est
+     un plan de largeur nulle : il se coupait donc en « Jeremy » / « Ribes »,
+     soit la moitie de sa largeur reelle — le raccord partait de cette
+     moitie et arrivait au double de la taille voulue. */
+  .intro .intro-mot.is-nom .intro-nom {
+    white-space: nowrap;
+  }
+
   /* A 1,9vmin la matiere secondaire tomberait sous les 8 px sur un
      telephone : elle est agrandie sans changer sa place dans la hierarchie. */
   .intro .intro-sat {

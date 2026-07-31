@@ -145,12 +145,24 @@
      nom qu'elle contient. Prendre cette largeur comme cible faisait
      atterrir le nom a plus de deux fois sa taille reelle. Un Range sur le
      contenu donne la boite du texte lui-meme, et les deux cotes sont
-     mesures de la meme facon — les demi-interlignes se compensent. */
+     mesures de la meme facon — les demi-interlignes se compensent.
+
+     La premiere ligne, et non l'union : si le texte se replie, l'union
+     donne la largeur de la ligne la plus longue et la hauteur de toutes,
+     ce qui ne decrit plus aucune boite reelle. Le sosie, lui, tient
+     toujours sur une ligne. */
   function measureText(element) {
     if (typeof document.createRange === "function") {
       var range = document.createRange();
 
       range.selectNodeContents(element);
+
+      var rects =
+        typeof range.getClientRects === "function" ? range.getClientRects() : null;
+
+      if (rects && rects.length && rects[0].width) {
+        return rects[0];
+      }
 
       var rect = range.getBoundingClientRect();
 
@@ -197,13 +209,7 @@
     var fontSize =
       parseFloat(window.getComputedStyle(source).fontSize) * scale;
 
-    /* Les deux textes sont identiques, dans la meme famille, la meme
-       graisse et la meme chasse : le rapport des largeurs est celui des
-       corps. Mesurer plutot que calculer evite de dependre des valeurs
-       ecrites dans le CSS. */
-    var ratio = to.width / from.width;
-
-    if (!isFinite(fontSize) || !isFinite(ratio) || ratio <= 0) {
+    if (!isFinite(fontSize) || fontSize <= 0) {
       return false;
     }
 
@@ -226,6 +232,32 @@
     ghost.style.left = from.left + (from.left - placed.left) + "px";
     ghost.style.top = from.top + (from.top - placed.top) + "px";
 
+    var text = measureText(ghost);
+    var border = ghost.getBoundingClientRect();
+
+    /* Le rapport se prend sur le sosie, pas sur l'original : c'est le sosie
+       qui voyage, et lui seul dit ce qui sera reellement dessine. Le
+       comparer a l'original supposait que les deux aient exactement la meme
+       forme — hypothese fausse des que la composition en replie un et pas
+       l'autre : en portrait, le nom se coupait en deux lignes et le raccord
+       arrivait a plus de quatre fois la taille du h1, hors de l'ecran par la
+       droite, avant de sauter a sa place. Mesure ainsi, la largeur d'arrivee
+       est celle du h1 par construction. */
+    var ratio = to.width / text.width;
+
+    if (!isFinite(ratio) || ratio <= 0) {
+      ghost.parentNode.removeChild(ghost);
+      return false;
+    }
+
+    /* L'echelle s'applique au coin de la boite de bordure, pas au texte :
+       ce qui separe les deux se dilate donc avec elle et doit etre reporte
+       sur la translation. Sans ce report, le nom rate sa place d'autant —
+       peu en largeur, franchement en hauteur si l'interligne du sosie et
+       celle du h1 ne coincident pas. */
+    var shiftX = to.left - from.left + (text.left - border.left) * (1 - ratio);
+    var shiftY = to.top - from.top + (text.top - border.top) * (1 - ratio);
+
     root.classList.add("intro-handoff");
     overlay.classList.add("is-handoff");
     raiseApp();
@@ -236,9 +268,9 @@
         {
           transform:
             "translate(" +
-            (to.left - from.left) +
+            shiftX +
             "px, " +
-            (to.top - from.top) +
+            shiftY +
             "px) scale(" +
             ratio +
             ")",
