@@ -117,29 +117,6 @@
     }, APP_RISE_DURATION + 120);
   }
 
-  /* La camera est une transformation du plan. Le sosie du nom vit hors du
-     plan — il doit donc reprendre a la main l'echelle qu'elle appliquait,
-     sans quoi il apparaitrait a sa taille intrinseque. */
-  function readPlaneScale(plane) {
-    var transform = window.getComputedStyle(plane).transform;
-
-    if (!transform || transform === "none") {
-      return 1;
-    }
-
-    var values = transform.replace(/^matrix(3d)?\(/, "").replace(/\)$/, "").split(",");
-    var a = parseFloat(values[0]);
-    var b = parseFloat(values[1]);
-
-    if (!isFinite(a) || !isFinite(b)) {
-      return 1;
-    }
-
-    var scale = Math.sqrt(a * a + b * b);
-
-    return scale > 0 ? scale : 1;
-  }
-
   /* La boite du texte, pas celle de l'element. Le h1 du CV est un bloc :
      sa boite fait toute la largeur de la colonne, soit plus du double du
      nom qu'elle contient. Prendre cette largeur comme cible faisait
@@ -191,13 +168,14 @@
     }
 
     var source = overlay.querySelector(".intro-nom");
-    var plane = overlay.querySelector(".intro-plane");
     var target = document.querySelector(".identity h1");
 
-    if (!source || !plane || !target || typeof source.animate !== "function") {
+    if (!source || !target || typeof source.animate !== "function") {
       return false;
     }
 
+    /* Les deux boites a l'ecran : celle que la camera donne au nom, celle
+       que le CV donne au h1. Le raccord n'a besoin de rien d'autre. */
     var from = measureText(source);
     var to = measureText(target);
 
@@ -205,11 +183,9 @@
       return false;
     }
 
-    var scale = readPlaneScale(plane);
-    var fontSize =
-      parseFloat(window.getComputedStyle(source).fontSize) * scale;
+    var nominal = parseFloat(window.getComputedStyle(source).fontSize);
 
-    if (!isFinite(fontSize) || fontSize <= 0) {
+    if (!isFinite(nominal) || nominal <= 0) {
       return false;
     }
 
@@ -218,64 +194,69 @@
     ghost.className = "intro-ghost";
     ghost.setAttribute("aria-hidden", "true");
     ghost.textContent = source.textContent;
-    ghost.style.left = from.left + "px";
-    ghost.style.top = from.top + "px";
-    ghost.style.fontSize = fontSize + "px";
+    ghost.style.left = "0px";
+    ghost.style.top = "0px";
+    ghost.style.fontSize = nominal + "px";
     document.body.appendChild(ghost);
 
-    /* Le sosie est place par sa boite de bordure, mais c'est sa boite de
-       texte qui doit couvrir celle de l'original : l'ecart vient du
-       demi-interligne. On mesure une fois, on corrige, et le depart est
-       exact — sans quoi le nom sursaute au premier repere. */
-    var placed = measureText(ghost);
+    /* Le sosie est pose a un corps arbitraire, puis mesure : ses deux
+       echelles se deduisent de cette mesure. Le depart vaut exactement la
+       boite que la camera montre, l'arrivee exactement celle du h1 — les
+       deux par construction, sans jamais interroger la camera.
 
-    ghost.style.left = from.left + (from.left - placed.left) + "px";
-    ghost.style.top = from.top + (from.top - placed.top) + "px";
-
+       C'est ce qui remplace l'ancienne lecture de la matrice du plan. Une
+       animation CSS peut tourner sur le compositeur, et ce que
+       `getComputedStyle` en rapporte pendant qu'elle tourne depend du
+       moteur : la ou il rendait 1 au lieu de l'echelle reelle, le nom
+       naissait au double de sa taille apparente. Mesurer ne depend
+       d'aucun moteur. */
     var text = measureText(ghost);
     var border = ghost.getBoundingClientRect();
 
-    /* Le rapport se prend sur le sosie, pas sur l'original : c'est le sosie
-       qui voyage, et lui seul dit ce qui sera reellement dessine. Le
-       comparer a l'original supposait que les deux aient exactement la meme
-       forme — hypothese fausse des que la composition en replie un et pas
-       l'autre : en portrait, le nom se coupait en deux lignes et le raccord
-       arrivait a plus de quatre fois la taille du h1, hors de l'ecran par la
-       droite, avant de sauter a sa place. Mesure ainsi, la largeur d'arrivee
-       est celle du h1 par construction. */
-    var ratio = to.width / text.width;
+    if (!text.width) {
+      ghost.parentNode.removeChild(ghost);
+      return false;
+    }
 
-    if (!isFinite(ratio) || ratio <= 0) {
+    var startScale = from.width / text.width;
+    var endScale = to.width / text.width;
+
+    if (!isFinite(startScale) || !isFinite(endScale) || endScale <= 0) {
       ghost.parentNode.removeChild(ghost);
       return false;
     }
 
     /* L'echelle s'applique au coin de la boite de bordure, pas au texte :
-       ce qui separe les deux se dilate donc avec elle et doit etre reporte
-       sur la translation. Sans ce report, le nom rate sa place d'autant —
-       peu en largeur, franchement en hauteur si l'interligne du sosie et
-       celle du h1 ne coincident pas. */
-    var shiftX = to.left - from.left + (text.left - border.left) * (1 - ratio);
-    var shiftY = to.top - from.top + (text.top - border.top) * (1 - ratio);
+       l'ecart entre les deux se dilate avec elle et doit etre reporte sur
+       la translation, a chaque bout. Sans ce report, le nom rate sa place
+       d'autant — peu en largeur, franchement en hauteur des que les
+       interlignes different. */
+    var offsetX = text.left - border.left;
+    var offsetY = text.top - border.top;
+
+    function step(box, factor) {
+      return (
+        "translate(" +
+        (box.left - border.left - offsetX * factor) +
+        "px, " +
+        (box.top - border.top - offsetY * factor) +
+        "px) scale(" +
+        factor +
+        ")"
+      );
+    }
+
+    /* Pose l'etat de depart avant meme d'armer l'animation : le sosie a ete
+       ajoute a son corps nominal en haut a gauche, et rien ne doit pouvoir
+       s'intercaler pour le peindre ainsi. */
+    ghost.style.transform = step(from, startScale);
 
     root.classList.add("intro-handoff");
     overlay.classList.add("is-handoff");
     raiseApp();
 
     var travel = ghost.animate(
-      [
-        { transform: "translate(0px, 0px) scale(1)" },
-        {
-          transform:
-            "translate(" +
-            shiftX +
-            "px, " +
-            shiftY +
-            "px) scale(" +
-            ratio +
-            ")",
-        },
-      ],
+      [{ transform: step(from, startScale) }, { transform: step(to, endScale) }],
       {
         duration: HANDOFF_DURATION,
         easing: "cubic-bezier(0.62, 0, 0.24, 1)",
