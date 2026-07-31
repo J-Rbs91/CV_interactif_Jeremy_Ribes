@@ -8,15 +8,16 @@ export const realisations = {
     { value: "+83% CA", label: "en 2 mois à peine" },
     { value: "+5,6 pts", label: "de marge" },
   ],
-  /* La note fait le contrepoids du titre ET de l'étiquette, et elle nomme.
-     Du titre : ce cas est un exemple, pas le total. De l'étiquette : « deux
-     mois » cadre la redynamisation du point de vente, pas la durée de vie de
-     l'outillage. Nommer les trois dispositifs effectivement mobilisés ferme
-     les deux amalgames symétriques : ils n'ont pas été conçus pour ce seul
-     poste, et le reste de la section Outils n'a pas été conçu pour lui —
-     PANUM en particulier, dont la fiche indique qu'il n'est pas déployé en
-     production, ne doit rien devoir à ce cas. */
-  note: "Ce cas n'est qu'un exemple. Parmi les dispositifs détaillés dans Outils, trois ont été mobilisés ici — Opti'Profit, le brief connecté et le gestionnaire de planning ; les autres relèvent de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
+  /* La note fait le contrepoids du titre ET de l'étiquette. Du titre : ce cas
+     est un exemple, pas le total. De l'étiquette : « deux mois » cadre la
+     redynamisation du point de vente, pas la durée de vie de l'outillage —
+     le reste de la section Outils n'a pas été conçu pour ce poste, PANUM en
+     particulier, qui n'a jamais tourné en magasin.
+
+     Elle ne liste plus les dispositifs : les cartes les nomment désormais,
+     et c'est leur place. Un nom répété dans la note et dans la carte se lit
+     comme deux dispositifs. */
+  note: "Ce cas n'est qu'un exemple : les dispositifs qu'il mobilise ne sont qu'une partie de ceux détaillés dans Outils, les autres relevant de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
   items: [
     {
       icon: "trending-up",
@@ -25,7 +26,7 @@ export const realisations = {
     },
     {
       icon: "wrench",
-      text: "Création d'un outil d'aide à la décision (Google Apps Script) identifiant en temps réel le meilleur mix produit selon les contraintes métier et le budget client.",
+      text: "Opti'Profit, outil d'aide à la décision (Google Apps Script) identifiant en temps réel le meilleur mix produit selon les contraintes métier et le budget client.",
       nature: "produit",
     },
     {
@@ -44,8 +45,13 @@ export const realisations = {
       nature: "produit",
     },
     {
+      icon: "check",
+      text: "Brief'Maker, support de brief connecté répartissant les missions prioritaires et suivant les indicateurs du jour — chiffre d'affaires, objectifs, SAV, relances : coordination d'équipe renforcée et oublis administratifs fortement réduits.",
+      nature: "produit",
+    },
+    {
       icon: "calendar",
-      text: "Outil de planning permettant d'adapter les effectifs aux besoins réels et de résoudre les tensions organisationnelles.",
+      text: "Gestionnaire de Planning, permettant d'adapter les effectifs aux besoins réels et de résoudre les tensions organisationnelles.",
       nature: "produit",
     },
   ],
