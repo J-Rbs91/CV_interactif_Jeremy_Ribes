@@ -606,11 +606,34 @@ html.intro-handoff .identity h1 {
     --by: 44vmin;
   }
 
+  /* Le nom est dit a la taille qu'il aura une fois la camera retiree, et
+     non a celle des trois enonces qui le precedent.
+
+     Ce dernier plan est le seul que la camera regarde de loin : elle finit
+     a 0,585 pour tenir la colonne entiere. Le nom, donne comme les autres a
+     6,4vmin, arrivait donc a 15 px a l'ecran — et la ligne qui l'accompagne,
+     au tiers de sa taille, a 5 px. Ce n'etait plus du texte, c'etait de la
+     matiere : on voyait qu'il y avait quelque chose d'ecrit sans pouvoir le
+     lire. Le meme oubli que celui deja repare pour la matiere secondaire
+     plus bas, a ceci pres que la mesure doit ici passer le retrait de la
+     camera avant de compter.
+
+     La taille est donc dite avant le retrait pour se lire apres : 14vmin
+     rendus a 0,585 redonnent au nom les 32 px du h1 du CV. Le raccord n'a
+     plus qu'a le deplacer, la ou il devait le doubler de taille. */
   .intro .intro-mot.is-nom {
     --bx: -34vmin;
     --by: 88vmin;
     width: auto;
-    font-size: 6.4vmin;
+    font-size: 14vmin;
+  }
+
+  /* Le rapport du CV entre le nom et son role — 12 px sur 32 — plutot que
+     le tiers d'origine : le plan final est la meme composition que l'entete
+     qu'il annonce, a l'echelle de la camera pres. La ligne se replie dans
+     la largeur du nom, exactement comme elle le fait dans le CV. */
+  .intro .intro-role {
+    font-size: 0.375em;
   }
 
   /* Le nom est le seul enonce qui n'a pas le droit de se replier. Les trois
@@ -746,9 +769,13 @@ html.intro-handoff .identity h1 {
     display: none;
   }
 
+  /* Le trait ferme la composition sous le nom : sa place se compte depuis
+     le bas du bloc, pas depuis un nombre fixe. Le bloc ayant repris la
+     taille du CV, il descend de 88vmin +/- 18 au lieu de +/- 7, et le trait
+     le traversait a hauteur de la deuxieme ligne du role. */
   .intro .intro-rule {
     left: -34vmin;
-    top: 98vmin;
+    top: 110vmin;
     width: 52vmin;
   }
 
