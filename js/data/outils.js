@@ -52,13 +52,18 @@ export const outils = [
        seule preuve d'utilité qu'un lecteur ne peut pas mettre en doute — la
        taire pour annoncer une intention était le plus mauvais échange. */
     status: "En usage quotidien depuis sa conception",
-    chips: ["Coordination", "Back-office", "Priorisation", "Google"],
+    chips: ["Agrégation", "Agenda Google", "Priorisation", "Back-office"],
     summary:
-      "Support de brief connecté permettant de répartir dynamiquement les missions prioritaires et de fiabiliser la continuité de l'information chaque jour.",
+      "Feuille de brief quotidienne agrégeant le planning, l'agenda et le suivi des dossiers en une seule vue, et répartissant les tâches du jour entre les collaborateurs.",
     context:
       "Le manque de coordination quotidienne, la perte d'information entre les shifts et la difficulté à prioriser les tâches de back-office créent des oublis et une lecture floue de l'activité.",
+    /* « Support connecté » ne disait pas connecté à quoi, et se lisait donc
+       comme un document partagé. L'outil est un point d'agrégation : il
+       consomme le planning et le suivi des dossiers — deux dispositifs de
+       cette même section — et l'agenda de l'enseigne. C'est ce qui fait
+       système plutôt que collection. */
     action:
-      "Conception d'un support de brief connecté permettant une répartition dynamique des missions prioritaires et un suivi des indicateurs de performance en temps réel : chiffre d'affaires, objectifs journaliers, SAV, relances, vérifications.",
+      "Conception d'un support de brief agrégeant automatiquement les sources du jour : planning des effectifs, rendez-vous de l'agenda Google et suivi des dossiers, devis et tiers payant. S'y ajoutent une attribution des tâches par collaborateur, pour dispatcher et hiérarchiser le back-office, et des espaces de saisie libre pour les indicateurs de performance et les informations managériales.",
     results:
       "Amélioration de la coordination d'équipe, réduction drastique des oublis administratifs et meilleure lisibilité de l'activité pour la direction. Conçu pour piloter un point de vente, il est resté en service quotidien au-delà de ce contexte et sert encore aujourd'hui dans mon poste actuel.",
   },
