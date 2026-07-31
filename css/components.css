@@ -573,14 +573,14 @@
 .punchline-box p {
   font-family: var(--font-display);
   font-stretch: expanded;
-  font-size: var(--fs-metric);
+  font-size: var(--fs-quote);
   font-weight: 700;
   color: var(--n-ink);
-  line-height: 1.22;
-  letter-spacing: -0.028em;
+  line-height: 1.25;
+  letter-spacing: -0.026em;
   /* Assez large pour que le guillemet fermant ne tombe pas seul sur une
      ligne, et equilibre pour que la derniere ligne ne soit pas un orphelin. */
-  max-width: 46ch;
+  max-width: 40ch;
   text-wrap: balance;
 }
 

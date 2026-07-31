@@ -85,7 +85,7 @@
   /* Echelle typographique. Elle avait dix valeurs approximatives dont
      soixante-douze elements au meme corps : un titre de bloc, sa
      description et ses etiquettes se lisaient au meme poids, et la
-     hierarchie retombait entierement sur les cadres. Huit paliers, un
+     hierarchie retombait entierement sur les cadres. Neuf paliers, un
      role chacun, aucune valeur en dur ailleurs.
 
      Le titre de section etait a 38 px : le seul objet de la page a cette
@@ -95,7 +95,8 @@
      un ecran vide. Le titre de section reprend ce rapport : il redevient
      un evenement, pas une etiquette. */
   --fs-display: 54px; /* titre de section */
-  --fs-metric: 32px; /* enonce detache : chiffre de preuve, citation */
+  --fs-metric: 32px; /* chiffre de preuve, titre de section en etroit */
+  --fs-quote: 26px; /* citation detachee */
   --fs-lead: 22px; /* nom, titre de fenetre, annee */
   --fs-title: 19px; /* titre de bloc */
   --fs-body: 15px; /* texte courant, seule taille de lecture */

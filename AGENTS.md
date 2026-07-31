@@ -135,7 +135,7 @@ qui tient.
 - Privilégier des changements minimaux et sûrs.
 
 ## Typographie
-- Huit paliers déclarés en tête de `css/base.css` (`--fs-display` →
+- Neuf paliers déclarés en tête de `css/base.css` (`--fs-display` →
   `--fs-label`), un rôle chacun. **Aucune taille en dur** dans
   `layout.css`, `components.css` ni `sections.css` : toute nouvelle règle
   consomme un palier. Le CV avait dix valeurs approximatives dont
