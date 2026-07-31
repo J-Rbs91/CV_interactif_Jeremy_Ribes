@@ -45,6 +45,12 @@ FLAMME  700 #9C3A06   600 #BF4A08   500 #DE5E0E   400 #F07A22
 Le socle — la Formation — n'a pas de couleur propre : c'est de l'encre en
 retrait. Choix éditorial assumé, le BTS de 2012 n'est pas l'argument du dossier.
 
+Un cran, pas quatre : `ink-700` en texte, `ink-600` en marque — le cadre est à
+`ink-800` / `ink-600`. Le socle avait glissé dans le gris (`text-muted`) et sur
+`ink-300` pour l'année : la section se lisait comme désactivée, et l'année ne se
+lisait plus du tout. Le retrait se joue sur une nuance et sur la composition —
+pas de carte, pas de fond, pas de pastille — jamais sur la lisibilité.
+
 ## Le cas de la timeline
 
 Les expériences ne changent pas de famille, elles changent de **nuance**. La

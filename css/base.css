@@ -190,12 +190,20 @@
 }
 
 /* Le socle : même encre, une nuance en retrait. La Formation ne doit pas
-   peser autant que ce qui a été construit. */
+   peser autant que ce qui a été construit.
+
+   « Une nuance » — le socle en descendait quatre : le titre partait dans le
+   gris (--text-muted, 4,4:1 sur le dégradé, sous le seuil) et la marque
+   tombait à --ink-300, soit 1,9:1. À l'écran l'année « 2012 » et l'onglet de
+   navigation disparaissaient dans le fond, et la section entière se lisait
+   comme désactivée à côté du vert des Projets. Le retrait n'est pas de
+   l'effacement : un cran sous le cadre (ink-800 → ink-700, ink-600 → ink-600),
+   la hiérarchie tient et tout repasse AA. */
 .n-socle {
-  --n-ink: var(--text-muted);
-  --n-mark: var(--ink-300);
+  --n-ink: var(--ink-700);
+  --n-mark: var(--ink-600);
   --n-surf: var(--ink-50);
-  --n-line: var(--ink-100);
+  --n-line: var(--ink-200);
 }
 
 .icon {
