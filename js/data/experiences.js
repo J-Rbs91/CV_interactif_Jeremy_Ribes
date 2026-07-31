@@ -8,14 +8,15 @@ export const realisations = {
     { value: "+83% CA", label: "en 2 mois à peine" },
     { value: "+5,6 pts", label: "de marge" },
   ],
-  /* La note fait le contrepoids du titre ET de l'étiquette. Du titre : ce cas
-     est un exemple, pas le total. De l'étiquette : « deux mois » cadre la
-     redynamisation du point de vente, pas la durée de vie des dispositifs.
-     Trois des cinq cartes décrivent des outils qui existent hors de ce poste
-     — PANUM a son propre site et son propre déploiement — et les enfermer
-     dans une expérience passée les ferait passer pour des bricolages de
-     circonstance. */
-  note: "Ce cas n'est qu'un exemple, et les dispositifs qu'il présente ne s'y limitent pas : plusieurs ont continué à servir et à évoluer au-delà de ce poste. Leur détail est dans la section Outils ; les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
+  /* La note fait le contrepoids du titre ET de l'étiquette, et elle nomme.
+     Du titre : ce cas est un exemple, pas le total. De l'étiquette : « deux
+     mois » cadre la redynamisation du point de vente, pas la durée de vie de
+     l'outillage. Nommer les trois dispositifs effectivement mobilisés ferme
+     les deux amalgames symétriques : ils n'ont pas été conçus pour ce seul
+     poste, et le reste de la section Outils n'a pas été conçu pour lui —
+     PANUM en particulier, dont la fiche indique qu'il n'est pas déployé en
+     production, ne doit rien devoir à ce cas. */
+  note: "Ce cas n'est qu'un exemple. Les dispositifs mobilisés ici — Opti'Profit, le brief connecté et le gestionnaire de planning — ne sont qu'une partie de ceux détaillés dans Outils, les autres relevant de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
   items: [
     {
       icon: "trending-up",
