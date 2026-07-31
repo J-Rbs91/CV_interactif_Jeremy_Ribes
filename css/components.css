@@ -169,10 +169,31 @@
 /* Le degre encre → foret faisait de ce paragraphe un encart colore en pied
    de colonne, alors que c'est du texte de lecture. Il redevient du texte. */
 .intro-strip {
-  padding: var(--space-3) 0;
+  position: relative;
+  padding: var(--space-3) 0 var(--space-3) var(--space-2);
   border-top: 1px solid var(--ink-200);
   flex-shrink: 0;
   background: none;
+}
+
+/* Le filet. C'est le seul objet de la colonne qui parle a la premiere
+   personne, et rien ne le disait : il arrivait comme la suite de la
+   navigation. Un trait le tient sur le cote, le meme outil que l'axe des
+   sections — un enonce adosse a une structure, pas un encadre.
+
+   Il est pose en pseudo-element plutot qu'en `border-left` parce que le bloc
+   porte deja un filet en tete : les deux bordures se seraient rejointes en
+   angle, et un angle, meme ouvert, se lit comme le debut d'une boite. Detache
+   du haut et du bas, le trait court sur la hauteur du texte et sur elle
+   seule. */
+.intro-strip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: var(--space-3);
+  bottom: var(--space-3);
+  width: 1px;
+  background: var(--ink-300);
 }
 
 /* Quatre lignes de prose suivie : c'est de la lecture, pas une mention.
@@ -181,10 +202,17 @@
    seule taille de lecture, et que c'est celle du texte courant. La nuance
    en retrait suffit a tenir l'accroche sous le titre ; sa taille n'avait
    pas a s'en charger en plus. */
+
+/* La nuance en retrait etait le dernier reste de ce classement : elle tenait
+   l'accroche sous le titre, mais la mettait aussi sous le texte courant du
+   CV, alors que c'est la seule phrase de la page qui dise le parcours a la
+   premiere personne. Elle passe a l'encre pleine — 6,0:1 devient 14,1:1 —
+   sans fond ni graisse : ici la hierarchie se dit par la nuance, et le seul
+   objet gras de la colonne reste le nom. */
 .intro-strip p {
   font-size: var(--fs-body);
   line-height: 1.65;
-  color: var(--text-dim);
+  color: var(--text);
 }
 
 /* La navigation etait une pile de gelules blanches a coins de 16 px, ombre
@@ -688,9 +716,12 @@
   background: none;
 }
 
-.intro-strip-mobile {
-  padding: var(--space-3) 0;
-}
+/* En etroit, l'accroche ne demandait deja rien de plus que la regle de base :
+   cette reprise redisait mot pour mot le meme retrait. Elle ne redisait plus
+   la meme chose des que le filet a eu besoin d'une marge a gauche — a
+   specificite egale et posee plus bas, elle l'ecrasait, et le trait venait se
+   coller au texte. Ce qui vaut des deux cotes n'a pas a etre ecrit deux
+   fois. */
 
 .app-mobile .grid-2,
 .app-mobile .grid-3 {
