@@ -150,6 +150,15 @@
     ),
     linear-gradient(168deg, var(--ink-50) 0%, #eaf1f8 56%, #dde8f2 100%);
 
+  /* Le ton d'arrivee du degrade, isole. Le fond ci-dessus est en
+     `background-attachment: fixed` : il se resout sur la fenetre et ne
+     peint rien au-dela d'elle. Partout ou la fenetre se decale — l'elastique
+     de defilement mobile, l'apparition de la barre d'adresse — le canevas
+     du navigateur apparait, et sa couleur par defaut est le blanc. Cette
+     teinte le remplit : invisible tant que le degrade est en place, elle
+     est la seule chose visible quand il ne l'est plus. */
+  --fond-page-base: #dde8f2;
+
   /* --- Élévation & rayons ---------------------------------------------- */
   --shadow-sm: 0 10px 30px rgba(12, 39, 64, 0.06);
   --shadow-md: 0 18px 45px rgba(12, 39, 64, 0.1);
@@ -213,6 +222,16 @@ body {
      est ecrit dessus, pas la surface. */
   background: var(--fond-page);
   background-attachment: fixed;
+  /* Declaree apres le raccourci, qui remet la couleur a transparent. Le
+     canevas herite du fond de la racine : sans elle, il restait blanc. */
+  background-color: var(--fond-page-base);
+  /* Le document ne defile pas (voir `body { overflow: hidden }`), mais le
+     defilement du contenu se chainait jusqu'a lui : au bout de course, le
+     navigateur etirait le plan entier — fond fixe et grain compris — sous
+     le doigt, decouvrant le canevas en bas d'ecran, puis le rendait d'un
+     coup au relachement. La page n'a aucun elastique a offrir : elle ne le
+     prend plus. */
+  overscroll-behavior: none;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 15px;

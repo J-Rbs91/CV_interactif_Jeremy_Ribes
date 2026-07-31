@@ -20,11 +20,16 @@
   background: transparent;
 }
 
+/* En etroit, c'est ce bloc qui defile, pas le document. Son bout de course
+   doit rester le sien : `contain` garde l'accuse de reception habituel a
+   l'interieur du panneau et l'empeche de remonter au document, ou il
+   deplacait le fond de page lui-meme. */
 .app-mobile {
   display: block;
   max-width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  overscroll-behavior-y: contain;
   background: transparent;
 }
 
