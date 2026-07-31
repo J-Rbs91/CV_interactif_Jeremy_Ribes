@@ -175,8 +175,14 @@
   background: none;
 }
 
+/* Quatre lignes de prose suivie : c'est de la lecture, pas une mention.
+   Elles etaient au dernier cran de l'echelle — celui des legendes et des
+   unites, sous le texte secondaire — alors que l'echelle ne declare qu'une
+   seule taille de lecture, et que c'est celle du texte courant. La nuance
+   en retrait suffit a tenir l'accroche sous le titre ; sa taille n'avait
+   pas a s'en charger en plus. */
 .intro-strip p {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-body);
   line-height: 1.65;
   color: var(--text-dim);
 }
