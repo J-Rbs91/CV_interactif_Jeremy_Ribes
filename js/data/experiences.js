@@ -1,9 +1,11 @@
 export const realisations = {
   stats: [
-    /* « 2 mois après déploiement » et non « en 2 mois » : la fenêtre qualifie
-       la mesure des effets, pas la durée du poste. Le raccourci laissait la
-       porte ouverte à la lecture inverse. */
-    { value: "+83% CA", label: "2 mois après déploiement" },
+    /* « à peine » fait tout le travail : les deux mois disent la VITESSE à
+       laquelle les effets sont apparus, pas une mesure qu'on aurait bornée à
+       deux mois — ce qui passerait pour un échantillon court, donc un
+       résultat fragile. C'est l'argument, pas une réserve. La durée du poste
+       est portée par le badge de section, jamais ici. */
+    { value: "+83% CA", label: "en 2 mois à peine" },
     { value: "+5,6 pts", label: "de marge" },
   ],
   /* La note fait le contrepoids du titre : elle dit explicitement que ce cas
