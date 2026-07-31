@@ -1,6 +1,9 @@
 export const realisations = {
   stats: [
-    { value: "+83% CA", label: "en 2 mois" },
+    /* « 2 mois après déploiement » et non « en 2 mois » : la fenêtre qualifie
+       la mesure des effets, pas la durée du poste. Le raccourci laissait la
+       porte ouverte à la lecture inverse. */
+    { value: "+83% CA", label: "2 mois après déploiement" },
     { value: "+5,6 pts", label: "de marge" },
   ],
   /* La note fait le contrepoids du titre : elle dit explicitement que ce cas

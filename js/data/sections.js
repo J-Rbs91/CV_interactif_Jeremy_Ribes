@@ -19,14 +19,19 @@ export const sections = [
   /* « Cas concret » et non « Réalisations » : au pluriel et sans complément,
      le mot annonçait l'inventaire complet et reléguait de fait tout ce qui
      est conçu et mené ailleurs — Outils, Projets transverses. La section
-     n'est pas la somme du travail, c'est UN cas : une prise de poste de
-     responsable de magasin redressée en deux mois. Nommer le cas rend leur
-     rang aux autres sections. */
+     n'est pas la somme du travail, c'est UN cas : le poste de responsable
+     de magasin. Nommer le cas rend leur rang aux autres sections.
+
+     Le badge porte la durée du POSTE, jamais celle de la mesure. Accoler
+     « 2 mois » au rôle laissait croire à un mandat de deux mois — deux mois
+     est la fenêtre sur laquelle les effets ont été mesurés après déploiement,
+     et cette information appartient au bloc de stats, accrochée au chiffre
+     qu'elle qualifie. */
   {
     id: "realisations",
     icon: "trending-up",
     label: "Cas concret",
-    sub: "Responsable de magasin · 2 mois",
+    sub: "Responsable de magasin · 2024-2025",
     nature: "preuve",
   },
   {
