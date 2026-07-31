@@ -32,8 +32,12 @@ export const outils = [
       "Solution de suivi commercial et de pilotage de la performance permettant de centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
     context:
       "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées et impossibilité pour le management de comprendre précisément pourquoi des ventes sont perdues.",
+    /* L'origine terrain n'apparaissait nulle part : la fiche décrivait un
+       produit sorti de rien, quand il prolonge un suivi outillé qui a produit
+       des résultats mesurés en magasin et tourne encore aujourd'hui. C'est
+       ce qui sépare un produit éprouvé d'une intuition de développeur. */
     action:
-      "Conception d'indicateurs de suivi en temps réel, de tableaux de bord multi-niveaux et de mécanismes d'aide à la décision adaptés aux collaborateurs, managers et responsables de réseau.",
+      "Prolongement d'un suivi outillé conçu en magasin sous Google Sheets, toujours en usage aujourd'hui, étendu en solution complète : conception d'indicateurs de suivi en temps réel, de tableaux de bord multi-niveaux et de mécanismes d'aide à la décision adaptés aux collaborateurs, managers et responsables de réseau.",
     results:
       "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique : identification des pertes évitables et objectivation du coaching commercial. L'outil est aujourd'hui fonctionnellement abouti et éprouvé en conditions de test. Son déploiement en points de vente pilotes, qui permettra les derniers ajustements, constitue la prochaine étape.",
   },

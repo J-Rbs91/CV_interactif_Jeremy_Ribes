@@ -16,7 +16,7 @@ export const realisations = {
      poste, et le reste de la section Outils n'a pas été conçu pour lui —
      PANUM en particulier, dont la fiche indique qu'il n'est pas déployé en
      production, ne doit rien devoir à ce cas. */
-  note: "Ce cas n'est qu'un exemple. Les dispositifs mobilisés ici — Opti'Profit, le brief connecté et le gestionnaire de planning — ne sont qu'une partie de ceux détaillés dans Outils, les autres relevant de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
+  note: "Ce cas n'est qu'un exemple. Parmi les dispositifs détaillés dans Outils, trois ont été mobilisés ici — Opti'Profit, le brief connecté et le gestionnaire de planning ; les autres relèvent de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
   items: [
     {
       icon: "trending-up",
@@ -35,7 +35,12 @@ export const realisations = {
     },
     {
       icon: "clipboard",
-      text: "Système de suivi automatisé des devis, améliorant la concrétisation, les délais et la coordination entre collaborateurs.",
+      /* La carte était anonyme, donc lue comme un PANUM antidaté — alors que
+         PANUM n'a jamais tourné en magasin. Nommer la technique la rattache
+         à ce qu'elle était vraiment, et les deux faits qui suivent sont les
+         plus solides du dossier : l'outil survit à son contexte, et il a
+         engendré un produit. */
+      text: "Système de suivi automatisé des devis conçu sous Google Sheets et Apps Script, améliorant la concrétisation, les délais et la coordination entre collaborateurs. Toujours en usage dans mon poste actuel, il est à l'origine du développement de PANUM.",
       nature: "produit",
     },
     {
