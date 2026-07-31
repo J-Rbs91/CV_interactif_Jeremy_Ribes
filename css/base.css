@@ -62,7 +62,14 @@
   /* --- Texte & surfaces (dérivés de l'encre) --------------------------- */
   --text: #0c2740;
   --text-dim: #455c72;
-  --text-muted: #5d7186;
+  /* Le gris de libellé était calibré sur du blanc — 5,04:1, conforme sur un
+     fond que la page n'a jamais. Le fond est un dégradé en
+     `background-attachment: fixed` qui descend jusqu'à #dde8f2 : le même mot
+     tombait à 4,03:1 selon l'endroit de la fenêtre où il défilait. Un ton
+     mesuré sur le bas du dégradé, pas sur le blanc théorique : 4,76:1 au pire
+     point. C'est le corps de texte le plus petit de la page — 11 px en mono
+     capitalisée, interlettrée — donc celui qui pardonne le moins. */
+  --text-muted: #52667c;
   --bg: #f2f6fa;
   --bg2: #fbfdff;
   --card: rgba(255, 255, 255, 0.88);

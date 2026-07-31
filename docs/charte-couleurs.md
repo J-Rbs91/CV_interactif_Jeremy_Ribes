@@ -58,14 +58,27 @@ récence se lit dans l'intensité de la pastille : `ink-700` pour le poste
 actuel, `ink-500` pour le précédent, `ink-300` pour les onze premières années.
 Le regard descend du présent vers le passé.
 
+La pastille seule. Les chevrons de puces l'ont suivie un temps, et sur la plus
+ancienne expérience ils tombaient à 1,8:1 — six lignes de contenu sans bord
+gauche. Un jalon pâle se lit encore comme « plus loin » ; une liste illisible
+ne se lit pas. La récence est portée par le jalon et par la date.
+
 ## Accessibilité
 
-Tous les tons employés en texte passent **WCAG AA** (≥ 4.5:1 sur blanc et sur
-leur propre surface). Vérifié au navigateur, contraste composité réel, sur les
-sept sections et le panneau latéral.
+Tous les tons employés en texte passent **WCAG AA**. Vérifié au navigateur,
+contraste composité réel, sur les sept sections et le panneau latéral.
 
-C'était une correction nécessaire : la palette d'origine échouait sur 4 accents
-sur 5, appliqués à du texte de 13 à 16 px.
+**La référence est le bas du dégradé, pas le blanc.** Le fond de page est un
+dégradé en `background-attachment: fixed` : il se résout sur la fenêtre, donc
+un même mot change de fond en défilant. Mesuré coin par coin, il va de
+`#f6f8fa` à `#dee7f1`. Un ton validé sur blanc ne prouve rien — c'est ce qui
+avait laissé passer `--text-muted` à 5,04:1 sur blanc et 4,03:1 sur la page.
+**Tout ton de texte se vérifie sur `#dde8f2`** (`--fond-page-base`).
+
+Corollaire sur les gammes : à ce niveau d'exigence, **le cran 600 ne suffit pas
+pour du texte** — `forest-600` donne 4,4:1 et `flame-600` 4,0:1. Un rôle de
+texte prend le cran 700, quelle que soit sa taille apparente. `--n-mark` reste
+ce qu'il est : une marque — filet, icône, jalon.
 
 ## Comment l'utiliser
 

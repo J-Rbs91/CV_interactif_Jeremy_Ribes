@@ -119,9 +119,13 @@
    Le décalage se calcule depuis `--rail-gap` (layout.css) : le bloc
    commence à `--axis + --rail-gap`, donc l'axe est à `-(--rail-gap)` de son
    bord, moins la moitié de la pastille pour la centrer dessus. */
+/* La puce garde toute la gamme de récence — c'est un jalon posé sur l'axe,
+   et un jalon pâle se lit encore comme « plus loin ». Les chevrons de puces
+   la suivaient : sur la plus ancienne expérience ils tombaient à 1,78:1,
+   c'est-à-dire nulle part, et six lignes de contenu perdaient leur bord
+   gauche. La récence est portée par le jalon et par la date ; la structure
+   d'une liste, elle, doit tenir aux trois crans. */
 .timeline-item {
-  /* puce et chevrons de puces suivent le même cran d'intensité */
-  --n-mark: var(--tl-dot, var(--recency-past));
   position: relative;
   padding-left: 0;
   padding-bottom: 6px;
@@ -301,10 +305,12 @@
 
 /* Le numéro d'ordre était une pastille carrée de 36 px : une boîte pour un
    seul caractère. Il redevient ce qu'il est — un chiffre, qui se distingue
-   par son corps et sa chasse, comme dans la séquence. */
+   par son corps et sa chasse, comme dans la séquence. C'est bien ce qui le
+   met au second plan : à 22 px il n'a pas besoin d'être pâle en plus, et la
+   marque forest-600 n'y passait pas le seuil (4,40:1). */
 .tool-mark {
   background: none;
-  color: var(--n-mark);
+  color: var(--n-ink);
   border: 0;
   border-radius: 0;
   width: auto;

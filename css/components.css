@@ -501,7 +501,11 @@
   border: 0;
   border-radius: 0;
   background: none;
-  color: var(--n-mark);
+  /* La marque, pas l'encre : c'était vrai quand l'étiquette était une gélule
+     posée sur --n-surf. Sans son fond, elle est du texte de 11 px à même le
+     dégradé, et le cran 600 n'y suffit plus — forest-600 tombe à 4,40:1,
+     flame-600 à 4,01:1. Un rôle de texte prend le cran de texte. */
+  color: var(--n-ink);
 }
 
 /* Chips : niveau 3 de la hiérarchie — informent sans crier. */
@@ -543,7 +547,10 @@
 .chip + .chip::before {
   content: "·";
   margin-right: var(--space-2);
-  color: var(--ink-300);
+  /* --ink-300 sur ce fond, c'est 1,9:1 : le séparateur disparaissait et deux
+     étiquettes se recollaient — précisément ce qu'il est là pour empêcher.
+     Neutre et subordonné aux étiquettes, mais visible. */
+  color: var(--text-muted);
 }
 
 /* Un label de groupe ouvre un nouveau propos : il porte la respiration. */
