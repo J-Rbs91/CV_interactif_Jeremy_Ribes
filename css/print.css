@@ -49,13 +49,13 @@
   }
 
   /* =====================================================================
-     BANDEAU — identité à gauche, preuve à droite
+     BANDEAU — l'identité, sur toute la largeur
+     -----------------------------------------------------------------------
+     Il tenait sur deux colonnes parce qu'une preuve chiffrée occupait la
+     droite. Elle est partie ; la grille n'avait plus qu'une colonne à
+     placer, et une grille d'une colonne est un bloc.
      ===================================================================== */
   .print-head {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    column-gap: 10mm;
     padding-bottom: 3mm;
     border-bottom: 2.5pt solid var(--ink-900);
   }
@@ -87,30 +87,6 @@
   .print-facts {
     margin-top: 1.5mm;
     font-size: 8.5pt;
-    color: var(--text-muted);
-  }
-
-  .print-proof {
-    display: flex;
-    gap: 7mm;
-    padding-bottom: 1mm;
-  }
-
-  .print-proof-value {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 17pt;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--n-ink);
-  }
-
-  .print-proof-label {
-    margin-top: 1mm;
-    font-size: 6.5pt;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
     color: var(--text-muted);
   }
 

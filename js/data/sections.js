@@ -63,11 +63,3 @@ export const sections = [
     nature: "socle",
   },
 ];
-
-/* Bandeau de preuve du panneau gauche. « 14 ans » est un fait (encre) ;
-   les deux deltas sont mesurés, donc en flamme — règle de rareté. */
-export const kpiItems = [
-  { value: "14", label: "Ans terrain", nature: "cadre" },
-  { value: "+83%", label: "CA", nature: "preuve" },
-  { value: "+5,6", label: "Pts marge", nature: "preuve" },
-];

@@ -3,9 +3,9 @@
    linéaire, tout déplié, monté à la demande par js/ui/print.js.
 
    Ce n'est pas la page à plat : c'est une mise en page de document — bandeau
-   à deux colonnes, preuve dans l'en-tête, sections numérotées. */
+   d'identité, adresses en ligne, sections numérotées. */
 import { contact } from "../data/contact.js";
-import { kpiItems, sections } from "../data/sections.js";
+import { sections } from "../data/sections.js";
 import { renderCompetencesSection } from "./renderCompetences.js";
 import {
   renderExperiencesSection,
@@ -66,19 +66,6 @@ function renderLiveLine() {
   </div>`;
 }
 
-function renderProof() {
-  return `<div class="print-proof">
-    ${kpiItems
-      .map(
-        (kpi) => `<div class="print-proof-item ${natureClass(kpi.nature)}">
-          <div class="print-proof-value">${kpi.value}</div>
-          <div class="print-proof-label">${kpi.label}</div>
-        </div>`,
-      )
-      .join("")}
-  </div>`;
-}
-
 export function renderPrintDocument() {
   return `<div class="print-doc">
     <header class="print-head">
@@ -88,7 +75,6 @@ export function renderPrintDocument() {
         <div class="print-role2">${contact.secondaryRole}</div>
         <div class="print-facts">${renderFacts()}</div>
       </div>
-      ${renderProof()}
     </header>
 
     ${renderLiveLine()}

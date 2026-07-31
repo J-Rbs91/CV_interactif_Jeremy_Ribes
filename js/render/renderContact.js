@@ -1,5 +1,4 @@
 import { contact } from "../data/contact.js";
-import { kpiItems } from "../data/sections.js";
 import { outils } from "../data/outils.js";
 import { projetsTransverses } from "../data/projets.js";
 import { icon } from "../ui/icons.js";
@@ -38,21 +37,6 @@ function renderContactItems(itemClassName = "") {
   return contact.items
     .map((item) => renderContactItem(item, itemClassName))
     .join("");
-}
-
-/* Bandeau de preuve : les trois chiffres que le recruteur doit lire
-   avant d'avoir cliqué où que ce soit. */
-function renderProofStrip() {
-  return `<div class="proof-strip">
-    ${kpiItems
-      .map(
-        (kpi) => `<div class="proof-item ${natureClass(kpi.nature)}">
-          <div class="proof-value">${kpi.value}</div>
-          <div class="proof-label">${kpi.label}</div>
-        </div>`,
-      )
-      .join("")}
-  </div>`;
 }
 
 /* Produits réellement en ligne, dérivés des données existantes : c'est
@@ -112,7 +96,6 @@ export function renderIdentity(options = {}) {
     <h1>${contact.name}</h1>
     <div class="role">${contact.role}</div>
     <div class="role2">${contact.secondaryRole}</div>
-    ${renderProofStrip()}
     <div class="${contactRowClassName}">${renderContactItems(itemClassName)}</div>
   </div>`;
 }
