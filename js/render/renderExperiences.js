@@ -57,7 +57,12 @@ export function renderRealisationsSection() {
         <div class="stats-label">${secondStat.label}</div>
       </div>
     </div>
-    <div class="section-label">Pilotage et redynamisation commerciale</div>
+    <!-- L'étiquette porte la revendication du cas, et elle l'affirme sans la
+         justifier : deux mois est le délai dans lequel les effets sont
+         apparus, donc un résultat. Toute précision sur le périmètre de la
+         mesure suggérerait au lecteur qu'il manque quelque chose et créerait
+         la question qu'elle prétendrait fermer. -->
+    <div class="section-label">Deux mois pour redynamiser le point de vente</div>
     <p class="note">${realisations.note.replace(/(Outils|Projets transverses)/g, "<strong>$1</strong>")}</p>
     ${realisations.items
       .map(
