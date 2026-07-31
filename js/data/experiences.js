@@ -3,7 +3,10 @@ export const realisations = {
     { value: "+83% CA", label: "en 2 mois" },
     { value: "+5,6 pts", label: "de marge" },
   ],
-  note: "Le détail méthodologique des dispositifs est disponible dans la section Outils.",
+  /* La note fait le contrepoids du titre : elle dit explicitement que ce cas
+     est un exemple et non le total, et renvoie vers les deux sections qui
+     portent le reste de ce qui a été conçu et mené. */
+  note: "Ce cas n'est qu'un exemple. Le détail méthodologique des dispositifs est dans la section Outils ; les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
   items: [
     {
       icon: "trending-up",

@@ -58,7 +58,7 @@ export function renderRealisationsSection() {
       </div>
     </div>
     <div class="section-label">Pilotage et redynamisation commerciale</div>
-    <p class="note">${realisations.note.replace("Outils", "<strong>Outils</strong>")}</p>
+    <p class="note">${realisations.note.replace(/(Outils|Projets transverses)/g, "<strong>$1</strong>")}</p>
     ${realisations.items
       .map(
         (item) => `
