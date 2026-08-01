@@ -84,6 +84,6 @@ export const outils = [
     action:
       "Développement d’un outil de construction de planning ajustant les effectifs à l’activité attendue à partir des contraintes d’exploitation du point de vente.",
     results:
-      "Conflits d’organisation récurrents réglés, coût du personnel ajusté au flux réel. L’outil ne construit plus les plannings aujourd’hui, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief’Maker pour afficher le planning du jour.",
+      "Conflits d’organisation récurrents réglés, coût du personnel ajusté au flux réel. Je ne l’utilise plus pour construire les plannings, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief’Maker pour afficher le planning du jour.",
   },
 ];
