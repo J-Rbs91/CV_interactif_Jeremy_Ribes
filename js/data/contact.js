@@ -4,7 +4,7 @@ export const contact = {
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Opticien depuis 2012, dont un an comme responsable de magasin. Au fil des postes, j’ai pris en charge ce qui relevait de l’organisation : procédures, suivi des dossiers, plannings, repères de pilotage. J’ai conçu pour cela cinq outils internes ; deux, construits chez un employeur précédent, servent encore tous les jours dans mon poste actuel. Je cherche un poste où ce travail est le cœur du rôle.",
+    "Professionnel de terrain avec 14 ans d’expérience en environnement commercial, j’ai progressivement orienté mon parcours vers ce qui me mobilise le plus : concevoir des outils concrets pour fiabiliser les décisions, structurer l’activité et fluidifier le travail au quotidien.",
   items: [
     { icon: "pin", text: "Montferrier-sur-Lez (34)" },
     { icon: "mail", text: "Me contacter", type: "contact-form" },
