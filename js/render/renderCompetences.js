@@ -1,9 +1,8 @@
 import { competences } from "../data/competences.js";
 import { natureClass, renderAccentTags } from "./renderUtils.js";
 
-/* Un bloc sans contenu ne s'ouvre pas. « Résultat observable » promettait une
-   preuve et livrait un adjectif comparatif sur six domaines sur sept : mieux
-   vaut pas de rubrique qu'une rubrique qui ne tient pas sa promesse. */
+/* Les quatre rubriques sont facultatives : un champ absent des données ne
+   produit pas de bloc. */
 function detailBlock(label, text) {
   if (!text) {
     return "";

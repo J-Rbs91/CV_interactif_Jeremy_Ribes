@@ -1,6 +1,3 @@
-/* Ordre revu : ce qui tourne d’abord, ce qui attend ensuite. Les trois
-   premières fiches sont en usage aujourd’hui — c’est l’argument, et il doit
-   arriver avant le produit le plus ambitieux mais non déployé. */
 export const outils = [
   {
     id: "optiprofit",
@@ -15,9 +12,6 @@ export const outils = [
       "En vente, le bon produit dépend du besoin technique, du budget, des contraintes du réseau de soins et de la marge. L’arbitrage se faisait de tête, catalogue par catalogue, avec le client en face.",
     action:
       "Développement d’un algorithme sous Google Apps Script intégrant les catalogues fournisseurs et les grilles tarifaires des mutuelles. L’outil filtre en temps réel les produits compatibles et met en évidence l’écart de marge entre deux solutions équivalentes pour le client.",
-    /* Le chiffre est reparti à l’expérience : ici, l’attribution était
-       confuse — on ne savait pas si l’outil avait produit les points de marge
-       seul — et la phrase était cassée. Ce que fait l’outil suffit. */
     results:
       "Suppression du temps passé à comparer les catalogues et arbitrage rendu explicite au moment où il se joue. L’outil a été l’un des leviers du redressement obtenu chez Générale d’Optique.",
   },
@@ -34,10 +28,6 @@ export const outils = [
       "L’information se perdait entre les shifts, et les tâches de back-office n’étaient priorisées par personne. Résultat : des oublis, et une lecture floue de l’activité pour la direction.",
     action:
       "Conception d’un support de brief qui agrège automatiquement les sources du jour — planning de l’équipe, rendez-vous de l’agenda Google, suivi des dossiers, devis et tiers payant. S’y ajoutent l’attribution des tâches par collaborateur et des espaces de saisie pour les indicateurs et les informations managériales.",
-    /* « Réduction drastique des oublis » : un superlatif non mesuré, placé
-       juste avant le fait le plus fort de la fiche, qu’il affaiblissait. Un
-       outil qui survit à son contexte d’origine est la seule preuve d’utilité
-       qu’un lecteur ne peut pas mettre en doute. */
     results:
       "En service tous les jours depuis sa conception. L’outil a suivi un changement d’employeur : construit chez Générale d’Optique, il est utilisé aujourd’hui dans mon poste actuel, où rien ne l’avait prévu.",
   },
@@ -48,8 +38,7 @@ export const outils = [
     nature: "produit",
     status: "En usage quotidien en magasin",
     chips: ["Application web", "Standardisation", "Données locales"],
-    /* Volontairement hors du bandeau « Produits en ligne » : le hub sert
-       la démonstration d’utilité, pas la vitrine produit. */
+    /* Exclu du bandeau « Produits en ligne » (cf. getLiveProducts). */
     liveProduct: false,
     link: {
       label: "Découvrir le hub",
@@ -69,9 +58,6 @@ export const outils = [
     title: "PANUM",
     category: "Suivi commercial & pilotage de la performance",
     nature: "produit",
-    /* Le statut disait « développement en cours » là où le produit est
-       fonctionnellement abouti : ce qui manque est la structure juridique
-       permettant de contractualiser avec des points de vente, pas du code. */
     status: "Abouti · en attente de déploiement pilote",
     chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
     link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
@@ -79,10 +65,6 @@ export const outils = [
       "Solution de suivi commercial et de pilotage de la performance : centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
     context:
       "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées, et un management qui ne sait pas précisément pourquoi les ventes se perdent.",
-    /* L’origine terrain n’apparaissait nulle part : la fiche décrivait un
-       produit sorti de rien, quand il prolonge un suivi outillé qui a produit
-       des résultats mesurés en magasin et tourne encore aujourd’hui. C’est
-       ce qui sépare un produit éprouvé d’une intuition de développeur. */
     action:
       "Extension en solution complète du suivi outillé conçu en magasin sous Google Sheets, qui tourne toujours : indicateurs en temps réel, tableaux de bord par niveau de responsabilité, priorisation des relances et identification des pertes évitables.",
     results:

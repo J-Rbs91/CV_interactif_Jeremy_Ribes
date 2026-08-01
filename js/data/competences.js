@@ -1,13 +1,3 @@
-/* Sept domaines dont trois paires se recouvraient : organisation/rédaction de
-   process décrivaient le même travail, interface/management par l’utilité la
-   même idée, outils/reporting le même objet. Cinq domaines nets valent mieux
-   que sept moyens.
-
-   La rubrique « Résultat observable » est devenue facultative. Six sur sept ne
-   contenaient que des adjectifs comparatifs — « plus prévisible », « plus
-   fiable », « plus lisible » : un label qui promet une preuve et livre une
-   impression fait plus de mal que pas de label du tout. Elle n’apparaît
-   maintenant que là où il y a un fait. */
 export const competences = [
   {
     id: "pilotage-commercial",
@@ -50,8 +40,6 @@ export const competences = [
     tags: ["Google Apps Script", "Web", "Automatisation"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
-    /* L’ambiguïté « conçoit-il ou fait-il faire ? » se levait nulle part dans
-       le CV — première question technique d’un recruteur, laissée ouverte. */
     miseEnPlace:
       "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
     exemple:

@@ -1,9 +1,6 @@
-/* Vue d'impression : le SPA ne monte que la section active, donc imprimer
-   la page telle quelle perd les 7/8 du contenu. On construit ici un document
-   linéaire, tout déplié, monté à la demande par js/ui/print.js.
-
-   Ce n'est pas la page à plat : c'est une mise en page de document — bandeau
-   d'identité, adresses en ligne, sections numérotées. */
+/* Vue d'impression : le SPA ne monte que la section active, donc imprimer la
+   page telle quelle perdrait le reste. On construit ici un document linéaire,
+   toutes sections dépliées, monté à la demande par js/ui/print.js. */
 import { contact } from "../data/contact.js";
 import { sections } from "../data/sections.js";
 import { renderCompetencesSection } from "./renderCompetences.js";
@@ -43,8 +40,8 @@ function renderFacts() {
     .join("&nbsp;· ");
 }
 
-/* Les trois adresses en ligne, une fois, en tête. Les répéter à chaque lien
-   dans le corps du document est exactement ce qui fait « photocopie ». */
+/* Les adresses en ligne sont regroupées en tête plutôt que répétées à chaque
+   lien du corps. */
 function renderLiveLine() {
   const products = getLiveProducts();
 

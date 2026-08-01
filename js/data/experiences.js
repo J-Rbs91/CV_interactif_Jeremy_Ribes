@@ -1,12 +1,3 @@
-/* La section « Cas concret » a disparu : elle racontait le mandat 2024-2025,
-   qui avait par ailleurs sa propre entrée ici — réduite, du coup, à quatre
-   lignes de fiche de poste. Le poste le plus élevé du parcours était le plus
-   mal décrit à l’endroit exact où le lecteur le cherche. Le contenu est
-   revenu dans l’expérience, et la note qui expliquait au lecteur comment
-   articuler les deux sections n’a plus d’objet.
-
-   Les outils sont nommés ici, jamais redécrits : leur description est en
-   section Outils, une fois. */
 export const experiences = [
   {
     role: "Opticien collaborateur",
@@ -37,9 +28,6 @@ export const experiences = [
       "Mise en place d’un suivi automatisé des devis et d’un brief quotidien, pour fiabiliser les relances et coordonner le back-office.",
       "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des plannings pour aligner les effectifs présents sur la charge réelle.",
     ],
-    /* Le chiffre vit ici, et nulle part ailleurs. Il figurait dans cinq
-       endroits du CV avec deux précisions différentes (5,6 et 5,64) : répété,
-       il cessait d’être une preuve pour signaler qu’il était le seul. */
     statsLabel: "Sur les deux mois qui ont suivi ces actions",
     stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],
     result:

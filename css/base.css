@@ -196,8 +196,8 @@
   --n-line: var(--flame-200);
 }
 
-/* Le socle : même encre, une nuance en retrait. La Formation ne doit pas
-   peser autant que ce qui a été construit.
+/* Le socle : même encre, une nuance en retrait — pour une section
+   volontairement moins appuyée que les autres.
 
    « Une nuance » — le socle en descendait quatre : le titre partait dans le
    gris (--text-muted, 4,4:1 sur le dégradé, sous le seuil) et la marque

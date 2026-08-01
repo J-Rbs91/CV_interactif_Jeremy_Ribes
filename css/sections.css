@@ -1,7 +1,5 @@
-/* Sept compétences de même nature : un tableau. Le rail de 2 px qui portait
-   la nature disparait avec les sept autres — c'est le titre qui la porte
-   maintenant, par sa couleur. L'etat ouvert se dit par le filet qui
-   apparait et par le contenu qui se deplie. */
+/* Pas de rail de nature sur ces cartes : c'est le titre qui la porte, par sa
+   couleur. L'etat ouvert se dit par le filet et par le contenu deplie. */
 .comp-card {
   background: none;
   border: 0;

@@ -1,7 +1,3 @@
-/* Les compétences transférables sont passées de quatre à deux par projet :
-   douze cartes au total, souvent génériques (« Vision d’ensemble »,
-   « Coordination », « Priorisation »), c’était la troisième fois que le CV
-   énumérait les mêmes qualités. Il ne reste que ce qui est propre au projet. */
 export const projetsTransverses = [
   {
     title: "KuT — Logiciel de gestion pour salons et activités de bien-être",
@@ -28,10 +24,6 @@ export const projetsTransverses = [
   {
     title: "L’Ortabels — Projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
-    /* Le projet le plus intéressant techniquement était le plus mal exploité :
-       trois puces, aucun problème posé. Un modèle prédictif appliqué à un
-       domaine inhabituel démontre exactement ce que le CV revendique —
-       transformer de la donnée en décision terrain. */
     bullets: [
       "Planifier des cultures suppose d’anticiper des stades de développement qui dépendent des températures, pas du calendrier : un semis se pilote en degrés-jours cumulés, pas en semaines.",
       "Conception d’un outil exploitant les températures locales, les degrés-jours et les modèles de croissance thermique pour estimer les fenêtres de semis, les stades de développement et les périodes de récolte.",
@@ -52,9 +44,6 @@ export const projetsTransverses = [
     ],
   },
   {
-    /* L’emoji était le seul du document, et « avancés » qualifiait des
-       régressions linéaires — un superlatif qui attire l’œil d’un lecteur
-       technique au mauvais endroit. « Superprofit » est impropre en gestion. */
     title: "Renta Menu — Pilotage de la rentabilité en restauration",
     subtitle: "Outil décisionnel · Google Apps Script",
     bullets: [

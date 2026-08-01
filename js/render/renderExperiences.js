@@ -36,8 +36,8 @@ export function renderProfilSection() {
   `;
 }
 
-/* Le libellé du chiffre est facultatif : un chiffre qui n'a rien à préciser
-   n'ouvre pas une ligne vide sous lui. */
+/* `label` est facultatif : sans lui, aucune ligne n'est ouverte sous la
+   valeur. */
 function renderStat(item) {
   return `
       <div class="stats-item">
@@ -46,9 +46,8 @@ function renderStat(item) {
       </div>`;
 }
 
-/* Le bloc de résultat ne s'affiche que sur les expériences qui en portent un.
-   Sur les deux autres, rien : une rubrique vide se lit comme un poste sans
-   résultat, ce qui est pire que pas de rubrique. */
+/* Bloc facultatif : rendu uniquement si l'expérience déclare `stats` ou
+   `result`. */
 function renderOutcome(experience) {
   const { statsLabel, stats, result } = experience;
 
