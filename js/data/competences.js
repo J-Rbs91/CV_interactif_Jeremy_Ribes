@@ -29,7 +29,7 @@ export const competences = [
     exemple:
       "Le lissage des rendez-vous de livraison a réduit la surcharge du samedi en répartissant la charge sur la semaine.",
     resultat:
-      "Ces procédures ont été adoptées par les équipes. J’ai repris la même démarche dans mon poste actuel.",
+      "Ces procédures ont été conçues et mises en place de ma propre initiative, sans commande préalable. Elles ont été adoptées par les équipes, et j’ai repris la même démarche dans mon poste actuel.",
   },
   {
     id: "outils-metiers",
