@@ -31,7 +31,7 @@ export const experiences = [
     statsLabel: "Sur les deux mois qui ont suivi ces actions",
     stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],
     result:
-      "Réorganisation et implication saluées par la direction régionale. Trois des outils conçus pour ce poste sont toujours en service, dont deux dans un magasin où je ne les avais pas déployés.",
+      "Réorganisation et implication saluées par la direction régionale. Le brief quotidien et le suivi des devis conçus pour ce poste sont aujourd’hui utilisés par mon équipe, dans une autre enseigne.",
   },
   {
     role: "Opticien collaborateur",

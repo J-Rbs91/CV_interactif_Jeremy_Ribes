@@ -12,7 +12,7 @@ export const profileContent = {
     {
       title: "Méthode",
       nature: "produit",
-      text: "Je pars d’un <strong>irritant précis</strong> — une ressaisie, un oubli, un calcul refait à la main — et je livre une réponse dont l’utilité se vérifie au premier usage. <strong>Sans attendre qu’on me le demande</strong> : la plupart de ces outils n’ont fait l’objet d’aucune commande. C’est ce qui les fait adopter — personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
+      text: "Je pars d’un <strong>irritant précis</strong> — une ressaisie, un oubli, un calcul refait à la main — et je livre une réponse dont l’utilité se vérifie au premier usage. <strong>Sans attendre qu’on me le demande.</strong> C’est aussi ce qui les fait adopter — personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
     },
   ],
   expertise:
@@ -37,7 +37,7 @@ export const formationContent = {
     {
       title: "Google Apps Script",
       nature: "produit",
-      text: "Développement des cinq outils internes présentés en section Outils, dont deux encore en usage quotidien.",
+      text: "Développement des cinq outils internes présentés en section Outils.",
     },
     {
       title: "Développement web & desktop",
