@@ -57,8 +57,8 @@ export function renderOutilsSection(expandedTool, options = {}) {
 
   return `
     <div class="card n-produit">
-      <div class="card-title"><div class="dot"></div>Récapitulatif des outils de pilotage</div>
-      <div class="card-text">Les outils présentés ici font partie d'une selection de solutions que j’ai conçues pour répondre à des besoins opérationnels concrets, clarifier les priorités et fiabiliser l’exécution au quotidien.</div>
+      <div class="card-title"><div class="dot"></div>Cinq outils conçus et développés</div>
+      <div class="card-text">Je les ai conçus et développés moi-même, sous Google Sheets et Apps Script comme en web. Trois sont en service aujourd’hui, dont deux dans un magasin où je ne les avais pas déployés.</div>
     </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}

@@ -1,103 +1,61 @@
-export const realisations = {
-  stats: [
-    /* Le chiffre se passe de sa durée : « en 2 mois à peine » se lisait à
-       quatre centimètres du libellé qui le dit déjà — « Deux mois pour
-       redynamiser le point de vente ». Répétée, la vitesse cessait d'être un
-       résultat pour devenir une insistance, et une insistance appelle la
-       question qu'elle veut fermer. Le libellé la porte une fois, le chiffre
-       reste nu. La durée du poste, elle, est au badge de section. */
-    { value: "+83% CA" },
-    { value: "+5,6 pts", label: "de marge" },
-  ],
-  /* La note fait le contrepoids du titre ET de l'étiquette. Du titre : ce cas
-     est un exemple, pas le total. De l'étiquette : « deux mois » cadre la
-     redynamisation du point de vente, pas la durée de vie de l'outillage —
-     le reste de la section Outils n'a pas été conçu pour ce poste, PANUM en
-     particulier, qui n'a jamais tourné en magasin.
+/* La section « Cas concret » a disparu : elle racontait le mandat 2024-2025,
+   qui avait par ailleurs sa propre entrée ici — réduite, du coup, à quatre
+   lignes de fiche de poste. Le poste le plus élevé du parcours était le plus
+   mal décrit à l’endroit exact où le lecteur le cherche. Le contenu est
+   revenu dans l’expérience, et la note qui expliquait au lecteur comment
+   articuler les deux sections n’a plus d’objet.
 
-     Elle ne liste plus les dispositifs : les cartes les nomment désormais,
-     et c'est leur place. Un nom répété dans la note et dans la carte se lit
-     comme deux dispositifs. */
-  note: "Ce cas n'est qu'un exemple : les dispositifs qu'il mobilise ne sont qu'une partie de ceux détaillés dans Outils, les autres relevant de contextes différents. Les autres réalisations que j'ai conçues et menées sont dans Projets transverses.",
-  items: [
-    {
-      icon: "trending-up",
-      text: "Déploiement d'une politique commerciale offensive et développement du trafic par actions locales ciblées, optimisation du référencement local et valorisation des avis Google (Uberall/Yext).",
-      nature: "produit",
-    },
-    {
-      icon: "wrench",
-      text: "Opti'Profit, outil d'aide à la décision (Google Apps Script) identifiant en temps réel le meilleur mix produit selon les contraintes métier et le budget client.",
-      nature: "produit",
-    },
-    {
-      icon: "coins",
-      text: "Sécurisation de la marge, suppression des ressaisies administratives chronophages et fluidification du parcours client.",
-      nature: "produit",
-    },
-    {
-      icon: "clipboard",
-      /* La carte était anonyme, donc lue comme un PANUM antidaté — alors que
-         PANUM n'a jamais tourné en magasin. Nommer la technique la rattache
-         à ce qu'elle était vraiment, et les deux faits qui suivent sont les
-         plus solides du dossier : l'outil survit à son contexte, et il a
-         engendré un produit. */
-      text: "Système de suivi automatisé des devis conçu sous Google Sheets et Apps Script, améliorant la concrétisation, les délais et la coordination entre collaborateurs. Toujours en usage dans mon poste actuel, il est à l'origine du développement de PANUM.",
-      nature: "produit",
-    },
-    {
-      icon: "check",
-      text: "Brief'Maker, feuille de brief quotidienne agrégeant le planning, l'agenda et le suivi des dossiers, avec attribution des tâches par collaborateur : coordination d'équipe renforcée et oublis administratifs fortement réduits. Toujours en usage dans mon poste actuel.",
-      nature: "produit",
-    },
-    {
-      icon: "calendar",
-      text: "Gestionnaire de Planning, permettant d'adapter les effectifs aux besoins réels et de résoudre les tensions organisationnelles.",
-      nature: "produit",
-    },
-  ],
-};
-
+   Les outils sont nommés ici, jamais redécrits : leur description est en
+   section Outils, une fois. */
 export const experiences = [
   {
     role: "Opticien collaborateur",
     company: "Krys",
-    date: "2025 → aujourd'hui",
+    date: "2025 → aujourd’hui",
     recency: "now",
+    context:
+      "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
-      "Normalisation opérationnelle : procédures de gestion back-office (contrôle, dispatch, retards) et lissage des flux de livraison (RDV livraison).",
-      "Pilotage : outils de suivi quotidien pour fiabiliser la remontée d'informations et coordonner l'équipe.",
-      "Interface opérationnelle : traduction des objectifs de la direction en méthodes de travail, facilitant l'adhésion de l'équipe.",
-      "Développement commercial & CRM : conception et déploiement d'une campagne e-mail automatisée auprès de plus d'un millier de clients, incluant la segmentation de la base, le contrôle des consentements, la personnalisation des communications et le suivi des conversions.",
-      "Fiabilisation des données commerciales : conception de contrôles automatisés rapprochant les données du logiciel métier et les suivis internes afin d'identifier les dossiers non tracés, quantifier les écarts et orienter les actions correctives.",
-      "Développement d'outils Desktop et Web d'aide à la vente.",
+      "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
+      "Conception et envoi d’une campagne e-mail auprès de plus de mille clients : segmentation de la base, vérification des consentements, personnalisation des messages, suivi des conversions.",
+      "Mise en place de contrôles automatisés rapprochant les données du logiciel métier et les suivis internes, pour repérer les dossiers non tracés et chiffrer les écarts.",
+      "Développement d’outils d’aide à la vente, web et desktop, dont un hub regroupant les tâches courantes du magasin.",
+      "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
     ],
   },
   {
     role: "Responsable de magasin",
-    company: "Générale d'Optique",
+    company: "Générale d’Optique",
     date: "2024 → 2025",
     recency: "recent",
+    context:
+      "Reprise d’un magasin en difficulté, en autonomie sur l’ensemble du périmètre : commerce, organisation, recrutement et équipe.",
     bullets: [
-      "Pilotage de l'activité commerciale, opérationnelle et organisationnelle du point de vente.",
-      "Management de proximité, accompagnement de l'équipe et suivi du fonctionnement quotidien.",
-      "Coordination entre besoins terrain, exigences de performance et attentes de la direction.",
-      "Contribution à l'amélioration de l'organisation, de la lisibilité de l'activité et du pilotage.",
+      "Recrutement et formation de deux collaborateurs, puis mise en place de leur organisation de travail.",
+      "Relance du trafic par actions locales ciblées, travail sur le référencement local et la collecte d’avis Google.",
+      "Conception d’Opti’Profit, outil d’aide à la vente qui identifie le meilleur compromis entre besoin technique, budget client, réseaux de soins et marge.",
+      "Mise en place d’un suivi automatisé des devis et d’un brief quotidien, pour fiabiliser les relances et coordonner le back-office.",
+      "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des plannings pour aligner les effectifs présents sur la charge réelle.",
     ],
-    tags: [
-      { label: "+83% CA", nature: "preuve" },
-      { label: "+5,6 pts marge", nature: "preuve" },
-    ],
+    /* Le chiffre vit ici, et nulle part ailleurs. Il figurait dans cinq
+       endroits du CV avec deux précisions différentes (5,6 et 5,64) : répété,
+       il cessait d’être une preuve pour signaler qu’il était le seul. */
+    statsLabel: "Sur les deux mois qui ont suivi ces actions",
+    stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],
+    result:
+      "Réorganisation et implication saluées par la direction régionale. Trois des outils conçus pour ce poste sont toujours en service, dont deux dans un magasin où je ne les avais pas déployés.",
   },
   {
     role: "Opticien collaborateur",
     company: "GrandOptical · Krys · Lissac",
     date: "2012 → 2023",
     recency: "past",
+    context:
+      "Onze ans en magasin, sur trois enseignes et trois organisations différentes.",
     bullets: [
-      "Relation client, vente conseil et gestion des situations complexes.",
-      "Bonne connaissance des contraintes terrain en magasin : charge, temps, priorités et qualité de service.",
-      "Évolution progressive vers des sujets d'organisation et d'amélioration du fonctionnement quotidien.",
+      "Vente conseil et traitement des dossiers complexes : contraintes techniques, réseaux de soins, tiers payant.",
+      "Trois enseignes, trois politiques commerciales et trois manières d’organiser un magasin : c’est de là que vient ma lecture des contraintes réelles d’un point de vente.",
+      "Bascule progressive vers les sujets d’organisation : méthodes de travail, fiabilisation des calculs récurrents et du suivi des dossiers.",
     ],
   },
 ];

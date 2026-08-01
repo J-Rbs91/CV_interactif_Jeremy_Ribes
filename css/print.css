@@ -175,7 +175,6 @@
   .card-sm,
   .comp-card,
   .tool-card,
-  .real-card,
   .project-card,
   .formation-card,
   .punchline-box,
@@ -214,7 +213,6 @@
   .card-title .dot,
   .comp-toggle-icon,
   .tool-toggle-icon,
-  .real-icon,
   .timeline-item::before,
   .timeline-item::after,
   .stats-divider {
@@ -249,8 +247,7 @@
   .detail-text,
   .card-text,
   .comp-desc,
-  .tool-summary-text,
-  .real-text {
+  .tool-summary-text {
     font-size: 9.5pt;
     line-height: 1.45;
     color: var(--ink-800);
@@ -411,33 +408,47 @@
     margin: 1mm 0 0 35mm;
   }
 
-  /* --- Réalisations ----------------------------------------------------- */
+  /* --- Cadrage & résultat d'expérience ----------------------------------- */
+  /* Alignés sur les puces, à 35 mm : le cadrage, les puces et le résultat
+     forment une seule colonne de matière à droite du libellé de date. */
+  .tl-context {
+    margin: 0 0 1mm 35mm;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: var(--ink-800);
+  }
+
+  .tl-outcome {
+    margin: 1.5mm 0 0 35mm;
+    padding-left: 4mm;
+    border-left: 1pt solid var(--n-line);
+  }
+
+  .tl-outcome-label {
+    margin-bottom: 0.8mm;
+    font-size: 7pt;
+  }
+
+  .tl-outcome-text {
+    margin-top: 1mm;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: var(--ink-800);
+  }
+
   .stats-spotlight {
     display: flex;
     gap: 10mm;
-    padding: 0 0 2mm;
+    padding: 0;
   }
 
   .stats-value {
-    font-size: 15pt;
+    font-size: 13pt;
     color: var(--n-ink);
   }
 
   .stats-label {
     font-size: 8pt;
-  }
-
-  .real-card {
-    display: block;
-    padding: 0 0 0 4mm;
-    border-left: 1pt solid var(--n-line);
-    margin-bottom: 2mm;
-  }
-
-  .note {
-    padding-left: 4mm;
-    font-size: 9pt;
-    border-left: 1pt solid var(--ink-200);
   }
 
   /* --- Projets & formation ---------------------------------------------- */

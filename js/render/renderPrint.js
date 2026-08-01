@@ -11,7 +11,6 @@ import {
   renderExperiencesSection,
   renderFormationSection,
   renderProfilSection,
-  renderRealisationsSection,
 } from "./renderExperiences.js";
 import { renderOutilsSection } from "./renderOutils.js";
 import { renderProjetSection } from "./renderProjets.js";
@@ -24,8 +23,6 @@ function renderSectionBody(sectionId) {
       return renderProfilSection();
     case "competences":
       return renderCompetencesSection(null, { expandAll: true });
-    case "realisations":
-      return renderRealisationsSection();
     case "outils":
       return renderOutilsSection(null, { expandAll: true });
     case "experience":

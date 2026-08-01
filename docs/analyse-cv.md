@@ -4,8 +4,17 @@ Périmètre analysé : `js/data/profile.js`, `js/data/experiences.js`, `js/data/
 `js/data/outils.js`, `js/data/projets.js`, `js/data/sections.js`, `js/data/contact.js`,
 et la version `<noscript>` d'`index.html`.
 
-Ce document est une analyse et une proposition. Il ne modifie aucun fichier de données :
-plusieurs corrections dépendent d'informations que je n'ai pas (voir section F).
+> **État : appliqué.** La réécriture décrite en section E a été portée dans les fichiers de
+> données, la couche de rendu, le repli `<noscript>` et le JSON-LD. Ce document reste le
+> compte rendu du diagnostic et la trace des arbitrages. Les points encore ouverts sont en
+> section F.
+>
+> Un élément découvert à l'application et absent du diagnostic initial : le bloc **JSON-LD**
+> d'`index.html` — la version lue par les ATS et les moteurs — portait l'ancien titre,
+> l'ancienne description, les sept anciennes compétences et la date de naissance. Même
+> classe de défaut que le `<noscript>` désynchronisé, avec un lectorat plus large.
+> Il a été resynchronisé, ainsi que les métadonnées `description`, `keywords` et
+> `og:description`.
 
 ---
 
@@ -1044,19 +1053,29 @@ Aucun chiffre ni aucune compétence n'a été ajouté : tout provient du contenu
 
 Par ordre d'impact sur la crédibilité du dossier.
 
-**Bloquantes — sans elles, un doute reste ouvert**
+**Traité à l'application**
 
-1. **Raison du changement de poste en 2025** (Responsable → Opticien collaborateur). Une
-   ligne factuelle suffit. C'est le point le plus coûteux du CV en l'état.
-2. **Base de comparaison des +83 %** : par rapport à N-1, aux deux mois précédents, à un
-   objectif ? Sans base, le chiffre est attaquable.
-3. **Écrivez-vous le code vous-même ?** À trancher explicitement, y compris pour distinguer
-   les cas (outils Apps Script développés seul vs KuT où vous coordonnez).
+- **Raison du changement de poste en 2025.** Arbitrage retenu : le CV n'explique rien. Un
+  CV qui justifie un départ crée la question au lieu de la fermer, et la place de cette
+  explication est l'entretien, préparée, en une phrase. Ce qui neutralise la mauvaise
+  lecture, c'est la substance du poste — recrutement et formation de deux collaborateurs,
+  réorganisation, reconnaissance de la direction régionale — désormais présente là où le
+  lecteur la cherche.
+- **Rôle technique.** Tranché explicitement : « je conçois et je développe moi-même »
+  (compétence *Conception d'outils métiers*, intro de la section Outils).
+
+**Encore ouvertes — elles feraient gagner le plus**
+
+1. **Base de comparaison des +83 %** : par rapport à N-1, aux deux mois précédents, à un
+   objectif ? Sans base, le chiffre reste attaquable. C'est la première question qu'un
+   recruteur posera sur ce point.
 
 **Fortes — elles transforment des affirmations en preuves**
 
-4. Dates par enseigne sur 2012-2023, et mois sur tous les postes.
-5. Effectif encadré chez Générale d'Optique, taille et CA du magasin.
+4. Dates par enseigne sur 2012-2023, et mois sur tous les postes. C'est le bloc le plus
+   faible du CV réécrit : onze ans y tiennent encore en trois lignes, faute de matière.
+5. Effectif total encadré chez Générale d'Optique, taille et CA du magasin. Le recrutement
+   de deux personnes est cité ; l'équipe complète ne l'est pas.
 6. Nombre d'utilisateurs quotidiens de Brief'Maker et du Hub.
 7. Utilisateurs ou clients réels de KuT et L'Ortabels, et date de mise en service.
 8. Résultats de la campagne e-mail Krys : taux d'ouverture, rendez-vous générés, CA attribué.
@@ -1065,7 +1084,9 @@ Par ordre d'impact sur la crédibilité du dossier.
 
 **Utiles — elles complètent le dossier**
 
-11. E-mail, LinkedIn, mobilité, disponibilité.
+11. E-mail, LinkedIn, mobilité, disponibilité. Volontairement non ajoutés : publier une
+    adresse en clair sur un site public l'expose au moissonnage, et c'est votre décision,
+    pas la mienne. Le formulaire reste seul en attendant.
 12. Intitulés de postes réellement visés, et secteurs.
 13. Temps de conception de chaque outil (démontre une capacité de livraison rapide).
 14. Statut réel de Renta Menu.
@@ -1076,13 +1097,26 @@ Par ordre d'impact sur la crédibilité du dossier.
 
 ---
 
-## Ordre d'exécution recommandé
+---
 
-1. Rassembler les trois informations bloquantes (F1 à F3).
-2. Réordonner les sections : Expériences en position 2, fusion du Cas concret avec
-   l'expérience Générale d'Optique, suppression de la `note`.
-3. Réécrire les trois blocs d'expérience (E.4) et l'accroche (E.2).
-4. Consolider les compétences de 7 à 5 (E.7), en supprimant les résultats non observables.
-5. Passe stylistique : casser les triades, limiter les antithèses en *sans*, retirer les
-   superlatifs non mesurés (« drastique », « fortement », « avancés »).
-6. Resynchroniser le `<noscript>` d'`index.html` avec les données.
+## Ce qui a été appliqué
+
+| Fichier | Changement |
+|---|---|
+| `js/data/contact.js` | Titre fonctionnel, sous-titre unifié, accroche réécrite, date de naissance retirée |
+| `js/data/profile.js` | Citation, intro, positionnement, méthode, cible réécrits ; étiquettes converties en livrables ; formation continue rattachée à des objets réels |
+| `js/data/experiences.js` | `realisations` supprimé, contenu fusionné dans l'expérience Générale d'Optique ; les trois blocs réécrits ; modèle enrichi (`context`, `stats`, `statsLabel`, `result`) |
+| `js/data/competences.js` | 7 domaines → 5 ; `resultat` désormais factuel ou absent |
+| `js/data/outils.js` | Ordre revu (ce qui tourne d'abord), cinq fiches resserrées, chiffre retiré d'Opti'Profit |
+| `js/data/projets.js` | Emoji, « avancés » et « superprofit » retirés ; L'Ortabels étoffé ; compétences transférables 4 → 2 par projet |
+| `js/data/sections.js` | « Cas concret » supprimé, Expériences remontée en position 2, sous-titres qui qualifient au lieu de compter |
+| `js/render/renderExperiences.js` | `renderRealisationsSection` supprimé ; rendu du cadrage et du bloc de résultat |
+| `js/render/renderCompetences.js` | Blocs de détail conditionnels — un label sans contenu ne s'affiche plus |
+| `js/render/renderOutils.js` | Intro de section réécrite |
+| `js/main.js`, `js/render/renderPrint.js` | Section `realisations` retirée du routage |
+| `css/sections.css`, `css/print.css` | `.real-*` (mort) remplacé par `.tl-context` et `.tl-outcome`, écran et impression |
+| `index.html` | `<noscript>` resynchronisé, JSON-LD et métadonnées SEO resynchronisés |
+
+**Vérifications passées** : syntaxe JS, parsing HTML, validité du JSON-LD, rendu des six
+sections en 1280×900 / 1440×1024 / 390×844 sans débordement, document d'impression complet
+sans bloc vide, aucune erreur JavaScript.

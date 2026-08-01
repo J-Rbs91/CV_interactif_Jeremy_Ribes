@@ -243,30 +243,43 @@
   margin-top: var(--space-2);
 }
 
-/* Cinq réalisations de même nature : même traitement que les compétences.
-   L'icône reste, elle nomme le type d'action ; c'est le rail qui part. */
-.real-card {
-  background: none;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  box-shadow: none;
-}
-
-.real-icon {
-  color: var(--n-mark);
-  font-size: var(--fs-title);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.real-text {
+/* La ligne de cadrage du poste : elle dit dans quelle situation les puces qui
+   suivent ont été menées. Elle n'est pas une puce — d'où l'absence de chevron
+   et la légère mise en retrait par la couleur. */
+.tl-context {
   font-size: var(--fs-body);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--text);
+  margin-bottom: var(--space-1);
+}
+
+/* Le résultat ferme l'expérience qui en porte un. Un filet, pas une carte :
+   le bloc doit se lire comme la conclusion des puces qui précèdent, pas
+   comme un encadré rapporté à côté d'elles. */
+.tl-outcome {
+  margin-top: var(--space-2);
+  padding-left: var(--space-2);
+  border-left: 2px solid var(--n-mark);
+}
+
+.tl-outcome-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.tl-outcome .stats-spotlight {
+  gap: var(--space-3);
+}
+
+.tl-outcome-text {
+  margin-top: var(--space-1);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text-dim);
 }
 
 .tool-card {

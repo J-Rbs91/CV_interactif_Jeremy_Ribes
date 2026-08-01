@@ -1,91 +1,45 @@
+/* Ordre revu : ce qui tourne d’abord, ce qui attend ensuite. Les trois
+   premières fiches sont en usage aujourd’hui — c’est l’argument, et il doit
+   arriver avant le produit le plus ambitieux mais non déployé. */
 export const outils = [
   {
     id: "optiprofit",
-    title: "Opti'Profit",
+    title: "Opti’Profit",
     category: "Aide à la décision commerciale",
     nature: "produit",
     status: "Déployé en situation réelle",
     chips: ["Google Apps Script", "Rentabilité", "Temps réel"],
     summary:
-      "Outil d'aide à la décision capable d'identifier rapidement le meilleur compromis entre contraintes techniques, budget client et rentabilité magasin.",
+      "Outil d’aide à la décision qui identifie, en vente, le meilleur compromis entre besoin technique, budget client et rentabilité du magasin.",
     context:
-      "En situation de vente, l'enjeu est d'identifier instantanément le produit offrant le meilleur compromis entre les besoins techniques du client, son budget et les contraintes des réseaux de soins, tout en maximisant la rentabilité du point de vente.",
+      "En vente, le bon produit dépend du besoin technique, du budget, des contraintes du réseau de soins et de la marge. L’arbitrage se faisait de tête, catalogue par catalogue, avec le client en face.",
     action:
-      "Développement d'un algorithme sous Google Apps Script intégrant catalogues fournisseurs et grilles tarifaires mutuelles. L'outil filtre en temps réel les produits compatibles et met en évidence ceux qui dégagent la marge la plus élevée.",
+      "Développement d’un algorithme sous Google Apps Script intégrant les catalogues fournisseurs et les grilles tarifaires des mutuelles. L’outil filtre en temps réel les produits compatibles et met en évidence l’écart de marge entre deux solutions équivalentes pour le client.",
+    /* Le chiffre est reparti à l’expérience : ici, l’attribution était
+       confuse — on ne savait pas si l’outil avait produit les points de marge
+       seul — et la phrase était cassée. Ce que fait l’outil suffit. */
     results:
-      "Dans un magasin en perte de vitesse, cet outil a contribué à un gain de +5,64 points de marge et grâce à des actions conjointes une hausse de +83 % du chiffre d'affaires en deux mois.",
-  },
-  {
-    id: "panum",
-    title: "PANUM",
-    category: "Suivi commercial & pilotage de la performance",
-    nature: "produit",
-    /* Le statut disait « développement en cours » là où le produit est
-       fonctionnellement abouti : ce qui manque est la structure juridique
-       permettant de contractualiser avec des points de vente, pas du code.
-       Un blocage administratif annoncé comme un chantier technique fait
-       passer un produit fini pour un prototype. */
-    status: "Abouti · en attente de déploiement pilote",
-    chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
-    link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
-    summary:
-      "Solution de suivi commercial et de pilotage de la performance permettant de centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
-    context:
-      "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées et impossibilité pour le management de comprendre précisément pourquoi des ventes sont perdues.",
-    /* L'origine terrain n'apparaissait nulle part : la fiche décrivait un
-       produit sorti de rien, quand il prolonge un suivi outillé qui a produit
-       des résultats mesurés en magasin et tourne encore aujourd'hui. C'est
-       ce qui sépare un produit éprouvé d'une intuition de développeur. */
-    action:
-      "Prolongement d'un suivi outillé conçu en magasin sous Google Sheets, toujours en usage aujourd'hui, étendu en solution complète : conception d'indicateurs de suivi en temps réel, de tableaux de bord multi-niveaux et de mécanismes d'aide à la décision adaptés aux collaborateurs, managers et responsables de réseau.",
-    results:
-      "Passage d'un suivi dispersé à un pilotage structuré sur le plan fonctionnel et analytique : identification des pertes évitables et objectivation du coaching commercial. L'outil est aujourd'hui fonctionnellement abouti et éprouvé en conditions de test. Son déploiement en points de vente pilotes, qui permettra les derniers ajustements, constitue la prochaine étape.",
+      "Suppression du temps passé à comparer les catalogues et arbitrage rendu explicite au moment où il se joue. L’outil a été l’un des leviers du redressement obtenu chez Générale d’Optique.",
   },
   {
     id: "briefmaker",
-    title: "Brief'Maker",
-    category: "Support connecté d'organisation quotidienne",
+    title: "Brief’Maker",
+    category: "Organisation quotidienne du magasin",
     nature: "produit",
-    /* « Conçu pour » décrivait une intention de conception là où l'outil est
-       en service tous les jours, dans un autre point de vente que celui où
-       il a été construit. Un usage qui survit au contexte d'origine est la
-       seule preuve d'utilité qu'un lecteur ne peut pas mettre en doute — la
-       taire pour annoncer une intention était le plus mauvais échange. */
     status: "En usage quotidien depuis sa conception",
     chips: ["Agrégation", "Agenda Google", "Priorisation", "Back-office"],
     summary:
-      "Feuille de brief quotidienne agrégeant le planning, l'agenda et le suivi des dossiers en une seule vue, et répartissant les tâches du jour entre les collaborateurs.",
+      "Feuille de brief quotidienne agrégeant le planning, l’agenda et le suivi des dossiers en une seule vue, et répartissant les tâches du jour entre les collaborateurs.",
     context:
-      "Le manque de coordination quotidienne, la perte d'information entre les shifts et la difficulté à prioriser les tâches de back-office créent des oublis et une lecture floue de l'activité.",
-    /* « Support connecté » ne disait pas connecté à quoi, et se lisait donc
-       comme un document partagé. L'outil est un point d'agrégation : il
-       consomme le planning et le suivi des dossiers — deux dispositifs de
-       cette même section — et l'agenda de l'enseigne. C'est ce qui fait
-       système plutôt que collection. */
+      "L’information se perdait entre les shifts, et les tâches de back-office n’étaient priorisées par personne. Résultat : des oublis, et une lecture floue de l’activité pour la direction.",
     action:
-      "Conception d'un support de brief agrégeant automatiquement les sources du jour : planning de l'équipe, rendez-vous de l'agenda Google et suivi des dossiers, devis et tiers payant. S'y ajoutent une attribution des tâches par collaborateur, pour dispatcher et hiérarchiser le back-office, et des espaces de saisie libre pour les indicateurs de performance et les informations managériales.",
+      "Conception d’un support de brief qui agrège automatiquement les sources du jour — planning de l’équipe, rendez-vous de l’agenda Google, suivi des dossiers, devis et tiers payant. S’y ajoutent l’attribution des tâches par collaborateur et des espaces de saisie pour les indicateurs et les informations managériales.",
+    /* « Réduction drastique des oublis » : un superlatif non mesuré, placé
+       juste avant le fait le plus fort de la fiche, qu’il affaiblissait. Un
+       outil qui survit à son contexte d’origine est la seule preuve d’utilité
+       qu’un lecteur ne peut pas mettre en doute. */
     results:
-      "Amélioration de la coordination d'équipe, réduction drastique des oublis administratifs et meilleure lisibilité de l'activité pour la direction. Conçu pour piloter un point de vente, il est resté en service quotidien au-delà de ce contexte et sert encore aujourd'hui dans mon poste actuel.",
-  },
-  {
-    id: "planning",
-    title: "Gestionnaire de Planning",
-    category: "Optimisation RH",
-    nature: "produit",
-    /* Les quatre autres fiches annoncent un état ; celle-ci répétait une
-       catégorie, ce qui la faisait passer pour la seule jamais sortie du
-       papier. Elle a servi en point de vente — c'est ce qu'il faut dire. Son
-       sort actuel, plus nuancé, revient aux résultats. */
-    status: "Déployé en point de vente",
-    chips: ["Planification", "Ressources", "Flux client"],
-    summary:
-      "Outil de planification permettant d'adapter les ressources aux besoins réels et de limiter les tensions d'organisation.",
-    context:
-      "Les tensions organisationnelles proviennent souvent d'une inadéquation entre les effectifs présents, la charge réelle de travail et les contraintes d'ouverture.",
-    action:
-      "Développement d'un outil de planification automatisé capable d'ajuster les ressources aux besoins réels et de fluidifier le parcours client à partir des contraintes d'activité.",
-    results:
-      "Résolution de conflits d'organisation et optimisation du coût du personnel par rapport au flux d'activité. L'outil n'assure plus la construction des plannings aujourd'hui, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief'Maker pour afficher le planning du jour.",
+      "En service tous les jours depuis sa conception. L’outil a suivi un changement d’employeur : construit chez Générale d’Optique, il est utilisé aujourd’hui dans mon poste actuel, où rien ne l’avait prévu.",
   },
   {
     id: "hub-opticien",
@@ -95,19 +49,59 @@ export const outils = [
     status: "En usage quotidien en magasin",
     chips: ["Application web", "Standardisation", "Données locales"],
     /* Volontairement hors du bandeau « Produits en ligne » : le hub sert
-       la démonstration d'utilité, pas la vitrine produit. */
+       la démonstration d’utilité, pas la vitrine produit. */
     liveProduct: false,
     link: {
       label: "Découvrir le hub",
       url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
     },
     summary:
-      "Point d'entrée unique regroupant les outils récurrents du magasin — demande au médecin, clôture de caisse, calcul d'épaisseur de verres — paramétrés une seule fois et utilisables sans formation.",
+      "Point d’entrée unique regroupant les outils récurrents du magasin — demande au médecin, clôture de caisse, calcul d’épaisseur de verres — paramétrés une seule fois et utilisables sans formation.",
     context:
-      "Les tâches courtes et répétées du magasin s'appuyaient sur des documents dispersés, des calculs refaits à la main et les mêmes informations ressaisies à chaque fois. Prises isolément elles paraissent mineures ; répétées chaque jour, elles consomment du temps de vente et laissent passer des erreurs.",
+      "Les tâches courtes et répétées du magasin s’appuyaient sur des documents dispersés, des calculs refaits à la main et les mêmes informations ressaisies chaque fois. Isolées, elles paraissent mineures ; répétées, elles consomment du temps de vente et laissent passer des erreurs.",
     action:
-      "Conception et développement d'un hub web réunissant ces usages : demandes et comptes rendus au médecin normalisés avec export PDF et envoi par mail, clôture de caisse avec reprise du comptage de la veille et contrôle de l'écart avec le logiciel métier, calcul d'épaisseur et de décentrement des verres avec visualisation. Les coordonnées du magasin sont saisies une fois et alimentent tous les outils ; les données restent sur le poste, sans transmission serveur.",
+      "Conception et développement d’un hub web réunissant ces usages : demandes et comptes rendus au médecin normalisés avec export PDF et envoi par mail, clôture de caisse avec reprise du comptage de la veille et contrôle de l’écart avec le logiciel métier, calcul d’épaisseur et de décentrement des verres avec visualisation. Les coordonnées du magasin sont saisies une fois et alimentent tous les outils ; les données restent sur le poste, sans transmission serveur.",
     results:
-      "Dispositif adopté et utilisé quotidiennement : documents homogènes quel que soit le collaborateur, calculs fiabilisés et ressaisies supprimées. Illustration directe de la méthode appliquée aux projets plus lourds — partir d'un irritant concret et livrer une réponse simple, dont l'utilité se vérifie dès le premier usage.",
+      "Utilisé tous les jours : documents identiques quel que soit le collaborateur, calculs fiabilisés, ressaisies supprimées. Illustration directe de la méthode appliquée aux projets plus lourds — partir d’un irritant concret, livrer une réponse dont l’utilité se vérifie au premier usage.",
+  },
+  {
+    id: "panum",
+    title: "PANUM",
+    category: "Suivi commercial & pilotage de la performance",
+    nature: "produit",
+    /* Le statut disait « développement en cours » là où le produit est
+       fonctionnellement abouti : ce qui manque est la structure juridique
+       permettant de contractualiser avec des points de vente, pas du code. */
+    status: "Abouti · en attente de déploiement pilote",
+    chips: ["Priorisation", "KPI causaux", "Aide à la décision"],
+    link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
+    summary:
+      "Solution de suivi commercial et de pilotage de la performance : centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
+    context:
+      "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées, et un management qui ne sait pas précisément pourquoi les ventes se perdent.",
+    /* L’origine terrain n’apparaissait nulle part : la fiche décrivait un
+       produit sorti de rien, quand il prolonge un suivi outillé qui a produit
+       des résultats mesurés en magasin et tourne encore aujourd’hui. C’est
+       ce qui sépare un produit éprouvé d’une intuition de développeur. */
+    action:
+      "Extension en solution complète du suivi outillé conçu en magasin sous Google Sheets, qui tourne toujours : indicateurs en temps réel, tableaux de bord par niveau de responsabilité, priorisation des relances et identification des pertes évitables.",
+    results:
+      "Le produit est fonctionnellement abouti et éprouvé en conditions de test. Le déploiement en points de vente pilotes est la prochaine étape ; il attend la mise en place de la structure juridique permettant de contractualiser.",
+  },
+  {
+    id: "planning",
+    title: "Gestionnaire de Planning",
+    category: "Planification des effectifs",
+    nature: "produit",
+    status: "Déployé en point de vente",
+    chips: ["Planification", "Ressources", "Flux client"],
+    summary:
+      "Outil de planification alignant les effectifs présents sur la charge réelle et les contraintes d’ouverture.",
+    context:
+      "Les tensions d’organisation venaient d’un écart entre les effectifs présents, la charge réelle de travail et les contraintes d’ouverture du magasin.",
+    action:
+      "Développement d’un outil de construction de planning ajustant les effectifs à l’activité attendue à partir des contraintes d’exploitation du point de vente.",
+    results:
+      "Conflits d’organisation récurrents réglés, coût du personnel ajusté au flux réel. L’outil ne construit plus les plannings aujourd’hui, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief’Maker pour afficher le planning du jour.",
   },
 ];

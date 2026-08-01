@@ -1,6 +1,20 @@
 import { competences } from "../data/competences.js";
 import { natureClass, renderAccentTags } from "./renderUtils.js";
 
+/* Un bloc sans contenu ne s'ouvre pas. « Résultat observable » promettait une
+   preuve et livrait un adjectif comparatif sur six domaines sur sept : mieux
+   vaut pas de rubrique qu'une rubrique qui ne tient pas sa promesse. */
+function detailBlock(label, text) {
+  if (!text) {
+    return "";
+  }
+
+  return `<div class="detail-block">
+            <div class="detail-label">${label}</div>
+            <div class="detail-text">${text}</div>
+          </div>`;
+}
+
 function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
   const isExpanded = expandAll || expandedCompetenceId === competence.id;
   const panelId = `competence-panel-${competence.id}`;
@@ -32,22 +46,10 @@ function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
         ${isExpanded ? "" : "hidden"}
       >
         <div class="comp-details-inner">
-          <div class="detail-block">
-            <div class="detail-label">Enjeu traité</div>
-            <div class="detail-text">${competence.enjeu}</div>
-          </div>
-          <div class="detail-block">
-            <div class="detail-label">Ce que j’ai mis en place</div>
-            <div class="detail-text">${competence.miseEnPlace}</div>
-          </div>
-          <div class="detail-block">
-            <div class="detail-label">Exemple concret</div>
-            <div class="detail-text">${competence.exemple}</div>
-          </div>
-          <div class="detail-block">
-            <div class="detail-label">Résultat observable</div>
-            <div class="detail-text">${competence.resultat}</div>
-          </div>
+          ${detailBlock("Enjeu traité", competence.enjeu)}
+          ${detailBlock("Ce que j’ai mis en place", competence.miseEnPlace)}
+          ${detailBlock("Exemple concret", competence.exemple)}
+          ${detailBlock("Résultat observable", competence.resultat)}
         </div>
       </div>
     </article>

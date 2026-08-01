@@ -1,114 +1,94 @@
+/* Sept domaines dont trois paires se recouvraient : organisation/rédaction de
+   process décrivaient le même travail, interface/management par l’utilité la
+   même idée, outils/reporting le même objet. Cinq domaines nets valent mieux
+   que sept moyens.
+
+   La rubrique « Résultat observable » est devenue facultative. Six sur sept ne
+   contenaient que des adjectifs comparatifs — « plus prévisible », « plus
+   fiable », « plus lisible » : un label qui promet une preuve et livre une
+   impression fait plus de mal que pas de label du tout. Elle n’apparaît
+   maintenant que là où il y a un fait. */
 export const competences = [
   {
     id: "pilotage-commercial",
-    title: "Pilotage commercial",
+    title: "Pilotage commercial & rentabilité",
     summary:
-      "Développer le flux clients tout en sécurisant la rentabilité de chaque vente.",
+      "Développer le flux clients en tenant la marge sur chaque vente.",
     nature: "produit",
-    tags: ["Flux clients", "Rentabilité", "Avis Google"],
+    tags: ["Flux clients", "Marge", "Référencement local"],
     enjeu:
-      "Relancer une activité commerciale dans un magasin en perte de vitesse sans sacrifier la rentabilité.",
+      "Relancer un magasin en difficulté sans acheter le chiffre par la remise.",
     miseEnPlace:
-      "J’ai travaillé à la fois sur le flux client et sur la qualité économique de chaque vente. J’ai combiné actions locales ciblées, optimisation du référencement local et des avis Google, et création d’un outil d’aide à la décision commerciale utilisé directement en vente.",
+      "J’ai travaillé les deux côtés en même temps. Le flux, par des actions locales ciblées, le référencement local et la collecte d’avis Google. La qualité économique de chaque vente, par un outil d’arbitrage produit utilisé directement en situation de vente.",
     exemple:
-      "L’outil faisait ressortir le mix produit le plus pertinent selon le budget client, les contraintes techniques, les offres en cours et les réseaux de soins.",
+      "L’outil fait ressortir le mix produit le plus pertinent selon le budget du client, les contraintes techniques, les offres en cours et les réseaux de soins.",
     resultat:
-      "En 2 mois, +83 % de chiffre d’affaires et +5,64 points de marge par rapport à la période de référence.",
+      "+83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, chez Générale d’Optique.",
   },
   {
-    id: "organisation-methodes",
-    title: "Organisation & méthodes",
+    id: "organisation-process",
+    title: "Organisation & formalisation des process",
     summary:
-      "Mettre en place des processus de travail clairs pour rendre l’activité plus lisible et réduire les pertes de temps.",
+      "Transformer des pratiques implicites en procédures écrites et réellement utilisées.",
     nature: "cadre",
-    tags: ["Processus", "Back-office", "Temps"],
+    tags: ["Procédures", "Back-office", "Priorisation"],
     enjeu:
-      "Réduire les pertes de temps, les flottements d’organisation et les zones d’incertitude dans le fonctionnement quotidien.",
+      "Réduire les flottements d’organisation et les zones d’incertitude du fonctionnement quotidien.",
     miseEnPlace:
-      "J’ai conçu des méthodes de travail pour rendre l’activité plus lisible : procédure de contrôle et de dispatch back-office, priorisation des dossiers complets / incomplets, organisation J+1 pour les montages et vérifications, et cadrage des rendez-vous de livraison.",
+      "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
     exemple:
-      "Le lissage des rendez-vous de livraison a permis de réduire la surcharge du samedi et de mieux répartir la charge de travail sur la semaine.",
+      "Le lissage des rendez-vous de livraison a réduit la surcharge du samedi en répartissant la charge sur la semaine.",
     resultat:
-      "Un fonctionnement plus prévisible, plus fluide et plus sûr, sans rigidifier inutilement l’organisation du magasin.",
+      "Ces procédures ont été adoptées sans arbitrage hiérarchique. J’ai repris la même démarche dans mon poste actuel.",
   },
   {
-    id: "outils-aide-decision",
-    title: "Outils d'aide à la décision",
+    id: "outils-metiers",
+    title: "Conception d’outils métiers",
     summary:
-      "Créer des outils simples pour fiabiliser les choix de l’équipe et accélérer la bonne décision.",
+      "Concevoir et développer moi-même les outils qui manquent à l’activité.",
     nature: "produit",
-    tags: ["GAS", "Automatisation", "Mix produit"],
+    tags: ["Google Apps Script", "Web", "Automatisation"],
     enjeu:
-      "Donner au terrain des repères concrets quand la bonne décision dépend de multiples contraintes métier.",
+      "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
+    /* L’ambiguïté « conçoit-il ou fait-il faire ? » se levait nulle part dans
+       le CV — première question technique d’un recruteur, laissée ouverte. */
     miseEnPlace:
-      "Je conçois des outils simples quand l’activité manque de lisibilité. J’ai développé un outil d’aide à la vente pour orienter le choix produit selon les contraintes métier et la marge, un outil de calcul pour fiabiliser la dégression de verres techniques, et un système de suivi structuré des devis / tiers payant.",
+      "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
     exemple:
-      "Ces outils permettent de savoir plus vite quoi proposer, quoi calculer, quoi traiter, quoi relancer ou quoi surveiller, sans dépendre d’un retraitement manuel lourd.",
+      "Je pars de l’usage observé, pas de la spécification. Un outil qui demande une formation pour être utilisé ne sera pas utilisé.",
     resultat:
-      "Une décision plus rapide, plus fiable et plus homogène, avec moins d’erreurs, moins de ressaisie et moins d’hésitation dans l’action.",
+      "Cinq outils déployés en situation réelle. Deux sont encore en usage quotidien, dans un magasin où je ne les avais pas déployés.",
   },
   {
-    id: "interface-coordination",
-    title: "Interface & coordination",
+    id: "pilotage-donnee",
+    title: "Pilotage par la donnée",
     summary:
-      "Faire le lien entre direction, contraintes opérationnelles et réalité du terrain.",
-    nature: "cadre",
-    tags: ["Direction", "Terrain", "Alignement"],
-    enjeu:
-      "Aligner des objectifs de performance avec les contraintes réelles du quotidien sans créer de rupture entre pilotage et terrain.",
-    miseEnPlace:
-      "Mon rôle n’est pas seulement de proposer des outils, mais de transformer des objectifs parfois abstraits en méthodes de travail compréhensibles et acceptables par l’équipe. J’interviens comme interface entre direction, contraintes opérationnelles et réalité du terrain.",
-    exemple:
-      "Mise en place de suivis quotidiens et de procédures adoptées par l’équipe pour fiabiliser la remontée d’information et mieux coordonner l’activité.",
-    resultat:
-      "Des priorités mieux partagées, une coordination plus lisible et un pilotage mieux connecté à la réalité opérationnelle.",
-  },
-  {
-    id: "management-utilite",
-    title: "Management par l'utilité",
-    summary:
-      "Faire adhérer au changement en démontrant l’intérêt immédiat des outils et des méthodes.",
-    nature: "cadre",
-    tags: ["Adhésion", "Changement", "Utilité"],
-    enjeu:
-      "Faire adopter des méthodes et des outils dans des environnements où tout ce qui ajoute de la complexité est spontanément rejeté.",
-    miseEnPlace:
-      "Je fais adhérer plus facilement quand une méthode apporte un bénéfice visible tout de suite : moins d’oublis, moins de ressaisie, meilleure priorisation, charge mieux répartie.",
-    exemple:
-      "C’est cette logique qui m’a permis de faire adopter des procédures, des supports de suivi et des outils de coordination dans des contextes où l’adhésion ne peut pas reposer sur la seule injonction.",
-    resultat:
-      "Des usages réellement adoptés, parce que perçus comme utiles au quotidien, et non comme une couche administrative supplémentaire.",
-  },
-  {
-    id: "suivi-reporting",
-    title: "Suivi & reporting",
-    summary:
-      "Rendre visibles les indicateurs qui aident réellement à décider et à agir.",
+      "Concevoir des indicateurs qui expliquent la performance, pas seulement qui la décrivent.",
     nature: "produit",
-    tags: ["KPI", "Concrétisation", "Délais"],
+    tags: ["Indicateurs causaux", "Contrôles automatisés", "Reporting"],
     enjeu:
-      "Passer d’un reporting descriptif à un reporting utile pour comprendre les causes de la sous-performance et agir au bon endroit.",
+      "Passer d’un reporting qui constate à un reporting qui dit où agir.",
     miseEnPlace:
-      "Je conçois le reporting comme un outil d’action. Les indicateurs qui m’intéressent sont les délais de traitement, la discipline de relance, le taux de perte, les pertes évitables, la qualité du suivi et la santé du portefeuille.",
+      "Les indicateurs que je construis portent sur les délais de traitement, la discipline de relance, le taux de perte, les pertes évitables et la santé du portefeuille. J’ai également mis en place des contrôles automatisés rapprochant le logiciel métier et les suivis internes.",
     exemple:
-      "La logique de pilotage ne consiste pas seulement à voir ce qui s’est passé, mais à comprendre pourquoi la performance se dégrade et sur quel levier agir en priorité.",
+      "C’est la logique qui structure PANUM : comprendre pourquoi une vente se perd, et sur quel levier agir en priorité.",
     resultat:
-      "Un pilotage plus factuel, plus réactif et plus utile pour objectiver les actions de coaching et les décisions de management.",
+      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage.",
   },
   {
-    id: "redaction-process",
-    title: "Cadrage & sécurisation des décisions",
+    id: "coordination-changement",
+    title: "Coordination & conduite du changement",
     summary:
-      "Transformation de contraintes métier, réglementaires et techniques en règles explicites, priorisées, testables et directement exploitables par les équipes.",
+      "Traduire des objectifs en méthodes de travail que l’équipe accepte.",
     nature: "cadre",
-    tags: ["Cadrage", "Priorisation", "Critères de validation"],
+    tags: ["Direction", "Terrain", "Adhésion"],
     enjeu:
-      "Transformer des pratiques implicites ou dispersées en process écrits, structurés et réellement utilisés par le terrain.",
+      "Faire adopter des méthodes dans des environnements où tout ce qui ajoute de la complexité est rejeté d’office.",
     miseEnPlace:
-      "Je rédige les process avec une logique de priorisation inspirée du modèle de Kano : d'abord sécuriser ce qui génère de l'insatisfaction si c'est absent, puis renforcer ce qui améliore l'expérience, et enfin introduire ce qui crée de la valeur perçue. En parallèle, je soigne le cadrage de chaque étape — la bonne formulation, au bon moment, dans les bons termes — pour que le process soit lisible, rassurant et orienté action.",
+      "Je traduis les objectifs de la direction en méthodes concrètes, et je fais remonter ce que le terrain sait et que le pilotage ignore. L’adhésion vient du bénéfice immédiat : moins d’oublis, moins de ressaisie, charge mieux répartie.",
     exemple:
-      "Cette approche m'a permis de structurer des procédures de back-office, des supports de brief quotidien et des guides de traitement des dossiers qui ont été adoptés sans friction par les équipes.",
+      "Suivis quotidiens et procédures de back-office adoptés par les équipes, dans deux enseignes différentes.",
     resultat:
-      "La rigueur n'a de valeur que si elle permet de sécuriser et fiabiliser le travail. Les process que je rédige sont utilisés parce qu'ils sont utiles, pas parce qu'ils sont imposés.",
+      "Chez Générale d’Optique, la réorganisation et mon implication ont été saluées par la direction régionale.",
   },
 ];
