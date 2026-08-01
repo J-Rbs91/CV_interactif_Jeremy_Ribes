@@ -28,8 +28,6 @@ export const competences = [
       "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
     exemple:
       "Le lissage des rendez-vous de livraison a réduit la surcharge du samedi en répartissant la charge sur la semaine.",
-    resultat:
-      "Ces procédures ont été adoptées sans arbitrage hiérarchique. J’ai repris la même démarche dans mon poste actuel.",
   },
   {
     id: "outils-metiers",
@@ -44,8 +42,6 @@ export const competences = [
       "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
     exemple:
       "Je pars de l’usage observé, pas de la spécification. Un outil qui demande une formation pour être utilisé ne sera pas utilisé.",
-    resultat:
-      "Cinq outils déployés en situation réelle. Deux sont encore en usage quotidien, dans un magasin où je ne les avais pas déployés.",
   },
   {
     id: "pilotage-donnee",
