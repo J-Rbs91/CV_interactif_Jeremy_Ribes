@@ -184,12 +184,9 @@
    en retrait suffit a tenir l'accroche sous le titre ; sa taille n'avait
    pas a s'en charger en plus. */
 
-/* La nuance en retrait etait le dernier reste de ce classement : elle tenait
-   l'accroche sous le titre, mais la mettait aussi sous le texte courant du
-   CV, alors que c'est la seule phrase de la page qui dise le parcours a la
-   premiere personne. Elle passe a l'encre pleine — 6,0:1 devient 14,1:1 —
-   sans fond ni graisse : ici la hierarchie se dit par la nuance, et le seul
-   objet gras de la colonne reste le nom. */
+/* Encre pleine plutot que nuance en retrait : 6,0:1 devient 14,1:1. Sans
+   fond ni graisse — la hierarchie se dit par la nuance, et le seul objet gras
+   de la colonne reste le nom. */
 .intro-strip p {
   font-size: var(--fs-body);
   line-height: 1.65;

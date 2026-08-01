@@ -39,8 +39,8 @@ function renderContactItems(itemClassName = "") {
     .join("");
 }
 
-/* Produits réellement en ligne, dérivés des données existantes : c'est
-   l'argument le plus fort du dossier, il ne doit pas coûter deux clics. */
+/* Bandeau des produits en ligne, dérivé des liens déclarés dans outils.js et
+   projets.js. `liveProduct: false` exclut une entrée du bandeau. */
 export function getLiveProducts() {
   return [
     ...outils

@@ -7,7 +7,6 @@ import {
   renderExperiencesSection,
   renderFormationSection,
   renderProfilSection,
-  renderRealisationsSection,
 } from "./render/renderExperiences.js";
 import {
   renderCompetencesSection,
@@ -266,8 +265,6 @@ function renderCurrentSection() {
       return renderProfilSection();
     case "competences":
       return renderCompetencesSection(state.expandedCompetenceId);
-    case "realisations":
-      return renderRealisationsSection();
     case "outils":
       return renderOutilsSection(state.expandedTool);
     case "experience":

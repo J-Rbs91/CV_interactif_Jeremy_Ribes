@@ -1,12 +1,6 @@
-import { experiences, realisations } from "../data/experiences.js";
+import { experiences } from "../data/experiences.js";
 import { formationContent, profileContent } from "../data/profile.js";
-import { icon } from "../ui/icons.js";
-import {
-  natureClass,
-  renderBulletList,
-  renderSmallCard,
-  renderTagRow,
-} from "./renderUtils.js";
+import { renderBulletList, renderSmallCard, renderTagRow } from "./renderUtils.js";
 
 export function renderProfilSection() {
   return `
@@ -42,41 +36,37 @@ export function renderProfilSection() {
   `;
 }
 
-export function renderRealisationsSection() {
-  const [firstStat, secondStat] = realisations.stats;
-
-  /* Le libellé est facultatif : un chiffre qui n'a rien à préciser n'ouvre
-     pas une ligne vide sous lui. */
-  const stat = (item) => `
+/* `label` est facultatif : sans lui, aucune ligne n'est ouverte sous la
+   valeur. */
+function renderStat(item) {
+  return `
       <div class="stats-item">
         <div class="stats-value">${item.value}</div>
         ${item.label ? `<div class="stats-label">${item.label}</div>` : ""}
       </div>`;
+}
+
+/* Bloc facultatif : rendu uniquement si l'expérience déclare `stats` ou
+   `result`. */
+function renderOutcome(experience) {
+  const { statsLabel, stats, result } = experience;
+
+  if (!stats && !result) {
+    return "";
+  }
 
   return `
-    <div class="punchline-box stats-spotlight n-preuve">
-      ${stat(firstStat)}
-      <div class="stats-divider"></div>
-      ${stat(secondStat)}
-    </div>
-    <!-- L'étiquette porte la revendication du cas, et elle l'affirme sans la
-         justifier : deux mois est le délai dans lequel les effets sont
-         apparus, donc un résultat. Toute précision sur le périmètre de la
-         mesure suggérerait au lecteur qu'il manque quelque chose et créerait
-         la question qu'elle prétendrait fermer. -->
-    <div class="section-label">Deux mois pour redynamiser le point de vente</div>
-    <p class="note">${realisations.note.replace(/(Outils|Projets transverses)/g, "<strong>$1</strong>")}</p>
-    ${realisations.items
-      .map(
-        (item) => `
-          <div class="real-card ${natureClass(item.nature)}">
-            <div class="real-icon">${icon(item.icon)}</div>
-            <div class="real-text">${item.text}</div>
-          </div>
-        `,
-      )
-      .join("")}
-  `;
+    <div class="tl-outcome n-preuve">
+      ${statsLabel ? `<div class="tl-outcome-label">${statsLabel}</div>` : ""}
+      ${
+        stats
+          ? `<div class="stats-spotlight">
+              ${stats.map(renderStat).join('<div class="stats-divider"></div>')}
+            </div>`
+          : ""
+      }
+      ${result ? `<p class="tl-outcome-text">${result}</p>` : ""}
+    </div>`;
 }
 
 export function renderExperiencesSection() {
@@ -89,8 +79,9 @@ export function renderExperiencesSection() {
             <span class="tl-company">${experience.company}</span>
             <span class="tl-date">${experience.date}</span>
           </div>
+          ${experience.context ? `<p class="tl-context">${experience.context}</p>` : ""}
           ${renderBulletList(experience.bullets)}
-          ${experience.tags ? `<div class="tl-tags">${renderTagRow(experience.tags)}</div>` : ""}
+          ${renderOutcome(experience)}
         </div>
       `,
     )
@@ -107,7 +98,7 @@ export function renderFormationSection() {
       </div>
     </div>
 
-    <div class="section-label">Compétences développées en continu</div>
+    <div class="section-label">Compétences acquises en autodidacte</div>
     <div class="grid-2">
       ${formationContent.continuousSkills.map(renderSmallCard).join("")}
     </div>

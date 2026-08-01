@@ -1,32 +1,32 @@
 export const profileContent = {
   quote:
-    "« Le pivot de la performance collective : rendre une activité plus lisible, plus fluide et plus pilotable, sans la rigidifier. »",
+    "« Rendre une activité plus lisible et plus pilotable, sans l’alourdir. »",
   intro:
-    "J’ai progressivement déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : <strong>outils d’aide à la vente</strong>, <strong>suivi des dossiers</strong>, <strong>planning</strong>, <strong>procédures</strong> et <strong>repères de pilotage</strong>.",
+    "J’ai déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : procédures, suivi des dossiers, plannings et repères de pilotage. Ce qui était une part annexe du poste en est devenu le cœur, et j’ai construit les <strong>outils</strong> qui manquaient pour le tenir.",
   cards: [
     {
       title: "Positionnement",
       nature: "cadre",
-      text: "<strong>Interface entre la direction</strong>, qui porte les objectifs stratégiques, et le terrain, qui exprime les besoins opérationnels réels.",
+      text: "Je fais l’interface entre une direction qui porte des objectifs et une équipe qui vit les contraintes d’exécution. Traduire l’objectif en méthode acceptable, et faire remonter ce que le terrain sait et que le pilotage ignore.",
     },
     {
       title: "Méthode",
       nature: "produit",
-      text: "<strong>Structurer sans alourdir.</strong> <strong>Outiller sans compliquer.</strong> Faire adopter en démontrant l’<strong>utilité concrète</strong>. Je pars d’un <strong>irritant concret</strong>, je construis une <strong>réponse simple</strong>.",
+      text: "Je pars d’un <strong>irritant précis</strong> — une ressaisie, un oubli, un calcul refait à la main — et je livre une réponse dont l’utilité se vérifie au premier usage. C’est ce qui la fait adopter : personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
     },
   ],
   expertise:
-    "Créer des <strong>outils</strong> et des <strong>cadres de travail</strong> qui améliorent la <strong>décision</strong>, la <strong>coordination</strong> et la <strong>performance collective</strong>.",
+    "Concevoir les <strong>outils</strong> et les <strong>procédures</strong> qui manquent à une activité pour être pilotée : ce qu’il faut décider, ce qu’il faut suivre, et ce qu’il faut cesser de refaire à la main.",
   contributionTags: [
-    { label: "Structuration", nature: "cadre" },
-    { label: "Aide à la décision", nature: "produit" },
-    { label: "Utilité terrain", nature: "cadre" },
-    { label: "Pilotage factuel", nature: "produit" },
-    { label: "Coordination", nature: "cadre" },
-    { label: "Adhésion", nature: "cadre" },
+    { label: "Procédures écrites", nature: "cadre" },
+    { label: "Outils de suivi", nature: "produit" },
+    { label: "Tableaux de pilotage", nature: "produit" },
+    { label: "Contrôles automatisés", nature: "produit" },
+    { label: "Organisation d’équipe", nature: "cadre" },
+    { label: "Conduite du changement", nature: "cadre" },
   ],
   target:
-    "Un <strong>rôle transverse</strong> où je peux prendre en charge la <strong>structuration d’une activité existante</strong>, fluidifier les <strong>interfaces entre équipes</strong> et installer des <strong>outils utiles</strong> <strong>à l’exécution comme à la décision</strong>.",
+    "Un <strong>rôle transverse</strong> sur la structuration d’une activité existante : formaliser les process, outiller le suivi, rendre l’activité pilotable. Je vise les fonctions organisation, process et outils métiers, en réseau de points de vente ou dans un environnement à contraintes opérationnelles fortes.",
 };
 
 export const formationContent = {
@@ -37,34 +37,34 @@ export const formationContent = {
     {
       title: "Google Apps Script",
       nature: "produit",
-      text: "Développement d'outils automatisés d'aide à la décision et de suivi.",
+      text: "Développement des cinq outils internes présentés en section Outils, dont deux encore en usage quotidien.",
     },
     {
-      title: "Outils Desktop & Web",
+      title: "Développement web & desktop",
       nature: "produit",
-      text: "Conception d'outils d'aide à la vente multi-plateformes.",
+      text: "Hub d’outils magasin, interfaces d’aide à la vente, application de suivi commercial.",
     },
     {
-      title: "Analyse de données",
+      title: "Analyse de données & modélisation",
       nature: "produit",
-      text: "Modèles prédictifs, indicateurs de performance, reporting automatisé.",
+      text: "Indicateurs causaux (PANUM), modèles de croissance thermique (L’Ortabels), régressions de prix (Renta Menu).",
     },
     {
-      title: "Structuration de process",
+      title: "Formalisation de process",
       nature: "cadre",
-      text: "Formalisation de méthodes et procédures opérationnelles.",
+      text: "Procédures de back-office et guides de traitement, priorisés selon une logique inspirée du modèle de Kano.",
     },
     {
-      title: "Orchestration de workflows IA multi-agents",
+      title: "Orchestration d’agents IA",
       nature: "produit",
-      text: "Conception de workflows reposant sur plusieurs agents spécialisés : exploration, analyse contradictoire, vérification factuelle, contrôle des sources, consolidation et validation humaine des livrables. Définition des rôles, des entrées, des critères de sortie, des mécanismes de contrôle croisé et des étapes de validation avant utilisation opérationnelle.",
+      text: "Découpage d’une tâche de développement entre agents spécialisés — analyse, cadrage, exécution, contrôle — avec critères de validation à chaque étape. Méthode appliquée au développement de ce CV.",
     },
     {
-      title: "Mise en production de produits numériques",
+      title: "Mise en production",
       nature: "cadre",
-      text: "Coordination des environnements, des contrôles qualité, des déploiements automatisés et des vérifications post-déploiement nécessaires à la publication et à l'évolution d'applications métiers.",
+      text: "Environnements, contrôles qualité et déploiements automatisés sur KuT, PANUM et L’Ortabels.",
     },
   ],
   quote:
-    "« Mon apprentissage est continu et toujours orienté vers la résolution de problèmes concrets du terrain. »",
+    "« Mon apprentissage est continu et orienté vers des problèmes concrets du terrain. »",
 };
