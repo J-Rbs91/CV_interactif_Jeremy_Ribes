@@ -26,7 +26,7 @@ export const profileContent = {
     { label: "Conduite du changement", nature: "cadre" },
   ],
   target:
-    "Un <strong>rôle transverse</strong> sur la structuration d’une activité existante : formaliser les process, outiller le suivi, rendre l’activité pilotable. Je vise les fonctions organisation, process et outils métiers, en réseau de points de vente ou dans un environnement à contraintes opérationnelles fortes.",
+    "Un <strong>rôle transverse</strong> dédié à la structuration de l’activité : formaliser les process, outiller le suivi et rendre le pilotage possible. Je me positionne sur les fonctions organisation, process et outils métiers, au sein d’un réseau commercial ou de service client, ou dans un environnement en croissance soumis à de fortes contraintes opérationnelles.",
 };
 
 export const formationContent = {
