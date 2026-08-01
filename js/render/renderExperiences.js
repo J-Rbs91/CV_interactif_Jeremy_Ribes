@@ -45,17 +45,19 @@ export function renderProfilSection() {
 export function renderRealisationsSection() {
   const [firstStat, secondStat] = realisations.stats;
 
+  /* Le libellé est facultatif : un chiffre qui n'a rien à préciser n'ouvre
+     pas une ligne vide sous lui. */
+  const stat = (item) => `
+      <div class="stats-item">
+        <div class="stats-value">${item.value}</div>
+        ${item.label ? `<div class="stats-label">${item.label}</div>` : ""}
+      </div>`;
+
   return `
     <div class="punchline-box stats-spotlight n-preuve">
-      <div class="stats-item">
-        <div class="stats-value">${firstStat.value}</div>
-        <div class="stats-label">${firstStat.label}</div>
-      </div>
+      ${stat(firstStat)}
       <div class="stats-divider"></div>
-      <div class="stats-item">
-        <div class="stats-value">${secondStat.value}</div>
-        <div class="stats-label">${secondStat.label}</div>
-      </div>
+      ${stat(secondStat)}
     </div>
     <!-- L'étiquette porte la revendication du cas, et elle l'affirme sans la
          justifier : deux mois est le délai dans lequel les effets sont

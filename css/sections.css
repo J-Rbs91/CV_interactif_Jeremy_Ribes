@@ -143,10 +143,13 @@
   background: var(--ink-50);
 }
 
+/* Sur la ligne de base, pas au centre : les deux chiffres n'ont plus le même
+   nombre de lignes sous eux, et un centrage les décalait de 11 px. Deux
+   mesures qu'on compare se lisent sur une seule ligne. */
 .stats-spotlight {
   text-align: left;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 20px;
 }
 
@@ -176,6 +179,8 @@
   height: var(--space-5);
   background: var(--ink-200);
   flex-shrink: 0;
+  /* Le filet n'a pas de ligne de base à suivre : il se centre sur la paire. */
+  align-self: center;
 }
 
 .tl-header {

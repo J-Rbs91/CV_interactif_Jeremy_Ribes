@@ -1,11 +1,12 @@
 export const realisations = {
   stats: [
-    /* « à peine » fait tout le travail : les deux mois disent la VITESSE à
-       laquelle les effets sont apparus, pas une mesure qu'on aurait bornée à
-       deux mois — ce qui passerait pour un échantillon court, donc un
-       résultat fragile. C'est l'argument, pas une réserve. La durée du poste
-       est portée par le badge de section, jamais ici. */
-    { value: "+83% CA", label: "en 2 mois à peine" },
+    /* Le chiffre se passe de sa durée : « en 2 mois à peine » se lisait à
+       quatre centimètres du libellé qui le dit déjà — « Deux mois pour
+       redynamiser le point de vente ». Répétée, la vitesse cessait d'être un
+       résultat pour devenir une insistance, et une insistance appelle la
+       question qu'elle veut fermer. Le libellé la porte une fois, le chiffre
+       reste nu. La durée du poste, elle, est au badge de section. */
+    { value: "+83% CA" },
     { value: "+5,6 pts", label: "de marge" },
   ],
   /* La note fait le contrepoids du titre ET de l'étiquette. Du titre : ce cas

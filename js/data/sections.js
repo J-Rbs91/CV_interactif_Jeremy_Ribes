@@ -24,9 +24,9 @@ export const sections = [
 
      Le badge porte la durée du POSTE, jamais celle de la mesure. Accoler
      « 2 mois » au rôle laissait croire à un mandat de deux mois — deux mois
-     est la fenêtre sur laquelle les effets ont été mesurés après déploiement,
-     et cette information appartient au bloc de stats, accrochée au chiffre
-     qu'elle qualifie. */
+     est la fenêtre sur laquelle les effets sont apparus après déploiement,
+     et c'est le libellé du cas qui le dit, une seule fois : « Deux mois pour
+     redynamiser le point de vente ». */
   {
     id: "realisations",
     icon: "trending-up",
