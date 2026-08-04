@@ -157,16 +157,29 @@ qui tient.
 - **La nature se dit par le texte.** Ce que portait le rail passe à la
   couleur du titre (`--n-ink`), comme un énoncé de la séquence est
   lui-même encre ou forêt. Un composant ne pose plus de barre teintée.
-- **La photo ouvre le Profil, pas la colonne de gauche.** Celle-ci porte
-  811 px de contenu fixe et déborde déjà sous 800 px de fenêtre : tout ce
-  qu'on y ajoute pousse la navigation sous la ligne de flottaison. Dans le
-  Profil — la section d'accueil — la photo occupe le vide qui suivait la
-  citation, bornée à 40 caractères sur une colonne trois fois plus large,
-  et ne déplace rien. Elle ne peut pas non plus se poser à côté du nom :
-  le `h1` se replierait en étroit, et le raccord de la séquence mesure
-  `getClientRects()[0]`, donc la première ligne seule — le nom atterrirait
-  à la largeur de « Jérémy ». Sous 1150 px la grille redevient une colonne,
-  sans quoi la citation tomberait sous vingt signes par ligne en corps 26.
+- **La photo est dans l'identité, à droite du nom.** Elle ouvrait le Profil
+  parce que la colonne de gauche porte 810 px de contenu fixe et déborde
+  déjà sous cette hauteur de fenêtre : tout ce qu'on y **empile** pousse la
+  navigation sous la ligne de flottaison. À côté du nom elle ne s'empile
+  pas — `.identity-head` est une grille de deux colonnes, la photo occupe
+  la seconde sur les deux premières lignes de titre, et le bloc ne grandit
+  que de ce que le premier sous-titre reprend en se resserrant : 24 px,
+  contre 96 pour une photo posée dessous. Elle est visible depuis toutes
+  les sections, ce que sa place dans le Profil ne donnait pas.
+- **96 px, et la deuxième ligne de titre repasse dessous.** C'est la plus
+  grande mesure qui laisse au nom les 181 px qu'il demande sur une ligne
+  dans les 307 de la colonne — et il doit y tenir : le raccord de la
+  séquence mesure `getClientRects()[0]`, donc la première ligne seule, et
+  un nom replié le ferait atterrir à la largeur de « Jérémy ».
+  `role2` reprend la largeur entière (`grid-column: 1 / -1`) : coupé court
+  il tombait à quatre lignes de six mots, il en fait deux, et le bloc
+  gagne les 29 px de la différence.
+- **En étroit, la photo descend d'un cran.** Le nom y est en 32 px et
+  demande 264 px : sous 380 px de fenêtre il ne peut plus partager sa ligne
+  avec la photo sans se replier. Elle longe donc les deux sous-titres
+  (`grid-row: 2 / 4`) et le nom garde la largeur entière — c'est la même
+  contrainte de raccord, résolue par la ligne du dessous plutôt que par la
+  taille de la photo, qu'aucune valeur ne sauvait sous 360 px.
 - **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
   plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
   séparées par un point médian — la règle que `css/print.css` appliquait
@@ -314,6 +327,10 @@ une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
 ## Impression
 - `css/print.css` recompose le document, il ne rétrécit pas la page : bandeau
   à deux colonnes, sections numérotées, grille libellé (30 mm) / matière.
+- Le portrait est dans le bandeau, à 26 mm, au bord opposé du nom — la même
+  composition qu'à l'écran, à la mesure du papier. La règle `*` du haut de
+  fichier coupe les images de fond, pas les `<img>` ; elle lui retire en
+  revanche son rayon, et la photo redevient carrée sur le papier.
 - L'écran a rejoint le papier sur les étiquettes et les cadres : ces deux
   systèmes se ressemblent désormais beaucoup, mais restent séparés. Une
   règle d'écran n'a pas à être répétée ici, et `print.css` garde ses
