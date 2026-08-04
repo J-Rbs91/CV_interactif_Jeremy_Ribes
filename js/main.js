@@ -11,9 +11,12 @@ import {
 import {
   renderCompetencesSection,
 } from "./render/renderCompetences.js";
-import { renderOutilsSection } from "./render/renderOutils.js";
+import {
+  defaultExpandedTool,
+  renderOutilsSection,
+} from "./render/renderOutils.js";
 import { renderProjetSection } from "./render/renderProjets.js";
-import { bindAccordion } from "./ui/accordion.js";
+import { bindAccordion, syncAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
@@ -23,12 +26,11 @@ import { bindShare } from "./ui/share.js";
 const state = {
   activeSection: "profil",
   expandedCompetenceId: null,
-  expandedTool: null,
+  expandedTool: defaultExpandedTool,
+  hasToggledTool: false,
   desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
-  pendingDesktopAccordionScroll: null,
-  pendingMobileAccordionScroll: null,
   shouldAnimateMobileNav: false,
   hasInitializedMobileNav: false,
   shouldAnimateSection: true,
@@ -105,129 +107,68 @@ function restoreDesktopScrollPosition() {
   }
 }
 
-function scrollDesktopAccordionIntoView() {
-  const target = state.pendingDesktopAccordionScroll;
+/* Une carte qu'on vient d'ouvrir doit rester visible. Le report d'un
+   rendez-vous de defilement d'un rendu a l'autre n'a plus lieu d'etre : la
+   bascule se fait en place, la carte est donc deja la quand on la mesure.
 
-  state.pendingDesktopAccordionScroll = null;
+   On ne juge que par le haut de la carte : au moment de l'appel le panneau
+   commence tout juste a se deplier, et sa hauteur finale n'est pas encore
+   connue. */
+function scrollAccordionIntoView(card) {
+  const scrollContainer = state.isMobileView
+    ? document.querySelector("#app.app-mobile")
+    : document.querySelector(".content-body");
 
-  if (!target) {
+  if (!card || !scrollContainer) {
     return;
   }
 
-  const contentBody = document.querySelector(".content-body");
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const cardTopRelative = card.getBoundingClientRect().top - containerRect.top;
 
-  if (!contentBody) {
+  /* En etroit, le bandeau de navigation est collant : la marge de confort
+     doit passer dessous, sinon la tete de carte se glisse derriere lui. */
+  const navigationShell = state.isMobileView
+    ? document.querySelector("[data-mobile-nav-shell]")
+    : null;
+  const comfortMargin = navigationShell
+    ? navigationShell.getBoundingClientRect().bottom - containerRect.top + 20
+    : 16;
+
+  const isComfortablyPlaced =
+    cardTopRelative >= comfortMargin &&
+    cardTopRelative <= scrollContainer.clientHeight - 40;
+
+  if (isComfortablyPlaced) {
     return;
   }
 
-  const targetId =
-    typeof CSS !== "undefined" && typeof CSS.escape === "function"
-      ? CSS.escape(target.id)
-      : target.id;
-  let accordionElement = null;
-
-  if (target.type === "competence") {
-    const toggle = contentBody.querySelector(
-      `.comp-card.is-open [data-competence="${targetId}"]`,
-    );
-
-    accordionElement = toggle?.closest(".comp-card");
-  } else if (target.type === "tool") {
-    const trigger = contentBody.querySelector(`[data-tool="${targetId}"]`);
-
-    accordionElement = trigger?.closest(".tool-card");
-  }
-
-  if (!accordionElement) {
-    return;
-  }
-
-  const containerRect = contentBody.getBoundingClientRect();
-  const elementRect = accordionElement.getBoundingClientRect();
-  const elementTopRelative = elementRect.top - containerRect.top;
-  const elementBottomRelative = elementRect.bottom - containerRect.top;
-  const containerVisibleHeight = contentBody.clientHeight;
-  const comfortMargin = 16;
-
-  if (
-    elementTopRelative >= 0 &&
-    elementBottomRelative <= containerVisibleHeight
-  ) {
-    return;
-  }
-
-  const targetScrollTop =
-    contentBody.scrollTop + elementTopRelative - comfortMargin;
-
-  contentBody.scrollTo({
-    top: Math.max(0, targetScrollTop),
+  scrollContainer.scrollTo({
+    top: Math.max(
+      0,
+      scrollContainer.scrollTop + cardTopRelative - comfortMargin,
+    ),
     behavior: "smooth",
   });
 }
 
-function queueMobileAccordionScroll(target) {
-  state.pendingMobileAccordionScroll = state.isMobileView ? target : null;
+function hasFocusInNavigation() {
+  const focused = document.activeElement;
+
+  return Boolean(focused && focused.closest?.("[data-section]"));
 }
 
-function findPendingMobileAccordionTarget() {
-  const target = state.pendingMobileAccordionScroll;
+function restoreFocusToActiveNavigation() {
+  const activeNavigationItem = document.querySelector(
+    `[data-section="${state.activeSection}"]`,
+  );
 
-  if (!target || !state.isMobileView) {
-    return null;
-  }
-
-  const targetId = typeof CSS !== "undefined" && typeof CSS.escape === "function"
-    ? CSS.escape(target.id)
-    : target.id;
-
-  if (target.type === "competence") {
-    return document.querySelector(
-      `.comp-card.is-open [data-competence="${targetId}"]`,
-    );
-  }
-
-  if (target.type === "tool") {
-    const trigger = document.querySelector(`[data-tool="${targetId}"]`);
-
-    if (trigger?.closest(".tool-card")?.querySelector(".tool-details")) {
-      return trigger;
-    }
-  }
-
-  return null;
-}
-
-function restoreMobileAccordionScrollPosition({ behavior = "smooth" } = {}) {
-  const scrollContainer = document.querySelector("#app.app-mobile");
-  const targetElement = findPendingMobileAccordionTarget();
-
-  state.pendingMobileAccordionScroll = null;
-
-  if (!scrollContainer || !targetElement) {
-    return false;
-  }
-
-  const containerRect = scrollContainer.getBoundingClientRect();
-  const targetRect = targetElement.getBoundingClientRect();
-  const targetOffset =
-    targetRect.top - containerRect.top + scrollContainer.scrollTop;
-  const navShell = document.querySelector("[data-mobile-nav-shell]");
-  const navHeight = navShell
-    ? navShell.getBoundingClientRect().bottom - containerRect.top
-    : 0;
-  const comfortMargin = navHeight + 20;
-
-  scrollContainer.scrollTo({
-    top: Math.max(0, targetOffset - comfortMargin),
-    behavior,
-  });
-
-  return true;
+  activeNavigationItem?.focus({ preventScroll: true });
 }
 
 /* Le rythme de la sequence, importe dans le CV : au changement de section,
    les blocs entrent decales, avec la meme courbe. Uniquement au changement
-   de section — un accordeon qui se deplie re-rend la meme page, et faire
+   de section — l'ouverture d'un accordeon ne re-rend plus rien, et faire
    rejouer l'entree a chaque ouverture donnerait une interface nerveuse.
    Le respect de `prefers-reduced-motion` est porte par css/base.css, qui
    ramene toutes les durees a 0,01 ms sans changer l'etat d'arrivee. */
@@ -289,64 +230,33 @@ function bindUi() {
     }
 
     state.expandedCompetenceId = null;
-    state.expandedTool = null;
-    state.pendingDesktopAccordionScroll = null;
-    state.pendingMobileAccordionScroll = null;
+    state.expandedTool =
+      sectionId === "outils" && !state.hasToggledTool
+        ? defaultExpandedTool
+        : null;
     state.desktopScrollTop = 0;
     state.activeSection = sectionId;
     state.shouldAnimateSection = true;
-    render();
+    /* La navigation est le seul endroit ou le document est reconstruit sous
+       le doigt de quelqu'un : le bouton qui portait le focus disparait avec
+       lui, et le clavier repart du haut de la page. On le lui rend. */
+    render({ restoreFocusToActiveNavigation: hasFocusInNavigation() });
   });
 
+  /* Aucun re-rendu ici : c'est ce qui rend le depliage animable, et ce qui
+     garde le focus sur le bouton qu'on vient d'actionner. */
   bindAccordion({
     onToolToggle: (toolId) => {
-      if (state.isMobileView) {
-        preserveMobileNavigationState();
-      } else {
-        preserveDesktopScrollPosition();
-      }
-
+      state.hasToggledTool = true;
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
-
-      if (!state.isMobileView && state.expandedTool) {
-        state.pendingDesktopAccordionScroll = {
-          type: "tool",
-          id: state.expandedTool,
-        };
-      } else if (!state.isMobileView) {
-        state.pendingDesktopAccordionScroll = null;
-      }
-
-      queueMobileAccordionScroll(
-        state.expandedTool ? { type: "tool", id: state.expandedTool } : null,
-      );
-      render();
+      scrollAccordionIntoView(syncAccordion("tool", state.expandedTool));
     },
     onCompetenceToggle: (competenceId) => {
-      if (state.isMobileView) {
-        preserveMobileNavigationState();
-      } else {
-        preserveDesktopScrollPosition();
-      }
-
       state.expandedCompetenceId =
         state.expandedCompetenceId === competenceId ? null : competenceId;
-
-      if (!state.isMobileView && state.expandedCompetenceId) {
-        state.pendingDesktopAccordionScroll = {
-          type: "competence",
-          id: state.expandedCompetenceId,
-        };
-      } else if (!state.isMobileView) {
-        state.pendingDesktopAccordionScroll = null;
-      }
-
-      queueMobileAccordionScroll(
-        state.expandedCompetenceId
-          ? { type: "competence", id: state.expandedCompetenceId }
-          : null,
+      scrollAccordionIntoView(
+        syncAccordion("competence", state.expandedCompetenceId),
       );
-      render();
     },
   });
 
@@ -368,6 +278,9 @@ function initializeViewportDetection() {
       return;
     }
 
+    /* La bascule large ↔ etroit est le seul re-rendu qui reste en cours de
+       lecture : on garde la position acquise plutot que de renvoyer en tete. */
+    preserveDesktopScrollPosition();
     state.isMobileView = event.matches;
     state.hasInitializedMobileNav = false;
     state.shouldAnimateMobileNav = false;
@@ -573,7 +486,8 @@ function initializeWindowBindings() {
   );
 }
 
-function render() {
+function render(options = {}) {
+  const { restoreFocusToActiveNavigation: shouldRestoreFocus = false } = options;
   const appElement = document.getElementById("app");
 
   if (!appElement) {
@@ -600,19 +514,15 @@ function render() {
   bindUi();
   playSectionEntry();
 
+  if (shouldRestoreFocus) {
+    restoreFocusToActiveNavigation();
+  }
+
   if (!state.isMobileView) {
     restoreDesktopScrollPosition();
-
-    requestAnimationFrame(() => {
-      scrollDesktopAccordionIntoView();
-    });
   }
 
   if (state.isMobileView) {
-    if (state.pendingMobileAccordionScroll) {
-      restoreMobileAccordionScrollPosition({ behavior: "auto" });
-    }
-
     bindMobileNavigationUi();
     const shouldCenterActiveItem =
       state.shouldAnimateMobileNav || !state.hasInitializedMobileNav;
@@ -627,9 +537,36 @@ function render() {
   }
 }
 
+/* L'entree des blocs se jouait derriere la sequence d'ouverture. Le module
+   monte le CV des l'analyse du document, l'entree partait aussitot, et
+   l'overlay ne se retirait qu'a 8,65 s : l'escalier etait fini depuis six
+   secondes quand on decouvrait la page. On la garde en reserve, et
+   js/ui/intro.js previent au raccord — c'est-a-dire au moment exact ou le
+   CV se decouvre, ce qui etait l'intention. */
+function deferSectionEntryUntilIntroHandoff() {
+  state.shouldAnimateSection = false;
+
+  document.addEventListener(
+    "cv:intro-raccord",
+    () => {
+      state.shouldAnimateSection = true;
+      playSectionEntry();
+    },
+    { once: true },
+  );
+}
+
 if (typeof document !== "undefined") {
+  const isIntroArmed =
+    document.documentElement.classList.contains("intro-armed");
+
   initializeViewportDetection();
   initializeWindowBindings();
   bindPrint();
+
+  if (isIntroArmed) {
+    deferSectionEntryUntilIntroHandoff();
+  }
+
   render();
 }

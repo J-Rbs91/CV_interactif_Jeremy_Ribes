@@ -87,6 +87,22 @@
 - Le raccord renvoie `false` et laisse le fondu d'origine reprendre la main
   si le nom, le plan ou le `h1` manquent, ou en `prefers-reduced-motion`.
   Ne jamais le rendre obligatoire : le CV doit rester lisible sans lui.
+- **Le raccord est interruptible** (`cancelHandoff`). Toute sortie anticipée
+  passe par lui avant de retirer l'overlay. Sans cela, « Passer » cliqué
+  entre 8,65 s et 9,43 s retirait la classe `intro-handoff` — donc
+  l'effacement du `h1` — pendant que le sosie continuait sa course : le nom
+  s'affichait deux fois, à deux endroits, pendant un tiers de seconde. Toute
+  nouvelle porte de sortie doit appeler `finish()`, jamais `removeOverlay()`
+  directement.
+- **`raiseApp()` émet `cv:intro-raccord` sur le document.** C'est le seul
+  point de contact entre la séquence et le CV, et il va dans ce sens-là :
+  `js/main.js` met son entrée en escalier en réserve tant que `intro-armed`
+  est posée, et la joue à la réception. Sans ce report, l'entrée partait à
+  l'analyse du document et se déroulait entièrement derrière l'overlay —
+  elle était finie depuis six secondes quand on découvrait la page, c'est-à-
+  dire qu'elle n'existait pas. L'évènement part de `raiseApp()` et non du
+  retrait de l'overlay parce que c'est là que le CV se découvre ; il part
+  aussi quand l'overlay est absent, sinon le CV n'entrerait jamais.
 - Le nom vit dans son propre `<span class="intro-nom">` : mesurer
   `.intro-mot.is-nom` donnerait la largeur du sous-titre, plus long.
 - Couleur : la séquence ne définit aucune teinte, elle consomme la charte
@@ -153,6 +169,42 @@ qui tient.
   entrent décalés (`playSectionEntry` dans `js/main.js`) — au changement
   de section seulement, jamais sur l'ouverture d'un accordéon.
 
+## Les deux accordéons — Outils et Compétences
+Même composant, mêmes règles. Trois d'entre elles se sont perdues une fois
+et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
+
+- **Une bascule ne re-rend pas sa section.** `js/ui/accordion.js` expose
+  `syncAccordion(famille, idOuvert)`, qui ne touche que les classes et les
+  attributs des cartes déjà montées. Repasser par `render()` recréerait la
+  carte déjà ouverte : le panneau naîtrait à `grid-template-rows: 1fr` sans
+  jamais être passé par `0fr`, donc **aucune transition n'aurait d'état de
+  départ** — le dépliage redeviendrait instantané et le chevron ne
+  tournerait plus, sans qu'une seule ligne de CSS ait bougé. Le bouton qui
+  portait le focus disparaîtrait avec le reste, et le clavier repartirait du
+  haut de la page à chaque ouverture.
+- **Le panneau est toujours dans le document**, replié à `0fr`. `inert` le
+  retire du parcours clavier et de l'arbre d'accessibilité ; surtout pas
+  `hidden`, qui pose `display: none` et coupe la transition pour la même
+  raison. Retrait, filet et marges intérieures ne se posent qu'à
+  l'ouverture : la ligne de grille vaut bien zéro, mais un padding ou une
+  bordure horizontale s'ajouteraient quand même à sa hauteur.
+- **Le résumé est un `<button>`**, avec `aria-expanded` et `aria-controls`.
+  Il ne contient donc que du contenu de phrasé : pas de `<div>`, pas de
+  `<a>` — le lien d'un outil vit à côté, hors du bouton. C'est pourquoi
+  `renderAccentTags` prend une option `element`.
+- **L'affordance est un mot, pas un chevron.** `renderDiscloseCommand()`
+  pose « Déplier le détail » / « Replier » et le chevron, dans la langue de
+  la seconde couche. Le chevron seul, à l'extrémité droite d'une colonne
+  large, ne se lisait pas comme une commande — c'était le défaut signalé :
+  on ne voyait pas qu'il y avait quelque chose à déplier. Les deux libellés
+  sont posés ensemble et CSS n'en montre qu'un : la bascule ne touche alors
+  qu'une classe. Le couple est `aria-hidden`, l'état étant déjà porté par
+  `aria-expanded`.
+- **Le premier outil est déplié à l'arrivée** dans la section, tant que le
+  visiteur n'a basculé aucune carte lui-même (`hasToggledTool`). Un exemple
+  ouvert montre ce que la commande donne ; le libellé seul l'annonce. Dès
+  qu'il a basculé une carte, il sait, et on ne force plus rien.
+
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
@@ -179,6 +231,14 @@ qui tient.
   `--font-mono` (JetBrains Mono) pour la seconde couche — libellés,
   étiquettes, dates, statuts, catégories. Tout ce qui donne du contexte
   sans être le message passe en mono.
+- **Une mesure de lecture, `--mesure` (74ch).** La fenêtre monte à 1 600 px
+  et la colonne de contenu à plus de 1 100 : un résumé d'outil y tenait sur
+  une seule ligne de plus de cent quarante signes, et le statut, poussé au
+  bord droit par un `margin-left: auto`, se retrouvait à neuf cents pixels
+  du titre qu'il qualifie. Elle borne les deux accordéons — bouton, résumé
+  et panneau ensemble, sinon le contour de focus encadre du vide. En `ch` et
+  non en pixels : une mesure suit le corps du texte qu'elle borne. Elle est
+  neutralisée à l'impression, où la page borne déjà la colonne.
 - `css/print.css` a son propre système : il ne consomme pas ces paliers.
 
 ## Couleur
@@ -204,5 +264,9 @@ qui tient.
 - Toute nouvelle section doit être ajoutée à `renderSectionBody()` dans
   `js/render/renderPrint.js`, sinon elle disparaît du PDF.
 - Un accordéon doit accepter `{ expandAll: true }` pour être imprimable.
+- Toute borne de largeur posée pour l'écran doit être relâchée ici. Le
+  papier a déjà sa colonne ; une mesure oubliée sur un conteneur de tête
+  rogne son contenu pendant que le bloc juste dessous prend toute la
+  largeur — l'écart se voit tout de suite sur le PDF, jamais à l'écran.
 - Pas de cartes ni de pastilles sur papier : les étiquettes redeviennent du
   texte.
