@@ -21,7 +21,7 @@
    s'ajouter dessous : la colonne porte 810 px de contenu fixe et deborde deja
    sous cette hauteur de fenetre, donc tout ce qui s'empile ici pousse la
    navigation sous la ligne de flottaison. A cote du nom, il ne coute que la
-   ligne que le premier sous-titre reprend en se resserrant — 24 px, la ou
+   ligne que le premier sous-titre reprend en se resserrant — 19 px, la ou
    une photo posee dessous en coutait 96.
 
    `minmax(0, 1fr)` et non `1fr` : sans le minimum a zero, la colonne de
@@ -56,6 +56,11 @@
 .identity-photo {
   grid-column: 2;
   grid-row: 1 / 3;
+  /* Le disque remonte de dix pixels dans la marge de tete du bloc : cale sur
+     la boite de ligne du nom, son bord haut tombait sous la capitale du J et
+     il pendait sous le titre. La grille reprend cinq de ces pixels sur la
+     ligne du dessous, ou il ne bornait plus rien. */
+  margin-top: -10px;
   width: 96px;
   height: 96px;
   border-radius: 50%;
@@ -808,8 +813,13 @@
   margin-bottom: var(--space-2);
 }
 
+/* La remontee du disque cale son bord sur la capitale du nom : elle n'a de
+   sens que la ou il partage sa ligne. Ici il longe les sous-titres, et la
+   reprendre ne ferait que le pousser vers le nom — a 360 px de fenetre, la
+   fin de « Ribes » passe deja sous sa colonne. */
 .identity-mobile .identity-photo {
   grid-row: 2 / 4;
+  margin-top: 0;
 }
 
 .contact-row-mobile {

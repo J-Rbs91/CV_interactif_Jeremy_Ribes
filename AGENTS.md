@@ -163,7 +163,7 @@ qui tient.
   navigation sous la ligne de flottaison. À côté du nom elle ne s'empile
   pas — `.identity-head` est une grille de deux colonnes, la photo occupe
   la seconde sur les deux premières lignes de titre, et le bloc ne grandit
-  que de ce que le premier sous-titre reprend en se resserrant : 24 px,
+  que de ce que le premier sous-titre reprend en se resserrant : 19 px,
   contre 96 pour une photo posée dessous. Elle est visible depuis toutes
   les sections, ce que sa place dans le Profil ne donnait pas.
 - **96 px, et la deuxième ligne de titre repasse dessous.** C'est la plus
