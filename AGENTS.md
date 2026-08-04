@@ -205,6 +205,45 @@ et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
   ouvert montre ce que la commande donne ; le libellé seul l'annonce. Dès
   qu'il a basculé une carte, il sait, et on ne force plus rien.
 
+## L'accroche se tape (`js/ui/typewriter.js`)
+Le paragraphe de la colonne d'identité s'écrit lettre à lettre, comme sous
+une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
+— seulement à l'écran quand elle manque.
+
+- **Le texte est posé entier avant d'être tapé.** Le module ne l'ajoute pas
+  au fur et à mesure : il le redécoupe en caractères, les éteint tous
+  (`opacity: 0`) et les rallume un par un. La composition est donc celle du
+  texte complet dès la première image. L'inverse — le procédé habituel —
+  recalcule les coupures de ligne à chaque caractère : le paragraphe grandit
+  d'une ligne d'un coup, la colonne tremble, et sur quatre lignes ça se voit
+  huit fois. Le repli quand rien ne se joue est le paragraphe lui-même,
+  intact dans le document.
+- **Le curseur est de largeur nulle**, son trait peint hors de sa boîte par
+  `::before`. Il se glisse entre le texte tapé et celui qui ne l'est pas
+  encore : un curseur qui occuperait sa place décalerait toute la suite à
+  chaque caractère, et on retomberait exactement sur le défaut que le point
+  précédent évite.
+- **La frappe ne joue qu'une fois par chargement.** Le CV se re-rend à chaque
+  changement de section : la rejouer ferait de l'accroche une animation
+  permanente. Le drapeau se lève avant la première image, pour qu'un
+  re-rendu survenu en pleine frappe retrouve simplement le texte entier.
+- **Elle attend `cv:intro-raccord`** quand la séquence d'ouverture est armée,
+  puis 480 ms de plus. Sans cette attente elle se déroulerait derrière
+  l'overlay et serait finie depuis cinq secondes quand on découvre la page —
+  le même défaut que l'entrée en escalier des blocs, pour la même raison.
+  Les 480 ms laissent le CV finir de monter : deux mouvements simultanés sur
+  le même bloc n'en font lire aucun.
+- La couche animée est `aria-hidden` et le texte réel est restitué à côté,
+  hors champ visuel (`.tw-text-sr`) : un texte éclaté en spans d'un caractère
+  se fait épeler par certains lecteurs d'écran. En
+  `prefers-reduced-motion: reduce`, rien ne se joue et le paragraphe reste
+  tel quel — la règle globale de `css/base.css` ne couvre que le CSS, et
+  cette animation est en JavaScript.
+- Cadence : ~9 ms par caractère plus une dérive de 0 à 7 ms, et des arrêts
+  aux ponctuations. Une cadence rigoureuse se lit comme une machine. Le
+  total reste sous quatre secondes, là où le paragraphe demande une
+  vingtaine de secondes de lecture : la frappe ne fait attendre personne.
+
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
