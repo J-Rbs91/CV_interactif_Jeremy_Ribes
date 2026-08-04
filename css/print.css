@@ -210,9 +210,23 @@
     margin-left: 0;
   }
 
+  /* Le papier n'a ni mesure de lecture a tenir — sa colonne est deja bornee
+     par la page — ni panneau a deplier : tout est ouvert.
+
+     Les deux conteneurs de tete comptent autant que leur contenu : bornes,
+     ils rognaient la colonne de matiere du resume alors que le detail juste
+     dessous prenait toute la largeur. */
+  .tool-summary,
+  .tool-main,
+  .comp-toggle,
+  .comp-toggle-main,
+  .comp-details-inner,
+  .tool-details {
+    max-width: none;
+  }
+
   .card-title .dot,
-  .comp-toggle-icon,
-  .tool-toggle-icon,
+  .accordion-cmd,
   .timeline-item::before,
   .timeline-item::after,
   .stats-divider {
@@ -287,9 +301,21 @@
     border: none;
   }
 
-  .comp-details {
+  /* Les deux panneaux depliables : la grille d'une ligne qui les anime a
+     l'ecran n'a rien a faire ici, et `0fr` les ferait disparaitre du PDF si
+     jamais l'un d'eux etait imprime replie. */
+  .comp-details,
+  .tool-panel {
     display: block !important;
+    grid-template-rows: none !important;
+  }
+
+  .comp-details {
     margin-top: 2mm;
+  }
+
+  .tool-details {
+    overflow: visible !important;
   }
 
   .comp-title,
@@ -338,9 +364,16 @@
     color: var(--ink-600);
   }
 
+  /* La ligne de pied de l'ecran porte la commande de depliage, masquee ici :
+     il n'y reste que l'etat, qui redevient une ligne a lui seul. */
+  .tool-footline {
+    display: block;
+    margin: 0;
+  }
+
   .tool-status {
     display: block;
-    margin: 0.5mm 0 1mm;
+    margin: 1mm 0 0;
     font-size: 7pt;
     letter-spacing: 0.1em;
     color: var(--text-muted);
@@ -568,6 +601,12 @@
   .live-products,
   .icon {
     display: none !important;
+  }
+
+  /* Le lien d'un outil n'est plus dans la grille du resume : il la rejoint,
+     sur la colonne de matiere (30 mm de libelle + 5 mm de gouttiere). */
+  .tool-card > .tool-link {
+    margin-left: 35mm;
   }
 
   /* Les liens produits sont déjà en tête : dans le corps, on garde le nom. */

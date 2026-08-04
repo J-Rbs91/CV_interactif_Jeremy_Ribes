@@ -111,6 +111,15 @@
   --fs-xs: 12px; /* mention */
   --fs-label: 11px; /* libelle en mono */
 
+  /* --- Mesure de lecture ------------------------------------------------ */
+  /* La largeur au-dela de laquelle une ligne cesse d'etre lisible : l'oeil
+     ne retrouve plus le debut de la suivante. La fenetre du CV monte a
+     1 600 px, la colonne de contenu a plus de 1 100 : un resume d'outil y
+     tenait sur une ligne de plus de cent quarante signes.
+     `ch` et non des pixels : la mesure suit le corps du texte qu'elle borne,
+     ce qui est precisement ce qu'on veut d'une mesure. */
+  --mesure: 74ch;
+
   /* --- Familles ---------------------------------------------------- */
   /* Archivo a chasse elargie porte l'identite et les titres de section :
      c'est le lien visuel avec la sequence d'ouverture. La mono porte la

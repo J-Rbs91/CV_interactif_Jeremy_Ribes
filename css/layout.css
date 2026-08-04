@@ -10,10 +10,17 @@
    Il ne reste que la separation des deux colonnes, en filet d'un pixel —
    le meme outil que l'axe de la sequence.
    ========================================================================= */
+/* `dvh` apres `vh`, qui reste le repli des moteurs qui l'ignorent.
+   `100vh` vaut la fenetre barre d'adresse retractee : tant qu'elle est
+   visible, le bas du conteneur tombe sous l'ecran. Comme c'est lui qui
+   defile — le document, lui, ne defile pas — les derniers pixels de contenu
+   n'etaient jamais atteignables : le defilement s'arrete quand le bas du
+   contenu rejoint le bas du conteneur, qui est deja hors champ. */
 .app {
   display: flex;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   max-width: 1600px;
   margin: 0 auto;
   overflow: hidden;
@@ -269,7 +276,15 @@
   );
 }
 
-.mobile-nav-shell:not(.is-overflow-right) .mobile-nav-hint {
+/* « Balayer pour voir les autres sections » restait affiche meme quand les
+   six sections tenaient dans la largeur : l'indice annoncait un geste sans
+   objet. `is-overflowing` etait calculee par js/main.js et n'etait consommee
+   nulle part — c'est elle qui commande. */
+.mobile-nav-shell:not(.is-overflowing) .mobile-nav-hint {
+  opacity: 0;
+}
+
+.mobile-nav-shell.is-overflowing:not(.is-overflow-right) .mobile-nav-hint {
   opacity: 0.7;
 }
 
@@ -331,6 +346,7 @@
 @media (max-width: 900px) {
   .app {
     height: 100vh;
+    height: 100dvh;
     flex-direction: column;
   }
 

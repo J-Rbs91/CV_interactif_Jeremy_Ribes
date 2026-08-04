@@ -17,6 +17,7 @@
 
 .comp-toggle {
   width: 100%;
+  max-width: var(--mesure);
   border: 0;
   background: transparent;
   color: inherit;
@@ -35,21 +36,18 @@
 
 .comp-toggle-main {
   flex: 1;
+  max-width: var(--mesure);
 }
 
-.comp-toggle-icon {
-  width: 9px;
-  height: 9px;
-  margin-top: 8px;
-  border-right: 1px solid var(--n-mark);
-  border-bottom: 1px solid var(--n-mark);
-  transform: rotate(45deg);
-  transition: transform 0.18s var(--e-move);
-  flex-shrink: 0;
-}
-
-.comp-card.is-open .comp-toggle-icon {
-  transform: rotate(225deg);
+/* Le titre et son resume sont deux <span> dans un conteneur qui n'est pas
+   une boite flex : ils restaient donc en ligne, et le `margin-bottom` du
+   titre ne s'appliquait pas — a l'ecran on lisait « Pilotage commercial &
+   rentabilite Developper le flux clients... » d'un seul tenant, le resume
+   repartant sous le titre comme s'il en etait la suite. Ce sont deux
+   niveaux, ils sont sur deux lignes. */
+.comp-title,
+.comp-desc {
+  display: block;
 }
 
 .comp-title {
@@ -92,6 +90,10 @@
   border-top: 1px solid var(--n-line);
   padding-top: var(--space-2);
   padding-bottom: var(--space-1);
+}
+
+.comp-details-inner {
+  max-width: var(--mesure);
 }
 
 /* Les expériences ne changent pas de nature : elles changent d'intensité.
@@ -207,7 +209,6 @@
 
 .tl-date {
   font-family: var(--font-mono);
-  font-family: var(--font-mono);
   font-size: var(--fs-label);
   color: var(--text-muted);
   margin-left: auto;
@@ -296,27 +297,35 @@
   margin-top: var(--space-4);
 }
 
+/* La zone de resume etait un <div> muni d'un `cursor: pointer` : rien ne
+   la designait comme une commande, ni pour le clavier (aucune tabulation
+   n'y arrivait, les cinq outils etaient inatteignables), ni pour les
+   lecteurs d'ecran, ni pour l'oeil. C'est un bouton. */
+/* Borne a la mesure, chiffre compris : la zone cliquable epouse alors ce
+   qu'on voit. Sans elle le bouton courait sur toute la colonne et son
+   contour de focus encadrait huit cents pixels de vide a droite du texte. */
 .tool-summary {
+  width: 100%;
+  max-width: calc(var(--mesure) + var(--tool-indent));
+  margin: 0;
   padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
 }
 
-.tool-toggle-icon {
-  width: 9px;
-  height: 9px;
-  margin-top: 8px;
-  border-right: 1px solid var(--text-muted);
-  border-bottom: 1px solid var(--text-muted);
-  transform: rotate(45deg);
-  transition: transform 0.18s var(--e-move);
-  flex-shrink: 0;
-}
-
-.tool-card.is-open .tool-toggle-icon {
-  transform: rotate(225deg);
+.tool-summary:focus-visible {
+  outline: 2px solid var(--n-mark);
+  outline-offset: 3px;
 }
 
 /* Le numéro d'ordre était une pastille carrée de 36 px : une boîte pour un
@@ -342,14 +351,22 @@
   flex-shrink: 0;
 }
 
+/* La mesure de lecture. Sur un ecran large la colonne de contenu depassait
+   1 100 px : le resume d'un outil tenait sur une seule ligne de plus de
+   cent quarante signes, et le statut se retrouvait plaque a neuf cents
+   pixels du titre qu'il qualifie — deux informations de la meme ligne que
+   plus rien ne reliait. La mesure les rapproche et rend la ligne lisible
+   d'un seul balayage de l'oeil. */
 .tool-main {
+  display: block;
   flex: 1;
+  max-width: var(--mesure);
 }
 
 .tool-topline {
   display: flex;
   align-items: baseline;
-  gap: var(--space-2);
+  gap: 4px var(--space-2);
   flex-wrap: wrap;
   margin-bottom: 4px;
 }
@@ -372,9 +389,37 @@
   letter-spacing: 0.16em;
 }
 
+/* Le statut était plaqué au bord droit de la ligne de titre par un
+   `margin-left: auto`. Sur quatre outils sur cinq il n'y tenait pas et
+   partait seul sur une deuxième ligne, aligné à droite sous la catégorie :
+   une bribe flottante, différente d'une carte à l'autre.
+
+   Il descend sur la ligne de pied, face à la commande de dépliage. Les deux
+   sont de la seconde couche ; ensemble ils ferment la carte par une ligne
+   identique sur les cinq — l'action à gauche, l'état à droite — et c'est
+   cette répétition qui rend la liste balayable. */
+.tool-footline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.tool-footline .accordion-cmd {
+  margin-top: 0;
+}
+
+/* Carte ouverte, le filet du panneau arrive juste sous la ligne de pied et
+   venait se coller au soulignement de la commande : deux traits a la meme
+   hauteur qu'on lisait comme un seul. Un cran les separe. */
+.tool-card.is-open .tool-footline {
+  padding-bottom: var(--space-1);
+}
+
 .tool-status {
   font-family: var(--font-mono);
-  margin-left: auto;
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
@@ -383,9 +428,78 @@
 }
 
 .tool-summary-text {
+  display: block;
   font-size: var(--fs-body);
   line-height: 1.55;
   color: var(--text);
+}
+
+/* =========================================================================
+   LA COMMANDE DE DÉPLIAGE — un mot, puis le chevron
+   -------------------------------------------------------------------------
+   L'affordance tenait dans un chevron de 9 px en gris, pose a l'extremite
+   droite de la carte : sur une colonne large il se retrouvait a plus de
+   mille pixels du titre, seul, sans rien autour. On ne voyait pas qu'il y
+   avait quelque chose a deplier — on ne le voyait pas du tout.
+
+   Elle devient une commande nommee, posee sous le resume, alignee sur la
+   matiere : le mot dit ce que le chevron se contentait de suggerer. Elle
+   prend la langue que le CV emploie deja pour tout ce qui documente sans
+   etre le message — mono, capitales, 0,16 em, souligne d'un filet. C'est
+   exactement l'habillage de `.tool-link` : ce sont deux commandes du meme
+   niveau, elles se ressemblent.
+   ========================================================================= */
+.accordion-cmd {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--n-line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--n-ink);
+  transition: border-color 0.15s ease;
+}
+
+/* Les deux libelles sont dans le document, un seul est montre : la bascule
+   ne touche alors qu'une classe, et le texte n'a pas a etre reecrit en JS.
+   Le couple est `aria-hidden` — l'etat est porte par `aria-expanded`. */
+.accordion-cmd-label.is-open,
+.is-open .accordion-cmd-label.is-closed {
+  display: none;
+}
+
+.is-open .accordion-cmd-label.is-open {
+  display: inline;
+}
+
+.accordion-chevron {
+  width: 7px;
+  height: 7px;
+  margin: 0 0 3px 2px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.28s var(--e-move);
+  flex-shrink: 0;
+}
+
+.is-open .accordion-chevron {
+  transform: rotate(225deg);
+}
+
+/* Le seul retour au survol de la page : le filet passe de la nuance tenue a
+   l'encre pleine. Il confirme au moment ou la souris approche ce que le mot
+   annonce deja de loin. */
+.tool-summary:hover .accordion-cmd,
+.tool-summary:focus-visible .accordion-cmd,
+.comp-toggle:hover .accordion-cmd,
+.comp-toggle:focus-visible .accordion-cmd {
+  border-bottom-color: var(--n-ink);
 }
 
 /* Un lien est un lien : du texte souligne. La gelule cerclee en faisait un
@@ -426,14 +540,45 @@
   font-weight: 500;
 }
 
+/* Le lien vit hors du bouton : un <a> dans un <button> n'est pas du contenu
+   admis, et la tabulation ne l'atteignait pas. Il s'aligne sur la matiere,
+   comme le detail. */
+.tool-card > .tool-link {
+  margin-left: var(--tool-indent);
+}
+
+/* Le panneau depliable. Meme mecanique que les competences : une grille
+   d'une ligne qui passe de 0fr a 1fr, la seule facon d'animer vers une
+   hauteur qu'on ne connait pas d'avance. */
+.tool-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--e-move);
+}
+
+.tool-card.is-open .tool-panel {
+  grid-template-rows: 1fr;
+}
+
 /* Le filet est décalé du rail : posé au ras, il refermait l'angle et le
    bloc redevenait une boîte à deux côtés. Le dégradé de fond partait dans
-   le même sens — il servait à délimiter, le filet le fait mieux. */
+   le même sens — il servait à délimiter, le filet le fait mieux.
+
+   Retrait, filet et marges ne se posent qu'a l'ouverture : la ligne de
+   grille vaut bien 0fr quand le panneau est replie, mais un padding ou une
+   bordure horizontale s'ajouteraient quand meme a sa hauteur. */
 .tool-details {
+  min-height: 0;
+  overflow: hidden;
   margin-left: var(--tool-indent);
+  max-width: var(--mesure);
+  padding: 0;
+  background: none;
+}
+
+.tool-card.is-open .tool-details {
   padding: var(--space-2) 0 var(--space-1);
   border-top: 1px solid var(--n-line);
-  background: none;
 }
 
 .tool-detail-grid {
@@ -515,11 +660,9 @@
   align-items: flex-start;
 }
 
-.app-mobile .tool-status {
-  width: 100%;
-  margin-left: 0;
-}
-
-.app-mobile .tool-details {
-  padding: var(--space-2) 0 var(--space-1);
+/* En etroit la ligne de pied se replie : l'etat passe sous la commande,
+   aligne a gauche comme tout le reste. */
+.app-mobile .tool-footline {
+  flex-direction: column;
+  align-items: flex-start;
 }

@@ -33,6 +33,10 @@
   var timers = [];
   var hasFinished = false;
   var hasRaisedApp = false;
+  /* Le raccord en cours, s'il y en a un : { ghost, travel }. Il faut pouvoir
+     l'interrompre — voir cancelHandoff. */
+  var handoff = null;
+  var keydownHandler = null;
 
   function readSessionFlag() {
     try {
@@ -87,8 +91,46 @@
   function removeOverlay(overlay) {
     root.classList.remove("intro-armed", "intro-lock", "intro-handoff");
 
+    /* L'ecouteur vivait aussi longtemps que la page : la sequence finie, il
+       continuait d'intercepter Echap, Entree et Espace pour ne rien en
+       faire. Il part avec ce qu'il servait. */
+    if (keydownHandler) {
+      document.removeEventListener("keydown", keydownHandler);
+      keydownHandler = null;
+    }
+
     if (overlay && overlay.parentNode) {
       overlay.parentNode.removeChild(overlay);
+    }
+  }
+
+  /* Retire le sosie et rend sa place au h1 du CV.
+
+     Appelee a l'arrivee du voyage, mais aussi quand on sort en cours de
+     raccord : sans cela, « Passer » clique entre 8,65 s et 9,43 s retirait
+     l'overlay — donc la classe `intro-handoff`, donc l'effacement du h1 —
+     pendant que le sosie continuait sa course. Le nom s'affichait deux fois,
+     a deux endroits, pendant un tiers de seconde. */
+  function cancelHandoff() {
+    if (!handoff) {
+      return;
+    }
+
+    var current = handoff;
+
+    handoff = null;
+    root.classList.remove("intro-handoff");
+
+    if (current.travel && typeof current.travel.cancel === "function") {
+      try {
+        current.travel.cancel();
+      } catch (error) {
+        /* animation deja terminee : rien a interrompre */
+      }
+    }
+
+    if (current.ghost && current.ghost.parentNode) {
+      current.ghost.parentNode.removeChild(current.ghost);
     }
   }
 
@@ -101,6 +143,11 @@
     }
 
     hasRaisedApp = true;
+
+    /* Le signal attendu par js/main.js : l'entree en escalier des blocs se
+       joue maintenant, au moment ou le CV se decouvre, et non a l'analyse du
+       document — ou elle se serait deroulee derriere l'overlay. */
+    document.dispatchEvent(new CustomEvent("cv:intro-raccord"));
 
     var app = document.getElementById("app");
 
@@ -264,18 +311,12 @@
       },
     );
 
-    function land() {
-      root.classList.remove("intro-handoff");
-
-      if (ghost.parentNode) {
-        ghost.parentNode.removeChild(ghost);
-      }
-    }
+    handoff = { ghost: ghost, travel: travel };
 
     if (travel.finished && typeof travel.finished.then === "function") {
-      travel.finished.then(land, land);
+      travel.finished.then(cancelHandoff, cancelHandoff);
     } else {
-      window.setTimeout(land, HANDOFF_DURATION + 40);
+      window.setTimeout(cancelHandoff, HANDOFF_DURATION + 40);
     }
 
     return true;
@@ -288,6 +329,7 @@
 
     hasFinished = true;
     clearTimers();
+    cancelHandoff();
 
     if (options && options.immediate) {
       removeOverlay(overlay);
@@ -401,6 +443,10 @@
 
     if (!overlay) {
       root.classList.remove("intro-armed", "intro-lock");
+      /* La classe etait posee : js/main.js a mis son entree en reserve et
+         attend le signal. Sans overlay il n'y aura pas de raccord, mais le
+         CV se decouvre tout de suite — donc le signal est du maintenant. */
+      raiseApp();
       return;
     }
 
@@ -417,11 +463,13 @@
       finish(overlay);
     });
 
-    document.addEventListener("keydown", function (event) {
+    keydownHandler = function (event) {
       if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
         finish(overlay);
       }
-    });
+    };
+
+    document.addEventListener("keydown", keydownHandler);
 
     waitForPaintReady(overlay);
   }

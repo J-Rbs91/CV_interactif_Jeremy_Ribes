@@ -1,5 +1,9 @@
 import { competences } from "../data/competences.js";
-import { natureClass, renderAccentTags } from "./renderUtils.js";
+import {
+  natureClass,
+  renderAccentTags,
+  renderDiscloseCommand,
+} from "./renderUtils.js";
 
 /* Les quatre rubriques sont facultatives : un champ absent des données ne
    produit pas de bloc. */
@@ -32,9 +36,9 @@ function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
         <span class="comp-toggle-main">
           <span class="comp-title">${competence.title}</span>
           <span class="comp-desc">${competence.summary}</span>
-          ${renderAccentTags(competence.tags)}
+          ${renderAccentTags(competence.tags, { element: "span" })}
+          ${renderDiscloseCommand()}
         </span>
-        <span class="comp-toggle-icon" aria-hidden="true"></span>
       </button>
       <div
         id="${panelId}"
@@ -42,7 +46,7 @@ function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
         role="region"
         aria-labelledby="${buttonId}"
         aria-hidden="${isExpanded ? "false" : "true"}"
-        ${isExpanded ? "" : "hidden"}
+        ${isExpanded ? "" : "inert"}
       >
         <div class="comp-details-inner">
           ${detailBlock("Enjeu traité", competence.enjeu)}
