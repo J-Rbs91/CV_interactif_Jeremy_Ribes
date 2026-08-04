@@ -2,10 +2,27 @@ import { experiences } from "../data/experiences.js";
 import { formationContent, profileContent } from "../data/profile.js";
 import { renderBulletList, renderSmallCard, renderTagRow } from "./renderUtils.js";
 
+/* La photo ouvre le Profil, face à la citation.
+
+   Pas dans la colonne de gauche : elle porte 811 px de contenu fixe et
+   déborde déjà sous 800 px de fenêtre, donc tout ce qu'on y ajoute pousse la
+   navigation sous la ligne de flottaison. Ici elle ne déplace rien — elle
+   occupe le vide qui suivait la citation, borné à 40 caractères sur une
+   colonne qui en fait trois fois plus. Et le Profil est la section d'accueil :
+   elle se voit sans qu'on ait à la chercher. */
 export function renderProfilSection() {
   return `
-    <div class="punchline-box n-cadre">
-      <p>${profileContent.quote}</p>
+    <div class="profil-head">
+      <div class="punchline-box n-cadre">
+        <p>${profileContent.quote}</p>
+      </div>
+      <img
+        class="profil-photo"
+        src="./assets/img/portrait/me.jpg"
+        width="405"
+        height="405"
+        alt="Jérémy Ribes"
+      />
     </div>
 
     <div class="card n-cadre">

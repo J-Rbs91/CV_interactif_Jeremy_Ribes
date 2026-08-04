@@ -10,6 +10,9 @@
 - `js/render/renderPrint.js` + `js/ui/print.js` + `css/print.css` : vue
   d'impression, montée à la demande car le SPA n'affiche qu'une section.
 - `assets/img/` : ressources image du projet.
+- `assets/img/portrait/` : la photo affichée dans le CV. Elle est distincte
+  du favicon et de l'`og:image`, qui ont leurs propres contraintes de
+  cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
 - `docs/charte-couleurs.md` : charte colorimétrique sémantique.
 
 ## Landing animée (séquence d'ouverture)
@@ -154,6 +157,16 @@ qui tient.
 - **La nature se dit par le texte.** Ce que portait le rail passe à la
   couleur du titre (`--n-ink`), comme un énoncé de la séquence est
   lui-même encre ou forêt. Un composant ne pose plus de barre teintée.
+- **La photo ouvre le Profil, pas la colonne de gauche.** Celle-ci porte
+  811 px de contenu fixe et déborde déjà sous 800 px de fenêtre : tout ce
+  qu'on y ajoute pousse la navigation sous la ligne de flottaison. Dans le
+  Profil — la section d'accueil — la photo occupe le vide qui suivait la
+  citation, bornée à 40 caractères sur une colonne trois fois plus large,
+  et ne déplace rien. Elle ne peut pas non plus se poser à côté du nom :
+  le `h1` se replierait en étroit, et le raccord de la séquence mesure
+  `getClientRects()[0]`, donc la première ligne seule — le nom atterrirait
+  à la largeur de « Jérémy ». Sous 1150 px la grille redevient une colonne,
+  sans quoi la citation tomberait sous vingt signes par ligne en corps 26.
 - **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
   plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
   séparées par un point médian — la règle que `css/print.css` appliquait

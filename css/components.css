@@ -644,6 +644,60 @@
   box-shadow: none;
 }
 
+/* L'ouverture du Profil : la citation sur l'axe, la photo au bord opposé.
+
+   La colonne de droite se resserre d'elle-même — la citation est en
+   `minmax(0, 1fr)`, elle rend de la place à mesure que la fenêtre se réduit,
+   et sa mesure reste bonne jusqu'en bas de la plage large. Aucune requête
+   média n'est donc nécessaire ici : `.app-mobile` prend le relais en étroit,
+   où la grille redevient une colonne. */
+.profil-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-4);
+}
+
+/* Cadrage rond, sans bordure ni ombre. La source est carrée : `cover` ne
+   recadre donc rien, il garantit seulement que le disque reste un disque si
+   la photo est un jour remplacée par une image non carrée. */
+.profil-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* La citation cède du terrain à mesure que la fenêtre se réduit, mais elle
+   ne peut pas descendre indéfiniment : sous 1150 px elle tomberait à moins
+   de vingt signes par ligne, en corps de 26 px — ce n'est plus une citation
+   détachée, c'est une colonne de mots. La grille redevient une colonne
+   avant ce point, et la photo reprend sa taille d'étroit. */
+@media (max-width: 1150px) {
+  .profil-head {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: var(--space-3);
+  }
+
+  .profil-photo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.app-mobile .profil-head {
+  grid-template-columns: 1fr;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.app-mobile .profil-photo {
+  width: 150px;
+  height: 150px;
+}
+
 .note {
   font-size: var(--fs-sm);
   line-height: 1.6;
