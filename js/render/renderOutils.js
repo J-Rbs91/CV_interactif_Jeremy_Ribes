@@ -90,7 +90,7 @@ export function renderOutilsSection(expandedTool, options = {}) {
   return `
     <div class="card n-produit">
       <div class="card-title"><div class="dot"></div>Cinq outils conçus et développés</div>
-      <div class="card-text">Je les ai conçus et développés sous Google Sheets et Apps Script comme en web. Quatre sont encore en usage aujourd’hui, dont trois à mon poste actuel. Le cinquième, Opti’Profit, a été cédé au directeur régional de GrandVision pour poursuivre son développement sur le réseau franchisé de la Générale d’Optique.</div>
+      <div class="card-text">Je les ai conçus et développés sous Google Sheets et Apps Script comme en web. Trois tournent tous les jours dans le magasin où je travaille : le suivi des devis, le brief quotidien et le hub d’outils. Les deux autres ont continué sans moi — Opti’Profit, cédé au directeur régional de GrandVision pour son réseau de franchisés, et le gestionnaire de planning, resté à l’équipe du magasin que je dirigeais.</div>
     </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}

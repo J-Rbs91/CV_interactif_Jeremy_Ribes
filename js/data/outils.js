@@ -13,7 +13,7 @@ export const outils = [
     action:
       "Développement d’un algorithme sous Google Apps Script intégrant les catalogues fournisseurs et les grilles tarifaires des mutuelles. L’outil filtre en temps réel les produits compatibles et met en évidence l’écart de marge entre deux solutions équivalentes pour le client.",
     results:
-      "Suppression du temps passé à comparer les catalogues et arbitrage rendu explicite au moment où il se joue. L’outil a été l’un des leviers du redressement obtenu chez Générale d’Optique. Je l’ai ensuite cédé au directeur régional de GrandVision, qui en poursuit le développement pour le réseau de magasins franchisés de la Générale d’Optique.",
+      "Suppression du temps passé à comparer les catalogues et arbitrage rendu explicite au moment où il se joue. L’outil a été l’un des leviers du redressement obtenu chez Générale d’Optique. Je l’ai ensuite cédé au directeur régional de GrandVision, pour qu’il soit développé à l’échelle du réseau de magasins franchisés de la Générale d’Optique.",
   },
   {
     id: "briefmaker",
@@ -75,7 +75,7 @@ export const outils = [
     title: "Gestionnaire de Planning",
     category: "Planification des effectifs",
     nature: "produit",
-    status: "Toujours en usage en point de vente",
+    status: "Resté en service après mon départ",
     chips: ["Planification", "Ressources", "Flux client"],
     summary:
       "Outil de planification alignant les effectifs présents sur la charge réelle et les contraintes d’ouverture.",
@@ -84,6 +84,6 @@ export const outils = [
     action:
       "Développement d’un outil de construction de planning ajustant les effectifs à l’activité attendue à partir des contraintes d’exploitation du point de vente.",
     results:
-      "Conflits d’organisation récurrents réglés, coût du personnel ajusté au flux réel. Un ancien collaborateur du magasin s’en sert toujours pour construire ses plannings. Je ne l’utilise plus moi-même, mais une version simplifiée — un planning type restitué selon la date — reste intégrée à Brief’Maker pour afficher le planning du jour.",
+      "Conflits d’organisation récurrents réglés, coût du personnel ajusté au flux réel. L’outil est resté au magasin après mon départ : un collaborateur a continué de s’en servir pour construire ses plannings. Une version simplifiée — un planning type restitué selon la date — reste par ailleurs intégrée à Brief’Maker pour afficher le planning du jour.",
   },
 ];
