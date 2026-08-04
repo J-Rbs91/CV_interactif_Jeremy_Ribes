@@ -22,6 +22,7 @@ import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
 import { bindPrint } from "./ui/print.js";
 import { bindShare } from "./ui/share.js";
+import { bindTypewriter } from "./ui/typewriter.js";
 
 const state = {
   activeSection: "profil",
@@ -262,6 +263,7 @@ function bindUi() {
 
   bindContactForm();
   bindShare();
+  bindTypewriter();
   initializeModal();
 }
 

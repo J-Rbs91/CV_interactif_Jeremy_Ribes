@@ -193,6 +193,69 @@
   color: var(--text);
 }
 
+/* --- Frappe de l'accroche --------------------------------------------- */
+/* Classes posees par js/ui/typewriter.js, et par lui seul. Les caracteres
+   sont tous composes des la premiere image : ils occupent leur place, ils
+   n'ont pas encore leur encre. C'est ce qui empeche la colonne de trembler
+   a chaque retour a la ligne pendant la frappe. */
+.tw-char {
+  opacity: 0;
+}
+
+.tw-char.is-typed {
+  opacity: 1;
+}
+
+/* Le curseur est de largeur nulle et son trait est peint hors de sa boite :
+   glisse entre le texte deja tape et celui qui ne l'est pas encore, un
+   curseur qui occuperait de la place deplacerait la suite du paragraphe a
+   chaque caractere, et les coupures de ligne bougeraient sous l'oeil.
+   Sa hauteur reste sous l'interligne, il n'ouvre donc aucune ligne. */
+.tw-caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1.1em;
+  vertical-align: -0.2em;
+}
+
+.tw-caret::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--ink-600);
+}
+
+/* Fixe tant que ca tape, clignotant une fois la phrase finie — c'est ce que
+   fait un vrai curseur, et c'est ce qui dit que la frappe est terminee. */
+.tw-live.is-done .tw-caret::before {
+  animation: tw-blink 1s steps(1, end) infinite;
+}
+
+@keyframes tw-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Le texte reel, pour les lecteurs d'ecran : la couche animee est
+   `aria-hidden`, un texte eclate en spans d'un caractere se faisant epeler
+   par certains d'entre eux. */
+.tw-text-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* La navigation etait une pile de gelules blanches a coins de 16 px, ombre
    portee et carre d'icone colore. Sept objets flottants pour sept mots.
    Elle devient une liste : le mot, son icone nue, et un trait qui marque

@@ -106,5 +106,8 @@ export function renderIntroStrip(options = {}) {
     .filter(Boolean)
     .join(" ");
 
-  return `<div class="${introStripClassName}"><p>${contact.intro}</p></div>`;
+  /* Le texte est pose entier : `js/ui/typewriter.js` le redecoupe pour le
+     faire apparaitre lettre a lettre, et le repli quand il ne le fait pas
+     est le paragraphe lui-meme. */
+  return `<div class="${introStripClassName}"><p data-typewriter>${contact.intro}</p></div>`;
 }
