@@ -542,6 +542,25 @@
     border-left: 2pt solid var(--n-mark);
   }
 
+  /* La photo suit sur le papier, à une taille de document. La règle `*` plus
+     haut coupe les images de fond, pas les <img> : celle-ci est du contenu. */
+  .profil-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 6mm;
+  }
+
+  .profil-head .punchline-box {
+    flex: 1;
+  }
+
+  .profil-photo {
+    width: 26mm;
+    height: 26mm;
+    flex: none;
+    break-inside: avoid;
+  }
+
   /* L'ecran borne la mesure de la citation pour lui donner sa forme de bloc
      detache ; le papier a deja sa grille et veut toute la colonne. */
   .punchline-box p {
