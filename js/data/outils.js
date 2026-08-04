@@ -66,7 +66,7 @@ export const outils = [
     context:
       "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Cela crée des zones grises : dossiers stagnants, relances oubliées, et un management qui ne sait pas précisément pourquoi les ventes se perdent.",
     action:
-      "Extension en solution complète du suivi outillé que j’avais conçu en magasin sous Google Sheets et Apps Script, et que toute l’équipe utilise encore plusieurs fois par jour : indicateurs en temps réel, tableaux de bord par niveau de responsabilité, priorisation des relances et identification des pertes évitables.",
+      "Extension en solution complète du suivi outillé que j’avais conçu en magasin sous Google Sheets et Apps Script, et que toute l’équipe utilise encore plusieurs fois par jour. Le produit modélise la hiérarchie d’un réseau — direction, management, collaborateurs — avec les périmètres de visibilité correspondants, historise les épisodes de blocage pour en mesurer les causes plutôt que les compter, et intègre le traitement des données personnelles dès la conception.",
     results:
       "Le produit est fonctionnellement abouti et éprouvé en conditions de test. Le moteur de priorisation, lui, n’a pas encore été confronté à des données d’exploitation réelles — c’est précisément l’objet du pilote. Le déploiement en points de vente attend la structure juridique qui permettra de contractualiser.",
   },
