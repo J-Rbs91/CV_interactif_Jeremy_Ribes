@@ -17,6 +17,52 @@
   margin-bottom: 6px;
 }
 
+/* Le portrait se loge dans la hauteur du bloc de titre plutot que de
+   s'ajouter dessous : la colonne porte 810 px de contenu fixe et deborde deja
+   sous cette hauteur de fenetre, donc tout ce qui s'empile ici pousse la
+   navigation sous la ligne de flottaison. A cote du nom, il ne coute que la
+   ligne que le premier sous-titre reprend en se resserrant — 24 px, la ou
+   une photo posee dessous en coutait 96.
+
+   `minmax(0, 1fr)` et non `1fr` : sans le minimum a zero, la colonne de
+   texte ne descend pas sous son mot le plus long et c'est la photo qui rend
+   la difference. */
+.identity-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: var(--space-2);
+}
+
+.identity-head h1,
+.identity-head .role {
+  grid-column: 1;
+}
+
+/* La deuxieme ligne de titre passe sous la photo et reprend toute la
+   colonne : c'est la seule des trois qui perdrait a etre coupee court —
+   quatre lignes de six mots au lieu de deux enonces. */
+.identity-head .role2 {
+  grid-column: 1 / -1;
+}
+
+/* Cadrage rond, sans bordure ni ombre. La source est carree : `cover` ne
+   recadre donc rien, il garantit seulement que le disque reste un disque si
+   la photo est un jour remplacee par une image non carree.
+
+   96 px est la mesure la plus grande qui laisse au nom la largeur qu'il
+   demande sur une ligne — il en fait 181 sur les 307 de la colonne, et le
+   raccord de la sequence d'ouverture vise une boite d'une seule ligne. */
+.identity-photo {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
 .identity .role {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
@@ -644,60 +690,6 @@
   box-shadow: none;
 }
 
-/* L'ouverture du Profil : la citation sur l'axe, la photo au bord opposé.
-
-   La colonne de droite se resserre d'elle-même — la citation est en
-   `minmax(0, 1fr)`, elle rend de la place à mesure que la fenêtre se réduit,
-   et sa mesure reste bonne jusqu'en bas de la plage large. Aucune requête
-   média n'est donc nécessaire ici : `.app-mobile` prend le relais en étroit,
-   où la grille redevient une colonne. */
-.profil-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: var(--space-4);
-}
-
-/* Cadrage rond, sans bordure ni ombre. La source est carrée : `cover` ne
-   recadre donc rien, il garantit seulement que le disque reste un disque si
-   la photo est un jour remplacée par une image non carrée. */
-.profil-photo {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-/* La citation cède du terrain à mesure que la fenêtre se réduit, mais elle
-   ne peut pas descendre indéfiniment : sous 1150 px elle tomberait à moins
-   de vingt signes par ligne, en corps de 26 px — ce n'est plus une citation
-   détachée, c'est une colonne de mots. La grille redevient une colonne
-   avant ce point, et la photo reprend sa taille d'étroit. */
-@media (max-width: 1150px) {
-  .profil-head {
-    grid-template-columns: 1fr;
-    justify-items: start;
-    gap: var(--space-3);
-  }
-
-  .profil-photo {
-    width: 150px;
-    height: 150px;
-  }
-}
-
-.app-mobile .profil-head {
-  grid-template-columns: 1fr;
-  justify-items: start;
-  gap: var(--space-3);
-}
-
-.app-mobile .profil-photo {
-  width: 150px;
-  height: 150px;
-}
-
 .note {
   font-size: var(--fs-sm);
   line-height: 1.6;
@@ -789,7 +781,16 @@
   border-bottom: 0;
 }
 
+/* Le nom passe en 32 px et demande alors 264 px pour tenir sur une ligne :
+   il ne peut plus partager la sienne avec la photo sous 380 px de fenetre.
+   Et il doit y tenir — le sosie de la sequence d'ouverture vise la premiere
+   ligne du h1, donc un nom replie le fait atterrir a la largeur de
+   « Jeremy ». La photo descend d'un cran : elle longe les deux sous-titres,
+   et le nom garde la largeur entiere. Aucune taille de photo ne sauvait ce
+   partage sous 360 px, la ligne du dessous le sauve partout. */
 .identity-mobile h1 {
+  grid-column: 1 / -1;
+  grid-row: 1;
   font-family: var(--font-display);
   font-stretch: expanded;
   letter-spacing: -0.028em;
@@ -797,8 +798,18 @@
   line-height: 1.05;
 }
 
+.identity-mobile .role {
+  grid-row: 2;
+}
+
 .identity-mobile .role2 {
+  grid-column: 1;
+  grid-row: 3;
   margin-bottom: var(--space-2);
+}
+
+.identity-mobile .identity-photo {
+  grid-row: 2 / 4;
 }
 
 .contact-row-mobile {

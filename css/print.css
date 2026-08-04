@@ -49,15 +49,30 @@
   }
 
   /* =====================================================================
-     BANDEAU — l'identité, sur toute la largeur
+     BANDEAU — l'identité, et le portrait au bord opposé
      -----------------------------------------------------------------------
-     Il tenait sur deux colonnes parce qu'une preuve chiffrée occupait la
-     droite. Elle est partie ; la grille n'avait plus qu'une colonne à
-     placer, et une grille d'une colonne est un bloc.
+     Deux colonnes de nouveau, mais pour ce que le papier attend d'un CV :
+     le nom à gauche, la photo à droite. La règle `*` plus haut coupe les
+     images de fond, pas les <img> : celle-ci est du contenu.
      ===================================================================== */
   .print-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 6mm;
     padding-bottom: 3mm;
     border-bottom: 2.5pt solid var(--ink-900);
+  }
+
+  .print-identity {
+    flex: 1;
+  }
+
+  .print-photo {
+    width: 26mm;
+    height: 26mm;
+    flex: none;
+    object-fit: cover;
+    break-inside: avoid;
   }
 
   .print-head h1 {
@@ -540,25 +555,6 @@
     text-align: left;
     padding-left: 4mm;
     border-left: 2pt solid var(--n-mark);
-  }
-
-  /* La photo suit sur le papier, à une taille de document. La règle `*` plus
-     haut coupe les images de fond, pas les <img> : celle-ci est du contenu. */
-  .profil-head {
-    display: flex;
-    align-items: flex-start;
-    gap: 6mm;
-  }
-
-  .profil-head .punchline-box {
-    flex: 1;
-  }
-
-  .profil-photo {
-    width: 26mm;
-    height: 26mm;
-    flex: none;
-    break-inside: avoid;
   }
 
   /* L'ecran borne la mesure de la citation pour lui donner sa forme de bloc

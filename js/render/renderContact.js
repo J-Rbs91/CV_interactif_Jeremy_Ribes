@@ -85,17 +85,47 @@ export function renderLiveProducts(options = {}) {
   </div>`;
 }
 
+/* Le portrait est le même objet partout — panneau, résumé étroit, papier —
+   et ne diffère que par la taille rendue, tenue en CSS. */
+export function renderPortrait(baseClassName, itemClassName = "") {
+  const { portrait, name } = contact;
+
+  if (!portrait) {
+    return "";
+  }
+
+  return `<img
+    class="${buildClassName(baseClassName, itemClassName)}"
+    src="${portrait.src}"
+    width="${portrait.width}"
+    height="${portrait.height}"
+    alt="${name}"
+  />`;
+}
+
 export function renderIdentity(options = {}) {
-  const { className = "", rowClassName = "", itemClassName = "" } = options;
+  const {
+    className = "",
+    rowClassName = "",
+    itemClassName = "",
+    photoClassName = "",
+  } = options;
   const identityClassName = ["identity", className].filter(Boolean).join(" ");
   const contactRowClassName = ["contact-row", rowClassName]
     .filter(Boolean)
     .join(" ");
 
+  /* Le nom, ses deux sous-titres et le portrait forment une seule en-tête :
+     c'est la grille de `.identity-head` qui place la photo à droite du nom.
+     La ligne de contact lui reste extérieure — elle prend toute la largeur,
+     sous le filet. */
   return `<div class="${identityClassName}">
-    <h1>${contact.name}</h1>
-    <div class="role">${contact.role}</div>
-    <div class="role2">${contact.secondaryRole}</div>
+    <div class="identity-head">
+      <h1>${contact.name}</h1>
+      <div class="role">${contact.role}</div>
+      ${renderPortrait("identity-photo", photoClassName)}
+      <div class="role2">${contact.secondaryRole}</div>
+    </div>
     <div class="${contactRowClassName}">${renderContactItems(itemClassName)}</div>
   </div>`;
 }

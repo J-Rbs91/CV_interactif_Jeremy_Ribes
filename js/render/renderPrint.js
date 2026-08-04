@@ -11,7 +11,7 @@ import {
 } from "./renderExperiences.js";
 import { renderOutilsSection } from "./renderOutils.js";
 import { renderProjetSection } from "./renderProjets.js";
-import { getLiveProducts } from "./renderContact.js";
+import { getLiveProducts, renderPortrait } from "./renderContact.js";
 import { linkHost, natureClass } from "./renderUtils.js";
 
 function renderSectionBody(sectionId) {
@@ -69,6 +69,7 @@ export function renderPrintDocument() {
         <div class="print-role2">${contact.secondaryRole}</div>
         <div class="print-facts">${renderFacts()}</div>
       </div>
+      ${renderPortrait("print-photo")}
     </header>
 
     ${renderLiveLine()}
