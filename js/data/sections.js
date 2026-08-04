@@ -33,7 +33,7 @@ export const sections = [
     id: "competences",
     icon: "check",
     label: "Compétences",
-    sub: "Domaines d'intervention",
+    sub: "Domaines de prédilection",
     nature: "cadre",
   },
   {
