@@ -90,7 +90,7 @@ export function renderOutilsSection(expandedTool, options = {}) {
   return `
     <div class="card n-produit">
       <div class="card-title"><div class="dot"></div>Cinq outils conçus et développés</div>
-      <div class="card-text">Je les ai conçus et développés sous Google Sheets et Apps Script comme en web. Trois d’entre eux sont encore usage quotidien aujourd’hui, dont un fellicité par le Directeur régional chez GrandVision.</div>
+      <div class="card-text">Je les ai conçus et développés sous Google Sheets et Apps Script comme en web. Trois d’entre eux sont encore en usage quotidien aujourd’hui, dont un salué par le directeur régional chez GrandVision.</div>
     </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}
