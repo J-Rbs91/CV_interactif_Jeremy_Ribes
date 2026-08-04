@@ -65,7 +65,7 @@ export const outils = [
     context:
       "Un devis se perd rarement d’un coup : il s’enlise. Une pièce qui manque, une prise en charge qui ne revient pas, une relance que personne ne s’attribue. Sans trace commune, chacun redécouvre le dossier à chaque fois, et le magasin ne sait ni ce qu’il perd, ni pourquoi.",
     action:
-      "Conception sous Google Sheets et Apps Script d’un suivi partagé par toute l’équipe : neuf statuts de tiers payant, plateforme et mutuelle, date de prochaine action, motif de blocage ou de perte, profil d’achat, collaborateur en charge et historique daté des échanges avec le client. Conçu dans un magasin puis reproposé dans un autre, il y a gagné un code couleur quand l’équipe s’est agrandie — à plusieurs, il faut retrouver son dossier d’un coup d’œil.",
+      "Conception sous Google Sheets et Apps Script d’un suivi partagé par toute l’équipe : neuf statuts de tiers payant, plateforme et mutuelle, date de prochaine action, motif de blocage ou de perte, profil d’achat, collaborateur en charge et historique daté des échanges avec le client.",
     results:
       "Utilisé plusieurs fois par jour par toute l’équipe, sans que personne ait eu à l’imposer. Ses colonnes sont devenues les référentiels de PANUM : statuts de financement, motifs, profils d’achat et historiques y sont repris tels quels. Le produit n’a pas été imaginé puis confronté au terrain — il est né de ce que le terrain remplissait déjà.",
   },
