@@ -40,7 +40,7 @@ export const sections = [
     id: "formation",
     icon: "cap",
     label: "Formation",
-    sub: "BTS OL 2012 · acquis en autodidacte",
+    sub: "BTS OL 2012",
     nature: "socle",
   },
 ];
