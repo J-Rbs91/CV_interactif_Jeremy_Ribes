@@ -11,23 +11,39 @@
    Le repli est le texte lui-meme : sans JavaScript, sans le module, ou apres
    une erreur, le paragraphe reste ce qu'il etait. */
 
-/* ~9 ms par caractere, plus une derive de 0 a 7 ms : une cadence rigoureuse
-   se lit comme une machine, pas comme quelqu'un qui ecrit. Les arrets de
-   ponctuation sont la ou une main s'arrete vraiment. L'accroche fait environ
-   quarante mots, soit une vingtaine de secondes de lecture a la vitesse
-   ordinaire : la frappe se termine en moins de quatre secondes, donc bien
-   avant que l'oeil ait rattrape le curseur. Elle ne fait attendre personne. */
-const BASE_DELAY = 9;
-const JITTER = 7;
+/* La cadence est le seul reglage qui se juge a l'oeil, et le premier essai
+   etait faux : 12 ms par caractere font 5 000 signes par minute, de l'ordre
+   de 800 mots par minute. Aucune main n'ecrit a cette vitesse — on ne lisait
+   pas quelqu'un qui tape, on lisait un texte qui se deroule, c'est-a-dire
+   exactement ce que l'effet est cense ne pas etre.
+
+   30 ms plus une derive de 0 a 24 ms donnent 42 ms en moyenne : 24
+   caracteres par seconde, environ 240 mots par minute. C'est encore au-dessus
+   d'une frappe soutenue ordinaire, et c'est assume — descendre au plausible
+   strict (80 mots par minute) ferait durer l'accroche une demi-minute, et
+   une accroche qui met trente secondes a se poser n'est plus une accroche.
+
+   La derive vaut 80 % de la base. Une cadence reguliere se reconnait tout de
+   suite comme calculee : c'est l'irregularite qui fait la main.
+
+   L'accroche fait 238 caracteres, la frappe dure donc une dizaine de
+   secondes. Le paragraphe demande une vingtaine de secondes de lecture
+   ordinaire : le curseur reste deux fois plus rapide que l'oeil et n'attend
+   jamais d'etre rattrape.
+
+   Les arrets de ponctuation ne suivent pas le meme facteur : triples, ils
+   auraient pese plus lourd que la frappe elle-meme et hache la phrase. */
+const BASE_DELAY = 30;
+const JITTER = 24;
 const PUNCTUATION_PAUSES = {
-  ",": 70,
-  ";": 110,
-  ":": 120,
-  "·": 120,
-  ".": 160,
-  "!": 160,
-  "?": 160,
-  "…": 200,
+  ",": 140,
+  ";": 220,
+  ":": 240,
+  "·": 240,
+  ".": 320,
+  "!": 320,
+  "?": 320,
+  "…": 400,
 };
 
 const START_DELAY = 220;

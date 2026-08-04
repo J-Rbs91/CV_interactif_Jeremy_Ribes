@@ -252,10 +252,15 @@ une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
   `prefers-reduced-motion: reduce`, rien ne se joue et le paragraphe reste
   tel quel — la règle globale de `css/base.css` ne couvre que le CSS, et
   cette animation est en JavaScript.
-- Cadence : ~9 ms par caractère plus une dérive de 0 à 7 ms, et des arrêts
-  aux ponctuations. Une cadence rigoureuse se lit comme une machine. Le
-  total reste sous quatre secondes, là où le paragraphe demande une
-  vingtaine de secondes de lecture : la frappe ne fait attendre personne.
+- **Cadence : 30 ms par caractère plus une dérive de 0 à 24 ms**, et des
+  arrêts aux ponctuations — une dizaine de secondes en tout. Le premier
+  réglage était à 12 ms de moyenne, soit 5 000 signes par minute : aucune
+  main n'écrit à cette vitesse, et on lisait un texte qui se déroule plutôt
+  que quelqu'un qui tape. C'est le défaut le plus facile à réintroduire, en
+  voulant raccourcir. Les 42 ms de moyenne restent au-dessus d'une frappe
+  humaine ordinaire, et c'est assumé : au plausible strict, l'accroche
+  mettrait une demi-minute à se poser. La dérive vaut 80 % de la base, une
+  cadence régulière se reconnaissant immédiatement comme calculée.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
