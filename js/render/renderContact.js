@@ -53,7 +53,7 @@ export function getLiveProducts() {
     ...projetsTransverses
       .filter((projet) => projet.link)
       .map((projet) => ({
-        name: projet.title.split(" — ")[0],
+        name: projet.title.split(" : ")[0],
         url: projet.link.url,
         nature: "preuve",
       })),

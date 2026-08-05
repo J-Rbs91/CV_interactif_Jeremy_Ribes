@@ -1,6 +1,6 @@
 export const projetsTransverses = [
   {
-    title: "KuT — Logiciel de gestion pour salons et activités de bien-être",
+    title: "KuT : logiciel de gestion pour salons et activités de bien-être",
     subtitle: "Conception produit & pilotage · en ligne, développement continu",
     bullets: [
       "Traduction des besoins d’un salon à prestations récurrentes en parcours, règles métier et fonctionnalités : clients, réservations, planning, fidélité, campagnes commerciales et indicateurs. Module de caisse et exports comptables en cours.",
@@ -22,7 +22,7 @@ export const projetsTransverses = [
     ],
   },
   {
-    title: "L’Ortabels — Projet maraîcher et outil d’aide à la décision",
+    title: "L’Ortabels : projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
     bullets: [
       "Planifier des cultures suppose d’anticiper des stades de développement qui dépendent des températures, pas du calendrier : un semis se pilote en degrés-jours cumulés, pas en semaines.",
@@ -44,7 +44,7 @@ export const projetsTransverses = [
     ],
   },
   {
-    title: "Renta Menu — Pilotage de la rentabilité en restauration",
+    title: "Renta Menu : pilotage de la rentabilité en restauration",
     subtitle: "Outil décisionnel · Google Apps Script",
     bullets: [
       "Modélisation du coût matière par composante de menu et calcul automatisé des marges brutes.",

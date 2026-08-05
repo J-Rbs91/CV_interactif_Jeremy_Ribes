@@ -2,7 +2,7 @@ export const profileContent = {
   quote:
     "« Rendre une activité plus lisible et plus pilotable, sans l’alourdir. »",
   intro:
-    "J’ai déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, <strong>conception d’outils</strong>, accompagnement et repères de pilotage. Ce qui était une part annexe de mon travail est devenu un véritable levier pour le développement des activités.",
+    "J’ai déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, accompagnement et repères de pilotage. Ce qui était une part annexe de mon travail est devenu un levier de développement, et j’ai construit les <strong>outils</strong> qui manquaient pour le tenir.",
   cards: [
     {
       title: "Positionnement",
@@ -12,7 +12,7 @@ export const profileContent = {
     {
       title: "Méthode",
       nature: "produit",
-      text: "Je pars d’un <strong>irritant précis</strong> — une ressaisie, un oubli, un calcul refait à la main — et je livre une réponse dont l’utilité se vérifie au premier usage. <strong>Sans attendre qu’on me le demande.</strong> C’est aussi ce qui les fait adopter — personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
+      text: "Je pars d’un <strong>irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main) et je livre une réponse dont l’utilité se vérifie au premier usage. <strong>Sans attendre qu’on me le demande.</strong> C’est aussi ce qui les fait adopter : personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
     },
   ],
   expertise:
@@ -57,7 +57,7 @@ export const formationContent = {
     {
       title: "Orchestration d’agents IA",
       nature: "produit",
-      text: "Découpage d’une tâche de développement entre agents spécialisés — analyse, cadrage, exécution, contrôle — avec critères de validation à chaque étape. Méthode appliquée au développement de ce CV.",
+      text: "Découpage d’une tâche de développement entre agents spécialisés (analyse, cadrage, exécution, contrôle), avec critères de validation à chaque étape. Méthode appliquée au développement de ce CV.",
     },
     {
       title: "Mise en production",
