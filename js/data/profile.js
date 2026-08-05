@@ -2,7 +2,7 @@ export const profileContent = {
   quote:
     "« Rendre une activité plus lisible et plus pilotable, sans l’alourdir. »",
   intro:
-    "J’ai déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : procédures, suivi des dossiers, plannings et repères de pilotage. Ce qui était une part annexe du poste en est devenu le cœur, et j’ai construit les <strong>outils</strong> qui manquaient pour le tenir.",
+    "J’ai déplacé ma valeur du face à face client vers l’<strong>organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, <strong>conception d’outils</strong>, accompagnement et repères de pilotage. Ce qui était une part annexe de mon travail est devenu un véritable levier pour le développement des activités.",
   cards: [
     {
       title: "Positionnement",
