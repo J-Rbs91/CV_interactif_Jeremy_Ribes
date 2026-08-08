@@ -18,6 +18,13 @@ import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
 import { bindPrint } from "./ui/print.js";
+import {
+  playSectionEntry as animateSectionEntry,
+  playSectionLeave,
+  prefersReducedMotion,
+  resolveSectionDirection,
+  setSectionDirection,
+} from "./ui/sectionTransition.js";
 import { bindShare } from "./ui/share.js";
 import { bindTypewriter } from "./ui/typewriter.js";
 
@@ -31,12 +38,16 @@ const state = {
   shouldAnimateMobileNav: false,
   hasInitializedMobileNav: false,
   shouldAnimateSection: true,
+  hasPlayedSectionEntry: false,
 };
 
-/* Le decalage d'entree est plafonne : au-dela de huit blocs, le dernier
-   arriverait apres que l'oeil a fini de parcourir la page, et le rythme se
-   lirait comme une lenteur. */
-const maxSectionEntryStagger = 8;
+/* La sortie de l'ecran courant dure le temps d'une animation, pendant
+   lequel le document affiche encore l'ancienne section : un second clic
+   peut tomber dedans. On garde donc la demande en attente plutot qu'un
+   booleen — le clic suivant redirige la cible au lieu d'empiler une
+   seconde transition. */
+let pendingSectionRequest = null;
+let cancelSectionLeave = null;
 
 const mobileViewport = "(max-width: 900px)";
 const mobileNavigationScrollSettleDelay = 350;
@@ -178,7 +189,13 @@ function restoreFocusToActiveNavigation() {
    de section — l'ouverture d'un accordeon ne re-rend plus rien, et faire
    rejouer l'entree a chaque ouverture donnerait une interface nerveuse.
    Le respect de `prefers-reduced-motion` est porte par css/base.css, qui
-   ramene toutes les durees a 0,01 ms sans changer l'etat d'arrivee. */
+   ramene toutes les durees a 0,01 ms sans changer l'etat d'arrivee.
+
+   La toute premiere entree se distingue des suivantes : elle accompagne la
+   decouverte du CV et n'est vue qu'une fois, la ou la navigation sera vue
+   six fois. La regle de frequence lui accorde le tempo ample qu'elle
+   refuse aux clics — le detail des durees est dans
+   js/ui/sectionTransition.js. */
 function playSectionEntry() {
   if (!state.shouldAnimateSection) {
     return;
@@ -186,25 +203,10 @@ function playSectionEntry() {
 
   state.shouldAnimateSection = false;
 
-  const contentHead = document.querySelector(".content-head");
-  const contentBody = document.querySelector(".content-body");
+  const isFirstEntry = !state.hasPlayedSectionEntry;
+  state.hasPlayedSectionEntry = true;
 
-  if (contentHead) {
-    contentHead.classList.add("is-entering");
-  }
-
-  if (!contentBody) {
-    return;
-  }
-
-  Array.from(contentBody.children).forEach((block, index) => {
-    block.style.setProperty(
-      "--i",
-      String(Math.min(index, maxSectionEntryStagger)),
-    );
-  });
-
-  contentBody.classList.add("is-entering");
+  animateSectionEntry({ isFirstEntry });
 }
 
 function renderCurrentSection() {
@@ -226,27 +228,107 @@ function renderCurrentSection() {
   }
 }
 
+/* Le rendu attend la fin de la sortie ; l'appui, lui, n'attend rien. Sans
+   cette marque, le bouton reste visuellement inerte pendant 130 ms et le
+   clic semble n'avoir rien declenche — c'est exactement le defaut que la
+   transition etait censee corriger. Le rendu qui suit reconstruira ces
+   memes boutons avec le meme etat. */
+function markActiveNavigationItem(sectionId) {
+  document.querySelectorAll(".nav-item[data-section]").forEach((navItem) => {
+    const isActive = navItem.dataset.section === sectionId;
+
+    navItem.classList.toggle("active", isActive);
+    navItem.setAttribute("aria-pressed", isActive ? "true" : "false");
+  });
+}
+
+/* On arrive dans une section les cartes repliees, et on la retrouve repliee
+   en y revenant : l'etat d'ouverture appartient a la visite en cours, pas au
+   document. */
+function commitSectionState(sectionId) {
+  state.expandedCompetenceId = null;
+  state.expandedTool = null;
+  state.desktopScrollTop = 0;
+  state.activeSection = sectionId;
+  state.shouldAnimateSection = true;
+}
+
+function applySectionChange(sectionId, shouldRestoreFocus) {
+  if (state.isMobileView) {
+    preserveMobileNavigationState({ shouldAnimate: true });
+  }
+
+  commitSectionState(sectionId);
+  render({ restoreFocusToActiveNavigation: shouldRestoreFocus });
+}
+
+/* Une bascule large ↔ etroit pendant la sortie reconstruirait le document
+   sous l'animation, et le minuteur rendrait une seconde fois derriere. On
+   solde la demande dans l'etat : le rendu de la bascule affiche la section
+   demandee, une seule fois. */
+function flushPendingSectionChange() {
+  if (!pendingSectionRequest) {
+    return;
+  }
+
+  const { sectionId } = pendingSectionRequest;
+
+  cancelSectionLeave?.();
+  cancelSectionLeave = null;
+  pendingSectionRequest = null;
+  commitSectionState(sectionId);
+}
+
 function bindUi() {
   bindNavigation((sectionId) => {
-    if (!sectionId || state.activeSection === sectionId) {
+    if (!sectionId) {
       return;
     }
 
-    if (state.isMobileView) {
-      preserveMobileNavigationState({ shouldAnimate: true });
+    /* Un clic tombe dans la sortie deja lancee : on change la destination
+       sans relancer de mouvement. Rejouer la sortie ferait repartir un
+       ecran deja parti, et deux minuteurs se disputeraient le rendu. */
+    if (pendingSectionRequest) {
+      pendingSectionRequest.sectionId = sectionId;
+      markActiveNavigationItem(sectionId);
+      return;
     }
 
-    /* On revient a une section les cartes repliees : l'etat d'ouverture
-       appartient a la visite en cours de la section, pas au document. */
-    state.expandedCompetenceId = null;
-    state.expandedTool = null;
-    state.desktopScrollTop = 0;
-    state.activeSection = sectionId;
-    state.shouldAnimateSection = true;
+    if (state.activeSection === sectionId) {
+      return;
+    }
+
+    markActiveNavigationItem(sectionId);
+
     /* La navigation est le seul endroit ou le document est reconstruit sous
        le doigt de quelqu'un : le bouton qui portait le focus disparait avec
-       lui, et le clavier repart du haut de la page. On le lui rend. */
-    render({ restoreFocusToActiveNavigation: hasFocusInNavigation() });
+       lui, et le clavier repart du haut de la page. On le lui rend. Le test
+       se fait maintenant, tant que ce bouton existe encore. */
+    const shouldRestoreFocus = hasFocusInNavigation();
+
+    /* Mouvement reduit : pas de phase de sortie du tout. Un ecran qu'on
+       fait partir en 0,01 ms n'est pas un repli, c'est un clignotement. */
+    if (prefersReducedMotion()) {
+      applySectionChange(sectionId, shouldRestoreFocus);
+      return;
+    }
+
+    setSectionDirection(resolveSectionDirection(state.activeSection, sectionId));
+    pendingSectionRequest = { sectionId, shouldRestoreFocus };
+
+    cancelSectionLeave = playSectionLeave(() => {
+      const request = pendingSectionRequest;
+
+      pendingSectionRequest = null;
+      cancelSectionLeave = null;
+
+      /* La destination a pu changer en cours de sortie : l'entree se joue
+         dans le sens de la demande retenue, pas de la premiere. */
+      setSectionDirection(
+        resolveSectionDirection(state.activeSection, request.sectionId),
+      );
+      applySectionChange(request.sectionId, request.shouldRestoreFocus);
+    });
   });
 
   /* Aucun re-rendu ici : c'est ce qui rend le depliage animable, et ce qui
@@ -285,6 +367,8 @@ function initializeViewportDetection() {
     if (state.isMobileView === event.matches) {
       return;
     }
+
+    flushPendingSectionChange();
 
     /* La bascule large ↔ etroit est le seul re-rendu qui reste en cours de
        lecture : on garde la position acquise plutot que de renvoyer en tete. */

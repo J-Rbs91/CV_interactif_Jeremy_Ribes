@@ -147,6 +147,34 @@
      bouge ici bouge desormais dans la meme langue. */
   --e-move: cubic-bezier(0.62, 0, 0.24, 1);
 
+  /* La courbe de depart, et elle seule : une acceleration pure. Un ecran
+     qui s'en va n'a pas a etre regarde arriver quelque part — il quitte le
+     champ, et la meme courbe qu'a l'entree lui donnerait un faux poids. */
+  --e-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* La meme langue, lue par l'autre bout : la moitie decelerante de
+     `--e-move`, sans son elan initial. Un mouvement continu a le droit de
+     prendre son temps a demarrer ; une apparition, non — mesuree sur
+     Chromium, la courbe en S laissait l'ecran a moins de 1 % d'opacite
+     pendant sa premiere centaine de millisecondes, soit un trou entre
+     l'ecran parti et celui qui arrive. Reserve a l'entree des sections :
+     la montee du CV au raccord garde `--e-move`, elle n'enchaine rien. */
+  --e-enter: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --e-section-enter: var(--e-enter);
+
+  /* --- Temps : la duree se decide a la frequence de l'action ------------- */
+  /* Changer de section est occasionnel — six clics dans une visite. La
+     fourchette qui convient a ce rythme est de 250 a 400 ms, en deux
+     temps : l'ancien ecran part, le nouveau vient. Au-dela, l'animation
+     que le premier clic rend agreable devient le prix du sixieme.
+     Le rendu qui suit la sortie n'est pas commande par un minuteur mais
+     par la fin reelle de l'animation (js/ui/sectionTransition.js) : cette
+     duree peut donc changer ici seule, sans rien desynchroniser. */
+  --t-section-leave: 110ms;
+  --t-section-enter: 240ms;
+  --t-section-offset: 0ms;
+  --t-section-stagger: 24ms;
+
   /* --- Matiere : le grain de la sequence, partage ----------------------- */
   /* La sequence est de la pellicule, le CV etait du verre (backdrop-filter,
      degrades blancs translucides). Deux materiaux opposes de part et
@@ -299,13 +327,28 @@ body::after {
    cessait d'exister — c'est une part de la rupture, invisible parce qu'on
    ne voit pas ce qui manque.
 
-   Deux mouvements, pas trois. La montee du CV, qui referme le raccord ;
-   et l'entree des blocs au changement de section, qui importe le rythme
-   de la sequence : un decalage court, la meme courbe, jamais de rebond.
+   Trois mouvements, pas quatre. La montee du CV, qui referme le raccord ;
+   la sortie de l'ecran qu'on quitte ; l'entree de celui qu'on demande.
+   Une seule courbe a l'entree, une seule au depart, jamais de rebond.
 
-   `backwards` et non `both` : l'etat d'arrivee doit redevenir le style
-   naturel de l'element, sinon un `transform` fige survivrait a
-   l'animation et bloquerait les survols.
+   Le changement de section est le seul endroit ou tout l'ecran est
+   remplace. Sans transition, les deux etats se substituent sans lien : on
+   ne sait pas si on a avance ou recule dans le sommaire, et le clic laisse
+   croire a un rechargement. Le mouvement repond a cette question-la, et a
+   aucune autre — il oriente, il ne se montre pas. C'est un CV.
+
+   L'orientation est portee par `--section-dir`, pose sur `#app` par
+   js/ui/sectionTransition.js : +1 quand on descend le sommaire, -1 quand
+   on le remonte. L'ancien ecran s'echappe du cote ou l'on va, le nouveau
+   arrive du cote d'ou l'on vient. Rien d'autre ne bouge — ni zoom, ni
+   rotation, ni flou : ces effets appartiennent aux pages de vitrine, et
+   un CV se lit.
+
+   `backwards` et non `both` a l'entree : l'etat d'arrivee doit redevenir
+   le style naturel de l'element, sinon un `transform` fige survivrait a
+   l'animation et bloquerait les survols. `forwards` a la sortie, au
+   contraire : l'element doit rester parti jusqu'a ce que le rendu le
+   remplace.
    ========================================================================= */
 
 @keyframes cv-entre {
@@ -318,7 +361,14 @@ body::after {
 @keyframes bloc-monte {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(calc(var(--section-dir, 1) * 12px));
+  }
+}
+
+@keyframes bloc-sort {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--section-dir, 1) * -8px));
   }
 }
 
@@ -326,15 +376,41 @@ body::after {
   animation: cv-entre 0.72s var(--e-move) backwards;
 }
 
-.content-head.is-entering {
-  animation: bloc-monte 0.5s var(--e-move) backwards;
+/* La sortie part d'un bloc : l'ecran quitte le champ d'un seul tenant.
+   L'escalier est reserve a l'arrivee, ou il donne un ordre de lecture ;
+   au depart il ne donnerait qu'une attente. */
+.content-head.is-leaving,
+.content-body.is-leaving {
+  animation: bloc-sort var(--t-section-leave) var(--e-exit) forwards;
+  /* Un accordeon qu'on ouvrirait pendant ces 130 ms disparaitrait avec le
+     rendu qui suit. La navigation, elle, reste atteignable : elle n'est
+     pas dans le contenu. */
+  pointer-events: none;
 }
 
-/* Le decalage est plafonne dans main.js : au-dela de huit blocs, le
-   dernier arriverait apres que l'oeil a fini de parcourir la page. */
+.content-head.is-entering {
+  animation: bloc-monte var(--t-section-enter) var(--e-section-enter) backwards;
+}
+
+/* Le decalage est plafonne dans js/ui/sectionTransition.js : au-dela de
+   quelques blocs, le dernier arriverait apres que l'oeil a fini de
+   parcourir la page. */
 .content-body.is-entering > * {
-  animation: bloc-monte 0.5s var(--e-move) backwards;
-  animation-delay: calc(60ms + var(--i, 0) * 45ms);
+  animation: bloc-monte var(--t-section-enter) var(--e-section-enter) backwards;
+  animation-delay: calc(
+    var(--t-section-offset) + var(--i, 0) * var(--t-section-stagger)
+  );
+}
+
+/* La toute premiere entree n'est pas une navigation : c'est la decouverte
+   du CV, au raccord de la sequence. Rare et marquante, elle a droit au
+   tempo ample que la regle de frequence refuse aux clics suivants. */
+.content-head.is-entering-first,
+.content-body.is-entering-first > * {
+  --e-section-enter: var(--e-move);
+  --t-section-enter: 500ms;
+  --t-section-offset: 60ms;
+  --t-section-stagger: 45ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -345,5 +421,22 @@ body::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Le repli ne se contente pas de couper : la phase de sortie est sautee
+     en JS, et cette regle garantit qu'aucun ecran ne puisse rester a
+     `opacity: 0` si elle l'etait malgre tout. Le deplacement disparait,
+     le fondu reste — il n'a jamais gene personne. */
+  .content-head.is-leaving,
+  .content-body.is-leaving {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .content-head.is-entering,
+  .content-body.is-entering > * {
+    --section-dir: 0;
+    animation-delay: 0ms !important;
   }
 }
