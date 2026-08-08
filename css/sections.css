@@ -398,9 +398,12 @@
    sont de la seconde couche ; ensemble ils ferment la carte par une ligne
    identique sur les cinq — l'action à gauche, l'état à droite — et c'est
    cette répétition qui rend la liste balayable. */
+/* `center` et non `baseline` : la commande est devenue une pastille, et une
+   pastille alignee sur la ligne de base de son texte pend sous le statut
+   qu'elle cotoie. C'est sa boite qu'on aligne maintenant, pas son texte. */
 .tool-footline {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-1) var(--space-3);
@@ -412,8 +415,7 @@
 }
 
 /* Carte ouverte, le filet du panneau arrive juste sous la ligne de pied et
-   venait se coller au soulignement de la commande : deux traits a la meme
-   hauteur qu'on lisait comme un seul. Un cran les separe. */
+   venait se coller a la commande. Un cran les separe. */
 .tool-card.is-open .tool-footline {
   padding-bottom: var(--space-1);
 }
@@ -435,34 +437,111 @@
 }
 
 /* =========================================================================
-   LA COMMANDE DE DÉPLIAGE — un mot, puis le chevron
+   LA COMMANDE DE DÉPLIAGE — une pastille qui appelle
    -------------------------------------------------------------------------
    L'affordance tenait dans un chevron de 9 px en gris, pose a l'extremite
    droite de la carte : sur une colonne large il se retrouvait a plus de
    mille pixels du titre, seul, sans rien autour. On ne voyait pas qu'il y
-   avait quelque chose a deplier — on ne le voyait pas du tout.
+   avait quelque chose a deplier — on ne le voyait pas du tout. Un mot
+   souligne a suivi ; il se lisait, mais il se lisait comme un lien parmi
+   les autres commandes soulignees de la carte.
 
-   Elle devient une commande nommee, posee sous le resume, alignee sur la
-   matiere : le mot dit ce que le chevron se contentait de suggerer. Elle
-   prend la langue que le CV emploie deja pour tout ce qui documente sans
-   etre le message — mono, capitales, 0,16 em, souligne d'un filet. C'est
-   exactement l'habillage de `.tool-link` : ce sont deux commandes du meme
-   niveau, elles se ressemblent.
-   ========================================================================= */
+   Elle devient une pastille : le texte reste celui de la seconde couche —
+   mono, capitales, 0,16 em — mais il est pose sur un aplat translucide de
+   la nature de la carte, cercle d'un filet de la meme teinte. Assez pale
+   pour ne pas concurrencer le titre, assez colore pour se detacher du blanc
+   et se lire comme une chose qu'on presse. Aucune carte n'etant plus
+   depliee d'office, c'est elle qui doit dire qu'il y a quelque chose
+   dessous : elle bat doucement pour le dire (voir `accordion-appel`).
+
+   `color-mix` plutot que des tons figes : la pastille se teinte de la
+   nature portee par la carte, sans qu'aucune nouvelle variable de charte
+   n'ait a etre declaree. */
 .accordion-cmd {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   margin-top: var(--space-2);
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--n-line);
+  padding: 7px 12px 7px 14px;
+  border: 1px solid color-mix(in srgb, var(--n-mark) 26%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--n-mark) 9%, transparent);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: var(--n-ink);
-  transition: border-color 0.15s ease;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s var(--e-move);
+}
+
+/* Le battement. Il tient dans un dixieme du cycle : six secondes d'immobilite
+   pour une demi-seconde de mouvement. C'est ce rapport qui fait la difference
+   entre un appel et un tic — l'oeil est rattrape par ce qui bouge apres etre
+   reste immobile, pas par ce qui vibre en continu.
+
+   L'amplitude est de deux pixels et d'un demi-degre : a cette echelle on ne
+   voit pas la pastille bouger, on voit qu'il y a quelque chose la.
+   `prefers-reduced-motion` est couvert par css/base.css, qui ramene toutes
+   les durees a 0,01 ms. */
+@keyframes accordion-appel {
+  0%,
+  8%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  1.6% {
+    transform: translateX(-2px) rotate(-0.5deg);
+  }
+
+  3.2% {
+    transform: translateX(2px) rotate(0.5deg);
+  }
+
+  4.8% {
+    transform: translateX(-1.5px) rotate(-0.35deg);
+  }
+
+  6.4% {
+    transform: translateX(1.5px) rotate(0.35deg);
+  }
+}
+
+/* Il ne bat que sur les cartes fermees — une carte ouverte n'a plus rien a
+   annoncer — et seulement tant que le visiteur n'a ouvert aucune carte :
+   `accordion-decouvert` est pose sur <html> a la premiere bascule
+   (js/main.js) et ne repart plus. */
+html:not(.accordion-decouvert) .tool-card:not(.is-open) .accordion-cmd,
+html:not(.accordion-decouvert) .comp-card:not(.is-open) .accordion-cmd {
+  animation: accordion-appel 7s var(--e-move) var(--appel-retard, 0s) infinite;
+}
+
+/* Decalees, sinon la page entiere fremit d'un bloc — un defaut d'affichage,
+   pas une invitation. Trois temps suffisent a rompre l'unisson. */
+.tool-card:nth-of-type(3n + 2),
+.comp-card:nth-of-type(3n + 2) {
+  --appel-retard: 0.45s;
+}
+
+.tool-card:nth-of-type(3n),
+.comp-card:nth-of-type(3n) {
+  --appel-retard: 0.9s;
+}
+
+/* Souris ou clavier arrives sur la commande : l'appel a fait son travail,
+   il se tait et laisse place au retour d'etat. Le prefixe `html:not(...)`
+   n'est pas decoratif — sans lui la regle passe sous celle du battement,
+   qui compte une classe de plus, et le mouvement continuerait sous la
+   souris. */
+html:not(.accordion-decouvert) .tool-summary:hover .accordion-cmd,
+html:not(.accordion-decouvert) .tool-summary:focus-visible .accordion-cmd,
+html:not(.accordion-decouvert) .comp-toggle:hover .accordion-cmd,
+html:not(.accordion-decouvert) .comp-toggle:focus-visible .accordion-cmd {
+  animation: none;
 }
 
 /* Les deux libelles sont dans le document, un seul est montre : la bascule
@@ -492,14 +571,17 @@
   transform: rotate(225deg);
 }
 
-/* Le seul retour au survol de la page : le filet passe de la nuance tenue a
-   l'encre pleine. Il confirme au moment ou la souris approche ce que le mot
-   annonce deja de loin. */
+/* Au survol la pastille se remplit d'un cran et monte d'un pixel : elle
+   confirme au moment ou la souris approche ce que le battement annonce de
+   loin. Le pixel de montee suffit — une pastille qui grossit ferait un
+   bouton d'application. */
 .tool-summary:hover .accordion-cmd,
 .tool-summary:focus-visible .accordion-cmd,
 .comp-toggle:hover .accordion-cmd,
 .comp-toggle:focus-visible .accordion-cmd {
-  border-bottom-color: var(--n-ink);
+  background: color-mix(in srgb, var(--n-mark) 16%, transparent);
+  border-color: color-mix(in srgb, var(--n-mark) 45%, transparent);
+  transform: translateY(-1px);
 }
 
 /* Un lien est un lien : du texte souligne. La gelule cerclee en faisait un

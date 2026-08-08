@@ -218,18 +218,40 @@ et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
   Il ne contient donc que du contenu de phrasé : pas de `<div>`, pas de
   `<a>` — le lien d'un outil vit à côté, hors du bouton. C'est pourquoi
   `renderAccentTags` prend une option `element`.
-- **L'affordance est un mot, pas un chevron.** `renderDiscloseCommand()`
-  pose « Déplier le détail » / « Replier » et le chevron, dans la langue de
-  la seconde couche. Le chevron seul, à l'extrémité droite d'une colonne
-  large, ne se lisait pas comme une commande — c'était le défaut signalé :
-  on ne voyait pas qu'il y avait quelque chose à déplier. Les deux libellés
-  sont posés ensemble et CSS n'en montre qu'un : la bascule ne touche alors
-  qu'une classe. Le couple est `aria-hidden`, l'état étant déjà porté par
-  `aria-expanded`.
-- **Le premier outil est déplié à l'arrivée** dans la section, tant que le
-  visiteur n'a basculé aucune carte lui-même (`hasToggledTool`). Un exemple
-  ouvert montre ce que la commande donne ; le libellé seul l'annonce. Dès
-  qu'il a basculé une carte, il sait, et on ne force plus rien.
+- **L'affordance est une pastille nommée, pas un chevron.**
+  `renderDiscloseCommand()` pose « Déplier le détail » / « Replier » et le
+  chevron, dans la langue de la seconde couche. Le chevron seul, à
+  l'extrémité droite d'une colonne large, ne se lisait pas comme une
+  commande — c'était le défaut signalé : on ne voyait pas qu'il y avait
+  quelque chose à déplier. Le mot souligné qui a suivi se lisait, mais
+  comme un lien de plus au milieu des autres commandes soulignées de la
+  carte. Il est maintenant posé sur un aplat translucide de la nature de la
+  carte (`color-mix` sur `--n-mark`), cerclé d'un filet de la même teinte :
+  assez pâle pour ne pas concurrencer le titre, assez coloré pour se lire
+  comme une chose qu'on presse. Les deux libellés sont posés ensemble et
+  CSS n'en montre qu'un : la bascule ne touche alors qu'une classe. Le
+  couple est `aria-hidden`, l'état étant déjà porté par `aria-expanded`.
+- **Aucune carte n'est dépliée à l'arrivée.** Un panneau ouvert d'office
+  prenait la moitié de l'écran avant qu'on ait lu la liste, et masquait le
+  fait que les autres cartes s'ouvrent aussi : ce qui est déjà ouvert ne
+  montre pas qu'on peut ouvrir. Revenir dans une section la retrouve
+  repliée — l'état d'ouverture appartient à la visite en cours, pas au
+  document.
+- **C'est la pastille qui porte l'invitation**, par un battement
+  (`accordion-appel`, `css/sections.css`). Il tient dans un dixième du
+  cycle : six secondes d'immobilité pour une demi-seconde de mouvement de
+  deux pixels — c'est ce rapport qui fait la différence entre un appel et
+  un tic, l'œil étant rattrapé par ce qui bouge après être resté immobile,
+  jamais par ce qui vibre en continu. Les cartes sont décalées de trois
+  temps (`--appel-retard`), sinon la page frémit d'un bloc et se lit comme
+  un défaut d'affichage. Le battement s'arrête sur une carte ouverte, sous
+  la souris, et **définitivement à la première bascule** :
+  `markAccordionAsDiscovered()` pose `accordion-decouvert` sur `<html>` —
+  le seul élément que `render()` ne reconstruit pas, donc la marque survit
+  aux changements de section. La démonstration faite, le mouvement n'apprend plus rien à
+  personne et devient du bruit. Les règles de survol reprennent ce préfixe
+  `html:not(.accordion-decouvert)` : sans lui elles passent sous celle du
+  battement, qui compte une classe de plus.
 
 ## L'accroche se tape (`js/ui/typewriter.js`)
 Le paragraphe de la colonne d'identité s'écrit lettre à lettre, comme sous
