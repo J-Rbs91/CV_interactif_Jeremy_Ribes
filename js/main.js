@@ -11,10 +11,7 @@ import {
 import {
   renderCompetencesSection,
 } from "./render/renderCompetences.js";
-import {
-  defaultExpandedTool,
-  renderOutilsSection,
-} from "./render/renderOutils.js";
+import { renderOutilsSection } from "./render/renderOutils.js";
 import { renderProjetSection } from "./render/renderProjets.js";
 import { bindAccordion, syncAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
@@ -34,8 +31,7 @@ import { bindTypewriter } from "./ui/typewriter.js";
 const state = {
   activeSection: "profil",
   expandedCompetenceId: null,
-  expandedTool: defaultExpandedTool,
-  hasToggledTool: false,
+  expandedTool: null,
   desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
@@ -164,6 +160,16 @@ function scrollAccordionIntoView(card) {
   });
 }
 
+/* La commande de depliage bat doucement tant qu'on n'a ouvert aucune carte :
+   c'est ce battement qui dit qu'il y a quelque chose dessous. A la premiere
+   ouverture, la demonstration est faite — le mouvement n'a plus rien a
+   apprendre a personne et devient du bruit. Il s'arrete, pour la visite
+   entiere. La marque est posee sur <html>, seul element que `render()` ne
+   reconstruit pas : elle survit aux changements de section. */
+function markAccordionAsDiscovered() {
+  document.documentElement.classList.add("accordion-decouvert");
+}
+
 function hasFocusInNavigation() {
   const focused = document.activeElement;
 
@@ -236,10 +242,12 @@ function markActiveNavigationItem(sectionId) {
   });
 }
 
+/* On arrive dans une section les cartes repliees, et on la retrouve repliee
+   en y revenant : l'etat d'ouverture appartient a la visite en cours, pas au
+   document. */
 function commitSectionState(sectionId) {
   state.expandedCompetenceId = null;
-  state.expandedTool =
-    sectionId === "outils" && !state.hasToggledTool ? defaultExpandedTool : null;
+  state.expandedTool = null;
   state.desktopScrollTop = 0;
   state.activeSection = sectionId;
   state.shouldAnimateSection = true;
@@ -327,11 +335,12 @@ function bindUi() {
      garde le focus sur le bouton qu'on vient d'actionner. */
   bindAccordion({
     onToolToggle: (toolId) => {
-      state.hasToggledTool = true;
+      markAccordionAsDiscovered();
       state.expandedTool = state.expandedTool === toolId ? null : toolId;
       scrollAccordionIntoView(syncAccordion("tool", state.expandedTool));
     },
     onCompetenceToggle: (competenceId) => {
+      markAccordionAsDiscovered();
       state.expandedCompetenceId =
         state.expandedCompetenceId === competenceId ? null : competenceId;
       scrollAccordionIntoView(

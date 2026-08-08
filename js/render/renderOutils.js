@@ -7,13 +7,13 @@ import {
 } from "./renderUtils.js";
 import { icon } from "../ui/icons.js";
 
-/* Le premier outil est déplié à l'arrivée dans la section, tant que le
-   visiteur n'a lui-même basculé aucune carte. Un exemple ouvert montre ce
-   que la commande donne ; le libellé seul ne fait que l'annoncer. Dès qu'il
-   a basculé une carte, il sait, et on ne force plus rien. */
-export const defaultExpandedTool = outils[0]?.id ?? null;
+/* Aucune carte n'est dépliée à l'arrivée dans la section. Un panneau ouvert
+   d'office prenait la moitié de l'écran avant qu'on ait lu la liste, et
+   masquait le fait que les cinq autres cartes s'ouvrent aussi : ce qui est
+   déjà ouvert ne montre pas qu'on peut ouvrir. C'est la commande de dépliage
+   qui porte cette invitation — voir `renderDiscloseCommand`.
 
-/* Le panneau est toujours dans le document, replié à `grid-template-rows: 0fr`.
+   Le panneau est toujours dans le document, replié à `grid-template-rows: 0fr`.
    Le monter au moment de l'ouverture le faisait naître déjà ouvert : la
    transition n'avait aucun état de départ et le dépliage était instantané.
    `inert` le retire du parcours clavier et de l'arbre d'accessibilité quand
