@@ -8,8 +8,8 @@ export const experiences = [
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
-      "Conception et envoi d’une campagne e-mail auprès de plus de mille clients : segmentation de la base, vérification des consentements, personnalisation des messages, suivi des conversions.",
-      "Rapprochement des données du logiciel métier et des suivis internes pour repérer les dossiers non tracés et chiffrer les écarts, en automatisant le contrôle plutôt qu’en le confiant à quelqu’un.",
+      "Conception et envoi d’une campagne e-mail : base de plus de mille clients segmentée, 771 envois après vérification des consentements, 96,5 % de délivrabilité, 9 rendez-vous pris en magasin. Attribution suivie jusqu’à la prise de rendez-vous.",
+      "Contrôle croisé de deux sources indépendantes — le logiciel métier et le suivi interne — pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
     ],

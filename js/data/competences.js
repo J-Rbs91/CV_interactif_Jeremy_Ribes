@@ -57,7 +57,7 @@ export const competences = [
     exemple:
       "C’est la logique qui structure PANUM : comprendre pourquoi une vente se perd, et sur quel levier agir en priorité.",
     resultat:
-      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage.",
+      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils rapprochent deux sources indépendantes, dont l’une est l’outil que j’ai conçu : le contrôle peut établir qu’il n’a pas été renseigné.",
   },
   {
     id: "coordination-changement",
