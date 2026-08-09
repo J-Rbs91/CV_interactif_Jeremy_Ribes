@@ -45,9 +45,9 @@ export const formationContent = {
       text: "Nommer qui traite quoi, et à quelle échéance. Une tâche partagée sans responsable identifié n’est traitée par personne — c’est ce que règlent le brief quotidien et le suivi des devis.",
     },
     {
-      title: "Conception d’indicateurs",
+      title: "Indicateurs avancés & retardés",
       nature: "produit",
-      text: "Distinguer ce qui constate un résultat déjà joué de ce qui permet d’agir avant qu’il le soit : délais de traitement, discipline de relance, dossiers à risque, causes de perte.",
+      text: "Séparer ce qui constate un résultat déjà joué de ce sur quoi on peut encore agir : délais de traitement, discipline de relance, dossiers à risque, causes de perte. C’est la logique qui structure PANUM.",
     },
     {
       title: "Analyse de données & modélisation",
