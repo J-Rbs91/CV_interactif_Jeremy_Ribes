@@ -9,8 +9,8 @@ export const experiences = [
     bullets: [
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
       "Conception et envoi d’une campagne e-mail auprès de plus de mille clients : segmentation de la base, vérification des consentements, personnalisation des messages, suivi des conversions.",
-      "Mise en place de contrôles automatisés rapprochant les données du logiciel métier et les suivis internes, pour repérer les dossiers non tracés et chiffrer les écarts.",
-      "Développement d’outils d’aide à la vente, web et desktop, dont un hub regroupant les tâches courantes du magasin.",
+      "Rapprochement des données du logiciel métier et des suivis internes pour repérer les dossiers non tracés et chiffrer les écarts, en automatisant le contrôle plutôt qu’en le confiant à quelqu’un.",
+      "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
     ],
   },
@@ -24,9 +24,9 @@ export const experiences = [
     bullets: [
       "Rédaction de l’offre d’emploi, conduite des entretiens et formation des deux collaborateurs recrutés.",
       "Stratégie de présence locale proposée et mise en place : actions ciblées, référencement local et collecte d’avis Google.",
-      "Conception d’Opti’Profit, outil d’aide à la vente qui identifie le meilleur compromis entre besoin technique, budget client, réseaux de soins et marge.",
-      "Mise en place d’un suivi automatisé des devis et d’un brief quotidien, pour fiabiliser les relances et coordonner le back-office.",
-      "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des horaires et des plannings pour aligner les effectifs présents sur la charge réelle.",
+      "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des horaires et des règles de présence pour aligner les effectifs sur la charge réelle.",
+      "Instauration d’un brief de début de journée et d’un suivi commun des devis : tâches de back-office attribuées nommément, dossiers à reprendre visibles de toute l’équipe.",
+      "Conception d’Opti’Profit pour amener l’arbitrage produit — besoin technique, budget, réseaux de soins, marge — au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
     ],
     statsLabel: "Sur les deux mois qui ont suivi ces actions",
     stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],

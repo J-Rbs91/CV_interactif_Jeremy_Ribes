@@ -66,15 +66,25 @@ function renderOutilCard(outil, index, expandedTool, expandAll) {
         <div class="tool-details">
           <div class="tool-detail-grid">
             <div class="detail-block">
-              <div class="detail-label">Contexte &amp; problème</div>
+              <div class="detail-label">Situation</div>
               <div class="detail-text">${outil.context}</div>
             </div>
+            ${
+              /* Facultatif : une fiche sans décision préalable à raconter se
+                 rend sans la case, plutôt qu'avec une case vide. */
+              outil.arbitrage
+                ? `<div class="detail-block">
+              <div class="detail-label">Arbitrage</div>
+              <div class="detail-text">${outil.arbitrage}</div>
+            </div>`
+                : ""
+            }
             <div class="detail-block">
-              <div class="detail-label">Action</div>
+              <div class="detail-label">Réponse</div>
               <div class="detail-text">${outil.action}</div>
             </div>
             <div class="detail-block">
-              <div class="detail-label">Résultats</div>
+              <div class="detail-label">Constat</div>
               <div class="detail-text">${outil.results}</div>
             </div>
           </div>
@@ -89,8 +99,8 @@ export function renderOutilsSection(expandedTool, options = {}) {
 
   return `
     <div class="card n-produit">
-      <div class="card-title"><div class="dot"></div>Six outils conçus et développés</div>
-      <div class="card-text">Je les ai conçus et développés sous Google Sheets et Apps Script comme en web. Trois tournent tous les jours dans le magasin où je travaille : le suivi des devis, le brief quotidien et le hub d’outils. Deux autres ont continué sans moi : Opti’Profit, cédé au directeur régional de GrandVision pour son réseau de franchisés, et le gestionnaire de planning, resté à l’équipe du magasin que je dirigeais. Le dernier, PANUM, attend son pilote.</div>
+      <div class="card-title"><div class="dot"></div>Six outils, six problèmes d’organisation</div>
+      <div class="card-text">Aucun n’est parti d’une idée de produit. Chacun répond à un dysfonctionnement que j’avais sous les yeux, et à un arbitrage pris avant la première ligne de code : ce qu’il fallait changer dans la façon de travailler, et ce qui ne pouvait pas tenir sans support. Trois sont utilisés par l’équipe du magasin où je travaille — le suivi des devis, le brief quotidien et le hub d’outils. Deux sont sortis de mes mains : Opti’Profit, cédé au directeur régional GrandVision, et le gestionnaire de planning, repris par un collaborateur après mon départ. Le dernier, PANUM, attend son pilote.</div>
     </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}

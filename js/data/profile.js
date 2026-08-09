@@ -12,7 +12,7 @@ export const profileContent = {
     {
       title: "Méthode",
       nature: "produit",
-      text: "Je pars d’un <strong>irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main) et je livre une réponse dont l’utilité se vérifie au premier usage. <strong>Sans attendre qu’on me le demande.</strong> C’est aussi ce qui les fait adopter : personne ne défend une procédure, tout le monde garde un outil qui fait gagner du temps.",
+      text: "Je pars d’un <strong>irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main), je cherche ce qui le produit, puis je tranche : une pratique à changer, une responsabilité à nommer, une étape à supprimer — et, quand rien de tout cela ne suffit, <strong>le support qui manquait</strong>. La réponse se vérifie au premier usage, et <strong>sans attendre qu’on me la demande</strong>.",
     },
   ],
   expertise:
@@ -35,14 +35,19 @@ export const formationContent = {
   subtitle: "Diplôme professionnel · Optique",
   continuousSkills: [
     {
-      title: "Google Apps Script",
-      nature: "produit",
-      text: "Développement des cinq outils internes présentés en section Outils.",
+      title: "Formalisation de process",
+      nature: "cadre",
+      text: "Procédures de back-office et guides de traitement, priorisés selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent.",
     },
     {
-      title: "Développement web & desktop",
+      title: "Attribution des responsabilités",
+      nature: "cadre",
+      text: "Nommer qui traite quoi, et à quelle échéance. Une tâche partagée sans responsable identifié n’est traitée par personne — c’est ce que règlent le brief quotidien et le suivi des devis.",
+    },
+    {
+      title: "Conception d’indicateurs",
       nature: "produit",
-      text: "Hub d’outils magasin, interfaces d’aide à la vente, application de suivi commercial.",
+      text: "Distinguer ce qui constate un résultat déjà joué de ce qui permet d’agir avant qu’il le soit : délais de traitement, discipline de relance, dossiers à risque, causes de perte.",
     },
     {
       title: "Analyse de données & modélisation",
@@ -50,14 +55,9 @@ export const formationContent = {
       text: "Indicateurs causaux (PANUM), modèles de croissance thermique (L’Ortabels), régressions de prix (Renta Menu).",
     },
     {
-      title: "Formalisation de process",
-      nature: "cadre",
-      text: "Procédures de back-office et guides de traitement, priorisés selon une logique inspirée du modèle de Kano.",
-    },
-    {
-      title: "Orchestration d’agents IA",
+      title: "Conception d’outils métiers",
       nature: "produit",
-      text: "Découpage d’une tâche de développement entre agents spécialisés (analyse, cadrage, exécution, contrôle), avec critères de validation à chaque étape. Méthode appliquée au développement de ce CV.",
+      text: "De la feuille de calcul outillée à l’application web : les six outils de la section Outils, conçus et développés seul.",
     },
     {
       title: "Mise en production",

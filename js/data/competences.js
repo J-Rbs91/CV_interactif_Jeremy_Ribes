@@ -35,7 +35,7 @@ export const competences = [
     summary:
       "Concevoir et développer moi-même les outils qui manquent à l’activité.",
     nature: "produit",
-    tags: ["Google Apps Script", "Web", "Automatisation"],
+    tags: ["Irritant observé", "Adoption sans formation", "Outils métiers"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
     miseEnPlace:
