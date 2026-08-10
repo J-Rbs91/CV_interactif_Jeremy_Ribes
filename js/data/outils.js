@@ -9,8 +9,8 @@ export const outils = [
     title: "Opti’Profit",
     category: "Aide à la décision commerciale",
     nature: "produit",
-    status: "Cédé au directeur régional GrandVision",
-    chips: ["Arbitrage en vente", "Marge", "Réseaux de soins"],
+    status: "Cédé à GrandVision pour son réseau franchisé",
+    chips: ["Arbitrage en vente", "Réseaux de soins", "Rentabilité", "Temps réel", "Google Apps Script"],
     summary:
       "Support d’arbitrage qui identifie, pendant la vente, le meilleur compromis entre besoin technique, budget du client et rentabilité du magasin.",
     context:
@@ -27,8 +27,8 @@ export const outils = [
     title: "Brief’Maker",
     category: "Organisation quotidienne du magasin",
     nature: "produit",
-    status: "Conçu chez Générale d’Optique · utilisé dans mon poste actuel",
-    chips: ["Coordination d’équipe", "Attribution des tâches", "Back-office"],
+    status: "En usage quotidien depuis sa conception",
+    chips: ["Coordination d’équipe", "Attribution des tâches", "Priorisation", "Back-office", "Agrégation", "Agenda Google"],
     summary:
       "Point de départ de journée : une vue unique du planning, de l’agenda et des dossiers en cours, et la répartition nominative des tâches entre les collaborateurs.",
     context:
@@ -45,8 +45,8 @@ export const outils = [
     title: "Hub Outils Opticien",
     category: "Outillage du quotidien en magasin",
     nature: "produit",
-    status: "En usage dans le magasin où je travaille",
-    chips: ["Tâches récurrentes", "Standardisation", "Fiabilisation des calculs"],
+    status: "En usage quotidien en magasin",
+    chips: ["Tâches récurrentes", "Fiabilisation des calculs", "Standardisation", "Données locales", "Application web"],
     /* Exclu du bandeau « Produits en ligne » (cf. getLiveProducts). */
     liveProduct: false,
     link: {
@@ -69,8 +69,8 @@ export const outils = [
     title: "Suivi des devis & tiers payant",
     category: "Suivi commercial en magasin",
     nature: "produit",
-    status: "En usage par l’équipe du magasin",
-    chips: ["Suivi de dossiers", "Tiers payant", "Relances"],
+    status: "En usage quotidien par toute l’équipe",
+    chips: ["Suivi de dossiers", "Tiers payant", "Relances", "Google Apps Script"],
     summary:
       "Suivi partagé qui tient chaque devis de son édition à sa conclusion : statut du tiers payant, prochaine action datée, motif de perte et historique des échanges avec le client.",
     context:
@@ -88,7 +88,7 @@ export const outils = [
     category: "Suivi commercial & pilotage de la performance",
     nature: "produit",
     status: "Abouti · en attente de déploiement pilote",
-    chips: ["Priorisation des relances", "Causes de perte", "Périmètres de visibilité"],
+    chips: ["Priorisation des relances", "Causes de perte", "Périmètres de visibilité", "Aide à la décision"],
     link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
     summary:
       "Solution de suivi commercial et de pilotage de la performance : centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
@@ -106,8 +106,8 @@ export const outils = [
     title: "Gestionnaire de Planning",
     category: "Planification des effectifs",
     nature: "produit",
-    status: "Repris par un collaborateur après mon départ",
-    chips: ["Charge et effectifs", "Contraintes d’ouverture", "Planification"],
+    status: "Resté en service après mon départ",
+    chips: ["Charge et effectifs", "Contraintes d’ouverture", "Planification", "Ressources", "Flux client"],
     summary:
       "Outil de construction de planning alignant les effectifs présents sur la charge réelle et les contraintes d’ouverture du point de vente.",
     context:

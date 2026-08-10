@@ -55,9 +55,14 @@ export const formationContent = {
       text: "Indicateurs causaux (PANUM), modèles de croissance thermique (L’Ortabels), régressions de prix (Renta Menu).",
     },
     {
-      title: "Conception d’outils métiers",
+      title: "Google Apps Script",
       nature: "produit",
-      text: "De la feuille de calcul outillée à l’application web : les six outils de la section Outils, conçus et développés seul.",
+      text: "Développement des outils internes présentés en section Outils.",
+    },
+    {
+      title: "Développement web & desktop",
+      nature: "produit",
+      text: "Hub d’outils magasin, interfaces d’aide à la vente, application de suivi commercial.",
     },
     {
       title: "Mise en production",
