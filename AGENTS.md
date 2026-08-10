@@ -14,6 +14,12 @@
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
   cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
 - `docs/charte-couleurs.md` : charte colorimétrique sémantique.
+- `.github/workflows/deploy-pages.yml` : publication sur GitHub Pages. Le
+  déploiement ne passe plus par le workflow géré par GitHub, qui n'était pas
+  modifiable et traînait des actions sur une version de Node dépréciée. Le
+  job recopie `index.html`, `css/`, `js/` et `assets/` dans `_site` avant de
+  téléverser : toute ressource ajoutée hors de ces quatre entrées doit être
+  déclarée là, sinon elle ne sera pas publiée.
 
 ## Landing animée (séquence d'ouverture)
 - Principe : **plan-séquence**. Il n'y a pas d'écrans qui se succèdent.
