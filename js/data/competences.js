@@ -25,7 +25,7 @@ export const competences = [
     enjeu:
       "Réduire les flottements d’organisation et les zones d’incertitude du fonctionnement quotidien.",
     miseEnPlace:
-      "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
+      "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience. <strong>Je n’écris que ce qui doit changer, et je m’arrête là</strong> : les étapes suivantes se sont imbriquées d’elles-mêmes dans les règles posées, sans avoir eu besoin d’être rédigées. Une procédure qu’on ne lit pas ne produit rien.",
     exemple:
       "Deux applications du même principe : <strong>niveler la charge plutôt que dimensionner sur le pic</strong>. Les rendez-vous de livraison répartis sur la semaine ont fait tomber la surcharge du samedi ; les plannings construits sur l’activité attendue, plutôt que sur un roulement fixe, ont aligné les effectifs sur le flux réel.",
   },
