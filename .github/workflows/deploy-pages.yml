@@ -1,0 +1,64 @@
+# Déploiement GitHub Pages piloté par le dépôt.
+#
+# Auparavant, Pages utilisait le workflow géré par GitHub
+# (`dynamic/pages/pages-build-deployment`), qui n'existe pas dans le dépôt et
+# ne peut donc pas être mis à jour : ses actions internes tournaient encore sur
+# Node 20, d'où l'avertissement de dépréciation à chaque build. Le déclarer ici
+# rend les versions d'actions maîtrisables, et supprime au passage un build
+# Jekyll dont un site statique n'a aucun besoin.
+#
+# Prérequis côté dépôt : Settings → Pages → Build and deployment → Source =
+# « GitHub Actions ». Sans ce réglage, l'étape de déploiement échoue.
+
+name: Déploiement GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un déploiement à la fois, sans annuler celui en cours : une publication
+# interrompue laisserait le site dans un état partiel.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      # Liste explicite plutôt que la racine entière : la documentation de
+      # travail (`AGENTS.md`, `docs/`, `skills-lock.json`, `.agents/`,
+      # `.claude/`) n'a pas à être publiée avec le CV.
+      - name: Assembler le site à publier
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r css js assets _site/
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v6
+
+      - name: Téléverser l'artefact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
