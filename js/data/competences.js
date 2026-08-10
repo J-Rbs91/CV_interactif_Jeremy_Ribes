@@ -21,13 +21,13 @@ export const competences = [
     summary:
       "Transformer des pratiques implicites en procédures écrites et réellement utilisées.",
     nature: "cadre",
-    tags: ["Procédures", "Back-office", "Priorisation"],
+    tags: ["Procédures", "Back-office", "Nivellement de charge", "Priorisation"],
     enjeu:
       "Réduire les flottements d’organisation et les zones d’incertitude du fonctionnement quotidien.",
     miseEnPlace:
       "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
     exemple:
-      "Le lissage des rendez-vous de livraison a réduit la surcharge du samedi en répartissant la charge sur la semaine.",
+      "Deux applications du même principe : <strong>niveler la charge plutôt que dimensionner sur le pic</strong>. Les rendez-vous de livraison répartis sur la semaine ont fait tomber la surcharge du samedi ; les plannings construits sur l’activité attendue, plutôt que sur un roulement fixe, ont aligné les effectifs sur le flux réel.",
   },
   {
     id: "outils-metiers",
@@ -35,7 +35,7 @@ export const competences = [
     summary:
       "Concevoir et développer moi-même les outils qui manquent à l’activité.",
     nature: "produit",
-    tags: ["Google Apps Script", "Web", "Automatisation"],
+    tags: ["Irritant observé", "Adoption sans formation", "Google Apps Script", "Web", "Automatisation"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
     miseEnPlace:
@@ -49,15 +49,15 @@ export const competences = [
     summary:
       "Concevoir des indicateurs qui expliquent la performance, pas seulement qui la décrivent.",
     nature: "produit",
-    tags: ["Indicateurs causaux", "Contrôles automatisés", "Reporting"],
+    tags: ["Indicateurs avancés", "Contrôles automatisés", "Reporting"],
     enjeu:
       "Passer d’un reporting qui constate à un reporting qui dit où agir.",
     miseEnPlace:
-      "Les indicateurs que je construis portent sur les délais de traitement, la discipline de relance, le taux de perte, les pertes évitables et la santé du portefeuille. J’ai également mis en place des contrôles automatisés rapprochant le logiciel métier et les suivis internes.",
+      "Je sépare les <strong>indicateurs retardés</strong>, qui constatent un résultat déjà joué, des <strong>indicateurs avancés</strong>, sur lesquels on peut encore agir : délais de traitement, discipline de relance, dossiers à risque, pertes évitables et santé du portefeuille. J’ai également mis en place des contrôles automatisés rapprochant le logiciel métier et les suivis internes.",
     exemple:
       "C’est la logique qui structure PANUM : comprendre pourquoi une vente se perd, et sur quel levier agir en priorité.",
     resultat:
-      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage.",
+      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils rapprochent deux sources indépendantes, dont l’une est l’outil que j’ai conçu : le contrôle peut établir qu’il n’a pas été renseigné.",
   },
   {
     id: "coordination-changement",

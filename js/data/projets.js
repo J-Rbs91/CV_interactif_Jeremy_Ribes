@@ -45,7 +45,7 @@ export const projetsTransverses = [
   },
   {
     title: "Renta Menu : pilotage de la rentabilité en restauration",
-    subtitle: "Outil décisionnel · Google Apps Script",
+    subtitle: "Outil décisionnel · Rentabilité en restauration",
     bullets: [
       "Modélisation du coût matière par composante de menu et calcul automatisé des marges brutes.",
       "Détermination des prix de vente par régression (linéaire inverse et logarithmique), à partir du coût et de l’élasticité observée.",
