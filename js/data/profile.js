@@ -12,7 +12,7 @@ export const profileContent = {
     {
       title: "Méthode",
       nature: "produit",
-      text: "Je pars d’un <strong>irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main), je cherche ce qui le produit, puis je tranche : une pratique à changer, une responsabilité à nommer, une étape à supprimer — et, quand rien de tout cela ne suffit, <strong>le support qui manquait</strong>. La réponse se vérifie au premier usage, et <strong>sans attendre qu’on me la demande</strong>.",
+      text: "Je pars d’un <strong>irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main), je cherche ce qui le produit, puis je tranche : une pratique à changer, une responsabilité à nommer, une étape à supprimer et, quand rien de tout cela ne suffit, <strong>le support qui manquait</strong>. La réponse se vérifie au premier usage, et <strong>sans attendre qu’on me la demande</strong>.",
     },
   ],
   expertise:
@@ -42,7 +42,7 @@ export const formationContent = {
     {
       title: "Attribution des responsabilités",
       nature: "cadre",
-      text: "Nommer qui traite quoi, et à quelle échéance. Une tâche partagée sans responsable identifié n’est traitée par personne — c’est ce que règlent le brief quotidien et le suivi des devis.",
+      text: "Nommer qui traite quoi, et à quelle échéance. Une tâche partagée sans responsable identifié n’est traitée par personne c’est ce que règlent le brief quotidien et le suivi des devis.",
     },
     {
       title: "Indicateurs avancés & retardés",
