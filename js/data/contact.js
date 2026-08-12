@@ -4,7 +4,7 @@ export const contact = {
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Professionnel de terrain avec 14 ans d’expérience en environnement commercial, j’ai progressivement orienté mon parcours vers ce qui me mobilise le plus : structurer l’activité, formaliser les procédures et rendre le pilotage possible — en construisant, quand il le fallait, les outils qui manquaient pour le tenir.",
+    "Professionnel de terrain avec 14 ans d’expérience en environnement commercial, j’ai progressivement orienté mon parcours vers ce qui me mobilise le plus : structurer l’activité, formaliser les procédures et rendre le pilotage possible  en construisant, quand il le fallait, les outils qui manquaient pour le tenir.",
   /* Le portrait accompagne le nom, à l'écran comme sur le papier : il est
      déclaré ici, avec le reste de l'identité, plutôt que dans chacune des
      vues qui l'affichent. `width` et `height` sont ceux du fichier — ils
