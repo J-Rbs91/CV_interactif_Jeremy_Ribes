@@ -9,7 +9,7 @@ export const outils = [
     title: "Opti’Profit",
     category: "Aide à la décision commerciale",
     nature: "produit",
-    status: "Cédé à GrandVision pour son réseau franchisé",
+    status: "Transmis à la demande du directeur régional GrandVision",
     chips: ["Arbitrage en vente", "Réseaux de soins", "Rentabilité", "Temps réel", "Google Apps Script"],
     summary:
       "Support d’arbitrage qui identifie, pendant la vente, le meilleur compromis entre besoin technique, budget du client et rentabilité du magasin.",
@@ -20,7 +20,7 @@ export const outils = [
     action:
       "Rassemblement des catalogues fournisseurs et des grilles mutuelles en une source unique, filtrage des produits compatibles avec le besoin et le budget, et mise en évidence de l’écart de marge entre deux solutions équivalentes pour le client. Développé sous Google Apps Script.",
     results:
-      "La comparaison de catalogues en situation de vente a disparu, et l’arbitrage est devenu explicite au moment où il se prend. Utilisé pendant toute la durée de mon poste. Je l’ai ensuite cédé au directeur régional de GrandVision, pour le réseau de magasins franchisés de la Générale d’Optique ; ce qu’il en a fait ensuite, je ne le sais pas.",
+      "La comparaison de catalogues en situation de vente a disparu, et l’arbitrage est devenu explicite au moment où il se prend. Utilisé pendant toute la durée de mon poste. Conçu et développé sur mon temps personnel, l’outil m’appartient : je l’ai transmis à la demande du directeur régional de GrandVision, qui l’envisageait pour le réseau de magasins franchisés de la Générale d’Optique ; ce qu’il en a fait ensuite, je ne le sais pas.",
   },
   {
     id: "briefmaker",
