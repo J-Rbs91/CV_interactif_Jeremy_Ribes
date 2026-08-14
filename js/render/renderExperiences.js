@@ -52,7 +52,7 @@ function renderStat(item) {
 /* Bloc facultatif : rendu uniquement si l'expérience déclare `stats` ou
    `result`. */
 function renderOutcome(experience) {
-  const { statsLabel, stats, result } = experience;
+  const { statsLabel, stats, statsBase, result } = experience;
 
   if (!stats && !result) {
     return "";
@@ -67,6 +67,12 @@ function renderOutcome(experience) {
               ${stats.map(renderStat).join('<div class="stats-divider"></div>')}
             </div>`
           : ""
+      }
+      ${
+        /* La base suit immédiatement les chiffres qu'elle qualifie : séparée
+           d'eux par le texte de résultat, elle ne se rapporterait plus à
+           rien de lisible. */
+        statsBase ? `<p class="tl-outcome-base">${statsBase}</p>` : ""
       }
       ${result ? `<p class="tl-outcome-text">${result}</p>` : ""}
     </div>`;

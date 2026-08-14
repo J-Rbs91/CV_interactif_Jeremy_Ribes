@@ -1,0 +1,10 @@
+{
+  "name": "cv-interactif-jeremy-ribes",
+  "private": true,
+  "type": "module",
+  "description": "CV interactif — site statique. Aucune dépendance : `type: module` sert uniquement à ce que Node lise js/**/*.js comme les modules ES que le navigateur y voit déjà, afin que scripts/build-cv-integral.mjs puisse en tirer le texte intégral.",
+  "scripts": {
+    "build": "node scripts/build-cv-integral.mjs",
+    "verify": "node scripts/build-cv-integral.mjs --verify"
+  }
+}

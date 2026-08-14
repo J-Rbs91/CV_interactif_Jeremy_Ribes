@@ -9,6 +9,14 @@
 - `js/ui/icons.js` : jeu d'icônes SVG monochromes (`currentColor`).
 - `js/render/renderPrint.js` + `js/ui/print.js` + `css/print.css` : vue
   d'impression, montée à la demande car le SPA n'affiche qu'une section.
+  `renderPrintDocument()` sert désormais deux consommateurs : la commande
+  d'impression, et le bloc de texte intégral d'`index.html` (voir plus bas).
+- `scripts/build-cv-integral.mjs` + `package.json` : génération du bloc de
+  texte intégral. `npm run build` l'écrit dans `index.html`, `npm run verify`
+  échoue s'il est désynchronisé. Aucune dépendance : `type: module` sert
+  seulement à ce que Node lise `js/**/*.js` comme des modules ES.
+- `robots.txt`, `sitemap.xml` : autorisation explicite des robots, y compris
+  ceux des modèles de langage, qui se taisent souvent sans règle les nommant.
 - `assets/img/` : ressources image du projet.
 - `assets/img/portrait/` : la photo affichée dans le CV. Elle est distincte
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
@@ -17,9 +25,10 @@
 - `.github/workflows/deploy-pages.yml` : publication sur GitHub Pages. Le
   déploiement ne passe plus par le workflow géré par GitHub, qui n'était pas
   modifiable et traînait des actions sur une version de Node dépréciée. Le
-  job recopie `index.html`, `css/`, `js/` et `assets/` dans `_site` avant de
-  téléverser : toute ressource ajoutée hors de ces quatre entrées doit être
-  déclarée là, sinon elle ne sera pas publiée.
+  job vérifie d'abord que le texte intégral est à jour (`npm run verify`),
+  puis recopie `index.html`, `robots.txt`, `sitemap.xml`, `css/`, `js/` et
+  `assets/` dans `_site` avant de téléverser : toute ressource ajoutée hors
+  de ces six entrées doit être déclarée là, sinon elle ne sera pas publiée.
 
 ## Landing animée (séquence d'ouverture)
 - Principe : **plan-séquence**. Il n'y a pas d'écrans qui se succèdent.
@@ -302,6 +311,52 @@ une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
   humaine ordinaire, et c'est assumé : au plausible strict, l'accroche
   mettrait une demi-minute à se poser. La dérive vaut 80 % de la base, une
   cadence régulière se reconnaissant immédiatement comme calculée.
+
+## Lisibilité par les lecteurs automatiques
+
+Un CV est lu par des machines avant de l'être par une personne : moteurs,
+agrégateurs, outils de tri de candidatures, et surtout les IA auxquelles un
+recruteur donne l'URL. Presque aucun de ces lecteurs n'exécute de
+JavaScript. Or le document livré ne contient qu'un `#app` vide.
+
+- **Le bloc `#cv-integral`, en tête de `<body>`, porte le CV entier** —
+  toutes sections, toutes fiches dépliées. Il est **généré** par
+  `scripts/build-cv-integral.mjs` depuis `js/data/*.js`, via
+  `renderPrintDocument()`. Il ne se modifie pas à la main : on modifie les
+  données, puis on relance `npm run build`. La CI refuse un `index.html`
+  désynchronisé.
+- **Le repli manuel en `<noscript>` a été supprimé.** Il portait la consigne
+  de rester aligné sur les données et ne l'était plus : un tiers du contenu
+  affiché à l'écran n'y figurait pas. Une copie manuelle d'une source de
+  vérité finit toujours par mentir. Ne pas en réintroduire.
+- **Le masquage passe par une règle CSS**, `html.js-actif #cv-integral`, et
+  non par `hidden` ou `aria-hidden` : ces deux attributs sont interprétés par
+  les extracteurs de contenu, qui écarteraient alors le seul endroit où le CV
+  leur est accessible. La classe est posée par `js/ui/intro.js`, script
+  bloquant du `<head>`, donc avant le premier rendu — le bloc n'apparaît
+  jamais à qui a JavaScript. Une règle de feuille de style retire bien le
+  bloc de l'arbre d'accessibilité : les lecteurs d'écran suivent
+  l'application, pas la copie.
+- **Le bloc reste hors de `#app`.** Placé dedans, `render()` l'effacerait au
+  premier rendu et les robots qui exécutent le JavaScript perdraient tout
+  sauf la section active.
+- **Les identifiants du bloc généré sont préfixés `cv-`.** Le document
+  imprimable et l'application décrivent les mêmes fiches et portent donc les
+  mêmes `id` ; ils coexistent ici dans un seul document.
+- **Rien de décoratif ne doit précéder le CV dans le texte du document.** Les
+  mots de la séquence d'ouverture vivaient en clair dans `<body>` : les
+  extracteurs les lisaient à la place du CV, et en tiraient un titre de poste
+  qui n'est pas celui du CV. Ils sont désormais dans un `<template>`, dont le
+  contenu est un fragment inerte absent de l'arbre du document. `bindOverlay`
+  les met en place au chargement, avant que `.is-playing` n'arme quoi que ce
+  soit.
+- **Une séparation portée par le CSS n'est jamais extraite.** Les adresses en
+  ligne étaient séparées par un `::before` sous `@media print` : hors
+  impression elles se lisaient « panum.frkut.panum.fr ». Le séparateur est
+  maintenant écrit dans le document.
+- Le JSON-LD `Person` du `<head>` reste un filet, pas la solution : beaucoup
+  d'extracteurs l'ignorent. Il doit néanmoins rester cohérent avec les
+  données lorsqu'on modifie un intitulé, une date ou un chiffre.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.

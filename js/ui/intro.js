@@ -38,6 +38,24 @@
   var handoff = null;
   var keydownHandler = null;
 
+  /* Marque posee avant toute autre decision — y compris avant le retour
+     anticipe de `shouldPlay()`, qui ne concerne que la sequence.
+
+     Elle commande le sort du bloc de texte integral place en tete du
+     document (voir scripts/build-cv-integral.mjs) : ce bloc est le CV rendu
+     lisible sans JavaScript, il doit donc rester affiche tant qu'on ne sait
+     pas que le script tourne, et s'effacer des qu'on le sait. La marque est
+     posee par un script bloquant du <head>, donc avant le premier rendu :
+     personne ne voit le bloc apparaitre puis disparaitre.
+
+     Le masquage se fait en CSS, pas par `hidden` ni `aria-hidden` : ces deux
+     attributs sont lus par les extracteurs de contenu, qui ecarteraient
+     alors le seul endroit ou le CV leur est accessible. Une regle de feuille
+     de style, elle, ne les concerne pas — et retire bien le bloc de l'arbre
+     d'accessibilite, donc du chemin des lecteurs d'ecran, pour qui
+     l'application fait deja le travail. */
+  root.classList.add("js-actif");
+
   function readSessionFlag() {
     try {
       return window.sessionStorage.getItem(STORAGE_KEY) === "1";
@@ -438,6 +456,32 @@
     schedule(begin, FONT_WAIT_LIMIT);
   }
 
+  /* Le plan de la sequence arrive dans un <template> : son contenu est un
+     fragment inerte, invisible aux lecteurs automatiques comme aux moteurs
+     de style tant qu'on ne l'a pas insere. On l'insere ici, a
+     DOMContentLoaded — c'est-a-dire avant `waitForPaintReady`, donc avant
+     que `.is-playing` n'arme la moindre animation. Le deroule visuel n'en
+     sait rien.
+
+     Si le navigateur ne connait pas <template>, `content` est absent : les
+     noeuds seraient alors des enfants ordinaires du <template>, deja dans
+     l'arbre. On ne fait rien, la sequence se joue telle quelle. */
+  function fillPlane(overlay) {
+    var template = overlay.querySelector("[data-intro-plan]");
+
+    if (!template) {
+      return;
+    }
+
+    if (template.content) {
+      template.parentNode.insertBefore(
+        template.content.cloneNode(true),
+        template,
+      );
+      template.parentNode.removeChild(template);
+    }
+  }
+
   function bindOverlay() {
     var overlay = document.querySelector("[data-intro]");
 
@@ -471,6 +515,7 @@
 
     document.addEventListener("keydown", keydownHandler);
 
+    fillPlane(overlay);
     waitForPaintReady(overlay);
   }
 

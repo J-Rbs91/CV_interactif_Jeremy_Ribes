@@ -274,6 +274,15 @@
   gap: var(--space-3);
 }
 
+/* La base de comparaison qualifie les chiffres, elle ne les concurrence pas :
+   taille de mention et ton effacé, collée sous le bloc qu'elle documente. */
+.tl-outcome-base {
+  margin-top: 6px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
 .tl-outcome-text {
   margin-top: var(--space-1);
   font-size: var(--fs-body);

@@ -13,7 +13,7 @@ export const competences = [
     exemple:
       "L’outil fait ressortir le mix produit le plus pertinent selon le budget du client, les contraintes techniques, les offres en cours et les réseaux de soins.",
     resultat:
-      "+83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, chez Générale d’Optique.",
+      "Chez Générale d’Optique, ces actions ont contribué à +83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, mesurés par rapport à la moyenne des seize mois précédents.",
   },
   {
     id: "organisation-process",

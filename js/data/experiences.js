@@ -28,8 +28,17 @@ export const experiences = [
       "Instauration d’un brief de début de journée et d’un suivi commun des devis : tâches de back-office attribuées nommément, dossiers à reprendre visibles de toute l’équipe.",
       "Conception d’Opti’Profit pour amener l’arbitrage produit besoin technique, budget, réseaux de soins, marge au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
     ],
-    statsLabel: "Sur les deux mois qui ont suivi ces actions",
+    /* Un écart chiffré sans sa base de comparaison se lit comme une
+       affirmation invérifiable, et c'est la première question posée en
+       entretien. La base est donc portée par la fiche elle-même, au même
+       titre que le chiffre. Le libellé attribue une contribution, pas une
+       causalité : relance commerciale, constitution de l'équipe et
+       réorganisation ont joué ensemble — aucun de ces leviers n'explique
+       l'écart à lui seul. */
+    statsLabel: "Sur les deux mois qui ont suivi, ces actions ont contribué à",
     stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],
+    statsBase:
+      "Écarts mesurés par rapport à la moyenne des seize mois précédents.",
     result:
       "Réorganisation et implication saluées par la direction régionale. Le brief quotidien et le suivi des devis conçus pour ce poste sont aujourd’hui utilisés par mon équipe, dans une autre enseigne.",
   },

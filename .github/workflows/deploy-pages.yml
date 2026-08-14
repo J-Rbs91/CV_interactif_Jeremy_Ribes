@@ -35,13 +35,27 @@ jobs:
       - name: Récupérer le dépôt
         uses: actions/checkout@v7
 
+      - name: Installer Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      # Le bloc de texte intégral d'index.html est généré depuis js/data/*.js.
+      # On ne le régénère pas ici : on vérifie qu'il est à jour, et on échoue
+      # sinon. Régénérer en silence publierait un contenu que personne n'a
+      # relu et qui ne serait pas dans le dépôt — le CV doit être exactement
+      # ce qui a été commité.
+      - name: Vérifier que le texte intégral est à jour
+        run: npm run verify
+
       # Liste explicite plutôt que la racine entière : la documentation de
       # travail (`AGENTS.md`, `docs/`, `skills-lock.json`, `.agents/`,
-      # `.claude/`) n'a pas à être publiée avec le CV.
+      # `.claude/`, `scripts/`, `package.json`) n'a pas à être publiée avec le
+      # CV.
       - name: Assembler le site à publier
         run: |
           mkdir -p _site
-          cp index.html _site/
+          cp index.html robots.txt sitemap.xml _site/
           cp -r css js assets _site/
 
       - name: Configurer Pages
