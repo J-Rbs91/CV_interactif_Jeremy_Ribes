@@ -308,6 +308,25 @@ une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
 - Privilégier des changements minimaux et sûrs.
 
+## Ponctuation du texte visible
+- **Aucun tiret cadratin (—) ni demi-cadratin (–) dans le texte du CV.**
+  La règle couvre tout ce qui s'affiche : `js/data/*.js`, les gabarits de
+  `js/render/`, le repli `<noscript>` de `index.html`, le JSON-LD, les
+  métadonnées et le texte de partage. Les commentaires de code n'en font
+  pas partie.
+- Ne jamais se contenter de supprimer le tiret. Une incise ouverte par un
+  tiret et fermée par un autre perd ses deux bornes d'un coup, et
+  l'apposition se recolle à la phrase : « deux sources indépendantes le
+  logiciel métier et le suivi interne pour identifier » ne se lit plus.
+  On repose la ponctuation qui portait la construction.
+- La convention, fixée par `b2bfd6b` : **parenthèses** pour les appositions
+  et les énumérations insérées, **deux-points** pour les explications et
+  les listes qui suivent, **point-virgule** pour les oppositions, **virgule
+  ou point médian** pour les titres composés. Quand l'incise portait une
+  bascule, une phrase repart d'un point.
+- Contrôle avant de pousser : `grep -n "—\|–" index.html js/data/*.js
+  js/render/*.js` ne doit rien remonter hors commentaires.
+
 ## Typographie
 - Neuf paliers déclarés en tête de `css/base.css` (`--fs-display` →
   `--fs-label`), un rôle chacun. **Aucune taille en dur** dans
