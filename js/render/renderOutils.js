@@ -100,7 +100,7 @@ export function renderOutilsSection(expandedTool, options = {}) {
   return `
     <div class="card n-produit">
       <div class="card-title"><div class="dot"></div>Six outils, six problèmes d’organisation</div>
-      <div class="card-text">Chacun répond à un dysfonctionnement que j’avais sous les yeux, et à un arbitrage pris avant la première ligne de code : ce qu’il fallait changer dans la façon de travailler, et ce qui ne pouvait pas tenir sans support. Trois sont utilisés par l’équipe du magasin où je travaille — le suivi des devis, le brief quotidien et le hub d’outils. Deux sont sortis de mes mains : Opti’Profit, cédé au directeur régional GrandVision, et le gestionnaire de planning, repris par un collaborateur après mon départ. Le dernier, PANUM, attend son pilote.</div>
+      <div class="card-text">Chacun répond à un dysfonctionnement que j’avais sous les yeux, et à un arbitrage pris avant la première ligne de code : ce qu’il fallait changer dans la façon de travailler, et ce qui ne pouvait pas tenir sans support. Trois sont utilisés par l’équipe du magasin où je travaille : le suivi des devis, le brief quotidien et le hub d’outils. Deux sont sortis de mes mains : Opti’Profit, cédé au directeur régional GrandVision, et le gestionnaire de planning, repris par un collaborateur après mon départ. Le dernier, PANUM, attend son pilote.</div>
     </div>
 
     ${outils.map((outil, index) => renderOutilCard(outil, index, expandedTool, expandAll)).join("")}
