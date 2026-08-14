@@ -128,9 +128,10 @@
     font-weight: 500;
   }
 
-  .print-live-item + .print-live-item::before {
-    content: "·";
-    margin-right: 3mm;
+  /* La separation entre adresses est desormais ecrite dans le document
+     (voir renderLiveLine) : elle se lit aussi hors impression, et dans le
+     texte qu'un lecteur automatique extrait. */
+  .print-live-items {
     color: var(--ink-300);
   }
 

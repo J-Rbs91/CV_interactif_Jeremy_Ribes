@@ -1,0 +1,11 @@
+# CV de Jérémy Ribes — https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/
+#
+# Ce site est un CV : il est publié pour être lu, y compris par les outils
+# automatiques qu'utilisent les recruteurs. L'autorisation est donc large et
+# explicite — plusieurs robots d'indexation par modèle de langage se taisent
+# en l'absence de règle les nommant, et l'implicite ne leur suffit pas.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/sitemap.xml

@@ -440,3 +440,89 @@ body::after {
     animation-delay: 0ms !important;
   }
 }
+
+/* ============================================================
+   Texte integral — le CV pour qui n'execute pas de script
+   ============================================================
+   Bloc genere par scripts/build-cv-integral.mjs et place en tete du
+   document. Il porte le CV entier, toutes sections et toutes fiches
+   depliees, la ou l'application ne monte qu'une section a la fois dans
+   un `#app` initialement vide.
+
+   Il s'adresse a deux publics qui ne se croisent jamais : le visiteur
+   dont le JavaScript est indisponible, qui doit pouvoir lire le CV ; et
+   les lecteurs automatiques — moteurs, agregateurs, IA a qui l'on donne
+   l'URL — qui n'executent aucun script et ne resolvent aucune feuille de
+   style. Les premiers voient ce qui suit ; les seconds lisent le bloc
+   quelle que soit la regle posee ici, ce qui est precisement l'objet.
+
+   Des que `js-actif` apparait, l'application prend le relais et le bloc
+   s'efface. `display: none` plutot que `hidden` ou `aria-hidden` : ces
+   deux attributs sont interpretes par les extracteurs de contenu, qui
+   ecarteraient alors le seul endroit ou le CV leur est accessible. */
+html.js-actif #cv-integral {
+  display: none;
+}
+
+/* Mise en forme minimale, pour le seul cas ou le bloc est vu : sans
+   JavaScript. Les classes du document viennent de la vue d'impression,
+   dont les regles vivent toutes sous `@media print` — a l'ecran, rien ne
+   s'y applique. On ne rejoue pas la mise en page du CV ici : on rend un
+   texte long confortablement lisible, ce qui est tout ce qu'on lui
+   demande. */
+#cv-integral {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-900);
+}
+
+#cv-integral h1 {
+  margin: 0 0 0.25em;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+#cv-integral h2 {
+  margin: 2.5em 0 0.75em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--ink-300);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+#cv-integral p {
+  margin: 0 0 0.9em;
+}
+
+#cv-integral .print-photo {
+  max-width: 7rem;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* La vue d'impression compose en grilles et en colonnes calibrees pour la
+   page A4. Hors de ce contexte elles n'ont aucun sens : on remet tout en
+   flux vertical plutot que de porter une seconde mise en page. */
+#cv-integral .print-doc,
+#cv-integral .print-head,
+#cv-integral .print-section,
+#cv-integral .print-section-body,
+#cv-integral .tool-detail-grid,
+#cv-integral .grid-2,
+#cv-integral .stats-spotlight {
+  display: block;
+}
+
+#cv-integral .detail-label,
+#cv-integral .print-live-label,
+#cv-integral .section-label {
+  font-weight: 700;
+}
+
+#cv-integral .stats-value {
+  font-weight: 700;
+}
