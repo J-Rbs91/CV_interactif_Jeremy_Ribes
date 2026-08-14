@@ -477,6 +477,13 @@
     font-size: 7pt;
   }
 
+  .tl-outcome-base {
+    margin-top: 0.8mm;
+    font-size: 8pt;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
   .tl-outcome-text {
     margin-top: 1mm;
     font-size: 9.5pt;
