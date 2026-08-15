@@ -18,9 +18,24 @@ let printView = null;
    vue, rend l'etat impossible a desynchroniser : ce qui est monte est
    toujours ce qui a ete demande.
 
-   Le retour au defaut au demontage garantit qu'un Ctrl+P — qui n'a traverse
-   aucun bouton, donc n'a rien pu declarer — sorte la presentation complete, y
-   compris apres une impression du recto. */
+   **Le document demande survit au cycle d'impression.** `requestedMode`
+   revenait au defaut au demontage, pour qu'un Ctrl+P — qui n'a traverse aucun
+   bouton, donc n'a rien pu declarer — sorte la presentation complete meme
+   apres une impression du recto. Cette remise a zero partait d'un cycle en
+   une passe : ouvrir, imprimer, fermer. Chrome sous Android en fait deux. Il
+   emet `afterprint` des qu'il passe la main au service d'impression du
+   systeme, bien avant que le document ne soit produit, puis rend la page une
+   seconde fois au moment de fabriquer le PDF. La premiere passe demontait la
+   vue et rendait la main au defaut ; la seconde retrouvait `integral` et
+   sortait la presentation complete — un lecteur qui demandait le CV recevait
+   les six pages, sans rien avoir fait de travers.
+
+   Le mode reste donc pose jusqu'a ce qu'un autre bouton en declare un autre.
+   Ce que cela change pour la commande du navigateur est assume et se dit en
+   une phrase : elle sert le dernier document demande, la presentation
+   complete tant qu'aucun bouton n'a ete presse. Servir le document que le
+   lecteur vient de demander prime sur le repli d'une commande qu'il n'a pas
+   utilisee. */
 const defaultMode = "integral";
 let requestedMode = defaultMode;
 let mountedMode = null;
@@ -59,7 +74,6 @@ function unmountPrintView() {
   printView.remove();
   printView = null;
   mountedMode = null;
-  requestedMode = defaultMode;
 }
 
 /* **Le bouton monte la vue lui-meme**, il ne se repose pas sur `beforeprint`.
