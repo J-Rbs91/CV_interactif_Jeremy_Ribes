@@ -79,16 +79,19 @@ export const a4Content = {
       value: "3 outils en usage quotidien",
       text: "Suivi des devis, brief quotidien et hub d’outils, utilisés chaque jour par l’équipe en magasin.",
     },
-    /* « Repris hors de leur contexte » disait le concept, pas le fait : une
-       abstraction qui se lisait comme un intitule de rubrique plutot que
-       comme une preuve. « Utilisés sans moi » est la formulation que le
-       projet emploie deja pour les statuts d'outils, et c'est exactement ce
-       que les trois cas etablissent. Elle tient en plus sur une ligne, la ou
-       l'ancienne s'en prenait deux. */
+    /* Deux formulations ecartees avant celle-ci. « Repris hors de leur
+       contexte » disait un concept, pas un fait, et se lisait comme un
+       intitule de rubrique. « Utilises sans moi » disait le fait, mais sur un
+       registre trop familier pour un CV.
+
+       L'ordre des trois cas suit l'intitule : les deux qui parlent
+       litteralement d'un depart ouvrent la phrase, celui du brief et du suivi
+       — repris par une equipe ou je travaille encore — la ferme. Un titre qui
+       generalise doit au moins etre porte par ce qui le suit directement. */
     {
       nature: "produit",
-      value: "Utilisés sans moi",
-      text: "Brief et suivi repris dans une autre enseigne, planning repris après mon départ, Opti’Profit transmis à une direction régionale.",
+      value: "Maintenus après mon départ",
+      text: "Gestionnaire de planning resté en service après mon départ, Opti’Profit transmis à une direction régionale, brief et suivi repris dans une autre enseigne.",
     },
   ],
   /* Deux entrees, pas trois : ces projets prouvent que la methode se
