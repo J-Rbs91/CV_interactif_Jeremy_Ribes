@@ -79,9 +79,15 @@ export const a4Content = {
       value: "3 outils en usage quotidien",
       text: "Suivi des devis, brief quotidien et hub d’outils, utilisés chaque jour par l’équipe en magasin.",
     },
+    /* « Repris hors de leur contexte » disait le concept, pas le fait : une
+       abstraction qui se lisait comme un intitule de rubrique plutot que
+       comme une preuve. « Utilisés sans moi » est la formulation que le
+       projet emploie deja pour les statuts d'outils, et c'est exactement ce
+       que les trois cas etablissent. Elle tient en plus sur une ligne, la ou
+       l'ancienne s'en prenait deux. */
     {
       nature: "produit",
-      value: "Repris hors de leur contexte",
+      value: "Utilisés sans moi",
       text: "Brief et suivi repris dans une autre enseigne, planning repris après mon départ, Opti’Profit transmis à une direction régionale.",
     },
   ],
