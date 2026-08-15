@@ -517,17 +517,26 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 ## Deux documents sortent par la même commande
 
 Le bouton « Présentation complète » et le bouton « CV complet · PDF » appellent
-tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`,
-lue par `setPrintMode()` : c'est `beforeprint` qui monte le document demandé,
-comme avant, et rien n'est dupliqué.
+tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
 
-- **Le mode revient toujours à `integral` au démontage.** Ce n'est pas une
-  précaution : c'est ce qui garantit qu'un Ctrl+P — qui n'a traversé aucun
-  bouton, donc n'a rien pu déclarer — sorte la présentation complète, y
-  compris juste après une impression du recto. Sans remise à zéro, le mode
-  devient un état rémanent que rien dans l'interface n'affiche, et le
-  raccourci clavier rendrait un document différent selon ce qui a été imprimé
-  avant.
+- **Le bouton monte la vue lui-même, il n'attend pas `beforeprint`.** C'était
+  l'inverse. Tant qu'il n'y avait qu'un document à sortir, l'événement ne
+  pouvait rien rendre d'autre que le bon, et son absence ne coûtait qu'une
+  impression vide. Avec deux documents il porte le choix de l'utilisateur, et
+  le remettre à un événement que ce fichier documente déjà comme non garanti
+  — le repli Safari est là depuis le début — fait dépendre ce qui sort du
+  navigateur plutôt que du bouton pressé. Monter depuis le bouton ne duplique
+  rien : `mountPrintView()` est idempotent.
+- **Deux variables d'état, `requestedMode` et `mountedMode`, et pas une.**
+  Elles peuvent diverger, et c'est ce cas qui casse : une vue montée puis
+  jamais démontée — un navigateur qui n'émet pas `afterprint` suffit — restait
+  servie telle quelle à l'impression suivante, le second bouton renonçant à la
+  reconstruire parce que `printView` existait déjà. Il sortait alors le
+  document de l'autre. Comparer les modes plutôt que tester la présence de la
+  vue rend l'état impossible à désynchroniser.
+- **Le mode revient à `integral` au démontage.** C'est ce qui garantit qu'un
+  Ctrl+P — qui n'a traversé aucun bouton, donc n'a rien pu déclarer — sorte la
+  présentation complète, y compris juste après une impression du recto.
 - **Les deux jeux de règles CSS ne se croisent jamais.** Le recto préfixe tout
   en `cv1-` et ne réutilise aucune classe de la vue intégrale. C'est délibéré :
   les règles de la présentation recomposent des composants d'écran étalés sur

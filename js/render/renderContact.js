@@ -39,8 +39,8 @@ function renderShareButton(itemClassName) {
    `renderCvDocument()` — le bouton pose juste avant.
 
    Les deux boutons partagent `[data-print]` et ne different que par sa
-   valeur, lue par `setPrintMode()` : c'est toujours `window.print()` qui
-   sort, et `beforeprint` qui monte le document demande. */
+   valeur : le gestionnaire de `js/ui/print.js` la lit, monte le document
+   correspondant, puis appelle `window.print()`. */
 function renderFullPresentationButton(itemClassName) {
   return `<button
       type="button"
