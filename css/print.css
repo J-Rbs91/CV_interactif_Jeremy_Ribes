@@ -810,15 +810,15 @@
   }
 
   .cv1-part-title {
-    padding-bottom: 1.5mm;
-    margin-bottom: 3.2mm;
-    border-bottom: 1pt solid var(--ink-900);
+    padding-bottom: 1.6mm;
+    margin-bottom: 3.4mm;
+    border-bottom: 0.75pt solid var(--ink-300);
     font-family: var(--font-display);
-    font-size: 9.5pt;
+    font-size: 8.6pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-900);
+    letter-spacing: 0.14em;
+    color: var(--ink-700);
   }
 
   /* --- Competences : l'enonce, puis les faits --------------------------- */
@@ -826,9 +826,15 @@
     margin-top: 2.9mm;
   }
 
+  /* Encre, et pas la couleur de nature. A l'ecran, `--n-ink` fait sens : le
+     lecteur voit les six sections, il finit par lire que le vert dit ce qui
+     produit et le bleu ce qui cadre. Sur un recto isole, ce systeme n'a aucun
+     endroit ou s'enseigner : cinq intitules dont deux verts et trois bleus se
+     lisent comme une alternance arbitraire, et c'est ce qui faisait
+     desordonne. Une seule couleur de titre, un seul accent sur la page. */
   .cv1-comp-title {
     font-weight: 800;
-    color: var(--n-ink);
+    color: var(--ink-900);
   }
 
   .cv1-comp-title::after {
@@ -850,7 +856,7 @@
 
   .cv1-comp-proof:not(:last-child)::after {
     content: " · ";
-    color: var(--n-mark);
+    color: var(--ink-300);
   }
 
   /* --- Resultats & adoption : trois colonnes ---------------------------- */
@@ -871,7 +877,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    color: var(--n-ink);
+    color: var(--ink-900);
   }
 
   /* Seule la premiere cellule porte un chiffre mesure, donc seule elle prend
@@ -928,8 +934,8 @@
 
   .cv1-job-company {
     font-size: 8.4pt;
-    font-weight: 600;
-    color: var(--forest-700);
+    font-weight: 500;
+    color: var(--ink-600);
   }
 
   /* Aligne sur les intitules, pas sur la date : la colonne de matiere est
@@ -948,7 +954,7 @@
 
   .cv1-project-title {
     font-weight: 800;
-    color: var(--forest-700);
+    color: var(--ink-900);
   }
 
   .cv1-project-title::after,
@@ -966,7 +972,7 @@
 
   .cv1-method {
     font-weight: 600;
-    color: var(--ink-700);
+    color: var(--ink-800);
   }
 
   .cv1-formation-title {

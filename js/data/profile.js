@@ -124,8 +124,10 @@ export const formationContent = {
   year: "2012",
   title: "BTS Opticien Lunetier",
   subtitle: "Diplôme professionnel · Optique",
+  /* Une ligne, avec l'intitule et l'annee devant. Repliee, elle tombait en
+     derniere ligne de page, la position la moins sure du document. */
   a4Note:
-    "Compétences développées en autodidacte : process, data, automatisation et développement d’outils métiers.",
+    "En autodidacte : process, data, automatisation, développement d’outils.",
   continuousSkills: [
     {
       title: "Formalisation de process",
