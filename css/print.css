@@ -654,10 +654,11 @@
   .nav-list,
   .mobile-nav-sticky,
   .contact-modal-overlay,
+  .export-overlay,
   .contact-form-trigger,
-  .share-trigger,
   .live-products,
-  .icon {
+  .icon,
+  .icon-bold {
     display: none !important;
   }
 

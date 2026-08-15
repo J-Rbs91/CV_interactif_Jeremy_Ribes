@@ -904,48 +904,20 @@
   color: var(--ink-700);
 }
 
-.share-trigger {
-  position: relative;
-}
-
-.share-trigger .ic {
+/* La porte du panneau « Partager & Exporter ». Elle garde le traitement des
+   deux autres commandes de la ligne — du texte souligne — et ne se distingue
+   que par sa marque, pleine la ou les autres sont en trait : c'est la seule
+   qui ouvre quelque chose plutot que d'agir. */
+.export-trigger .ic {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.share-trigger .ic svg {
+.export-trigger .ic svg {
+  display: block;
   width: 12px;
   height: 12px;
-  display: block;
-}
-
-.share-feedback {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translate(-50%, -4px);
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--forest-50);
-  color: var(--forest-700);
-  border: 1px solid var(--forest-200);
-  box-shadow: var(--shadow-sm);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
-  z-index: 5;
-}
-
-.share-trigger.is-copied .share-feedback {
-  opacity: 1;
-  transform: translate(-50%, 0);
 }
 
 .contact-modal-overlay {

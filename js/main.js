@@ -17,7 +17,8 @@ import { bindAccordion, syncAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
-import { bindPrint, bindPrintTriggers } from "./ui/print.js";
+import { bindExportPanel } from "./ui/exportPanel.js";
+import { bindPrint } from "./ui/print.js";
 import {
   playSectionEntry as animateSectionEntry,
   playSectionLeave,
@@ -25,7 +26,6 @@ import {
   resolveSectionDirection,
   setSectionDirection,
 } from "./ui/sectionTransition.js";
-import { bindShare } from "./ui/share.js";
 import { bindTypewriter } from "./ui/typewriter.js";
 
 const state = {
@@ -404,8 +404,7 @@ function bindUi() {
   });
 
   bindContactForm();
-  bindShare();
-  bindPrintTriggers();
+  bindExportPanel();
   bindTypewriter();
   initializeModal();
 }

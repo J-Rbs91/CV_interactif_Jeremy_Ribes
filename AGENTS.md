@@ -6,14 +6,25 @@
 - `js/data/` : contenus et métadonnées affichés.
 - `js/render/` : fonctions de rendu HTML.
 - `js/ui/` : interactions UI simples.
-- `js/ui/icons.js` : jeu d'icônes SVG monochromes (`currentColor`).
+- `js/ui/icons.js` : **deux** jeux d'icônes en `currentColor`. `icon()` rend
+  la grille 24 en trait de 1,8, pour les repères posés dans une ligne de
+  texte. `boldIcon()` rend la grille 256 en aplat — les logos de réseaux et
+  les marques du panneau de partage, qu'un contour rendrait
+  indifférenciables. Ces glyphes-là viennent de Phosphor Icons (MIT), copiés
+  plutôt qu'installés, mention de licence en tête du fichier.
 - `js/render/renderPrint.js` + `js/ui/print.js` + `css/print.css` : vue
   d'impression, montée à la demande car le SPA n'affiche qu'une section.
   `renderPrintDocument()` sert désormais deux consommateurs : la commande
   d'impression, et le bloc de texte intégral d'`index.html` (voir plus bas).
 - `js/render/renderCv.js` : le **recto A4**, second document servi par la même
   commande d'impression. `js/ui/print.js` choisit entre les deux selon le mode
-  posé par le bouton cliqué (voir « Deux documents », plus bas).
+  demandé (voir « Deux documents », plus bas).
+- `js/render/renderExport.js` + `js/ui/exportPanel.js` + `css/export.css` : le
+  panneau **« Partager & Exporter »**, seule porte vers le lien et vers les
+  deux documents (voir la section dédiée).
+- `js/ui/share.js` : la charge de partage, les six canaux et la copie du lien.
+  L'URL vient de `contact.site` — le recto la porte aussi, et deux copies
+  d'une même adresse finissent par diverger.
 - `scripts/check-cv-a4.mjs` : `npm run check:cv` imprime le recto avec le
   Chromium local et échoue s'il sort en plus d'une page. Il rapatrie les
   polices réelles avant de mesurer — il demande donc le réseau, et n'est pas
@@ -413,15 +424,12 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   contradiction. La fermeture **rend le focus avant** de poser `inert` : un
   élément qui devient inerte en portant le focus le perd au profit du
   `<body>`, et le clavier repartirait du haut de la page.
-- **La vue intégrale a une porte visible.** `renderPrintDocument()` produit
-  le CV entier ; il n'était atteignable que par la commande d'impression du
-  navigateur, soit dix-sept interactions pour un lecteur qui voulait tout
-  voir. `[data-print]` appelle `window.print()` et rien d'autre : c'est
-  `beforeprint` qui monte la vue, quel que soit le déclencheur, et la monter
-  aussi depuis le bouton la monterait deux fois. Les déclencheurs se relient
-  dans `bindUi()` — les écouteurs de fenêtre se posent une fois, les boutons
-  sont reconstruits à chaque rendu.
-- **Cette porte s'appelle « Présentation complète », jamais « CV complet ».**
+- **Les documents ont une porte visible**, et c'est le panneau « Partager &
+  Exporter ». `renderPrintDocument()` produit le CV entier ; il n'était
+  atteignable que par la commande d'impression du navigateur, soit dix-sept
+  interactions pour un lecteur qui voulait tout voir.
+- **Le document exporté s'appelle « Présentation complète », jamais
+  « CV complet ».**
   Un CV est un recto A4 : le mot promet une forme, et le document en fait
   six pages, toutes fiches dépliées. L'écart ne se constate qu'après le clic,
   quand le geste est déjà engagé, et ce qui s'ouvre alors n'est pas un CV
@@ -523,11 +531,17 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 
 ## Deux documents sortent par la même commande
 
-Le bouton « Présentation complète » et le bouton « CV complet · PDF » appellent
-tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
+Les deux lignes d'export du panneau appellent `printDocument(mode)`, exporté
+par `js/ui/print.js`. Elles ne diffèrent que par le mode demandé — `cv` ou
+`integral`.
 
-- **Le bouton monte la vue lui-même, il n'attend pas `beforeprint`.** C'était
-  l'inverse. Tant qu'il n'y avait qu'un document à sortir, l'événement ne
+- **Une fonction exportée, pas un `[data-print]` relié à chaque rendu.** Le
+  panneau doit se fermer avant d'imprimer : la fenêtre d'impression prend la
+  main sur toute la page, et le lecteur qui en revient retrouverait l'écran
+  qu'il venait de quitter. Un attribut relié en aveugle imposerait l'ordre
+  inverse.
+- **La commande monte la vue elle-même, elle n'attend pas `beforeprint`.**
+  C'était l'inverse. Tant qu'il n'y avait qu'un document à sortir, l'événement ne
   pouvait rien rendre d'autre que le bon, et son absence ne coûtait qu'une
   impression vide. Avec deux documents il porte le choix de l'utilisateur, et
   le remettre à un événement que ce fichier documente déjà comme non garanti
@@ -541,9 +555,24 @@ tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
   reconstruire parce que `printView` existait déjà. Il sortait alors le
   document de l'autre. Comparer les modes plutôt que tester la présence de la
   vue rend l'état impossible à désynchroniser.
-- **Le mode revient à `integral` au démontage.** C'est ce qui garantit qu'un
-  Ctrl+P — qui n'a traversé aucun bouton, donc n'a rien pu déclarer — sorte la
-  présentation complète, y compris juste après une impression du recto.
+- **Le mode demandé survit au cycle d'impression.** Il revenait au défaut au
+  démontage, pour qu'un Ctrl+P — qui n'a traversé aucune commande du site,
+  donc n'a rien pu déclarer — sorte la présentation complète. Cette remise à
+  zéro partait d'un cycle en une passe. **Chrome sous Android en fait deux** :
+  il émet `afterprint` dès qu'il passe la main au service d'impression du
+  système, puis rend la page une seconde fois pour fabriquer le PDF. La
+  première passe rendait la main au défaut, la seconde sortait la
+  présentation complète à un lecteur qui avait demandé le recto. Le mode reste
+  donc posé jusqu'à ce qu'une autre commande en déclare un autre ; la commande
+  du navigateur sert le dernier document demandé.
+- **Rien n'étire le document imprimé à la hauteur de la page.** `base.css`
+  pose `min-height: 100vh` sur `html` et `body` ; en pagination, `vh` vaut la
+  zone imprimable, et la boîte du document faisait donc exactement une page
+  quel que soit son contenu — 260 mm de recto étirés à 266. Rien ne s'y
+  voyait, mais la tolérance était nulle : un arrondi inframillimétrique
+  suffisait à faire basculer ce trop-plein de blanc en une seconde page vide.
+  `print.css` remet donc `min-height: 0`, et tout ajout au recto se mesure
+  contre les 266 mm réels, pas contre une page qui se remplit toute seule.
 - **Les deux jeux de règles CSS ne se croisent jamais.** Le recto préfixe tout
   en `cv1-` et ne réutilise aucune classe de la vue intégrale. C'est délibéré :
   les règles de la présentation recomposent des composants d'écran étalés sur
@@ -551,6 +580,58 @@ tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
   est la contrainte principale. Mélangées, un réglage pris pour la pagination
   de l'une casserait la tenue en une page de l'autre sans qu'aucun sélecteur
   ne le laisse voir.
+
+## Partager & Exporter
+
+La ligne de contact portait quatre commandes de front : partager, le recto A4,
+la présentation complète, me contacter. Trois répondaient à la même question —
+comment j'emporte ce CV — et se disputaient la même ligne, chacune payant le
+prix d'une décision à prendre avant d'avoir compris ce qu'elle offrait. Sur un
+téléphone, elles occupaient quatre lignes pleines au-dessus du premier mot du
+CV. Elles sont maintenant derrière une porte unique.
+
+- **Le panneau classe, il n'énumère pas.** D'un côté le lien, qui circule ; de
+  l'autre les documents, qui se déposent. C'est la seule distinction dont le
+  lecteur a besoin, et elle se lit avant de cliquer.
+- **Il est composé comme le recto A4, pas comme une modale de site.** Même
+  gouttière de libellé en mono capitale, mêmes filets fins, même titre sous un
+  trait épais, aucune carte, aucun rayon. Le panneau donne accès au document :
+  autant qu'il en ait déjà l'air. La gouttière est constante sur tout le
+  panneau — une gouttière qui se décale d'un bloc à l'autre n'est plus une
+  colonne.
+- **`css/export.css` ne partage aucune classe avec `css/print.css`**, pour la
+  raison qui sépare déjà le recto de la présentation complète : l'un compose
+  du papier sous contrainte de hauteur en millimètres, l'autre un écran sous
+  contrainte de pouce en pixels.
+- **Six canaux, et pas un de plus.** LinkedIn d'abord — le seul dont le
+  partage vaut recommandation professionnelle ; WhatsApp et SMS ensuite, parce
+  qu'un lien de CV se transfère d'un téléphone à l'autre plus souvent qu'il ne
+  se publie ; l'e-mail parce que c'est encore ce qu'un recruteur verse à un
+  dossier. Facebook et X ferment la liste.
+- **`mailto:` et `sms:` n'ouvrent pas d'onglet.** Ils passent la main à une
+  application du système : une nouvelle fenêtre laisserait un onglet vide
+  derrière le client de messagerie. Seuls les canaux web portent `target`.
+- **Le partage du système n'apparaît que là où il existe.** Sur un poste de
+  travail, `navigator.share` est absent et le bouton serait une promesse sans
+  suite. C'est le seul élément du panneau dont la présence dépend de
+  l'appareil.
+- **La copie rattrape le refus, elle ne se contente pas de tester l'API.** Le
+  presse-papiers moderne existe mais rejette sa promesse quand la permission
+  manque ou que le document n'a pas le focus : sans rattrapage, le repli par
+  champ temporaire n'était jamais tenté et le lecteur lisait « Échec » devant
+  une copie qui aurait abouti par l'autre voie. La confirmation se dit sur le
+  bouton lui-même, là où le geste a eu lieu — pas dans une bulle flottante que
+  le regard a déjà quittée.
+- **Fermer, puis imprimer, et dans cet ordre.** Le panneau se ferme d'abord,
+  le document part au cadre suivant. L'inverse rouvrirait le lecteur, au
+  retour de la fenêtre d'impression, sur l'écran qu'il venait de quitter.
+- **Panneau fermé : `inert`, et le focus rendu avant.** Même règle et même
+  raison que la modale de contact, plus haut.
+- **Les logos de réseaux sont des aplats, pas des contours.** Un LinkedIn et
+  un Facebook en trait de 1,8 sur vingt pixels sont interchangeables. D'où
+  `boldIcon()` et la grille 256 de Phosphor : c'est une seconde grille, pas un
+  réglage de la première. Les redessiner à la main aurait été plus long, moins
+  fidèle et sans meilleure licence.
 
 ## Le recto A4 — un CV en compétences
 - **Ce n'est pas une miniature du site.** C'est la règle dont tout le reste
