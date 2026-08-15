@@ -15,20 +15,20 @@
   gap: var(--space-4);
 }
 
-/* `font: inherit` comme sur `.tool-summary`, et pour la meme raison : un
-   bouton n'herite pas de la famille typographique, il retombe sur celle de
-   l'agent utilisateur. Le resume de chaque carte se composait donc en Arial
-   pendant que le reste de la page etait en Manrope — six blocs par ecran,
-   la ligne la plus repetee de la section. L'ecart ne se nomme pas a ce
-   corps, mais une texture qui change sans raison se lit comme un defaut
-   d'affichage. */
+/* Le `font: inherit` que portaient ce bouton et `.tool-summary` est remonte
+   au reglage des controles de formulaire de `base.css` : un bouton n'herite
+   pas la famille du document, il retombe sur celle de l'agent utilisateur, et
+   le resume de chaque carte se composait donc en Arial pendant que le reste
+   de la page etait en Manrope. Le defaut valait pour tous les boutons du CV,
+   pas pour ces deux-la : le corriger deux fois laissait les autres dehors, et
+   la regle posee sur une classe gagnait ailleurs contre des familles voulues
+   (voir `.contact-form-trigger`). */
 .comp-toggle {
   width: 100%;
   max-width: var(--mesure);
   border: 0;
   background: transparent;
   color: inherit;
-  font: inherit;
   padding: 0;
   display: flex;
   align-items: flex-start;
@@ -177,8 +177,12 @@
   margin-top: 4px;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
+  /* 500, comme le reste de la seconde couche. La graisse n'etait pas
+     declaree ici, et le libelle du chiffre sortait donc en 400, seul de son
+     registre — assez pour qu'il s'efface a cote des etiquettes voisines. */
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
 }
 
@@ -344,7 +348,6 @@
   -webkit-appearance: none;
   background: none;
   color: inherit;
-  font: inherit;
   text-align: left;
   cursor: pointer;
   display: flex;
@@ -415,7 +418,7 @@
   color: var(--text-muted);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
 }
 
 /* Le statut était plaqué au bord droit de la ligne de titre par un
@@ -516,7 +519,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   color: var(--n-ink);
   transition:
     background-color 0.18s ease,
@@ -648,7 +651,7 @@ html:not(.accordion-decouvert) .comp-toggle:focus-visible .accordion-cmd {
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   text-decoration: none;
   transition: border-color 0.15s ease;
 }
@@ -737,7 +740,7 @@ html:not(.accordion-decouvert) .comp-toggle:focus-visible .accordion-cmd {
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
   margin-bottom: 6px;
 }

@@ -96,7 +96,13 @@
     break-inside: avoid;
   }
 
+  /* Archivo, comme le nom a l'ecran et comme celui du recto. Le document le
+     plus long du projet etait le seul a titrer en Manrope : la famille
+     n'etait pas declaree, `body` porte `--font-sans`, et le nom changeait
+     donc de police entre la page et le fichier qu'elle produit. */
   .print-head h1 {
+    font-family: var(--font-display);
+    font-stretch: expanded;
     font-size: 25pt;
     font-weight: 800;
     letter-spacing: -0.035em;
@@ -104,12 +110,20 @@
     color: var(--ink-900);
   }
 
+  /* La meme ligne qu'a l'ecran, dans le meme registre. Elle classe le profil,
+     elle ne l'affirme pas : l'ecran la compose en mono, et ce document est le
+     site deplie — il n'a pas a rejuger ce que la page a decide. Le recto A4
+     garde sa ligne en Manrope grasse, et ce n'est pas une exception : ce
+     qu'il porte a cet endroit n'est pas le positionnement mais la fonction
+     visee, seul endroit du projet a la nommer, sur une feuille lue en trente
+     secondes. */
   .print-role {
     margin-top: 2.5mm;
-    font-size: 8.5pt;
-    font-weight: 800;
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
+    letter-spacing: var(--track-cap-print);
     color: var(--forest-700);
   }
 
@@ -133,14 +147,14 @@
     gap: 3mm;
     padding: 2mm 0;
     border-bottom: 0.5pt solid var(--ink-200);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 8pt;
   }
 
   .print-live-label {
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: var(--track-cap-print);
     color: var(--text-muted);
   }
 
@@ -182,17 +196,19 @@
     padding-bottom: 1.5mm;
     margin-bottom: 3.5mm;
     border-bottom: 1pt solid var(--ink-900);
+    font-family: var(--font-display);
+    font-stretch: expanded;
     font-size: 11pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--track-cap-title);
     color: var(--ink-900);
     break-after: avoid;
   }
 
   .print-section-title::before {
     content: counter(print-section, decimal-leading-zero);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 9pt;
     font-weight: 500;
     letter-spacing: 0;
@@ -284,14 +300,30 @@
     align-items: baseline;
   }
 
+  /* Le papier a son propre reglage du registre mono : 700 la ou l'ecran
+     tient 500. A 7 pt, une graisse de plus est ce qui rend au libelle ce
+     que la taille lui retire, et l'encre d'imprimante ne s'epaissit pas
+     comme un pixel allume. Ce qui n'allait pas n'est pas la valeur, c'est
+     qu'elle ne couvrait que la moitie des libelles : les six selecteurs
+     ci-dessous gardaient le 500 de l'ecran, si bien que la meme etiquette
+     changeait de poids selon le bloc ou elle tombait, dans un document ou
+     rien n'explique pourquoi. */
+  .section-label,
+  .tool-category,
+  .project-sub,
+  .tool-link,
+  .project-link {
+    font-weight: 700;
+  }
+
   .detail-label,
   .card .card-title {
     margin: 0;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 7pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--track-cap-print);
     color: var(--text-muted);
   }
 
@@ -362,7 +394,8 @@
 
   .comp-title,
   .tool-title,
-  .project-title {
+  .project-title,
+  .formation-title {
     display: block;
     font-size: 10.5pt;
     font-weight: 800;
@@ -391,7 +424,7 @@
     height: auto;
     border: none;
     background: none !important;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 9pt;
     color: var(--ink-300);
   }
@@ -598,18 +631,24 @@
   }
 
   /* L'ecran borne la mesure de la citation pour lui donner sa forme de bloc
-     detache ; le papier a deja sa grille et veut toute la colonne. */
+     detache ; le papier a deja sa grille et veut toute la colonne.
+
+     700 et non 600 : la citation est en Archivo, qui n'est servie qu'en 700
+     et 800. Le 600 demande ici ne rendait pas une citation plus calme — il
+     rendait exactement le 700 d'a cote, en laissant croire que la valeur
+     ecrite etait celle qui s'appliquait. Ce qui l'apaise sur le papier est
+     le corps, deja descendu a 10 pt. */
   .punchline-box p {
     max-width: none;
     font-size: 10pt;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink-800);
   }
 
   .section-label {
     margin: 2mm 0 0;
     font-size: 7pt;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--track-cap-print);
   }
 
   /* --- Étiquettes : du texte, pas des pastilles ------------------------- */
@@ -627,7 +666,7 @@
     background: none !important;
     font-size: 7.5pt;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--track-cap-print);
   }
 
   .chip {
@@ -683,7 +722,7 @@
   .tool-link::after,
   .project-link::after {
     content: " · " attr(data-host);
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 7.5pt;
     font-weight: 400;
     color: var(--text-muted);
@@ -769,16 +808,17 @@
 
   .cv1-qr figcaption {
     margin-top: 0.8mm;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 5.6pt;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--track-cap-print);
     color: var(--text-muted);
   }
 
   .cv1-head h1 {
     font-family: var(--font-display);
+    font-stretch: expanded;
     font-size: 22pt;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -797,7 +837,7 @@
     font-size: 8.6pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--track-cap-title);
     line-height: 1.3;
     color: var(--forest-700);
   }
@@ -840,11 +880,11 @@
   }
 
   .cv1-key {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 6.8pt;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--track-cap-print);
     line-height: 1.3;
     color: var(--text-muted);
   }
@@ -881,10 +921,11 @@
     margin-bottom: 3.5mm;
     border-bottom: 0.75pt solid var(--ink-300);
     font-family: var(--font-display);
+    font-stretch: expanded;
     font-size: 8.6pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--track-cap-title);
     color: var(--ink-700);
   }
 
@@ -940,6 +981,7 @@
 
   .cv1-cell-value {
     font-family: var(--font-display);
+    font-stretch: expanded;
     font-size: 10pt;
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -988,7 +1030,7 @@
      que leur seule position en tete de ligne suffit a reperer. */
   .cv1-job-date {
     flex: none;
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 7.2pt;
     color: var(--text-muted);
   }
@@ -1048,7 +1090,7 @@
   }
 
   .cv1-formation-year {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 7.4pt;
     color: var(--text-muted);
   }

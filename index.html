@@ -117,6 +117,23 @@
     <meta property="og:locale" content="fr_FR" />
     <meta property="profile:first_name" content="J&eacute;r&eacute;my" />
     <meta property="profile:last_name" content="Ribes" />
+    <!--
+      Les polices viennent de deux domaines distincts : la feuille de
+      googleapis, les fichiers de gstatic. Sans ces deux liens, le navigateur
+      découvre le second domaine en lisant le premier, et paie une résolution
+      DNS et une poignée de main TLS de plus avant le premier octet de police
+      — pendant lesquelles la page est composée dans la police de repli, puis
+      recomposée. `crossorigin` sur gstatic n'est pas décoratif : les polices
+      se chargent en mode anonyme, et une préconnexion qui ne le déclare pas
+      ouvre une connexion que la requête réelle n'utilisera pas.
+
+      Les trois familles, et leurs graisses, sont décrites dans
+      `AGENTS.md`, § Typographie. Cette adresse est répétée dans
+      `scripts/check-cv-a4.mjs` et `scripts/check-typo.mjs`, qui mesurent
+      avec les vraies polices : la changer ici demande de la changer là.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"

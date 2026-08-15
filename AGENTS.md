@@ -29,6 +29,13 @@
   Chromium local et échoue s'il sort en plus d'une page. Il rapatrie les
   polices réelles avant de mesurer — il demande donc le réseau, et n'est pas
   dans le workflow de déploiement pour cette raison.
+- `scripts/check-typo.mjs` : `npm run check:typo` rend les trois surfaces —
+  site, présentation complète, recto A4 — dans le Chromium local et relève
+  ce que le navigateur a **réellement** composé, famille par famille et
+  graisse par graisse. Il échoue sur les deux défauts qui ne s'écrivent nulle
+  part : une famille absente (un bouton retombe sur la police du système) et
+  une graisse absente (le navigateur en prend une autre sans le dire). Comme
+  `check:cv`, il demande le réseau et n'est pas dans le déploiement.
 - `scripts/build-cv-integral.mjs` + `package.json` : génération du bloc de
   texte intégral. `npm run build` l'écrit dans `index.html`, `npm run verify`
   échoue s'il est désynchronisé. Aucune dépendance : `type: module` sert
@@ -47,6 +54,8 @@
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
   cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
 - `docs/charte-couleurs.md` : charte colorimétrique sémantique.
+- `docs/charte-typographique.md` : les trois familles, les neuf paliers, les
+  trois interlettrages et les deux pièges qui ne s'écrivent nulle part.
 - `.github/workflows/deploy-pages.yml` : publication sur GitHub Pages. Le
   déploiement ne passe plus par le workflow géré par GitHub, qui n'était pas
   modifiable et traînait des actions sur une version de Node dépréciée. Le
@@ -514,7 +523,53 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   Tout nouveau conteneur de prose la consomme, et `css/print.css` la relâche
   dans la même liste — une borne d'écran oubliée là rogne la colonne pendant
   que le bloc du dessous prend toute la largeur.
-- `css/print.css` a son propre système : il ne consomme pas ces paliers.
+- **Trois interlettrages de capitales, déclarés dans `base.css`.** Une
+  capitale espacée n'a plus de silhouette de mot : l'espacement est ce qui
+  lui rend une forme. Le projet en portait sept valeurs — de 0.08 à 0.2 —
+  réparties dans six fichiers, et aucune ne distinguait un rôle d'un autre.
+  `--track-cap` (0.16em) pour le libellé mono à l'écran, `--track-cap-print`
+  (0.1em) pour le même au papier, où la page ne peut pas payer la largeur et
+  où l'encre rend ce que l'espacement donnait, `--track-cap-title` (0.14em)
+  pour les capitales de titre. Une valeur unique serait fausse quelque part :
+  l'espace grandit avec le corps, et ce qui est juste à 11 px est disloqué à
+  7 pt.
+- **La chasse élargie se déclare partout où `--font-display` est consommé**,
+  même là où elle paraît redondante. Google ne sert qu'une seule chasse
+  d'Archivo (125 %), donc un titre sans `font-stretch` sort quand même
+  élargi — tant que la police vient de là. Le lecteur qui a une Archivo
+  installée sur son poste, lui, a l'axe complet : la même règle lui rend un
+  titre à 100 %, et la page change de voix sans qu'aucun test local ne le
+  montre.
+- **Un contrôle de formulaire n'hérite pas la famille du document.** Un
+  `button` sans réglage sort dans la police d'interface du système. Le
+  panneau d'export a composé pendant des mois le titre et le résumé de
+  chaque document en Arial, à côté de titres Archivo, dans la même fenêtre :
+  la règle qui manquait ne s'écrivait nulle part, donc il n'y avait rien à
+  relire. `base.css` pose `font: inherit` sur `button, input, select,
+  textarea` — sur le **nom d'élément**, à la spécificité la plus faible, pour
+  que toute classe la reprenne sans lutter. Ne pas reposer ce réglage sur une
+  classe : `.contact-row button` le faisait, gagnait contre
+  `.contact-form-trigger`, et rendait à la police de lecture les deux
+  commandes que le CV voulait en mono.
+- **Une graisse absente ne rate pas, elle glisse.** Demander un 600 à
+  JetBrains Mono, chargée en 400, 500 et 700, donne un 700 — et le CSS
+  continue d'afficher 600. Les graisses réellement servies sont celles de
+  l'adresse de `index.html`, et rien d'autre : Archivo 700 et 800, JetBrains
+  Mono 400, 500 et 700, Manrope de 400 à 800. Elles ne coûtent pas un fichier
+  chacune, les trois familles étant servies en variable — le nombre n'est
+  donc pas un budget, mais toute valeur hors liste est un défaut silencieux.
+  `npm run check:typo` en fait échouer le contrôle.
+- `css/print.css` a son propre système de **tailles** : il ne consomme pas
+  ces paliers. Il consomme en revanche les familles, les interlettrages et
+  la chasse — un document qui titrerait dans une autre police que la page
+  qui le produit ne serait pas un autre système, seulement une divergence.
+  C'était le cas : la présentation complète titrait en Manrope pendant que
+  l'écran et le recto titraient en Archivo.
+- **Le registre mono est en 500 à l'écran et en 700 au papier**, et cette
+  différence-là est voulue : à 7 pt, une graisse de plus rend au libellé ce
+  que la taille lui retire, et l'encre ne s'épaissit pas comme un pixel
+  allumé. Ce qui n'allait pas n'était pas la valeur, c'était qu'elle ne
+  couvrait que la moitié des libellés du document.
 
 ## Couleur
 - Deux porteuses et un accent : encre (ce qui cadre), forêt (ce qui produit),
