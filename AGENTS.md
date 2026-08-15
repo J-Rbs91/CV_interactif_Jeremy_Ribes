@@ -11,6 +11,13 @@
   d'impression, montée à la demande car le SPA n'affiche qu'une section.
   `renderPrintDocument()` sert désormais deux consommateurs : la commande
   d'impression, et le bloc de texte intégral d'`index.html` (voir plus bas).
+- `js/render/renderCv.js` : le **recto A4**, second document servi par la même
+  commande d'impression. `js/ui/print.js` choisit entre les deux selon le mode
+  posé par le bouton cliqué (voir « Deux documents », plus bas).
+- `scripts/check-cv-a4.mjs` : `npm run check:cv` imprime le recto avec le
+  Chromium local et échoue s'il sort en plus d'une page. Il rapatrie les
+  polices réelles avant de mesurer — il demande donc le réseau, et n'est pas
+  dans le workflow de déploiement pour cette raison.
 - `scripts/build-cv-integral.mjs` + `package.json` : génération du bloc de
   texte intégral. `npm run build` l'écrit dans `index.html`, `npm run verify`
   échoue s'il est désynchronisé. Aucune dépendance : `type: module` sert
@@ -407,6 +414,12 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   aussi depuis le bouton la monterait deux fois. Les déclencheurs se relient
   dans `bindUi()` — les écouteurs de fenêtre se posent une fois, les boutons
   sont reconstruits à chaque rendu.
+- **Cette porte s'appelle « Présentation complète », jamais « CV complet ».**
+  Un CV est un recto A4 : le mot promet une forme, et le document en fait
+  six pages, toutes fiches dépliées. L'écart ne se constate qu'après le clic,
+  quand le geste est déjà engagé, et ce qui s'ouvre alors n'est pas un CV
+  trop long — c'est un autre objet, un dossier. « CV complet · PDF » désigne
+  le recto A4, et lui seul.
 - **Le rail étroit porte `short`, pas `label`.** À 390 px il n'affiche que
   trois entrées sur six et les coupe en pleine lettre. Le masque de débord
   dit qu'il y en a d'autres ; il ne dit pas combien. La mention du bandeau
@@ -500,6 +513,82 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   titre de compétence ou un nom d'outil n'est pas une preuve.
 - Pas d'emoji dans l'interface : ils sont multicolores et contredisent la
   charte. Ajouter un tracé à `js/ui/icons.js` et appeler `icon("nom")`.
+
+## Deux documents sortent par la même commande
+
+Le bouton « Présentation complète » et le bouton « CV complet · PDF » appellent
+tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`,
+lue par `setPrintMode()` : c'est `beforeprint` qui monte le document demandé,
+comme avant, et rien n'est dupliqué.
+
+- **Le mode revient toujours à `integral` au démontage.** Ce n'est pas une
+  précaution : c'est ce qui garantit qu'un Ctrl+P — qui n'a traversé aucun
+  bouton, donc n'a rien pu déclarer — sorte la présentation complète, y
+  compris juste après une impression du recto. Sans remise à zéro, le mode
+  devient un état rémanent que rien dans l'interface n'affiche, et le
+  raccourci clavier rendrait un document différent selon ce qui a été imprimé
+  avant.
+- **Les deux jeux de règles CSS ne se croisent jamais.** Le recto préfixe tout
+  en `cv1-` et ne réutilise aucune classe de la vue intégrale. C'est délibéré :
+  les règles de la présentation recomposent des composants d'écran étalés sur
+  plusieurs pages, celles du recto composent une page unique dont la hauteur
+  est la contrainte principale. Mélangées, un réglage pris pour la pagination
+  de l'une casserait la tenue en une page de l'autre sans qu'aucun sélecteur
+  ne le laisse voir.
+
+## Le recto A4 — un CV en compétences
+- **Ce n'est pas une miniature du site.** C'est la règle dont tout le reste
+  découle. Le site démontre et explique — chaque fiche déroule situation,
+  arbitrage, réponse, constat ; le recto sélectionne. Une page qui réduirait
+  chaque section d'un facteur six rendrait tout égal, donc rien lisible.
+- **La matière différenciante est dans les compétences et leurs preuves**, pas
+  dans le nombre de réalisations. Les compétences occupent donc le tiers de la
+  page, et la chronologie un cinquième : le parcours ne raconte plus les
+  postes, il donne la profondeur de terrain qui rend les compétences
+  crédibles. Une ligne de repères par poste, sans puces.
+- **Hiérarchie de la page**, et elle n'est pas celle du site : nom et
+  positionnement, accroche en deux phrases, cinq compétences prouvées,
+  résultats et adoption, parcours condensé, puis projets / méthodes /
+  formation en mentions de pied.
+- **`renderCv.js` ne rédige rien.** Chaque chaîne vient de `js/data/`. Une
+  phrase composée dans le fichier de rendu serait une copie qui dérive au
+  premier ajustement des données — c'est le défaut du `<noscript>` supprimé.
+- **La sélection appartient aux données.** `a4Rank` donne l'ordre des
+  compétences sur le papier — l'organisation d'abord, qui est le territoire
+  revendiqué, et non la performance commerciale, qui en est un résultat.
+  `a4Statement` énonce la compétence pour un lecteur sans le site sous les
+  yeux, `a4Proofs` porte les faits qui l'établissent, `a4Summary` la ligne de
+  repères d'un poste, et `a4Content` les synthèses que le site n'a pas à
+  faire.
+- **Trois preuves, dans cet ordre : impact économique, adoption terrain,
+  transférabilité.** Elles répondent à « ça marche ? », « c'est utilisé ? »,
+  « ça survit à son auteur ? ». Une quatrième diluerait la première, seule à
+  porter un chiffre — et seule, pour cette raison, à prendre la flamme.
+- **Deux registres de titre, et deux seulement.** Les trois blocs qui portent
+  la démonstration prennent la pleine largeur sous un filet ; les trois
+  mentions de pied prennent la gouttière de libellé en mono. Ce n'est pas une
+  variation de style : c'est ce qui dit où s'arrête la démonstration.
+- **L'accroche n'a pas de libellé.** Posée sous le bandeau, sa place dit ce
+  qu'elle est, et la gouttière de 30 mm lui coûtait deux lignes de repli pour
+  un mot que personne ne lit. C'est le seul bloc du document dans ce cas.
+- **`contact.site` est la seule voie de retour.** Une feuille qui a quitté son
+  support ne porte plus aucun chemin vers le formulaire de contact, qui est le
+  seul moyen de joindre. L'URL est déclarée dans `contact.js` et consommée
+  aussi par `js/ui/share.js` : deux copies d'une même adresse divergent, et
+  c'est celle du papier qu'on oublierait de corriger.
+- **Ça se vérifie en comptant les pages, jamais à l'œil.** `npm run check:cv`.
+  `#print-view` est masqué hors impression, et un débordement de trois
+  millimètres sort une seconde page presque vide sans rien changer à ce qu'on
+  voit dans le navigateur. Le contrôle charge les vraies polices avant de
+  mesurer : avec les polices de substitution de Chromium, les lignes se
+  replient ailleurs et il certifierait une page qui n'est pas celle qui sort.
+- **Quand la page déborde, on retire de la matière — on ne réduit pas le
+  corps.** Le recto est déjà à 8,4 pt. Le premier tri est la redite : une
+  preuve énoncée deux fois prend la place de celle qui manque. C'est ce qui a
+  fait tomber la catégorie de chaque projet transverse, qui nommait ce que le
+  texte juste après décrivait déjà, et les résumés de compétences, qui
+  redisaient l'accroche et les postes. Il reste ensuite huit millimètres de
+  réserve : c'est peu, et c'est le budget de tout ajout.
 
 ## Impression
 - `css/print.css` recompose le document, il ne rétrécit pas la page : bandeau

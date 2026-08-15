@@ -28,21 +28,48 @@ function renderShareButton(itemClassName) {
    sections puis ouvrir les onze cartes, soit dix-sept interactions pour un
    contenu que le document sait rendre d'un bloc.
 
-   C'est aussi ce que fait un recruteur qui verse le CV a un dossier. */
-function renderFullCvButton(itemClassName) {
+   C'est aussi ce que fait un recruteur qui verse le CV a un dossier.
+
+   Le bouton disait « CV complet · PDF ». Un CV est un recto A4 : c'est la
+   forme que le mot promet, et le document en fait six pages. L'ecart ne se
+   voit qu'apres le clic, quand le lecteur a deja engage son geste — et ce
+   qu'il decouvre alors n'est pas un CV trop long, c'est autre chose, un
+   dossier qui deplie chaque fiche. Le libelle nomme donc ce qui s'ouvre
+   vraiment, et « CV complet · PDF » designe maintenant le recto A4 rendu par
+   `renderCvDocument()` — le bouton pose juste avant.
+
+   Les deux boutons partagent `[data-print]` et ne different que par sa
+   valeur, lue par `setPrintMode()` : c'est toujours `window.print()` qui
+   sort, et `beforeprint` qui monte le document demande. */
+function renderFullPresentationButton(itemClassName) {
   return `<button
       type="button"
       class="${buildClassName("contact-form-trigger", itemClassName)}"
       data-print
-      title="Ouvrir le CV entier, toutes fiches dépliées"
+      title="Ouvrir la présentation entière, toutes fiches dépliées — à imprimer ou enregistrer en PDF"
     >
-      <span class="ic">${icon("printer")}</span> CV complet · PDF
+      <span class="ic">${icon("printer")}</span> Présentation complète
+    </button>`;
+}
+
+/* Le recto A4 — le CV au sens strict, celui qu'un recruteur attend quand il
+   demande « le CV ». Il precede la presentation complete parce que c'est le
+   document ordinaire : celui qu'on verse a un dossier, qu'on imprime, qu'on
+   transfere. La presentation complete repond a la question d'apres. */
+function renderCvButton(itemClassName) {
+  return `<button
+      type="button"
+      class="${buildClassName("contact-form-trigger", itemClassName)}"
+      data-print="cv"
+      title="Le CV en un recto A4 — à imprimer ou enregistrer en PDF"
+    >
+      <span class="ic">${icon("page")}</span> CV complet · PDF
     </button>`;
 }
 
 function renderContactItem(item, itemClassName) {
   if (item.type === "contact-form") {
-    return `${renderShareButton(itemClassName)}${renderFullCvButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
+    return `${renderShareButton(itemClassName)}${renderCvButton(itemClassName)}${renderFullPresentationButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
       <span class="ic">${icon(item.icon)}</span> ${item.text}
     </button>`;
   }

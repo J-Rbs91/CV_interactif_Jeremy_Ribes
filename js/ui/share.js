@@ -1,7 +1,11 @@
+import { contact } from "../data/contact.js";
+
+/* L'URL vient de `contact.site` : le recto A4 la porte aussi, et deux copies
+   de la meme adresse finissent par diverger. */
 const SHARE_PAYLOAD = {
   title: "CV Interactif de J\u00e9r\u00e9my Ribes",
   text: "D\u00e9couvrez le CV interactif de J\u00e9r\u00e9my Ribes, Manager de Proximit\u00e9 & Coordinateur Performance Commerciale",
-  url: "https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/",
+  url: contact.site.url,
 };
 
 const feedbackTimeouts = new WeakMap();

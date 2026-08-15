@@ -1,3 +1,14 @@
+/* Champs `a4*` — le recto A4 est un CV en competences, pas une chronologie :
+   c'est ce bloc qui y occupe le plus de place, et l'ordre d'ecran ne lui
+   convient pas. `a4Rank` le rejoue en partant de l'organisation, qui est le
+   territoire revendique, et non de la performance commerciale, qui en est un
+   resultat.
+
+   `a4Statement` enonce la competence pour un lecteur qui n'a pas le site sous
+   les yeux : `summary` s'appuie sur la fiche depliee juste dessous, le recto
+   n'a rien dessous. `a4Proofs` porte les faits qui l'etablissent, chacun
+   verifiable, aucun explicatif — le detail du raisonnement est ce que la
+   presentation complete a de plus et que le recto n'essaie pas d'avoir. */
 export const competences = [
   {
     id: "pilotage-commercial",
@@ -15,6 +26,15 @@ export const competences = [
       "L’outil fait ressortir le mix produit le plus pertinent selon le budget du client, les contraintes techniques, les offres en cours et les réseaux de soins.",
     resultat:
       "Chez Générale d’Optique, ces actions ont contribué à +83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, mesurés par rapport à la moyenne des seize mois précédents.",
+    a4Rank: 3,
+    a4Statement:
+      "Développer l’activité tout en maintenant la qualité économique des ventes.",
+    a4Proofs: [
+      "Reprise d’un magasin en difficulté",
+      "Actions commerciales locales et référencement local",
+      "Trafic et rentabilité de chaque vente travaillés ensemble",
+      "Outil d’arbitrage commercial utilisé en situation de vente",
+    ],
   },
   {
     id: "organisation-process",
@@ -30,6 +50,15 @@ export const competences = [
       "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
     exemple:
       "Deux applications du même principe : <strong>niveler la charge plutôt que dimensionner sur le pic</strong>. Les rendez-vous de livraison répartis sur la semaine ont fait tomber la surcharge du samedi ; les plannings construits sur l’activité attendue, plutôt que sur un roulement fixe, ont aligné les effectifs sur le flux réel.",
+    a4Rank: 1,
+    a4Statement:
+      "Structurer une activité existante en transformant les pratiques implicites en méthodes de travail claires et utilisables.",
+    a4Proofs: [
+      "Procédures de contrôle, de dispatch et de traitement des retards",
+      "Montages et vérifications organisés en J+1",
+      "Rendez-vous de livraison lissés pour répartir la charge",
+      "Plannings construits sur l’activité attendue plutôt que sur un roulement fixe",
+    ],
   },
   {
     id: "outils-metiers",
@@ -45,6 +74,15 @@ export const competences = [
       "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
     exemple:
       "Je pars de l’usage observé, pas de la spécification. Un outil qui demande une formation pour être utilisé ne sera pas utilisé.",
+    a4Rank: 2,
+    a4Statement:
+      "Concevoir des outils simples qui sécurisent une décision, suppriment les ressaisies ou rendent une activité plus facile à exécuter.",
+    a4Proofs: [
+      "Opti’Profit : arbitrage produit, budget, contraintes réseau et marge pendant la vente",
+      "Brief’Maker : planning, agenda, dossiers et attribution nominative des tâches",
+      "Suivi devis & tiers payant : statut, prochaine action, responsable, causes de perte",
+      "Hub outils magasin : calculs manuels supprimés, documents récurrents standardisés",
+    ],
   },
   {
     id: "pilotage-donnee",
@@ -62,6 +100,15 @@ export const competences = [
       "C’est la logique qui structure PANUM : comprendre pourquoi une vente se perd, et sur quel levier agir en priorité.",
     resultat:
       "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils rapprochent deux sources indépendantes, dont l’une est l’outil que j’ai conçu : le contrôle peut établir qu’il n’a pas été renseigné.",
+    a4Rank: 4,
+    a4Statement:
+      "Construire des indicateurs destinés à orienter l’action, et pas seulement à constater le résultat.",
+    a4Proofs: [
+      "Indicateurs avancés séparés des indicateurs retardés",
+      "Délais de traitement, relances, dossiers à risque, causes et pertes évitables",
+      "Rapprochement automatisé de deux sources indépendantes pour détecter les dossiers non tracés",
+      "PANUM : d’un suivi de terrain vers un pilotage des causes de sous-performance",
+    ],
   },
   {
     id: "coordination-changement",
@@ -79,5 +126,15 @@ export const competences = [
       "Suivis quotidiens et procédures de back-office adoptés par les équipes, dans deux enseignes différentes.",
     resultat:
       "Chez Générale d’Optique, la réorganisation et mon implication ont été saluées par la direction régionale.",
+    a4Rank: 5,
+    a4Statement:
+      "Faire le lien entre les objectifs de la direction et les contraintes concrètes des équipes.",
+    a4Proofs: [
+      "Tâches et responsabilités attribuées nominativement",
+      "Brief quotidien commun à l’équipe",
+      "Recrutement et formation de deux collaborateurs à la reprise du magasin",
+      "Méthodes et outils adoptés dans deux enseignes différentes",
+      "Outils utilisés sans avoir été imposés",
+    ],
   },
 ];
