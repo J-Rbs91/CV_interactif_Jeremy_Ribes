@@ -580,11 +580,13 @@ tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
 - **L'accroche n'a pas de libellé.** Posée sous le bandeau, sa place dit ce
   qu'elle est, et la gouttière de 30 mm lui coûtait deux lignes de repli pour
   un mot que personne ne lit. C'est le seul bloc du document dans ce cas.
-- **`contact.site` est la seule voie de retour.** Une feuille qui a quitté son
-  support ne porte plus aucun chemin vers le formulaire de contact, qui est le
-  seul moyen de joindre. L'URL est déclarée dans `contact.js` et consommée
-  aussi par `js/ui/share.js` : deux copies d'une même adresse divergent, et
-  c'est celle du papier qu'on oublierait de corriger.
+- **Aucune adresse en ligne sur le recto.** Le lecteur arrive du site : lui
+  redonner l'URL du site et celles des trois produits, c'est lui rendre le
+  chemin par lequel il est venu. La contrepartie est assumée : détachée de son
+  support — imprimée, versée à un dossier, transférée — la feuille ne porte
+  plus aucune voie de retour, faute d'e-mail ou de téléphone dans les données.
+  Le jour où l'un des deux existe, il prend cette place. `contact.site` reste
+  déclaré dans `contact.js` pour `js/ui/share.js`.
 - **Ça se vérifie en comptant les pages, jamais à l'œil.** `npm run check:cv`.
   `#print-view` est masqué hors impression, et un débordement de trois
   millimètres sort une seconde page presque vide sans rien changer à ce qu'on

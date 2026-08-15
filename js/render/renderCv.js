@@ -32,8 +32,8 @@ import { contact } from "../data/contact.js";
 import { competences } from "../data/competences.js";
 import { experiences } from "../data/experiences.js";
 import { a4Content, formationContent } from "../data/profile.js";
-import { getLiveProducts, renderPortrait } from "./renderContact.js";
-import { linkHost, natureClass } from "./renderUtils.js";
+import { renderPortrait } from "./renderContact.js";
+import { natureClass } from "./renderUtils.js";
 
 function renderRow(label, body, className = "") {
   return `<div class="cv1-row${className ? ` ${className}` : ""}">
@@ -42,23 +42,14 @@ function renderRow(label, body, className = "") {
   </div>`;
 }
 
-/* Les adresses en ligne, groupees : celle du CV d'abord — c'est la seule voie
-   de retour d'une feuille qui a quitte son support — puis les produits
-   reellement joignables. Un recruteur qui veut verifier n'a pas a chercher.
+/* Pas d'adresses en ligne sur le recto. Le lecteur arrive du site : lui
+   redonner l'URL du site et celles des trois produits, c'est lui rendre le
+   chemin par lequel il est venu.
 
-   C'est aussi le seul endroit ou l'adresse du site figure. Un pied de page la
-   repetait, avec une invitation a y trouver le detail : douze millimetres pour
-   redire une ligne deja lue en tete, sur une page qui manquait d'air. */
-function renderLinks() {
-  const hosts = [
-    contact.site.host,
-    ...getLiveProducts().map((product) => linkHost(product.url)),
-  ];
-
-  return `<div class="cv1-links">${hosts
-    .map((host) => `<span class="cv1-site">${host}</span>`)
-    .join("")}</div>`;
-}
+   La contrepartie est assumee et connue : detachee de son support — imprimee,
+   versee a un dossier, transferee — la feuille ne porte plus aucune voie de
+   retour, faute d'e-mail ou de telephone dans les donnees. Le jour ou l'un
+   des deux existe, il prend cette place, qui est la bonne. */
 
 /* Le portrait tient dans la hauteur que l'identite occupe deja : a 22 mm il
    est plus court que le nom, le positionnement et les adresses empiles, et ne
@@ -72,7 +63,6 @@ function renderHead() {
       <div class="cv1-facts">${contact.a4.experience} · ${
         contact.items.find((item) => item.icon === "pin")?.text ?? ""
       }</div>
-      ${renderLinks()}
     </div>
     ${renderPortrait("cv1-photo")}
   </header>`;

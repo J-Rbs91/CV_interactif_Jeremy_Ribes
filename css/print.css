@@ -747,25 +747,6 @@
     color: var(--ink-600);
   }
 
-  .cv1-links {
-    margin-top: 1mm;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 7.2pt;
-  }
-
-  /* Les adresses en ligne prennent la flamme, comme partout dans le document.
-     Groupees sur une ligne, elles font une seule tache et non quatre : la
-     regle de rarete porte sur les zones de couleur, pas sur les mots. */
-  .cv1-site {
-    color: var(--flame-700);
-    font-weight: 500;
-  }
-
-  .cv1-links .cv1-site:not(:last-child)::after {
-    content: " · ";
-    color: var(--ink-300);
-  }
-
   /* --- Lignes a libelle : profil, et les trois mentions de pied ---------- */
   .cv1-row {
     display: grid;
