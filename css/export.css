@@ -23,6 +23,12 @@
    d'actions.
    ========================================================================= */
 
+:root {
+  /* La colonne de libelles du panneau. Declaree ici parce que deux grilles la
+     partagent et qu'elles doivent bouger ensemble. */
+  --export-gouttiere: 112px;
+}
+
 .export-overlay {
   position: fixed;
   inset: 0;
@@ -240,9 +246,15 @@
 }
 
 /* --- Lignes a libelle : la gouttiere du recto, en pixels ---------------- */
+/* 112 px et non 96 : le libelle le plus long du panneau — « PDF · 6 pages »
+   — mesure 109 px en mono capitale a l'interlettrage du projet, et debordait
+   de sa colonne. Il le faisait deja de 4 px avant que l'interlettrage ne soit
+   unifie ; le seul effet visible etait une gouttiere qui se refermait sur une
+   ligne et pas sur les autres. La gouttiere est la meme pour les deux grilles
+   du panneau, sinon les libelles ne s'alignent plus d'un bloc a l'autre. */
 .export-row {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
+  grid-template-columns: var(--export-gouttiere) minmax(0, 1fr);
   column-gap: var(--space-2);
   align-items: center;
   padding: 14px 0;
@@ -351,7 +363,7 @@
    de texte se suivaient sans qu'on voie ou commencait la seconde. */
 .export-doc {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
+  grid-template-columns: var(--export-gouttiere) minmax(0, 1fr);
   column-gap: var(--space-2);
   align-items: start;
   width: 100%;
