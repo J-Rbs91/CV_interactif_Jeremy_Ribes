@@ -691,9 +691,15 @@
      en deux pages dont la seconde est vide, et c'est le defaut le plus facile
      a ne pas voir. `npm run check:cv`.
      ===================================================================== */
+  /* Marge laterale propre au recto, en plus de celle de `@page`. Modifier
+     `@page` toucherait aussi la presentation complete, dont la pagination est
+     reglee sur 15 mm ; ce retrait est donc pose ici. Il porte la colonne a
+     170 mm pour 20 mm de blanc de chaque cote — un texte qui court d'un bord
+     a l'autre d'une A4 se lit comme un formulaire, pas comme un CV. */
   .cv-a4 {
-    font-size: 8.4pt;
-    line-height: 1.38;
+    padding: 0 4mm;
+    font-size: 8.2pt;
+    line-height: 1.4;
     color: var(--ink-800);
   }
 
@@ -702,7 +708,7 @@
     display: flex;
     align-items: flex-start;
     gap: 6mm;
-    padding-bottom: 2.5mm;
+    padding-bottom: 3.5mm;
     border-bottom: 2.5pt solid var(--ink-900);
   }
 
@@ -766,7 +772,7 @@
     grid-template-columns: 30mm 1fr;
     column-gap: 5mm;
     align-items: baseline;
-    margin-top: 2.2mm;
+    margin-top: 3mm;
   }
 
   .cv1-key {
@@ -789,23 +795,23 @@
      30 mm lui coutait deux lignes de repli pour un mot que personne ne lit.
      C'est le seul bloc du document dans ce cas. */
   .cv1-pitch {
-    padding-bottom: 2.5mm;
-    margin-top: 2.5mm;
+    padding-bottom: 4.5mm;
+    margin-top: 4mm;
     border-bottom: 0.5pt solid var(--ink-100);
   }
 
   .cv1-pitch p + p {
-    margin-top: 1.2mm;
+    margin-top: 2mm;
   }
 
   /* --- Les trois blocs de demonstration --------------------------------- */
   .cv1-part {
-    margin-top: 3mm;
+    margin-top: 5mm;
   }
 
   .cv1-part-title {
-    padding-bottom: 1.2mm;
-    margin-bottom: 2mm;
+    padding-bottom: 1.5mm;
+    margin-bottom: 3.2mm;
     border-bottom: 1pt solid var(--ink-900);
     font-family: var(--font-display);
     font-size: 9.5pt;
@@ -817,7 +823,7 @@
 
   /* --- Competences : l'enonce, puis les faits --------------------------- */
   .cv1-comp + .cv1-comp {
-    margin-top: 1.8mm;
+    margin-top: 2.9mm;
   }
 
   .cv1-comp-title {
@@ -836,9 +842,9 @@
      noyaient — cinq lignes de faits par competence, vingt-cinq sur la page,
      et plus aucun intitule ne ressortait. */
   .cv1-comp-proofs {
-    margin-top: 0.6mm;
-    font-size: 7.4pt;
-    line-height: 1.32;
+    margin-top: 1.1mm;
+    font-size: 7.2pt;
+    line-height: 1.35;
     color: var(--text-muted);
   }
 
@@ -878,7 +884,7 @@
   }
 
   .cv1-cell-text {
-    margin-top: 1mm;
+    margin-top: 1.4mm;
     font-size: 7.6pt;
     line-height: 1.32;
     color: var(--ink-700);
@@ -893,7 +899,7 @@
 
   /* --- Parcours : un cinquieme de la page ------------------------------- */
   .cv1-job + .cv1-job {
-    margin-top: 1.6mm;
+    margin-top: 2.8mm;
   }
 
   .cv1-job-head {
@@ -903,8 +909,11 @@
     gap: 0 3mm;
   }
 
+  /* La date ouvre la ligne sans tenir sa propre colonne. A 30 mm de
+     gouttiere, le resume du poste n'avait plus que 137 mm et se repliait sur
+     deux lignes — trois postes, trois lignes perdues, pour aligner des dates
+     que leur seule position en tete de ligne suffit a reperer. */
   .cv1-job-date {
-    width: 30mm;
     flex: none;
     font-family: "JetBrains Mono", monospace;
     font-size: 7.2pt;
@@ -926,7 +935,7 @@
   /* Aligne sur les intitules, pas sur la date : la colonne de matiere est
      celle qui se lit, la date n'est qu'un reperage. */
   .cv1-job-summary {
-    margin: 0.4mm 0 0 33mm;
+    margin: 0.8mm 0 0;
     font-size: 7.8pt;
     line-height: 1.32;
     color: var(--ink-600);
@@ -934,7 +943,7 @@
 
   /* --- Mentions de pied ------------------------------------------------- */
   .cv1-project + .cv1-project {
-    margin-top: 1mm;
+    margin-top: 1.8mm;
   }
 
   .cv1-project-title {
@@ -973,14 +982,5 @@
 
   .cv1-formation-note {
     color: var(--ink-600);
-  }
-
-  .cv1-foot {
-    margin-top: 4mm;
-    padding-top: 1.5mm;
-    border-top: 0.5pt solid var(--ink-100);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 6.8pt;
-    color: var(--text-muted);
   }
 }

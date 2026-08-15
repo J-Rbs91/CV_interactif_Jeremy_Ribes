@@ -44,7 +44,11 @@ function renderRow(label, body, className = "") {
 
 /* Les adresses en ligne, groupees : celle du CV d'abord — c'est la seule voie
    de retour d'une feuille qui a quitte son support — puis les produits
-   reellement joignables. Un recruteur qui veut verifier n'a pas a chercher. */
+   reellement joignables. Un recruteur qui veut verifier n'a pas a chercher.
+
+   C'est aussi le seul endroit ou l'adresse du site figure. Un pied de page la
+   repetait, avec une invitation a y trouver le detail : douze millimetres pour
+   redire une ligne deja lue en tete, sur une page qui manquait d'air. */
 function renderLinks() {
   const hosts = [
     contact.site.host,
@@ -172,9 +176,5 @@ export function renderCvDocument() {
        <span class="cv1-formation-note">${formationContent.a4Note}</span>`,
     )}
 
-    <footer class="cv1-foot">
-      Compétences détaillées, six outils et projets documentés :
-      <span class="cv1-site">${contact.site.host}</span>
-    </footer>
   </div>`;
 }

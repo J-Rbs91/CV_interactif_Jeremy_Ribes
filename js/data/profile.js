@@ -82,7 +82,7 @@ export const a4Content = {
     {
       nature: "produit",
       value: "Repris hors de leur contexte",
-      text: "Brief et suivi utilisés dans une autre enseigne, gestionnaire de planning repris après mon départ, Opti’Profit transmis à la demande d’une direction régionale.",
+      text: "Brief et suivi repris dans une autre enseigne, planning repris après mon départ, Opti’Profit transmis à une direction régionale.",
     },
   ],
   /* Deux entrees, pas trois : ces projets prouvent que la methode se
