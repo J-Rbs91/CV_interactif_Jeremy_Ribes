@@ -44,10 +44,88 @@ export const profileContent = {
     "<strong>Un rôle transverse dédié à la structuration de l’activité</strong> : formaliser les process, outiller le suivi et rendre le pilotage possible. Je me positionne sur les fonctions organisation, process et outils métiers, au sein d’un réseau commercial ou de service client, ou dans un environnement en croissance soumis à de fortes contraintes opérationnelles.",
 };
 
+/* Contenus propres au recto A4 (js/render/renderCv.js). Ils vivent ici et non
+   dans le rendu : le recto choisit ce qu'il montre, il ne redige pas, sans
+   quoi une phrase du CV finirait par dire autre chose que la meme phrase du
+   site sans que rien ne le signale.
+
+   Ce qui est ici n'existe nulle part ailleurs, et c'est normal : ce sont des
+   enonces de synthese que le site n'a pas a faire — il demontre section par
+   section, le recto doit trancher. Les trois preuves en sont l'exemple :
+   aucune fiche ne les porte, elles se lisent en croisant les statuts des six
+   outils et le resultat d'un poste. */
+export const a4Content = {
+  /* Deux phrases, pas trois. La premiere dit le deplacement du profil, la
+     seconde la methode — et le gras, relu seul, doit former un enonce
+     complet, comme partout ailleurs. */
+  pitch: [
+    "Professionnel de terrain ayant progressivement <strong>déplacé sa valeur vers l’organisation de l’activité</strong> : formalisation des process, conception d’outils métiers, suivi de la performance et coordination entre objectifs de direction et contraintes d’exécution.",
+    "Capacité à <strong>partir d’un irritant concret, identifier sa cause et apporter la réponse la plus simple</strong> : modification de pratique, clarification d’une responsabilité, suppression d’une étape ou création d’un outil.",
+  ],
+  /* Trois preuves, et trois seulement : impact economique, adoption terrain,
+     transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur
+     enchainement qui repond a « ça marche ? », « c'est utilise ? », « ça
+     survit a son auteur ? ». Une quatrieme diluerait la premiere, qui est la
+     seule a porter un chiffre. */
+  proofs: [
+    {
+      nature: "preuve",
+      value: "+83 % CA · +5,6 pts de marge",
+      text: "Redynamisation d’un magasin en difficulté.",
+      note: "Sur les deux mois qui ont suivi, comparés à la moyenne des seize mois précédents.",
+    },
+    {
+      nature: "produit",
+      value: "3 outils en usage quotidien",
+      text: "Suivi des devis, brief quotidien et hub d’outils, utilisés chaque jour par l’équipe en magasin.",
+    },
+    {
+      nature: "produit",
+      value: "Repris hors de leur contexte",
+      text: "Brief et suivi utilisés dans une autre enseigne, gestionnaire de planning repris après mon départ, Opti’Profit transmis à la demande d’une direction régionale.",
+    },
+  ],
+  /* Deux entrees, pas trois : ces projets prouvent que la methode se
+     transfere hors de l'optique, ils ne composent pas un second parcours.
+     L'Ortabels et Renta Menu se disent ensemble parce qu'ils prouvent la meme
+     chose — modeliser pour decider — et separes ils prendraient deux fois la
+     place pour une seule demonstration.
+
+     Une ligne chacun, et c'est une contrainte dure : a deux lignes le bloc
+     pesait autant que le parcours entier, pour une mention qui n'a qu'a
+     etablir que la methode se transfere hors optique. C'est ce qui a fait
+     tomber la categorie qui accompagnait chaque titre — « Conception produit
+     & pilotage », « Modelisation & aide a la decision » : elle nommait ce que
+     le texte juste apres decrivait deja, et cette redite coutait la ligne. */
+  projects: [
+    {
+      title: "KuT",
+      text: "Besoins métier traduits en parcours, règles fonctionnelles et plans de tests.",
+    },
+    {
+      title: "L’Ortabels · Renta Menu",
+      text: "Données métier transformées en outils de décision.",
+    },
+  ],
+  /* Une ligne, et rien de plus. Detaillee, elle ferait basculer le document
+     vers un CV de developpeur, alors que le profil est organisation, process
+     et outils metiers — l'outil y est un moyen, pas le metier. */
+  methods: [
+    "Formalisation de process",
+    "Analyse de données & modélisation",
+    "Google Apps Script",
+    "Développement web",
+    "Conception fonctionnelle",
+    "Automatisation",
+  ],
+};
+
 export const formationContent = {
   year: "2012",
   title: "BTS Opticien Lunetier",
   subtitle: "Diplôme professionnel · Optique",
+  a4Note:
+    "Compétences développées en autodidacte : process, data, automatisation et développement d’outils métiers.",
   continuousSkills: [
     {
       title: "Formalisation de process",

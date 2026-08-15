@@ -1,212 +1,179 @@
-/* Recto A4 — le CV proprement dit.
+/* Recto A4 — un CV en competences.
    -------------------------------------------------------------------------
    `renderPrintDocument()` produit six pages : toutes les sections, toutes les
    fiches depliees. C'est une presentation complete, et le bouton qui l'ouvre
-   le dit desormais. Un CV est autre chose : un recto A4, lu en trente
-   secondes, dont la contrainte de format EST la methode de selection.
+   le dit. Un CV est autre chose : un recto, lu en trente secondes, dont la
+   contrainte de format EST la methode de selection.
 
-   Ce document ne rentre donc pas la vue integrale dans une page. Il repart
-   des memes donnees et n'en retient que ce qui repond a quatre questions,
-   dans cet ordre : qui, pour quel role, avec quelle preuve, par quel
-   parcours. Tout ce qui documente plutot qu'il ne repond est reste dans la
-   presentation complete, ou le lien de l'en-tete conduit.
+   **Ce document n'est pas une miniature du site.** C'est la regle dont tout
+   le reste decoule. Le site demontre et explique — chaque fiche deroule
+   situation, arbitrage, reponse, constat ; le recto selectionne. La matiere
+   la plus differenciante est dans les competences et leurs preuves, pas dans
+   le nombre de realisations : une page qui reduirait chaque section du site
+   d'un facteur six rendrait tout egal, donc rien lisible.
+
+   D'ou la hierarchie, qui n'est pas celle du site :
+     1. nom et positionnement    4. resultats et adoption
+     2. accroche, deux phrases   5. parcours, condense
+     3. cinq competences prouvees 6. projets, methodes, formation
+   Le parcours vient apres les competences et n'occupe qu'un cinquieme de la
+   page : sa fonction est de donner la profondeur de terrain qui rend les
+   competences credibles, pas de raconter des postes.
 
    Trois regles tiennent la page, et se perdent des qu'on ajoute :
-   - Aucun texte metier n'est reecrit ici. Chaque chaine vient de `js/data/` :
-     ce document choisit, il ne redige pas. Une phrase composee dans ce
-     fichier serait une copie qui derive au premier ajustement des donnees.
-   - La selection appartient aux donnees (`a4Bullets`, `a4Stats`), pas au
-     rendu. Le jour ou une puce devient la meilleure d'une fiche, on change
-     un rang dans `experiences.js`, pas une regle ici.
-   - Une seule tache chiffree. Sur une page unique, deux blocs de chiffres se
-     neutralisent, et le lecteur n'en verifie plus aucun. */
+   - **Aucun texte metier n'est redige ici.** Chaque chaine vient de
+     `js/data/`. Une phrase composee dans ce fichier serait une copie qui
+     derive au premier ajustement des donnees.
+   - **La selection appartient aux donnees** (`a4Rank`, `a4Statement`,
+     `a4Proofs`, `a4Summary`, `a4Content`), pas au rendu.
+   - **Une seule tache chiffree.** Sur une page unique, deux blocs de chiffres
+     se neutralisent et le lecteur n'en verifie plus aucun. */
 import { contact } from "../data/contact.js";
 import { competences } from "../data/competences.js";
 import { experiences } from "../data/experiences.js";
-import { formationContent, profileContent } from "../data/profile.js";
-import { outils } from "../data/outils.js";
-import { projetsTransverses } from "../data/projets.js";
-import { renderPortrait } from "./renderContact.js";
-import { natureClass } from "./renderUtils.js";
+import { a4Content, formationContent } from "../data/profile.js";
+import { getLiveProducts, renderPortrait } from "./renderContact.js";
+import { linkHost, natureClass } from "./renderUtils.js";
 
 function renderRow(label, body, className = "") {
-  return `<div class="cv1-row ${className}">
+  return `<div class="cv1-row${className ? ` ${className}` : ""}">
     <div class="cv1-key">${label}</div>
     <div class="cv1-val">${body}</div>
   </div>`;
 }
 
-function renderHead() {
-  const place = contact.items.find((item) => item.icon === "pin");
+/* Les adresses en ligne, groupees : celle du CV d'abord — c'est la seule voie
+   de retour d'une feuille qui a quitte son support — puis les produits
+   reellement joignables. Un recruteur qui veut verifier n'a pas a chercher. */
+function renderLinks() {
+  const hosts = [
+    contact.site.host,
+    ...getLiveProducts().map((product) => linkHost(product.url)),
+  ];
 
+  return `<div class="cv1-links">${hosts
+    .map((host) => `<span class="cv1-site">${host}</span>`)
+    .join("")}</div>`;
+}
+
+/* Le portrait tient dans la hauteur que l'identite occupe deja : a 22 mm il
+   est plus court que le nom, le positionnement et les adresses empiles, et ne
+   coute donc rien a la page. Le retirer ne libere pas une ligne — c'est une
+   question de fond, pas de place, et elle appartient au contenu. */
+function renderHead() {
   return `<header class="cv1-head">
     <div class="cv1-identity">
       <h1>${contact.name}</h1>
-      <div class="cv1-role">${contact.role}</div>
-      <div class="cv1-role2">${contact.secondaryRole}</div>
-      <div class="cv1-facts">
-        ${place ? `<span>${place.text}</span>` : ""}
-        <span class="cv1-site">${contact.site.host}</span>
-      </div>
+      <div class="cv1-positioning">${contact.a4.positioning}</div>
+      <div class="cv1-facts">${contact.a4.experience} · ${
+        contact.items.find((item) => item.icon === "pin")?.text ?? ""
+      }</div>
+      ${renderLinks()}
     </div>
     ${renderPortrait("cv1-photo")}
   </header>`;
 }
 
-/* Le cadre : ce que je fais, et ce que je cherche. Deux phrases, et c'est la
-   seule prose du recto — le reste est du fait verifiable. Elles precedent le
-   parcours parce qu'un lecteur qui ignore la cible lit les postes sans savoir
-   ce qu'il doit y chercher. */
-function renderFrame() {
-  return `<div class="cv1-frame">
-    ${renderRow("Expertise", profileContent.expertise)}
-    ${renderRow("Recherche", profileContent.target)}
-  </div>`;
-}
+/* Le bloc le plus long de la page, et c'est voulu : c'est lui qui porte ce
+   qui distingue le profil. Chaque competence tient en deux temps — l'enonce,
+   puis les faits qui l'etablissent — et jamais le raisonnement qui y a mene,
+   qui est ce que la presentation complete a de plus. */
+function renderCompetences() {
+  const ordered = competences
+    .filter((competence) => competence.a4Rank)
+    .sort((first, second) => first.a4Rank - second.a4Rank);
 
-/* La seule tache chiffree de la page, prise a la fiche qui porte `a4Stats`.
-   La base de comparaison voyage avec les chiffres : un ecart sans sa base se
-   lit comme une affirmation invérifiable, et c'est la premiere question posee
-   en entretien. */
-function renderProof() {
-  const source = experiences.find((experience) => experience.a4Stats);
-
-  if (!source?.stats?.length) {
-    return "";
-  }
-
-  const values = source.stats
+  return ordered
     .map(
-      (stat) =>
-        `<span class="cv1-stat"><span class="cv1-stat-value">${stat.value}</span>${
-          stat.label ? `<span class="cv1-stat-label">${stat.label}</span>` : ""
-        }</span>`,
+      (competence) => `<div class="cv1-comp ${natureClass(competence.nature)}">
+        <p class="cv1-comp-line">
+          <span class="cv1-comp-title">${competence.title}</span>
+          <span class="cv1-comp-statement">${competence.a4Statement}</span>
+        </p>
+        <p class="cv1-comp-proofs">${competence.a4Proofs
+          .map((proof) => `<span class="cv1-comp-proof">${proof}</span>`)
+          .join("")}</p>
+      </div>`,
     )
     .join("");
-
-  /* `statsLabel` ouvre la phrase que les chiffres terminent — « ces actions
-     ont contribué à » — et doit donc les preceder. Repousse dessous avec la
-     base de comparaison, il donnait « +83 % CA · ont contribué à ». */
-  const lead = [`${source.company} · ${source.date}`, source.statsLabel]
-    .filter(Boolean)
-    .join(" — ");
-
-  return `<div class="cv1-proof n-preuve">
-    <div class="cv1-key">Résultats mesurés</div>
-    <div class="cv1-val">
-      <div class="cv1-note cv1-note-lead">${lead}</div>
-      <div class="cv1-stats">${values}</div>
-      ${source.statsBase ? `<div class="cv1-note">${source.statsBase}</div>` : ""}
-    </div>
-  </div>`;
 }
 
-/* Les seuls intitules, en une ligne courante. Leurs resumes tenaient ici au
-   depart : cinq lignes de plus, trente millimetres, soit le huitieme d'une
-   page pour redire ce que l'expertise, les chiffres et les postes venaient
-   d'etablir. Sur un recto, ce n'est pas une redondance acceptable, c'est la
-   place d'un poste entier.
-
-   Les intitules restent parce qu'ils nomment les cinq domaines d'un coup
-   d'oeil, ce qu'aucun autre bloc de la page ne fait. Leur detail — enjeu,
-   mise en place, exemple, resultat — est dans la presentation complete, ou
-   le pied de page conduit. */
-function renderSkills() {
-  const items = competences
+/* Impact economique, adoption terrain, transferabilite — dans cet ordre, et
+   trois seulement. Seule la premiere porte un chiffre, donc seule la premiere
+   prend la flamme : c'est la regle de rarete, et c'est aussi ce qui fait de
+   ce bloc l'element le plus voyant de la page. */
+function renderEvidence() {
+  return `<div class="cv1-evidence">${a4Content.proofs
     .map(
-      (competence) =>
-        `<span class="cv1-skill ${natureClass(competence.nature)}">${competence.title}</span>`,
+      (proof) => `<div class="cv1-cell ${natureClass(proof.nature)}">
+        <div class="cv1-cell-value">${proof.value}</div>
+        <div class="cv1-cell-text">${proof.text}</div>
+        ${proof.note ? `<div class="cv1-cell-note">${proof.note}</div>` : ""}
+      </div>`,
     )
-    .join("");
-
-  return renderRow("Compétences", `<div class="cv1-skills">${items}</div>`);
+    .join("")}</div>`;
 }
 
-function renderJob(experience) {
-  const ranks = experience.a4Bullets ?? [];
-  const bullets = ranks
-    .map((rank) => experience.bullets?.[rank])
-    .filter(Boolean);
-
-  return `<article class="cv1-job">
-    <div class="cv1-job-head">
-      <span class="cv1-job-date">${experience.date}</span>
-      <span class="cv1-job-role">${experience.role}</span>
-      <span class="cv1-job-company">${experience.company}</span>
-    </div>
-    ${experience.context ? `<p class="cv1-job-context">${experience.context}</p>` : ""}
-    ${
-      bullets.length
-        ? `<ul class="cv1-bullets">${bullets.map((bullet) => `<li>${bullet}</li>`).join("")}</ul>`
-        : ""
-    }
-    ${experience.result ? `<p class="cv1-job-result">${experience.result}</p>` : ""}
-  </article>`;
-}
-
-/* Le statut d'un outil est la seule chose que le recto en retient. Ni le
-   resume, ni la categorie ne disent ce que dit « Resté en service après mon
-   départ » : c'est la difference entre avoir fait des outils et avoir des
-   outils utilises sans soi. */
-function renderTools() {
-  return outils
+function renderCareer() {
+  return experiences
+    .filter((experience) => experience.a4Summary)
     .map(
-      (outil) => `<li class="${natureClass(outil.nature)}">
-        <span class="cv1-item-title">${outil.title}</span>
-        <span class="cv1-item-note">${outil.status}</span>
-      </li>`,
+      (experience) => `<div class="cv1-job">
+        <p class="cv1-job-head">
+          <span class="cv1-job-date">${experience.date}</span>
+          <span class="cv1-job-role">${experience.role}</span>
+          <span class="cv1-job-company">${experience.company}</span>
+        </p>
+        <p class="cv1-job-summary">${experience.a4Summary}</p>
+      </div>`,
     )
     .join("");
 }
 
 function renderProjects() {
-  return projetsTransverses
-    .map((projet) => {
-      const [name, ...rest] = projet.title.split(" : ");
-
-      return `<li class="n-produit">
-        <span class="cv1-item-title">${name}</span>
-        <span class="cv1-item-note">${rest.join(" : ")}</span>
-      </li>`;
-    })
+  return a4Content.projects
+    .map(
+      (project) => `<p class="cv1-project">
+        <span class="cv1-project-title">${project.title}</span>
+        <span class="cv1-project-text">${project.text}</span>
+      </p>`,
+    )
     .join("");
 }
 
-function renderSideBlock(title, items) {
-  return `<section class="cv1-block">
-    <h2 class="cv1-block-title">${title}</h2>
-    <ul class="cv1-items">${items}</ul>
+function renderPart(title, body) {
+  return `<section class="cv1-part">
+    <h2 class="cv1-part-title">${title}</h2>
+    ${body}
   </section>`;
 }
 
 export function renderCvDocument() {
   return `<div class="cv-a4">
     ${renderHead()}
-    ${renderFrame()}
-    ${renderProof()}
-    ${renderSkills()}
 
-    <div class="cv1-body">
-      <main class="cv1-main">
-        <h2 class="cv1-block-title">Parcours</h2>
-        ${experiences.map(renderJob).join("")}
-      </main>
+    <div class="cv1-pitch">${a4Content.pitch.map((line) => `<p>${line}</p>`).join("")}</div>
 
-      <aside class="cv1-side">
-        ${renderSideBlock("Outils conçus", renderTools())}
-        ${renderSideBlock("Projets transverses", renderProjects())}
-        ${renderSideBlock(
-          "Formation",
-          `<li class="n-socle">
-            <span class="cv1-item-title">${formationContent.title}</span>
-            <span class="cv1-item-note">${formationContent.subtitle} · ${formationContent.year}</span>
-          </li>`,
-        )}
-      </aside>
-    </div>
+    ${renderPart("Compétences", renderCompetences())}
+    ${renderPart("Résultats & adoption", renderEvidence())}
+    ${renderPart("Parcours", renderCareer())}
+
+    ${renderRow("Projets transverses", renderProjects())}
+    ${renderRow(
+      "Méthodes & outils",
+      a4Content.methods
+        .map((method) => `<span class="cv1-method">${method}</span>`)
+        .join(""),
+    )}
+    ${renderRow(
+      "Formation",
+      `<span class="cv1-formation-title">${formationContent.title}</span>
+       <span class="cv1-formation-year">${formationContent.year}</span>
+       <span class="cv1-formation-note">${formationContent.a4Note}</span>`,
+    )}
 
     <footer class="cv1-foot">
-      Présentation complète, outils et projets détaillés :
+      Compétences détaillées, six outils et projets documentés :
       <span class="cv1-site">${contact.site.host}</span>
     </footer>
   </div>`;

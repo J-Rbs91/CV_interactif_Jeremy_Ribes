@@ -668,28 +668,32 @@
   }
 
   /* =====================================================================
-     RECTO A4 — le CV proprement dit
+     RECTO A4 — un CV en competences
      -----------------------------------------------------------------------
      Deuxieme document servi par la meme commande d'impression (voir
      js/ui/print.js). Il ne partage aucune classe avec la presentation
-     complete : tout est prefixe `cv1-`, et c'est deliberé. Les regles du
+     complete : tout est prefixe `cv1-`, et c'est delibere. Les regles du
      dessus recomposent des composants d'ecran deplies sur plusieurs pages ;
      celles-ci composent une page unique dont la contrainte de hauteur est la
      regle principale. Melanger les deux jeux ferait qu'un reglage pris pour
      la pagination de l'un romprait la tenue en une page de l'autre, sans
      qu'aucun des deux selecteurs ne le laisse voir.
 
-     Ce qui reste commun est ce qui doit l'etre : `@page`, la coupe des fonds
-     et des rayons, la charte, et la langue mono des libelles.
+     Deux registres de titre, et deux seulement. Les trois blocs qui portent
+     la demonstration — competences, resultats, parcours — prennent la pleine
+     largeur sous un filet ; les trois lignes de pied — projets, methodes,
+     formation — prennent la gouttiere de libelle en mono. Ce n'est pas une
+     variation de style : c'est ce qui dit au lecteur ou s'arrete la
+     demonstration et ou commencent les mentions.
 
      Tout ajout ici se verifie en comptant les pages du PDF, jamais a l'oeil
      dans le navigateur : un document qui deborde de trois millimetres sort
      en deux pages dont la seconde est vide, et c'est le defaut le plus facile
-     a ne pas voir.
+     a ne pas voir. `npm run check:cv`.
      ===================================================================== */
   .cv-a4 {
-    font-size: 8.6pt;
-    line-height: 1.4;
+    font-size: 8.4pt;
+    line-height: 1.38;
     color: var(--ink-800);
   }
 
@@ -715,55 +719,54 @@
 
   .cv1-head h1 {
     font-family: var(--font-display);
-    font-size: 23pt;
+    font-size: 22pt;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1;
     color: var(--ink-900);
   }
 
-  .cv1-role {
-    margin-top: 2mm;
-    font-size: 8pt;
+  /* Le territoire professionnel, en une ligne. C'est la premiere chose lue
+     apres le nom et elle doit se lire comme une adresse de poste. */
+  .cv1-positioning {
+    margin-top: 1.8mm;
+    font-size: 8.6pt;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
     color: var(--forest-700);
   }
 
-  .cv1-role2 {
+  .cv1-facts {
     margin-top: 1.2mm;
-    font-size: 8.4pt;
-    font-weight: 600;
+    font-size: 8pt;
     color: var(--ink-600);
   }
 
-  .cv1-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3mm;
-    margin-top: 1.2mm;
+  .cv1-links {
+    margin-top: 1mm;
     font-family: "JetBrains Mono", monospace;
-    font-size: 7.6pt;
-    color: var(--text-muted);
+    font-size: 7.2pt;
   }
 
-  /* L'adresse du CV en ligne est la seule voie de retour d'une feuille qui a
-     quitte son support : elle prend la flamme, comme toute adresse en ligne
-     du document. */
+  /* Les adresses en ligne prennent la flamme, comme partout dans le document.
+     Groupees sur une ligne, elles font une seule tache et non quatre : la
+     regle de rarete porte sur les zones de couleur, pas sur les mots. */
   .cv1-site {
     color: var(--flame-700);
     font-weight: 500;
   }
 
-  /* --- La grille du recto : libelle a gauche, matiere a droite ---------- */
-  .cv1-row,
-  .cv1-proof {
+  .cv1-links .cv1-site:not(:last-child)::after {
+    content: " · ";
+    color: var(--ink-300);
+  }
+
+  /* --- Lignes a libelle : profil, et les trois mentions de pied ---------- */
+  .cv1-row {
     display: grid;
-    grid-template-columns: 26mm 1fr;
+    grid-template-columns: 30mm 1fr;
     column-gap: 5mm;
     align-items: baseline;
-    margin-top: 3mm;
+    margin-top: 2.2mm;
   }
 
   .cv1-key {
@@ -772,6 +775,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    line-height: 1.3;
     color: var(--text-muted);
   }
 
@@ -780,76 +784,26 @@
     color: var(--ink-900);
   }
 
-  /* --- La seule tache chiffree de la page ------------------------------- */
-  .cv1-proof {
-    padding: 2.5mm 0;
-    margin-top: 3mm;
-    border-top: 0.5pt solid var(--ink-100);
+  /* L'accroche prend la pleine largeur et se passe de libelle : posee juste
+     sous le bandeau, sa place dit deja ce qu'elle est, et la gouttiere de
+     30 mm lui coutait deux lignes de repli pour un mot que personne ne lit.
+     C'est le seul bloc du document dans ce cas. */
+  .cv1-pitch {
+    padding-bottom: 2.5mm;
+    margin-top: 2.5mm;
     border-bottom: 0.5pt solid var(--ink-100);
   }
 
-  .cv1-stats {
-    display: flex;
-    align-items: baseline;
-    gap: 8mm;
-  }
-
-  .cv1-stat-value {
-    font-family: var(--font-display);
-    font-size: 14pt;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--flame-700);
-  }
-
-  .cv1-stat-label {
-    margin-left: 1.5mm;
-    font-size: 8pt;
-    color: var(--ink-600);
-  }
-
-  .cv1-note {
+  .cv1-pitch p + p {
     margin-top: 1.2mm;
-    font-size: 7.4pt;
-    line-height: 1.35;
-    color: var(--text-muted);
   }
 
-  .cv1-note-lead {
-    margin: 0 0 1mm;
+  /* --- Les trois blocs de demonstration --------------------------------- */
+  .cv1-part {
+    margin-top: 3mm;
   }
 
-  /* --- Competences : une ligne courante d'intitules --------------------- */
-  .cv1-skill {
-    font-weight: 800;
-    color: var(--n-ink);
-  }
-
-  /* Le point median est pose en `::after` sur l'etiquette precedente, comme
-     partout ailleurs dans le document : en `::before` sur la suivante, un
-     repli de ligne l'enverrait ouvrir la ligne d'apres. */
-  .cv1-skill:not(:last-child)::after {
-    content: " · ";
-    font-weight: 400;
-    color: var(--ink-300);
-  }
-
-  /* --- Deux colonnes : le parcours, et ce qu'il a produit --------------- */
-  .cv1-body {
-    display: grid;
-    grid-template-columns: 1fr 58mm;
-    column-gap: 7mm;
-    margin-top: 5mm;
-  }
-
-  /* Le filet unique du CV a l'ecran, a la mesure du papier : un axe, pas des
-     rails. Il separe les deux colonnes sans les mettre en boite. */
-  .cv1-side {
-    padding-left: 7mm;
-    border-left: 0.5pt solid var(--ink-100);
-  }
-
-  .cv1-block-title {
+  .cv1-part-title {
     padding-bottom: 1.2mm;
     margin-bottom: 2mm;
     border-bottom: 1pt solid var(--ink-900);
@@ -861,109 +815,172 @@
     color: var(--ink-900);
   }
 
-  .cv1-block + .cv1-block {
-    margin-top: 4.5mm;
+  /* --- Competences : l'enonce, puis les faits --------------------------- */
+  .cv1-comp + .cv1-comp {
+    margin-top: 1.8mm;
   }
 
-  /* --- Parcours --------------------------------------------------------- */
+  .cv1-comp-title {
+    font-weight: 800;
+    color: var(--n-ink);
+  }
+
+  .cv1-comp-title::after {
+    content: " — ";
+    font-weight: 400;
+    color: var(--ink-300);
+  }
+
+  /* Les preuves passent au corps du dessous et en gris : elles se parcourent,
+     elles ne se lisent pas en continu. Au meme corps que l'enonce, elles le
+     noyaient — cinq lignes de faits par competence, vingt-cinq sur la page,
+     et plus aucun intitule ne ressortait. */
+  .cv1-comp-proofs {
+    margin-top: 0.6mm;
+    font-size: 7.4pt;
+    line-height: 1.32;
+    color: var(--text-muted);
+  }
+
+  .cv1-comp-proof:not(:last-child)::after {
+    content: " · ";
+    color: var(--n-mark);
+  }
+
+  /* --- Resultats & adoption : trois colonnes ---------------------------- */
+  .cv1-evidence {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 6mm;
+  }
+
+  .cv1-cell + .cv1-cell {
+    padding-left: 6mm;
+    border-left: 0.5pt solid var(--ink-100);
+  }
+
+  .cv1-cell-value {
+    font-family: var(--font-display);
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--n-ink);
+  }
+
+  /* Seule la premiere cellule porte un chiffre mesure, donc seule elle prend
+     la flamme et le plus gros corps de la page apres le nom. Les deux autres
+     disent l'adoption et la transferabilite, qui sont des faits et non des
+     mesures : elles restent en foret. */
+  .cv1-cell.n-preuve .cv1-cell-value {
+    font-size: 12.5pt;
+    color: var(--flame-700);
+  }
+
+  .cv1-cell-text {
+    margin-top: 1mm;
+    font-size: 7.6pt;
+    line-height: 1.32;
+    color: var(--ink-700);
+  }
+
+  .cv1-cell-note {
+    margin-top: 0.8mm;
+    font-size: 6.8pt;
+    line-height: 1.3;
+    color: var(--text-muted);
+  }
+
+  /* --- Parcours : un cinquieme de la page ------------------------------- */
   .cv1-job + .cv1-job {
-    padding-top: 2.5mm;
-    margin-top: 2.5mm;
-    border-top: 0.5pt solid var(--ink-100);
+    margin-top: 1.6mm;
   }
 
   .cv1-job-head {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0 2.5mm;
+    gap: 0 3mm;
   }
 
-  /* La date ouvre la ligne plutot que de tenir sa propre colonne : la colonne
-     principale ne fait plus 115 mm, et 30 mm de gouttiere de date y coutaient
-     un quart de la mesure de lecture des puces. */
   .cv1-job-date {
-    order: -1;
-    width: 100%;
+    width: 30mm;
+    flex: none;
     font-family: "JetBrains Mono", monospace;
     font-size: 7.2pt;
     color: var(--text-muted);
   }
 
   .cv1-job-role {
-    font-size: 10pt;
+    font-size: 9.5pt;
     font-weight: 800;
     color: var(--ink-900);
   }
 
   .cv1-job-company {
-    font-size: 8.6pt;
-    color: var(--forest-700);
+    font-size: 8.4pt;
     font-weight: 600;
+    color: var(--forest-700);
   }
 
-  .cv1-job-context {
-    margin-top: 0.8mm;
+  /* Aligne sur les intitules, pas sur la date : la colonne de matiere est
+     celle qui se lit, la date n'est qu'un reperage. */
+  .cv1-job-summary {
+    margin: 0.4mm 0 0 33mm;
+    font-size: 7.8pt;
+    line-height: 1.32;
     color: var(--ink-600);
   }
 
-  .cv1-bullets {
-    margin-top: 1.2mm;
-    list-style: none;
+  /* --- Mentions de pied ------------------------------------------------- */
+  .cv1-project + .cv1-project {
+    margin-top: 1mm;
   }
 
-  .cv1-bullets li {
-    position: relative;
-    padding: 0.4mm 0 0.4mm 3.5mm;
-  }
-
-  .cv1-bullets li::before {
-    content: "";
-    position: absolute;
-    top: 1.5mm;
-    left: 0;
-    width: 1.4mm;
-    height: 0.5pt;
-    background: var(--n-mark);
-  }
-
-  .cv1-job-result {
-    margin-top: 1.2mm;
-    padding-left: 3mm;
-    border-left: 1pt solid var(--n-line);
-    font-size: 8pt;
-    color: var(--ink-600);
-  }
-
-  /* --- Colonne laterale : outils, projets, formation -------------------- */
-  .cv1-items {
-    list-style: none;
-  }
-
-  .cv1-items li + li {
-    margin-top: 1.8mm;
-  }
-
-  .cv1-item-title {
-    display: block;
-    font-size: 8.6pt;
+  .cv1-project-title {
     font-weight: 800;
-    color: var(--n-ink);
+    color: var(--forest-700);
   }
 
-  .cv1-item-note {
-    display: block;
+  .cv1-project-title::after,
+  .cv1-formation-title::after,
+  .cv1-formation-year::after {
+    content: " · ";
+    font-weight: 400;
+    color: var(--ink-300);
+  }
+
+  .cv1-method:not(:last-child)::after {
+    content: " · ";
+    color: var(--ink-300);
+  }
+
+  .cv1-method {
+    font-weight: 600;
+    color: var(--ink-700);
+  }
+
+  .cv1-formation-title {
+    font-weight: 800;
+    color: var(--ink-900);
+  }
+
+  .cv1-formation-year {
+    font-family: "JetBrains Mono", monospace;
     font-size: 7.4pt;
-    line-height: 1.3;
     color: var(--text-muted);
   }
 
+  .cv1-formation-note {
+    color: var(--ink-600);
+  }
+
   .cv1-foot {
-    margin-top: 5mm;
+    margin-top: 4mm;
     padding-top: 1.5mm;
     border-top: 0.5pt solid var(--ink-100);
     font-family: "JetBrains Mono", monospace;
-    font-size: 7pt;
+    font-size: 6.8pt;
     color: var(--text-muted);
   }
 }

@@ -1,14 +1,13 @@
-/* `a4Bullets` — le recto A4 ne tient pas les seize puces de cette liste. Il
-   nomme, par leur rang, celles qui restent : la selection est une donnee de la
-   fiche, pas une regle du rendu. Ecrite ici, elle se relit a cote des puces
-   qu'elle designe et ne peut pas les recopier, donc pas non plus mentir sur
-   leur contenu le jour ou l'une d'elles est reformulee — c'est le defaut du
-   `<noscript>` qu'on a supprime. Un rang absent laisse la fiche a son seul
-   cadrage, ce qui est le bon repli pour un poste ancien.
+/* `a4Summary` — le recto A4 est un CV en competences : la chronologie n'y
+   occupe qu'un cinquieme de la page, et sa fonction n'est plus de raconter
+   les postes mais de donner la profondeur de terrain qui rend credibles les
+   competences enoncees au-dessus. Chaque poste tient donc en une ligne de
+   reperes, sans puces.
 
-   `a4Stats` — une seule tache chiffree sur le recto. La regle de rarete de la
-   flamme vaut a plus forte raison sur une page unique : deux blocs de chiffres
-   se neutralisent, et c'est celui-ci qui porte le plus loin. */
+   Un resume ecrit plutot qu'une selection de puces : ces lignes ne disent pas
+   la meme chose que `bullets` en plus court, elles disent autre chose — le
+   territoire du poste, pas ses realisations, qui sont deja portees par les
+   competences. Un rang de puce n'aurait pas pu produire ca. */
 export const experiences = [
   {
     role: "Opticien collaborateur",
@@ -24,11 +23,8 @@ export const experiences = [
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
     ],
-    /* Procédures de back-office, campagne e-mail chiffrée. La reprise des
-       outils par l'équipe — quatrième puce — dit la même chose que le
-       résultat de la fiche suivante, vu de l'autre bout : sur une page, une
-       preuve énoncée deux fois prend la place de celle qui manque. */
-    a4Bullets: [0, 1],
+    a4Summary:
+      "Organisation back-office · outils métiers · suivi de l’activité · procédures · optimisation des flux",
     /* Les quatre chiffres de la campagne vivaient au milieu d'une puce, en
        deuxième ligne : au même corps, à la même couleur et dans le même flux
        que le reste. Or le chiffre est le plus fort aimant visuel d'une page
@@ -65,9 +61,8 @@ export const experiences = [
       "Instauration d’un brief de début de journée et d’un suivi commun des devis : tâches de back-office attribuées nommément, dossiers à reprendre visibles de toute l’équipe.",
       "Conception d’Opti’Profit pour amener l’arbitrage produit besoin technique, budget, réseaux de soins, marge au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
     ],
-    // Formalisation des procédures, brief quotidien et suivi partagé des devis.
-    a4Bullets: [2, 3],
-    a4Stats: true,
+    a4Summary:
+      "Redynamisation commerciale · organisation du point de vente · recrutement et formation · pilotage · conception d’outils",
     /* Un écart chiffré sans sa base de comparaison se lit comme une
        affirmation invérifiable, et c'est la première question posée en
        entretien. La base est donc portée par la fiche elle-même, au même
@@ -94,5 +89,7 @@ export const experiences = [
       "Trois enseignes, trois politiques commerciales et trois manières d’organiser un magasin : c’est de là que vient ma lecture des contraintes réelles d’un point de vente.",
       "Bascule progressive vers les sujets d’organisation : méthodes de travail, fiabilisation des calculs récurrents et du suivi des dossiers.",
     ],
+    a4Summary:
+      "Onze ans de terrain dans trois enseignes et trois organisations : vente, dossiers complexes, puis évolution vers l’organisation et la fiabilisation des méthodes.",
   },
 ];

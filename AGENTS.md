@@ -536,31 +536,41 @@ comme avant, et rien n'est dupliqué.
   de l'une casserait la tenue en une page de l'autre sans qu'aucun sélecteur
   ne le laisse voir.
 
-## Le recto A4 — un CV, pas un résumé de la présentation
-- **La contrainte de format EST la méthode de sélection.** Le recto ne fait pas
-  rentrer six pages dans une ; il repart des mêmes données et ne garde que ce
-  qui répond à quatre questions, dans l'ordre : qui, pour quel rôle, avec
-  quelle preuve, par quel parcours. Tout ce qui documente au lieu de répondre
-  reste dans la présentation complète, où le pied de page conduit.
+## Le recto A4 — un CV en compétences
+- **Ce n'est pas une miniature du site.** C'est la règle dont tout le reste
+  découle. Le site démontre et explique — chaque fiche déroule situation,
+  arbitrage, réponse, constat ; le recto sélectionne. Une page qui réduirait
+  chaque section d'un facteur six rendrait tout égal, donc rien lisible.
+- **La matière différenciante est dans les compétences et leurs preuves**, pas
+  dans le nombre de réalisations. Les compétences occupent donc le tiers de la
+  page, et la chronologie un cinquième : le parcours ne raconte plus les
+  postes, il donne la profondeur de terrain qui rend les compétences
+  crédibles. Une ligne de repères par poste, sans puces.
+- **Hiérarchie de la page**, et elle n'est pas celle du site : nom et
+  positionnement, accroche en deux phrases, cinq compétences prouvées,
+  résultats et adoption, parcours condensé, puis projets / méthodes /
+  formation en mentions de pied.
 - **`renderCv.js` ne rédige rien.** Chaque chaîne vient de `js/data/`. Une
   phrase composée dans le fichier de rendu serait une copie qui dérive au
   premier ajustement des données — c'est le défaut du `<noscript>` supprimé.
-- **La sélection appartient aux données, pas au rendu.** `a4Bullets` nomme par
-  leur rang les puces qui restent, `a4Stats` la fiche qui porte les chiffres.
-  Le jour où une puce devient la meilleure de sa fiche, on change un rang dans
-  `experiences.js`, pas une règle de rendu.
-- **Une seule tache chiffrée.** La règle de rareté de la flamme vaut à plus
-  forte raison sur une page unique : deux blocs de chiffres se neutralisent et
-  le lecteur n'en vérifie plus aucun.
-- **Une preuve énoncée deux fois prend la place de celle qui manque.** La
-  quatrième puce de Krys et le résultat de Générale d'Optique disaient la même
-  chose vue des deux bouts ; une seule est restée. C'est le premier tri à faire
-  quand la page déborde, avant de retirer de la matière.
-- **Les résumés de compétences n'y sont pas, et ne doivent pas y revenir.** Ils
-  y tenaient au départ : cinq lignes, trente millimètres, le huitième d'une
-  page pour redire ce que l'expertise, les chiffres et les postes venaient
-  d'établir. Les intitulés seuls restent, parce qu'ils nomment les cinq
-  domaines d'un coup d'œil, ce qu'aucun autre bloc ne fait.
+- **La sélection appartient aux données.** `a4Rank` donne l'ordre des
+  compétences sur le papier — l'organisation d'abord, qui est le territoire
+  revendiqué, et non la performance commerciale, qui en est un résultat.
+  `a4Statement` énonce la compétence pour un lecteur sans le site sous les
+  yeux, `a4Proofs` porte les faits qui l'établissent, `a4Summary` la ligne de
+  repères d'un poste, et `a4Content` les synthèses que le site n'a pas à
+  faire.
+- **Trois preuves, dans cet ordre : impact économique, adoption terrain,
+  transférabilité.** Elles répondent à « ça marche ? », « c'est utilisé ? »,
+  « ça survit à son auteur ? ». Une quatrième diluerait la première, seule à
+  porter un chiffre — et seule, pour cette raison, à prendre la flamme.
+- **Deux registres de titre, et deux seulement.** Les trois blocs qui portent
+  la démonstration prennent la pleine largeur sous un filet ; les trois
+  mentions de pied prennent la gouttière de libellé en mono. Ce n'est pas une
+  variation de style : c'est ce qui dit où s'arrête la démonstration.
+- **L'accroche n'a pas de libellé.** Posée sous le bandeau, sa place dit ce
+  qu'elle est, et la gouttière de 30 mm lui coûtait deux lignes de repli pour
+  un mot que personne ne lit. C'est le seul bloc du document dans ce cas.
 - **`contact.site` est la seule voie de retour.** Une feuille qui a quitté son
   support ne porte plus aucun chemin vers le formulaire de contact, qui est le
   seul moyen de joindre. L'URL est déclarée dans `contact.js` et consommée
@@ -573,8 +583,12 @@ comme avant, et rien n'est dupliqué.
   mesurer : avec les polices de substitution de Chromium, les lignes se
   replient ailleurs et il certifierait une page qui n'est pas celle qui sort.
 - **Quand la page déborde, on retire de la matière — on ne réduit pas le
-  corps.** Le recto est déjà à 8,6 pt ; en descendre ferait un CV illisible qui
-  tient en une page, ce qui n'est pas l'objectif.
+  corps.** Le recto est déjà à 8,4 pt. Le premier tri est la redite : une
+  preuve énoncée deux fois prend la place de celle qui manque. C'est ce qui a
+  fait tomber la catégorie de chaque projet transverse, qui nommait ce que le
+  texte juste après décrivait déjà, et les résumés de compétences, qui
+  redisaient l'accroche et les postes. Il reste ensuite huit millimètres de
+  réserve : c'est peu, et c'est le budget de tout ajout.
 
 ## Impression
 - `css/print.css` recompose le document, il ne rétrécit pas la page : bandeau

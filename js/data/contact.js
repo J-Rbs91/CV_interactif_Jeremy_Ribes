@@ -14,6 +14,17 @@ export const contact = {
      Déclarée ici et non dans `js/ui/share.js`, qui la portait en dur : deux
      copies d'une même URL finissent par diverger, et c'est celle du papier
      qu'on oublierait de corriger. */
+  /* Le recto A4 n'ouvre pas sur le meme registre que l'ecran. `role` et
+     `secondaryRole` sont faits pour une colonne d'identite qu'on lit posement,
+     avec le CV entier autour ; le papier n'a qu'une ligne pour dire le
+     territoire, et elle doit se lire comme une adresse de poste, pas comme une
+     presentation. `experience` sort du sous-titre le seul fait qui date le
+     profil : quatorze ans, avant que le lecteur n'ait rien lu d'autre. */
+  a4: {
+    positioning:
+      "Structuration de l’activité · Organisation & process · Outils métiers · Pilotage par la donnée",
+    experience: "14 ans d’expérience en environnement commercial",
+  },
   site: {
     host: "j-rbs91.github.io/CV_interactif_Jeremy_Ribes",
     url: "https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/",
