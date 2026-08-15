@@ -666,4 +666,304 @@
     font-weight: 400;
     color: var(--text-muted);
   }
+
+  /* =====================================================================
+     RECTO A4 — le CV proprement dit
+     -----------------------------------------------------------------------
+     Deuxieme document servi par la meme commande d'impression (voir
+     js/ui/print.js). Il ne partage aucune classe avec la presentation
+     complete : tout est prefixe `cv1-`, et c'est deliberé. Les regles du
+     dessus recomposent des composants d'ecran deplies sur plusieurs pages ;
+     celles-ci composent une page unique dont la contrainte de hauteur est la
+     regle principale. Melanger les deux jeux ferait qu'un reglage pris pour
+     la pagination de l'un romprait la tenue en une page de l'autre, sans
+     qu'aucun des deux selecteurs ne le laisse voir.
+
+     Ce qui reste commun est ce qui doit l'etre : `@page`, la coupe des fonds
+     et des rayons, la charte, et la langue mono des libelles.
+
+     Tout ajout ici se verifie en comptant les pages du PDF, jamais a l'oeil
+     dans le navigateur : un document qui deborde de trois millimetres sort
+     en deux pages dont la seconde est vide, et c'est le defaut le plus facile
+     a ne pas voir.
+     ===================================================================== */
+  .cv-a4 {
+    font-size: 8.6pt;
+    line-height: 1.4;
+    color: var(--ink-800);
+  }
+
+  /* --- Bandeau ---------------------------------------------------------- */
+  .cv1-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 6mm;
+    padding-bottom: 2.5mm;
+    border-bottom: 2.5pt solid var(--ink-900);
+  }
+
+  .cv1-identity {
+    flex: 1;
+  }
+
+  .cv1-photo {
+    width: 22mm;
+    height: 22mm;
+    flex: none;
+    object-fit: cover;
+  }
+
+  .cv1-head h1 {
+    font-family: var(--font-display);
+    font-size: 23pt;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink-900);
+  }
+
+  .cv1-role {
+    margin-top: 2mm;
+    font-size: 8pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--forest-700);
+  }
+
+  .cv1-role2 {
+    margin-top: 1.2mm;
+    font-size: 8.4pt;
+    font-weight: 600;
+    color: var(--ink-600);
+  }
+
+  .cv1-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3mm;
+    margin-top: 1.2mm;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7.6pt;
+    color: var(--text-muted);
+  }
+
+  /* L'adresse du CV en ligne est la seule voie de retour d'une feuille qui a
+     quitte son support : elle prend la flamme, comme toute adresse en ligne
+     du document. */
+  .cv1-site {
+    color: var(--flame-700);
+    font-weight: 500;
+  }
+
+  /* --- La grille du recto : libelle a gauche, matiere a droite ---------- */
+  .cv1-row,
+  .cv1-proof {
+    display: grid;
+    grid-template-columns: 26mm 1fr;
+    column-gap: 5mm;
+    align-items: baseline;
+    margin-top: 3mm;
+  }
+
+  .cv1-key {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 6.8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .cv1-val strong {
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  /* --- La seule tache chiffree de la page ------------------------------- */
+  .cv1-proof {
+    padding: 2.5mm 0;
+    margin-top: 3mm;
+    border-top: 0.5pt solid var(--ink-100);
+    border-bottom: 0.5pt solid var(--ink-100);
+  }
+
+  .cv1-stats {
+    display: flex;
+    align-items: baseline;
+    gap: 8mm;
+  }
+
+  .cv1-stat-value {
+    font-family: var(--font-display);
+    font-size: 14pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--flame-700);
+  }
+
+  .cv1-stat-label {
+    margin-left: 1.5mm;
+    font-size: 8pt;
+    color: var(--ink-600);
+  }
+
+  .cv1-note {
+    margin-top: 1.2mm;
+    font-size: 7.4pt;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  .cv1-note-lead {
+    margin: 0 0 1mm;
+  }
+
+  /* --- Competences : une ligne courante d'intitules --------------------- */
+  .cv1-skill {
+    font-weight: 800;
+    color: var(--n-ink);
+  }
+
+  /* Le point median est pose en `::after` sur l'etiquette precedente, comme
+     partout ailleurs dans le document : en `::before` sur la suivante, un
+     repli de ligne l'enverrait ouvrir la ligne d'apres. */
+  .cv1-skill:not(:last-child)::after {
+    content: " · ";
+    font-weight: 400;
+    color: var(--ink-300);
+  }
+
+  /* --- Deux colonnes : le parcours, et ce qu'il a produit --------------- */
+  .cv1-body {
+    display: grid;
+    grid-template-columns: 1fr 58mm;
+    column-gap: 7mm;
+    margin-top: 5mm;
+  }
+
+  /* Le filet unique du CV a l'ecran, a la mesure du papier : un axe, pas des
+     rails. Il separe les deux colonnes sans les mettre en boite. */
+  .cv1-side {
+    padding-left: 7mm;
+    border-left: 0.5pt solid var(--ink-100);
+  }
+
+  .cv1-block-title {
+    padding-bottom: 1.2mm;
+    margin-bottom: 2mm;
+    border-bottom: 1pt solid var(--ink-900);
+    font-family: var(--font-display);
+    font-size: 9.5pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-900);
+  }
+
+  .cv1-block + .cv1-block {
+    margin-top: 4.5mm;
+  }
+
+  /* --- Parcours --------------------------------------------------------- */
+  .cv1-job + .cv1-job {
+    padding-top: 2.5mm;
+    margin-top: 2.5mm;
+    border-top: 0.5pt solid var(--ink-100);
+  }
+
+  .cv1-job-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 2.5mm;
+  }
+
+  /* La date ouvre la ligne plutot que de tenir sa propre colonne : la colonne
+     principale ne fait plus 115 mm, et 30 mm de gouttiere de date y coutaient
+     un quart de la mesure de lecture des puces. */
+  .cv1-job-date {
+    order: -1;
+    width: 100%;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7.2pt;
+    color: var(--text-muted);
+  }
+
+  .cv1-job-role {
+    font-size: 10pt;
+    font-weight: 800;
+    color: var(--ink-900);
+  }
+
+  .cv1-job-company {
+    font-size: 8.6pt;
+    color: var(--forest-700);
+    font-weight: 600;
+  }
+
+  .cv1-job-context {
+    margin-top: 0.8mm;
+    color: var(--ink-600);
+  }
+
+  .cv1-bullets {
+    margin-top: 1.2mm;
+    list-style: none;
+  }
+
+  .cv1-bullets li {
+    position: relative;
+    padding: 0.4mm 0 0.4mm 3.5mm;
+  }
+
+  .cv1-bullets li::before {
+    content: "";
+    position: absolute;
+    top: 1.5mm;
+    left: 0;
+    width: 1.4mm;
+    height: 0.5pt;
+    background: var(--n-mark);
+  }
+
+  .cv1-job-result {
+    margin-top: 1.2mm;
+    padding-left: 3mm;
+    border-left: 1pt solid var(--n-line);
+    font-size: 8pt;
+    color: var(--ink-600);
+  }
+
+  /* --- Colonne laterale : outils, projets, formation -------------------- */
+  .cv1-items {
+    list-style: none;
+  }
+
+  .cv1-items li + li {
+    margin-top: 1.8mm;
+  }
+
+  .cv1-item-title {
+    display: block;
+    font-size: 8.6pt;
+    font-weight: 800;
+    color: var(--n-ink);
+  }
+
+  .cv1-item-note {
+    display: block;
+    font-size: 7.4pt;
+    line-height: 1.3;
+    color: var(--text-muted);
+  }
+
+  .cv1-foot {
+    margin-top: 5mm;
+    padding-top: 1.5mm;
+    border-top: 0.5pt solid var(--ink-100);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7pt;
+    color: var(--text-muted);
+  }
 }

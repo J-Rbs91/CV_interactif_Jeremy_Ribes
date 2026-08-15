@@ -24,6 +24,10 @@ const PATHS = {
   "arrow-up-right": '<path d="M8 16 16 8"/><path d="M9.6 8H16v6.4"/>',
   share:
     '<path d="M14 4h6v6"/><path d="M10 14 20 4"/><path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"/>',
+  /* Une feuille unique, coin replie. Elle se distingue de `printer` par ce
+     qu'elle montre : l'imprimante dit le geste, la feuille dit le format —
+     et c'est le format qui separe les deux documents. */
+  page: '<path d="M13.4 3.4H7.5a2 2 0 0 0-2 2v13.2a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8.4z"/><path d="M13.4 3.4v5h5"/><path d="M8.9 13.4h5.6M8.9 16.6h3.8"/>',
   printer:
     '<path d="M7.4 8.4V3.6h9.2v4.8"/><path d="M7.4 18.2H5.5a2 2 0 0 1-2-2v-5.8a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v5.8a2 2 0 0 1-2 2h-1.9"/><rect x="7.4" y="14.6" width="9.2" height="5.8" rx="1"/>',
 };
