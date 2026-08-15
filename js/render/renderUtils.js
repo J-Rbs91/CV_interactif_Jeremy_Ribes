@@ -30,10 +30,24 @@ export function renderAccentTags(tags, options = {}) {
    comme les catégories, les statuts et les liens.
 
    `aria-hidden` : l'état est déjà porté par `aria-expanded` sur le bouton.
-   Sans lui, le nom accessible du bouton contiendrait les deux libellés. */
-export function renderDiscloseCommand() {
+   Sans lui, le nom accessible du bouton contiendrait les deux libellés.
+
+   Le libellé fermé nomme ce qu'il y a derrière, et diffère d'une carte à
+   l'autre. Onze cartes portaient « Déplier le détail » : le battement de la
+   pastille répond à « y a-t-il quelque chose dessous ? », il ne répond pas à
+   « laquelle vaut mon clic ? ». Devant onze portes identiques, la réponse
+   rationnelle est de n'en ouvrir aucune — et c'est le contenu le plus dense
+   du CV qui restait derrière.
+
+   Chaque libellé nomme l'arbitrage de sa fiche, qui est ce que la fiche a de
+   propre. Il reste dans la langue de la seconde couche, comme toute commande
+   du document, et le chevron avec la pastille portent l'affordance.
+
+   Le repli sur « Déplier le détail » est délibéré : une fiche sans libellé
+   déclaré doit rester utilisable, pas disparaître. */
+export function renderDiscloseCommand(closedLabel) {
   return `<span class="accordion-cmd" aria-hidden="true">
-    <span class="accordion-cmd-label is-closed">Déplier le détail</span>
+    <span class="accordion-cmd-label is-closed">${closedLabel ?? "Déplier le détail"}</span>
     <span class="accordion-cmd-label is-open">Replier</span>
     <span class="accordion-chevron"></span>
   </span>`;

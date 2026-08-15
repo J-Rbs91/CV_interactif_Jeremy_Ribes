@@ -5,6 +5,7 @@ export const competences = [
     summary:
       "Développer le flux clients en tenant la marge sur chaque vente.",
     nature: "produit",
+    detailLabel: "Relancer sans remise",
     tags: ["Flux clients", "Marge", "Référencement local"],
     enjeu:
       "Relancer un magasin en difficulté sans acheter le chiffre par la remise.",
@@ -21,6 +22,7 @@ export const competences = [
     summary:
       "Transformer des pratiques implicites en procédures écrites et réellement utilisées.",
     nature: "cadre",
+    detailLabel: "Niveler la charge",
     tags: ["Procédures", "Back-office", "Nivellement de charge", "Priorisation"],
     enjeu:
       "Réduire les flottements d’organisation et les zones d’incertitude du fonctionnement quotidien.",
@@ -35,6 +37,7 @@ export const competences = [
     summary:
       "Concevoir et développer moi-même les outils qui manquent à l’activité.",
     nature: "produit",
+    detailLabel: "Partir de l’usage",
     tags: ["Irritant observé", "Adoption sans formation", "Google Apps Script", "Web", "Automatisation"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
@@ -49,6 +52,7 @@ export const competences = [
     summary:
       "Concevoir des indicateurs qui expliquent la performance, pas seulement qui la décrivent.",
     nature: "produit",
+    detailLabel: "Constater ou agir",
     tags: ["Indicateurs avancés", "Contrôles automatisés", "Reporting"],
     enjeu:
       "Passer d’un reporting qui constate à un reporting qui dit où agir.",
@@ -65,6 +69,7 @@ export const competences = [
     summary:
       "Traduire des objectifs en méthodes de travail que l’équipe accepte.",
     nature: "cadre",
+    detailLabel: "Faire adopter",
     tags: ["Direction", "Terrain", "Adhésion"],
     enjeu:
       "Faire adopter des méthodes dans des environnements où tout ce qui ajoute de la complexité est rejeté d’office.",

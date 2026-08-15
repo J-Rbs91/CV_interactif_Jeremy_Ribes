@@ -237,7 +237,12 @@
   .comp-toggle,
   .comp-toggle-main,
   .comp-details-inner,
-  .tool-details {
+  .tool-details,
+  .card-text,
+  .tl-bullets,
+  .tl-context,
+  .tl-outcome-text,
+  .tl-outcome-base {
     max-width: none;
   }
 
@@ -387,11 +392,14 @@
     margin: 0;
   }
 
+  /* Le statut a quitte la seconde couche a l'ecran : il n'est plus une
+     etiquette mais une phrase, et l'interlettrage qui convenait a des
+     capitales espacees delaverait un texte en bas de casse. */
   .tool-status {
     display: block;
     margin: 1mm 0 0;
-    font-size: 7pt;
-    letter-spacing: 0.1em;
+    font-size: 7.5pt;
+    letter-spacing: 0;
     color: var(--text-muted);
   }
 
@@ -473,9 +481,12 @@
     border-left: 1pt solid var(--n-line);
   }
 
+  /* Idem : c'est une phrase depuis l'ecran, elle se compose comme telle. */
   .tl-outcome-label {
     margin-bottom: 0.8mm;
-    font-size: 7pt;
+    font-size: 7.5pt;
+    letter-spacing: 0;
+    max-width: none;
   }
 
   .tl-outcome-base {
@@ -607,11 +618,14 @@
   }
 
   /* L'ecran separe desormais lui aussi par un point median, avec sa propre
-     gouttiere : sur le papier, seule l'espace du contenu doit compter. */
-  .chip + .chip::before,
-  .tag + .tag::before {
+     gouttiere : sur le papier, seule l'espace du contenu doit compter.
+     Il le pose en `::after` sur l'etiquette precedente, pour qu'un repli de
+     ligne n'envoie pas le point ouvrir la ligne suivante ; le papier suit,
+     sinon deux points s'afficheraient par intervalle. */
+  .chip:not(:last-child)::after,
+  .tag:not(:last-child)::after {
     content: " · ";
-    margin-right: 0;
+    margin-left: 0;
     color: var(--ink-300);
   }
 

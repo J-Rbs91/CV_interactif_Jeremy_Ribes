@@ -8,10 +8,31 @@ export const experiences = [
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
-      "Conception et envoi d’une campagne e-mail : base de plus de mille clients segmentée, 771 envois après vérification des consentements, 96,5 % de délivrabilité, 9 rendez-vous pris en magasin. Attribution suivie jusqu’à la prise de rendez-vous.",
+      "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
       "Contrôle croisé de deux sources indépendantes le logiciel métier et le suivi interne pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
+    ],
+    /* Les quatre chiffres de la campagne vivaient au milieu d'une puce, en
+       deuxième ligne : au même corps, à la même couleur et dans le même flux
+       que le reste. Or le chiffre est le plus fort aimant visuel d'une page
+       de texte, et le seul élément d'un CV qu'un lecteur en diagonale
+       s'arrête pour vérifier — celui-là ne se voyait pas.
+
+       Ils prennent donc le traitement déjà en place sur la fiche suivante,
+       qui est le seul endroit du CV qu'on ne peut pas rater. La puce garde
+       ce que les chiffres ne disent pas : la segmentation, la vérification
+       des consentements, la délivrabilité, l'attribution suivie.
+
+       Deux valeurs et non quatre. La règle de rareté de la flamme plafonne
+       à cinq taches par page, et la fiche suivante en porte déjà deux :
+       quatre ici les auraient banalisées, et c'est leur rareté qui fait tout
+       leur poids. On garde le volume traité et le résultat commercial, les
+       deux bouts de la chaîne. */
+    statsLabel: "Campagne e-mail conçue et envoyée depuis la base clients",
+    stats: [
+      { value: "771", label: "envois" },
+      { value: "9 RDV", label: "pris en magasin" },
     ],
   },
   {

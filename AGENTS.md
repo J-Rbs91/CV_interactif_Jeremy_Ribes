@@ -234,8 +234,9 @@ et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
   `<a>` — le lien d'un outil vit à côté, hors du bouton. C'est pourquoi
   `renderAccentTags` prend une option `element`.
 - **L'affordance est une pastille nommée, pas un chevron.**
-  `renderDiscloseCommand()` pose « Déplier le détail » / « Replier » et le
-  chevron, dans la langue de la seconde couche. Le chevron seul, à
+  `renderDiscloseCommand(libellé)` pose le libellé fermé de la carte et
+  « Replier », plus le chevron, dans la langue de la seconde couche. Le
+  chevron seul, à
   l'extrémité droite d'une colonne large, ne se lisait pas comme une
   commande — c'était le défaut signalé : on ne voyait pas qu'il y avait
   quelque chose à déplier. Le mot souligné qui a suivi se lisait, mais
@@ -252,6 +253,16 @@ et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
   montre pas qu'on peut ouvrir. Revenir dans une section la retrouve
   repliée — l'état d'ouverture appartient à la visite en cours, pas au
   document.
+- **Deux cartes voisines ne portent jamais le même libellé fermé.** Les onze
+  cartes affichaient « Déplier le détail ». Le battement répond à « y a-t-il
+  quelque chose dessous ? » ; il ne répond pas à « laquelle vaut mon
+  clic ? ». Devant onze portes identiques, la réponse rationnelle est de
+  n'en ouvrir aucune — et c'est le contenu le plus dense du CV qui restait
+  derrière. Le libellé vient du champ `detailLabel` des données et nomme
+  l'arbitrage de la fiche, qui est ce qu'elle a de propre. Une fiche ajoutée
+  sans `detailLabel` retombe sur « Déplier le détail » : elle reste
+  utilisable, mais elle rouvre le défaut — le libellé fait partie de la
+  fiche, pas de la mise en forme.
 - **C'est la pastille qui porte l'invitation**, par un battement
   (`accordion-appel`, `css/sections.css`). Il tient dans un dixième du
   cycle : six secondes d'immobilité pour une demi-seconde de mouvement de
@@ -358,10 +369,67 @@ JavaScript. Or le document livré ne contient qu'un `#app` vide.
   d'extracteurs l'ignorent. Il doit néanmoins rester cohérent avec les
   données lorsqu'on modifie un intitulé, une date ou un chiffre.
 
+## Circulation — ce qui se casse sans se voir
+
+Trois mécanismes de navigation n'ont aucun symptôme visible dans le code
+quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
+
+- **En étroit, le conteneur qui défile est `#app` lui-même**, et `render()`
+  remplace son contenu sans le remplacer, lui : son `scrollTop` survit au
+  changement de section, borné à la nouvelle hauteur. Depuis 1 400 px dans
+  Outils, un clic sur Compétences atterrissait à 993 — soit 140 px sous le
+  haut de la section demandée, titre hors écran et première carte coupée en
+  deux. `resetMobileScrollPosition()` cale sur le bandeau de navigation, pas
+  sur le haut du document : le résumé d'identité occupe six cents pixels, y
+  renvoyer ferait relire six fois le même en-tête. La mesure se prend
+  **après avoir remis `scrollTop` à zéro** — le bandeau est collant, mesuré
+  depuis une position défilée il rend sa position d'accroche, l'écart vaut
+  zéro et rien ne bouge. En large le problème ne se pose pas :
+  `.content-body` est reconstruit à chaque rendu. Le drapeau
+  `shouldResetMobileScroll` distingue le changement de section de la bascule
+  large ↔ étroit, qui doit conserver la position acquise.
+- **La modale fermée porte `inert`, jamais `aria-hidden`.** Elle reste dans
+  le document en `opacity: 0` pour que sa transition d'ouverture ait un état
+  de départ — même raison que les panneaux d'accordéon. Mais elle contient
+  cinq éléments focalisables : avec le seul `aria-hidden`, la douzième
+  tabulation déposait le focus sur sa croix de fermeture, invisible et sans
+  contour, et un lecteur d'écran annonçait du vide pendant que le focus
+  était réel. `inert` retire d'un seul attribut le parcours clavier et
+  l'arbre d'accessibilité ; `aria-hidden` en plus rouvrirait la
+  contradiction. La fermeture **rend le focus avant** de poser `inert` : un
+  élément qui devient inerte en portant le focus le perd au profit du
+  `<body>`, et le clavier repartirait du haut de la page.
+- **La vue intégrale a une porte visible.** `renderPrintDocument()` produit
+  le CV entier ; il n'était atteignable que par la commande d'impression du
+  navigateur, soit dix-sept interactions pour un lecteur qui voulait tout
+  voir. `[data-print]` appelle `window.print()` et rien d'autre : c'est
+  `beforeprint` qui monte la vue, quel que soit le déclencheur, et la monter
+  aussi depuis le bouton la monterait deux fois. Les déclencheurs se relient
+  dans `bindUi()` — les écouteurs de fenêtre se posent une fois, les boutons
+  sont reconstruits à chaque rendu.
+- **Le rail étroit porte `short`, pas `label`.** À 390 px il n'affiche que
+  trois entrées sur six et les coupe en pleine lettre. Le masque de débord
+  dit qu'il y en a d'autres ; il ne dit pas combien. La mention du bandeau
+  porte donc un repérage — « Section 3 sur 6 » — et non une consigne d'usage.
+  Une affordance qui a besoin d'une notice se reprend, elle ne se commente
+  pas.
+
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
 - Préserver la compatibilité GitHub Pages avec des chemins relatifs.
 - Privilégier des changements minimaux et sûrs.
+- **Le gras compose une deuxième couche de lecture**, qu'on le veuille ou
+  non : un lecteur en diagonale ne lit qu'elle. Elle doit former un énoncé
+  complet quand on ne lit qu'elle — le test est mécanique, on masque tout
+  sauf le gras et on relit — et rester **sous 30 % du bloc**. Au-delà, elle
+  ne hiérarchise plus rien, elle alourdit. Un passage par bloc suffit.
+- **Un résultat mesuré sort du corps de texte.** Le chiffre est le plus fort
+  aimant visuel d'une page, et le seul élément qu'un lecteur en diagonale
+  s'arrête pour vérifier ; laissé dans la phrase, il ne se voit pas. Les
+  champs `stats` / `statsLabel` / `statsBase` existent pour ça. La règle de
+  rareté de la flamme les plafonne : trois à cinq valeurs par section, pas
+  davantage — au-delà elles se banalisent, et c'est leur rareté qui fait
+  tout leur poids.
 
 ## Typographie
 - Neuf paliers déclarés en tête de `css/base.css` (`--fs-display` →
@@ -382,16 +450,42 @@ JavaScript. Or le document livré ne contient qu'un `#app` vide.
   élargie) pour l'identité et les titres de section, c'est le lien visuel
   avec la séquence d'ouverture ; `--font-sans` (Manrope) pour la lecture ;
   `--font-mono` (JetBrains Mono) pour la seconde couche — libellés,
-  étiquettes, dates, statuts, catégories. Tout ce qui donne du contexte
-  sans être le message passe en mono.
-- **Une mesure de lecture, `--mesure` (74ch).** La fenêtre monte à 1 600 px
+  étiquettes, dates, catégories. Tout ce qui donne du contexte sans être le
+  message passe en mono.
+- **La frontière est « ce qui classe », pas « ce qui est court ».** Le
+  registre mono cumule quatre facteurs de ralentissement : 11 px, capitales,
+  `0.16em` d'interlettrage, et un contraste au plancher du seuil AA. Les
+  capitales suppriment en plus la silhouette du mot, qui est ce qui permet
+  la lecture rapide. On n'y met donc que ce qui ne se lit pas en continu.
+  Les statuts d'outil en sont sortis (`.tool-status`, `.tl-outcome-label`) :
+  « Transmis à la demande du directeur régional GrandVision » et « Resté en
+  service après mon départ » ne donnent pas de contexte, ce sont les seules
+  preuves d'adoption par des tiers du document — la différence entre « il a
+  fait des outils » et « ses outils sont utilisés sans lui ». Avant de poser
+  du mono sur un contenu, se demander s'il classe ou s'il affirme.
+- **Une mesure de lecture, `--mesure` (62ch).** La fenêtre monte à 1 600 px
   et la colonne de contenu à plus de 1 100 : un résumé d'outil y tenait sur
   une seule ligne de plus de cent quarante signes, et le statut, poussé au
   bord droit par un `margin-left: auto`, se retrouvait à neuf cents pixels
-  du titre qu'il qualifie. Elle borne les deux accordéons — bouton, résumé
-  et panneau ensemble, sinon le contour de focus encadre du vide. En `ch` et
-  non en pixels : une mesure suit le corps du texte qu'elle borne. Elle est
-  neutralisée à l'impression, où la page borne déjà la colonne.
+  du titre qu'il qualifie. En `ch` et non en pixels : une mesure suit le
+  corps du texte qu'elle borne. Elle est neutralisée à l'impression, où la
+  page borne déjà la colonne.
+- **62ch et non 74, et le `ch` est un piège.** Il vaut la largeur du « 0 »,
+  plus étroite que la moyenne des lettres de Manrope : à 74ch la borne
+  rendait 85 à 89 signes par ligne, déjà au-dessus de la plage de confort de
+  45 à 75. La valeur n'était pas fausse, son unité ne dit pas ce qu'on croit
+  qu'elle dit. Toute modification de `--mesure` se vérifie sur le rendu, en
+  comptant les signes d'une ligne, jamais sur le nombre écrit dans le CSS.
+- **Elle borne toute la prose, pas seulement les accordéons.** Elle ne
+  tenait que les deux accordéons — bouton, résumé et panneau ensemble, sinon
+  le contour de focus encadre du vide. Les puces d'expérience et de projet,
+  le contexte de poste et le chapeau d'Outils couraient pendant ce temps
+  jusqu'à 136 signes, soit le double, dans les sections qu'un lecteur ouvre
+  en premier. Une mesure qui ne s'applique qu'à une partie des textes ne
+  repose pas l'œil : elle lui demande de se recalibrer d'un bloc à l'autre.
+  Tout nouveau conteneur de prose la consomme, et `css/print.css` la relâche
+  dans la même liste — une borne d'écran oubliée là rogne la colonne pendant
+  que le bloc du dessous prend toute la largeur.
 - `css/print.css` a son propre système : il ne consomme pas ces paliers.
 
 ## Couleur

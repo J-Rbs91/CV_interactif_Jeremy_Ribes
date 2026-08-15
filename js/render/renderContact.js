@@ -21,9 +21,28 @@ function renderShareButton(itemClassName) {
     </button>`;
 }
 
+/* La vue integrale existait deja — `renderPrintDocument()` la produit, toutes
+   fiches depliees, et elle sert le bloc lu par les moteurs. Mais elle n'etait
+   atteignable que par la commande d'impression du navigateur : aucun bouton
+   nulle part. Un lecteur qui voulait tout voir devait cliquer les six
+   sections puis ouvrir les onze cartes, soit dix-sept interactions pour un
+   contenu que le document sait rendre d'un bloc.
+
+   C'est aussi ce que fait un recruteur qui verse le CV a un dossier. */
+function renderFullCvButton(itemClassName) {
+  return `<button
+      type="button"
+      class="${buildClassName("contact-form-trigger", itemClassName)}"
+      data-print
+      title="Ouvrir le CV entier, toutes fiches dépliées"
+    >
+      <span class="ic">${icon("printer")}</span> CV complet · PDF
+    </button>`;
+}
+
 function renderContactItem(item, itemClassName) {
   if (item.type === "contact-form") {
-    return `${renderShareButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
+    return `${renderShareButton(itemClassName)}${renderFullCvButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
       <span class="ic">${icon(item.icon)}</span> ${item.text}
     </button>`;
   }

@@ -117,8 +117,20 @@
      1 600 px, la colonne de contenu a plus de 1 100 : un resume d'outil y
      tenait sur une ligne de plus de cent quarante signes.
      `ch` et non des pixels : la mesure suit le corps du texte qu'elle borne,
-     ce qui est precisement ce qu'on veut d'une mesure. */
-  --mesure: 74ch;
+     ce qui est precisement ce qu'on veut d'une mesure.
+
+     62ch et non 74. Le `ch` vaut la largeur du « 0 », plus etroite que la
+     moyenne des lettres de Manrope : a 74ch la borne rendait 85 a 89 signes
+     par ligne, deja au-dessus de la plage de confort de 45 a 75. La valeur
+     n'etait pas fausse, son unite ne dit simplement pas ce qu'on croit
+     qu'elle dit. 62ch rend ~74 signes, mesures sur le rendu.
+
+     Elle borne desormais toute la prose, et non les deux seuls accordeons :
+     les puces d'experience et de projet couraient jusqu'a 136 signes, soit
+     le double de la borne que le reste du CV respectait. Une mesure qui ne
+     s'applique qu'a une partie des textes ne repose pas l'oeil, elle lui
+     demande de se recalibrer d'un bloc a l'autre. */
+  --mesure: 62ch;
 
   /* --- Familles ---------------------------------------------------- */
   /* Archivo a chasse elargie porte l'identite et les titres de section :

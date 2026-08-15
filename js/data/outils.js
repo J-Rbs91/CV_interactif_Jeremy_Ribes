@@ -10,6 +10,7 @@ export const outils = [
     category: "Aide à la décision commerciale",
     nature: "produit",
     status: "Transmis à la demande du directeur régional GrandVision",
+    detailLabel: "Pourquoi pas une formation",
     chips: ["Arbitrage en vente", "Réseaux de soins", "Rentabilité", "Temps réel", "Google Apps Script"],
     summary:
       "Support d’arbitrage qui identifie, pendant la vente, le meilleur compromis entre besoin technique, budget du client et rentabilité du magasin.",
@@ -28,6 +29,7 @@ export const outils = [
     category: "Organisation quotidienne du magasin",
     nature: "produit",
     status: "En usage quotidien depuis sa conception",
+    detailLabel: "Le moment qui manquait",
     chips: ["Coordination d’équipe", "Attribution des tâches", "Priorisation", "Back-office", "Agrégation", "Agenda Google"],
     summary:
       "Point de départ de journée : une vue unique du planning, de l’agenda et des dossiers en cours, et la répartition nominative des tâches entre les collaborateurs.",
@@ -46,6 +48,7 @@ export const outils = [
     category: "Outillage du quotidien en magasin",
     nature: "produit",
     status: "En usage quotidien en magasin",
+    detailLabel: "Outiller la tâche",
     chips: ["Tâches récurrentes", "Fiabilisation des calculs", "Standardisation", "Données locales", "Application web"],
     /* Exclu du bandeau « Produits en ligne » (cf. getLiveProducts). */
     liveProduct: false,
@@ -70,6 +73,7 @@ export const outils = [
     category: "Suivi commercial en magasin",
     nature: "produit",
     status: "En usage quotidien par toute l’équipe",
+    detailLabel: "Trois règles avant l’outil",
     chips: ["Suivi de dossiers", "Tiers payant", "Relances", "Google Apps Script"],
     summary:
       "Suivi partagé qui tient chaque devis de son édition à sa conclusion : statut du tiers payant, prochaine action datée, motif de perte et historique des échanges avec le client.",
@@ -88,6 +92,7 @@ export const outils = [
     category: "Suivi commercial & pilotage de la performance",
     nature: "produit",
     status: "Abouti · en attente de déploiement pilote",
+    detailLabel: "Où le tableur s’arrête",
     chips: ["Priorisation des relances", "Causes de perte", "Périmètres de visibilité", "Aide à la décision"],
     link: { label: "Découvrir PANUM", url: "https://panum.fr/" },
     summary:
@@ -107,6 +112,7 @@ export const outils = [
     category: "Planification des effectifs",
     nature: "produit",
     status: "Resté en service après mon départ",
+    detailLabel: "Rouvrir les règles",
     chips: ["Charge et effectifs", "Contraintes d’ouverture", "Planification", "Ressources", "Flux client"],
     summary:
       "Outil de construction de planning alignant les effectifs présents sur la charge réelle et les contraintes d’ouverture du point de vente.",

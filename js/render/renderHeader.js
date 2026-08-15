@@ -26,7 +26,7 @@ function renderNavItem(section, activeSection, options = {}) {
   return `<button type="button" class="${navItemClassName}" data-section="${section.id}" aria-pressed="${isActive ? "true" : "false"}">
     <div class="nav-icon">${icon(section.icon)}</div>
     <div class="nav-copy">
-      <div class="nav-label">${section.label}</div>
+      <div class="nav-label">${compact ? (section.short ?? section.label) : section.label}</div>
     </div>
   </button>`;
 }
@@ -36,10 +36,19 @@ function renderNavigation(activeSection, options = {}) {
   const navigationClassName = compact ? "mobile-nav" : "nav-list";
 
   if (compact) {
+    /* Le rail ne montre que trois entrees sur six a 390 px, et le masque de
+       debord dit deja qu'il y en a d'autres. Ce qu'il ne disait pas, c'est
+       COMBIEN : le lecteur ignorait l'etendue de ce qui l'attendait, ce qui
+       est precisement le travail d'une navigation. La mention passe donc
+       d'une consigne d'usage — « balayer pour voir les autres sections » — a
+       un reperage : ou l'on est, et sur combien. Une affordance qui a besoin
+       d'une notice se reprend, elle ne se commente pas. */
+    const position = sections.findIndex(({ id }) => id === activeSection) + 1;
+
     return `<div class="mobile-nav-shell" data-mobile-nav-shell>
       <div class="mobile-nav-meta">
         <div class="mobile-nav-title">Navigation</div>
-        <div class="mobile-nav-hint">Balayer pour voir les autres sections</div>
+        <div class="mobile-nav-hint">Section ${position || 1} sur ${sections.length}</div>
       </div>
       <div class="mobile-nav-viewport" data-mobile-nav-viewport>
         <div class="${navigationClassName}" data-mobile-nav>
@@ -60,8 +69,21 @@ function renderNavigation(activeSection, options = {}) {
   </div>`;
 }
 
+/* `inert` et non `aria-hidden`. La modale reste dans le document, en
+   `opacity: 0`, pour que sa transition d'ouverture ait un etat de depart —
+   c'est la meme raison qui garde les panneaux d'accordeon montes. Mais elle
+   contient cinq elements focalisables : avec le seul `aria-hidden`, la
+   douzieme tabulation depuis le haut de la page deposait le focus sur sa
+   croix de fermeture, invisible et sans contour. L'utilisateur au clavier
+   pilotait un formulaire qu'il ne voyait pas, et un lecteur d'ecran
+   annoncait du vide pendant que le focus etait reel — un focus dans une
+   zone `aria-hidden` est explicitement interdit.
+
+   `inert` retire d'un seul attribut le parcours clavier ET l'arbre
+   d'accessibilite, ce qui rend `aria-hidden` redondant : le poser en plus
+   reintroduirait la contradiction qu'on corrige. */
 function renderContactModal() {
-  return `<div id="contact-modal" class="contact-modal-overlay" aria-hidden="true">
+  return `<div id="contact-modal" class="contact-modal-overlay" inert>
     <div class="contact-modal-body" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
       <button type="button" class="contact-modal-close" data-close-contact aria-label="Fermer">&times;</button>
       <div class="contact-modal-title" id="contact-modal-title">Me contacter</div>
@@ -121,7 +143,7 @@ export function renderMobileShell(activeSection, sectionContent) {
       ${renderIntroStrip({ className: "intro-strip-mobile" })}
     </div>
 
-    <div class="mobile-nav-sticky">
+    <div class="mobile-nav-sticky" data-mobile-nav-sticky>
       ${renderNavigation(activeSection, { compact: true })}
     </div>
 

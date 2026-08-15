@@ -43,7 +43,7 @@ function renderOutilCard(outil, index, expandedTool, expandAll) {
           <span class="tool-summary-text">${outil.summary}</span>
           ${renderAccentTags(outil.chips, { className: "chip-row-lg", element: "span" })}
           <span class="tool-footline">
-            ${renderDiscloseCommand()}
+            ${renderDiscloseCommand(outil.detailLabel)}
             <span class="tool-status">${outil.status}</span>
           </span>
         </span>

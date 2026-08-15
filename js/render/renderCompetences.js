@@ -37,7 +37,7 @@ function renderCompetenceCard(competence, expandedCompetenceId, expandAll) {
           <span class="comp-title">${competence.title}</span>
           <span class="comp-desc">${competence.summary}</span>
           ${renderAccentTags(competence.tags, { element: "span" })}
-          ${renderDiscloseCommand()}
+          ${renderDiscloseCommand(competence.detailLabel)}
         </span>
       </button>
       <div

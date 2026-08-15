@@ -24,6 +24,8 @@ const PATHS = {
   "arrow-up-right": '<path d="M8 16 16 8"/><path d="M9.6 8H16v6.4"/>',
   share:
     '<path d="M14 4h6v6"/><path d="M10 14 20 4"/><path d="M20 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"/>',
+  printer:
+    '<path d="M7.4 8.4V3.6h9.2v4.8"/><path d="M7.4 18.2H5.5a2 2 0 0 1-2-2v-5.8a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v5.8a2 2 0 0 1-2 2h-1.9"/><rect x="7.4" y="14.6" width="9.2" height="5.8" rx="1"/>',
 };
 
 export function icon(name, options = {}) {
