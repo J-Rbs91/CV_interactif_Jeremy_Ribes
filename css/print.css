@@ -707,7 +707,7 @@
   .cv1-head {
     display: flex;
     align-items: flex-start;
-    gap: 6mm;
+    gap: 5mm;
     padding-bottom: 3.5mm;
     border-bottom: 2.5pt solid var(--ink-900);
   }
@@ -716,11 +716,43 @@
     flex: 1;
   }
 
+  /* Le rond a besoin de `!important` : la regle `*` en tete de fichier pose
+     `border-radius: 0 !important` pour retirer les arrondis d'ecran, et elle
+     emportait la photo avec eux. C'est le seul endroit du document qui a une
+     raison de reprendre son rayon — l'identite est un portrait, pas une
+     vignette. */
   .cv1-photo {
     width: 22mm;
     height: 22mm;
     flex: none;
     object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  /* Le QR ne se lit pas, il se scanne : il n'entre dans aucun budget de ligne
+     et occupe la place laissee par les adresses retirees. A 20 mm pour un
+     symbole 4-M de 37 modules, chaque module fait 0,54 mm — au-dessus du
+     seuil de lecture d'un telephone, qu'on situe autour de 0,4 mm. Le
+     reduire, c'est le rendre decoratif. */
+  .cv1-qr {
+    flex: none;
+    text-align: center;
+  }
+
+  .cv1-qr img {
+    display: block;
+    width: 18mm;
+    height: 18mm;
+  }
+
+  .cv1-qr figcaption {
+    margin-top: 0.8mm;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 5.6pt;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
   }
 
   .cv1-head h1 {
@@ -734,11 +766,26 @@
 
   /* Le territoire professionnel, en une ligne. C'est la premiere chose lue
      apres le nom et elle doit se lire comme une adresse de poste. */
+  /* Une seule ligne, et c'est une contrainte de sens : ce sont quatre
+     territoires separes par des points medians, et une coupure tombe
+     forcement au milieu de l'un d'eux — on lisait « Pilotage / par la
+     donnee ». Toute reformulation se remesure. */
   .cv1-positioning {
     margin-top: 1.8mm;
-    font-size: 8.6pt;
+    font-size: 8.4pt;
     font-weight: 800;
+    line-height: 1.35;
     color: var(--forest-700);
+  }
+
+  .cv1-positioning span {
+    white-space: nowrap;
+  }
+
+  .cv1-positioning span:not(:last-child)::after {
+    content: " · ";
+    white-space: normal;
+    color: var(--forest-300);
   }
 
   .cv1-facts {

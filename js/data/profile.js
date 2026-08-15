@@ -127,7 +127,7 @@ export const formationContent = {
   /* Une ligne, avec l'intitule et l'annee devant. Repliee, elle tombait en
      derniere ligne de page, la position la moins sure du document. */
   a4Note:
-    "En autodidacte : process, data, automatisation, développement d’outils.",
+    "En autodidacte : process, data, automatisation.",
   continuousSkills: [
     {
       title: "Formalisation de process",

@@ -42,14 +42,26 @@ function renderRow(label, body, className = "") {
   </div>`;
 }
 
-/* Pas d'adresses en ligne sur le recto. Le lecteur arrive du site : lui
-   redonner l'URL du site et celles des trois produits, c'est lui rendre le
-   chemin par lequel il est venu.
+/* Le QR remplace les quatre adresses en ligne qui occupaient le bandeau. Le
+   lecteur arrive du site : lui rendre l'URL par laquelle il est venu ne lui
+   apprend rien, et quatre lignes d'adresses monospace etaient le seul element
+   technique d'un en-tete par ailleurs calme.
 
-   La contrepartie est assumee et connue : detachee de son support — imprimee,
-   versee a un dossier, transferee — la feuille ne porte plus aucune voie de
-   retour, faute d'e-mail ou de telephone dans les donnees. Le jour ou l'un
-   des deux existe, il prend cette place, qui est la bonne. */
+   Mais une feuille se detache de son support — imprimee, versee a un dossier,
+   transferee — et n'a alors plus aucune voie de retour, faute d'e-mail ou de
+   telephone dans les donnees. Le QR resout les deux : il ne se lit pas, donc
+   ne coute aucune ligne, et il rouvre le chemin depuis le papier.
+
+   `assets/img/qr-cv.svg` est un fichier fige, pas un rendu : il encode
+   `contact.site.url` et se regenere a la main si l'adresse change (la commande
+   est dans AGENTS.md). Un encodeur QR embarque aurait pese plus lourd que le
+   reste du projet pour une image qui ne change jamais. */
+function renderQr() {
+  return `<figure class="cv1-qr">
+    <img src="./assets/img/qr-cv.svg" width="37" height="37" alt="Code QR vers le CV interactif de ${contact.name}" />
+    <figcaption>CV interactif</figcaption>
+  </figure>`;
+}
 
 /* Le portrait tient dans la hauteur que l'identite occupe deja : a 22 mm il
    est plus court que le nom, le positionnement et les adresses empiles, et ne
@@ -59,11 +71,14 @@ function renderHead() {
   return `<header class="cv1-head">
     <div class="cv1-identity">
       <h1>${contact.name}</h1>
-      <div class="cv1-positioning">${contact.a4.positioning}</div>
+      <div class="cv1-positioning">${contact.a4.positioning
+        .map((item) => `<span>${item}</span>`)
+        .join("")}</div>
       <div class="cv1-facts">${contact.a4.experience} · ${
         contact.items.find((item) => item.icon === "pin")?.text ?? ""
       }</div>
     </div>
+    ${renderQr()}
     ${renderPortrait("cv1-photo")}
   </header>`;
 }
