@@ -4,6 +4,10 @@
    competences enoncees au-dessus. Chaque poste tient donc en une ligne de
    reperes, sans puces.
 
+   Une ligne par poste, jamais deux : trois postes qui se replient, ce sont
+   trois lignes prises a l'aeration de la page. Toute reformulation se
+   remesure.
+
    Un resume ecrit plutot qu'une selection de puces : ces lignes ne disent pas
    la meme chose que `bullets` en plus court, elles disent autre chose — le
    territoire du poste, pas ses realisations, qui sont deja portees par les
@@ -62,7 +66,7 @@ export const experiences = [
       "Conception d’Opti’Profit pour amener l’arbitrage produit besoin technique, budget, réseaux de soins, marge au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
     ],
     a4Summary:
-      "Redynamisation commerciale · organisation du point de vente · recrutement et formation · pilotage · conception d’outils",
+      "Redynamisation commerciale · organisation du point de vente · recrutement et formation · conception d’outils",
     /* Un écart chiffré sans sa base de comparaison se lit comme une
        affirmation invérifiable, et c'est la première question posée en
        entretien. La base est donc portée par la fiche elle-même, au même
@@ -90,6 +94,6 @@ export const experiences = [
       "Bascule progressive vers les sujets d’organisation : méthodes de travail, fiabilisation des calculs récurrents et du suivi des dossiers.",
     ],
     a4Summary:
-      "Onze ans de terrain dans trois enseignes et trois organisations : vente, dossiers complexes, puis évolution vers l’organisation et la fiabilisation des méthodes.",
+      "Onze ans de terrain, trois enseignes, trois organisations : vente, dossiers complexes, puis organisation et fiabilisation des méthodes.",
   },
 ];

@@ -21,8 +21,16 @@ export const contact = {
      presentation. `experience` sort du sous-titre le seul fait qui date le
      profil : quatorze ans, avant que le lecteur n'ait rien lu d'autre. */
   a4: {
-    positioning:
-      "Structuration de l’activité · Organisation & process · Outils métiers · Pilotage par la donnée",
+    /* Quatre territoires, declares separement et non en une chaine. Assemblee,
+       la ligne se repliait au milieu de l'un d'eux — on lisait « Pilotage par
+       la / donnee ». En items, la coupure ne peut tomber qu'entre deux, ou
+       elle se lit. */
+    positioning: [
+      "Structuration de l’activité",
+      "Organisation & process",
+      "Outils métiers",
+      "Pilotage par la donnée",
+    ],
     experience: "14 ans d’expérience en environnement commercial",
   },
   site: {

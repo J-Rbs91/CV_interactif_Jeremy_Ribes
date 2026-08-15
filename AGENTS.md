@@ -25,6 +25,13 @@
 - `robots.txt`, `sitemap.xml` : autorisation explicite des robots, y compris
   ceux des modèles de langage, qui se taisent souvent sans règle les nommant.
 - `assets/img/` : ressources image du projet.
+- `assets/img/qr-cv.svg` : le code QR du recto A4, vers `contact.site.url`.
+  Fichier figé, pas un rendu : il ne change que si l'adresse change, et se
+  régénère alors à la main —
+  `python3 -c "import segno; segno.make('<url>', error='m').save('assets/img/qr-cv.svg', scale=1, border=2, dark='#0c2740', light=None, xmldecl=False, omitsize=True)"`
+  (segno installé hors projet : le dépôt reste sans dépendance). Symbole 4-M,
+  37 modules ; à 18 mm de côté chaque module fait 0,49 mm, au-dessus du seuil
+  de lecture d'un téléphone. Le réduire le rendrait décoratif.
 - `assets/img/portrait/` : la photo affichée dans le CV. Elle est distincte
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
   cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
@@ -580,11 +587,23 @@ tous deux `window.print()`. Ils ne diffèrent que par la valeur de `data-print`.
 - **L'accroche n'a pas de libellé.** Posée sous le bandeau, sa place dit ce
   qu'elle est, et la gouttière de 30 mm lui coûtait deux lignes de repli pour
   un mot que personne ne lit. C'est le seul bloc du document dans ce cas.
-- **`contact.site` est la seule voie de retour.** Une feuille qui a quitté son
-  support ne porte plus aucun chemin vers le formulaire de contact, qui est le
-  seul moyen de joindre. L'URL est déclarée dans `contact.js` et consommée
-  aussi par `js/ui/share.js` : deux copies d'une même adresse divergent, et
-  c'est celle du papier qu'on oublierait de corriger.
+- **Un code QR, pas des adresses en ligne.** Les quatre URL qui occupaient le
+  bandeau ne servaient à rien : le lecteur arrive du site, lui rendre le chemin
+  par lequel il est venu ne lui apprend pas grand-chose, et c'était le seul
+  élément technique d'un en-tête par ailleurs calme. Mais une feuille se
+  détache de son support — imprimée, versée à un dossier, transférée — et n'a
+  alors plus aucune voie de retour, faute d'e-mail ou de téléphone dans les
+  données. Le QR résout les deux : il ne se lit pas, donc ne coûte aucune
+  ligne, et il rouvre le chemin depuis le papier. Le jour où un e-mail existe,
+  il vient à côté, pas à la place.
+- **La photo reprend son rond avec `!important`.** La règle `*` en tête de
+  `print.css` pose `border-radius: 0 !important` pour retirer les arrondis
+  d'écran, et elle emportait la photo. C'est le seul endroit du document qui a
+  une raison de le reprendre : l'identité est un portrait, pas une vignette.
+- **Le positionnement est une liste, pas une chaîne.** Assemblée, la ligne se
+  repliait au milieu d'un item — on lisait « Pilotage par la / donnée ». En
+  items déclarés séparément et rendus insécables, la coupure ne peut tomber
+  qu'entre deux, où elle se lit.
 - **Ça se vérifie en comptant les pages, jamais à l'œil.** `npm run check:cv`.
   `#print-view` est masqué hors impression, et un débordement de trois
   millimètres sort une seconde page presque vide sans rien changer à ce qu'on

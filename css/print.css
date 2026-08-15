@@ -691,9 +691,15 @@
      en deux pages dont la seconde est vide, et c'est le defaut le plus facile
      a ne pas voir. `npm run check:cv`.
      ===================================================================== */
+  /* Marge laterale propre au recto, en plus de celle de `@page`. Modifier
+     `@page` toucherait aussi la presentation complete, dont la pagination est
+     reglee sur 15 mm ; ce retrait est donc pose ici. Il porte la colonne a
+     170 mm pour 20 mm de blanc de chaque cote — un texte qui court d'un bord
+     a l'autre d'une A4 se lit comme un formulaire, pas comme un CV. */
   .cv-a4 {
-    font-size: 8.4pt;
-    line-height: 1.38;
+    padding: 0 4mm;
+    font-size: 8.2pt;
+    line-height: 1.4;
     color: var(--ink-800);
   }
 
@@ -701,8 +707,8 @@
   .cv1-head {
     display: flex;
     align-items: flex-start;
-    gap: 6mm;
-    padding-bottom: 2.5mm;
+    gap: 5mm;
+    padding-bottom: 3.5mm;
     border-bottom: 2.5pt solid var(--ink-900);
   }
 
@@ -710,11 +716,43 @@
     flex: 1;
   }
 
+  /* Le rond a besoin de `!important` : la regle `*` en tete de fichier pose
+     `border-radius: 0 !important` pour retirer les arrondis d'ecran, et elle
+     emportait la photo avec eux. C'est le seul endroit du document qui a une
+     raison de reprendre son rayon — l'identite est un portrait, pas une
+     vignette. */
   .cv1-photo {
     width: 22mm;
     height: 22mm;
     flex: none;
     object-fit: cover;
+    border-radius: 50% !important;
+  }
+
+  /* Le QR ne se lit pas, il se scanne : il n'entre dans aucun budget de ligne
+     et occupe la place laissee par les adresses retirees. A 20 mm pour un
+     symbole 4-M de 37 modules, chaque module fait 0,54 mm — au-dessus du
+     seuil de lecture d'un telephone, qu'on situe autour de 0,4 mm. Le
+     reduire, c'est le rendre decoratif. */
+  .cv1-qr {
+    flex: none;
+    text-align: center;
+  }
+
+  .cv1-qr img {
+    display: block;
+    width: 18mm;
+    height: 18mm;
+  }
+
+  .cv1-qr figcaption {
+    margin-top: 0.8mm;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 5.6pt;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
   }
 
   .cv1-head h1 {
@@ -728,11 +766,26 @@
 
   /* Le territoire professionnel, en une ligne. C'est la premiere chose lue
      apres le nom et elle doit se lire comme une adresse de poste. */
+  /* Une seule ligne, et c'est une contrainte de sens : ce sont quatre
+     territoires separes par des points medians, et une coupure tombe
+     forcement au milieu de l'un d'eux — on lisait « Pilotage / par la
+     donnee ». Toute reformulation se remesure. */
   .cv1-positioning {
     margin-top: 1.8mm;
-    font-size: 8.6pt;
+    font-size: 8.4pt;
     font-weight: 800;
+    line-height: 1.35;
     color: var(--forest-700);
+  }
+
+  .cv1-positioning span {
+    white-space: nowrap;
+  }
+
+  .cv1-positioning span:not(:last-child)::after {
+    content: " · ";
+    white-space: normal;
+    color: var(--forest-300);
   }
 
   .cv1-facts {
@@ -741,32 +794,13 @@
     color: var(--ink-600);
   }
 
-  .cv1-links {
-    margin-top: 1mm;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 7.2pt;
-  }
-
-  /* Les adresses en ligne prennent la flamme, comme partout dans le document.
-     Groupees sur une ligne, elles font une seule tache et non quatre : la
-     regle de rarete porte sur les zones de couleur, pas sur les mots. */
-  .cv1-site {
-    color: var(--flame-700);
-    font-weight: 500;
-  }
-
-  .cv1-links .cv1-site:not(:last-child)::after {
-    content: " · ";
-    color: var(--ink-300);
-  }
-
   /* --- Lignes a libelle : profil, et les trois mentions de pied ---------- */
   .cv1-row {
     display: grid;
     grid-template-columns: 30mm 1fr;
     column-gap: 5mm;
     align-items: baseline;
-    margin-top: 2.2mm;
+    margin-top: 3mm;
   }
 
   .cv1-key {
@@ -789,40 +823,46 @@
      30 mm lui coutait deux lignes de repli pour un mot que personne ne lit.
      C'est le seul bloc du document dans ce cas. */
   .cv1-pitch {
-    padding-bottom: 2.5mm;
-    margin-top: 2.5mm;
+    padding-bottom: 4.5mm;
+    margin-top: 4mm;
     border-bottom: 0.5pt solid var(--ink-100);
   }
 
   .cv1-pitch p + p {
-    margin-top: 1.2mm;
+    margin-top: 2mm;
   }
 
   /* --- Les trois blocs de demonstration --------------------------------- */
   .cv1-part {
-    margin-top: 3mm;
+    margin-top: 5mm;
   }
 
   .cv1-part-title {
-    padding-bottom: 1.2mm;
-    margin-bottom: 2mm;
-    border-bottom: 1pt solid var(--ink-900);
+    padding-bottom: 1.6mm;
+    margin-bottom: 3.4mm;
+    border-bottom: 0.75pt solid var(--ink-300);
     font-family: var(--font-display);
-    font-size: 9.5pt;
+    font-size: 8.6pt;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-900);
+    letter-spacing: 0.14em;
+    color: var(--ink-700);
   }
 
   /* --- Competences : l'enonce, puis les faits --------------------------- */
   .cv1-comp + .cv1-comp {
-    margin-top: 1.8mm;
+    margin-top: 2.9mm;
   }
 
+  /* Encre, et pas la couleur de nature. A l'ecran, `--n-ink` fait sens : le
+     lecteur voit les six sections, il finit par lire que le vert dit ce qui
+     produit et le bleu ce qui cadre. Sur un recto isole, ce systeme n'a aucun
+     endroit ou s'enseigner : cinq intitules dont deux verts et trois bleus se
+     lisent comme une alternance arbitraire, et c'est ce qui faisait
+     desordonne. Une seule couleur de titre, un seul accent sur la page. */
   .cv1-comp-title {
     font-weight: 800;
-    color: var(--n-ink);
+    color: var(--ink-900);
   }
 
   .cv1-comp-title::after {
@@ -836,15 +876,15 @@
      noyaient — cinq lignes de faits par competence, vingt-cinq sur la page,
      et plus aucun intitule ne ressortait. */
   .cv1-comp-proofs {
-    margin-top: 0.6mm;
-    font-size: 7.4pt;
-    line-height: 1.32;
+    margin-top: 1.1mm;
+    font-size: 7.2pt;
+    line-height: 1.35;
     color: var(--text-muted);
   }
 
   .cv1-comp-proof:not(:last-child)::after {
     content: " · ";
-    color: var(--n-mark);
+    color: var(--ink-300);
   }
 
   /* --- Resultats & adoption : trois colonnes ---------------------------- */
@@ -865,7 +905,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    color: var(--n-ink);
+    color: var(--ink-900);
   }
 
   /* Seule la premiere cellule porte un chiffre mesure, donc seule elle prend
@@ -878,7 +918,7 @@
   }
 
   .cv1-cell-text {
-    margin-top: 1mm;
+    margin-top: 1.4mm;
     font-size: 7.6pt;
     line-height: 1.32;
     color: var(--ink-700);
@@ -893,7 +933,7 @@
 
   /* --- Parcours : un cinquieme de la page ------------------------------- */
   .cv1-job + .cv1-job {
-    margin-top: 1.6mm;
+    margin-top: 2.8mm;
   }
 
   .cv1-job-head {
@@ -903,8 +943,11 @@
     gap: 0 3mm;
   }
 
+  /* La date ouvre la ligne sans tenir sa propre colonne. A 30 mm de
+     gouttiere, le resume du poste n'avait plus que 137 mm et se repliait sur
+     deux lignes — trois postes, trois lignes perdues, pour aligner des dates
+     que leur seule position en tete de ligne suffit a reperer. */
   .cv1-job-date {
-    width: 30mm;
     flex: none;
     font-family: "JetBrains Mono", monospace;
     font-size: 7.2pt;
@@ -919,14 +962,14 @@
 
   .cv1-job-company {
     font-size: 8.4pt;
-    font-weight: 600;
-    color: var(--forest-700);
+    font-weight: 500;
+    color: var(--ink-600);
   }
 
   /* Aligne sur les intitules, pas sur la date : la colonne de matiere est
      celle qui se lit, la date n'est qu'un reperage. */
   .cv1-job-summary {
-    margin: 0.4mm 0 0 33mm;
+    margin: 0.8mm 0 0;
     font-size: 7.8pt;
     line-height: 1.32;
     color: var(--ink-600);
@@ -934,12 +977,12 @@
 
   /* --- Mentions de pied ------------------------------------------------- */
   .cv1-project + .cv1-project {
-    margin-top: 1mm;
+    margin-top: 1.8mm;
   }
 
   .cv1-project-title {
     font-weight: 800;
-    color: var(--forest-700);
+    color: var(--ink-900);
   }
 
   .cv1-project-title::after,
@@ -957,7 +1000,7 @@
 
   .cv1-method {
     font-weight: 600;
-    color: var(--ink-700);
+    color: var(--ink-800);
   }
 
   .cv1-formation-title {
@@ -973,14 +1016,5 @@
 
   .cv1-formation-note {
     color: var(--ink-600);
-  }
-
-  .cv1-foot {
-    margin-top: 4mm;
-    padding-top: 1.5mm;
-    border-top: 0.5pt solid var(--ink-100);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 6.8pt;
-    color: var(--text-muted);
   }
 }

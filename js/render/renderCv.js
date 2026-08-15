@@ -32,8 +32,8 @@ import { contact } from "../data/contact.js";
 import { competences } from "../data/competences.js";
 import { experiences } from "../data/experiences.js";
 import { a4Content, formationContent } from "../data/profile.js";
-import { getLiveProducts, renderPortrait } from "./renderContact.js";
-import { linkHost, natureClass } from "./renderUtils.js";
+import { renderPortrait } from "./renderContact.js";
+import { natureClass } from "./renderUtils.js";
 
 function renderRow(label, body, className = "") {
   return `<div class="cv1-row${className ? ` ${className}` : ""}">
@@ -42,18 +42,25 @@ function renderRow(label, body, className = "") {
   </div>`;
 }
 
-/* Les adresses en ligne, groupees : celle du CV d'abord — c'est la seule voie
-   de retour d'une feuille qui a quitte son support — puis les produits
-   reellement joignables. Un recruteur qui veut verifier n'a pas a chercher. */
-function renderLinks() {
-  const hosts = [
-    contact.site.host,
-    ...getLiveProducts().map((product) => linkHost(product.url)),
-  ];
+/* Le QR remplace les quatre adresses en ligne qui occupaient le bandeau. Le
+   lecteur arrive du site : lui rendre l'URL par laquelle il est venu ne lui
+   apprend rien, et quatre lignes d'adresses monospace etaient le seul element
+   technique d'un en-tete par ailleurs calme.
 
-  return `<div class="cv1-links">${hosts
-    .map((host) => `<span class="cv1-site">${host}</span>`)
-    .join("")}</div>`;
+   Mais une feuille se detache de son support — imprimee, versee a un dossier,
+   transferee — et n'a alors plus aucune voie de retour, faute d'e-mail ou de
+   telephone dans les donnees. Le QR resout les deux : il ne se lit pas, donc
+   ne coute aucune ligne, et il rouvre le chemin depuis le papier.
+
+   `assets/img/qr-cv.svg` est un fichier fige, pas un rendu : il encode
+   `contact.site.url` et se regenere a la main si l'adresse change (la commande
+   est dans AGENTS.md). Un encodeur QR embarque aurait pese plus lourd que le
+   reste du projet pour une image qui ne change jamais. */
+function renderQr() {
+  return `<figure class="cv1-qr">
+    <img src="./assets/img/qr-cv.svg" width="37" height="37" alt="Code QR vers le CV interactif de ${contact.name}" />
+    <figcaption>CV interactif</figcaption>
+  </figure>`;
 }
 
 /* Le portrait tient dans la hauteur que l'identite occupe deja : a 22 mm il
@@ -64,12 +71,14 @@ function renderHead() {
   return `<header class="cv1-head">
     <div class="cv1-identity">
       <h1>${contact.name}</h1>
-      <div class="cv1-positioning">${contact.a4.positioning}</div>
+      <div class="cv1-positioning">${contact.a4.positioning
+        .map((item) => `<span>${item}</span>`)
+        .join("")}</div>
       <div class="cv1-facts">${contact.a4.experience} · ${
         contact.items.find((item) => item.icon === "pin")?.text ?? ""
       }</div>
-      ${renderLinks()}
     </div>
+    ${renderQr()}
     ${renderPortrait("cv1-photo")}
   </header>`;
 }
@@ -172,9 +181,5 @@ export function renderCvDocument() {
        <span class="cv1-formation-note">${formationContent.a4Note}</span>`,
     )}
 
-    <footer class="cv1-foot">
-      Compétences détaillées, six outils et projets documentés :
-      <span class="cv1-site">${contact.site.host}</span>
-    </footer>
   </div>`;
 }
