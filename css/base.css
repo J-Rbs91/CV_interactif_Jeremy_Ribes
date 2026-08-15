@@ -140,6 +140,40 @@
   --font-sans: "Manrope", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
+  /* Ces trois piles se declarent ici et nulle part ailleurs. `intro.css` en
+     avait deux copies et `print.css` huit — chacune vivait sa vie, et le
+     document imprime titrait en Manrope pendant que l'ecran titrait en
+     Archivo sans que rien ne le signale.
+
+     `font-stretch: expanded` accompagne `--font-display` partout ou il est
+     consomme, y compris la ou cela parait redondant : le service de polices
+     ne sert qu'une seule chasse d'Archivo (125 %), donc le titre sort elargi
+     sans qu'on demande rien — tant que la police vient de la. Le lecteur qui
+     a une Archivo installee sur son poste, lui, a l'axe de chasse complet, et
+     la meme regle lui rend un titre a 100 % : la page change de voix sans
+     qu'aucun essai local ne le montre. La valeur reste ecrite en toutes
+     lettres a cote de la famille qu'elle qualifie plutot qu'en token — elle
+     se verifie ainsi d'un coup d'oeil, la ou une indirection demanderait
+     d'aller la lire ailleurs. */
+
+  /* --- Interlettrage des capitales --------------------------------------- */
+  /* Une capitale espacee n'a plus de silhouette de mot : l'interlettrage est
+     ce qui lui rend une forme. Le projet en portait sept valeurs — 0.08,
+     0.1, 0.12, 0.14, 0.16, 0.18, 0.2 — reparties dans six fichiers, et
+     aucune ne distinguait un role d'un autre : elles dataient de regles
+     ecrites a des moments differents. Trois suffisent, parce qu'il n'y a
+     que trois situations.
+
+     Une valeur unique serait fausse quelque part : l'espace entre les
+     lettres grandit avec le corps, si bien que ce qui est juste a 11 px est
+     disloque a 7 pt et serre a 19 px. Le palier se choisit donc par role et
+     par support, jamais une fois pour toutes. */
+  --track-cap: 0.16em; /* libelle mono en capitales, ecran (11-12 px) */
+  --track-cap-print: 0.1em; /* le meme au papier (5,6-7,5 pt) : la page ne
+                               peut pas payer la largeur, et l'encre rend a
+                               cette taille ce que l'espacement donnait */
+  --track-cap-title: 0.14em; /* titre en capitales, ecran et papier */
+
   /* --- Rythme : l'espace encode le lien logique ------------------------- */
   /* Quatre paliers s'arretaient a 32 px, et le contenu se separait presque
      partout au meme cran de 24 px : deux blocs d'une meme liste et deux
@@ -273,6 +307,29 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Les controles de formulaire n'heritent pas la famille du document : un
+   `button` sans `font-family` sort dans la police d'interface du systeme,
+   Arial ici. Six textes du CV etaient dans ce cas sans qu'aucune regle ne
+   les designe — le titre et le resume de chaque document du panneau
+   d'export, le bouton d'envoi et la fermeture de la fenetre de contact.
+   C'est le defaut le plus difficile a voir en relisant le CSS : la regle
+   qui manque ne s'ecrit nulle part.
+
+   Le raccourci `font` et non `font-family` seule : la taille et la graisse
+   par defaut d'un controle viennent du systeme au meme titre que sa famille,
+   et un bouton pose dans une ligne de texte doit en prendre le corps. Ecrite
+   sur le nom d'element, la regle a la specificite la plus faible qui soit :
+   toute classe du projet la reprend sans avoir a lutter. C'est ce qui permet
+   de retirer le `font: inherit` que `.contact-row button` portait — pose sur
+   une classe, il gagnait contre `.contact-form-trigger` et rendait a la
+   police de lecture les deux commandes que le CV voulait en mono. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
 html,

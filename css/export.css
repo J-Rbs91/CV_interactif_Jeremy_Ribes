@@ -95,18 +95,23 @@
   border-bottom: 3px solid var(--ink-900);
 }
 
+/* Les cinq libelles du panneau etaient en 700, contre 500 partout ailleurs a
+   l'ecran. La seconde couche est en 500 — c'est ce qui la tient derriere le
+   message, et une porte qui s'ouvre par-dessus le CV est le dernier endroit
+   ou elle avait une raison de crier plus fort que lui. */
 .export-kicker {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
 }
 
 .export-title {
   margin-top: 6px;
   font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-lead);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -131,10 +136,11 @@
   margin-bottom: var(--space-2);
   border-bottom: 1px solid var(--ink-200);
   font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-xs);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--track-cap-title);
   color: var(--ink-700);
 }
 
@@ -228,9 +234,9 @@
 .export-native-label {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--track-cap);
 }
 
 /* --- Lignes a libelle : la gouttiere du recto, en pixels ---------------- */
@@ -251,9 +257,9 @@
   font-family: var(--font-mono);
   white-space: nowrap;
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
 }
 
@@ -308,9 +314,9 @@
 .export-action-label {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--track-cap);
 }
 
 /* La confirmation se dit sur le bouton : c'est la que le regard est, et la
@@ -388,17 +394,25 @@
   padding-top: 3px;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--track-cap);
   white-space: nowrap;
   color: var(--text-muted);
 }
 
 .export-doc-title {
   display: block;
+  /* Un titre de bloc, et il en prend la voix : Archivo sur tous les titres,
+     c'est la regle du projet. Le nom du document sortait en Arial gras — un
+     `div` dans un `button`, qui n'heritait donc aucune famille (voir la
+     regle des controles de formulaire dans `base.css`) — a cote de titres
+     Archivo, dans la meme fenetre. */
+  font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-body);
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--ink-900);
 }
 

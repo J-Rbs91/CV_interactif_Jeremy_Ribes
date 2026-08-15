@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node scripts/build-cv-integral.mjs",
     "verify": "node scripts/build-cv-integral.mjs --verify",
-    "check:cv": "node scripts/check-cv-a4.mjs"
+    "check:cv": "node scripts/check-cv-a4.mjs",
+    "check:typo": "node scripts/check-typo.mjs"
   }
 }

@@ -59,9 +59,13 @@ const browserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36";
 
 function curl(url, destination) {
+  /* `--retry` : le service de polices renvoie par intermittence un 404 sur un
+     fichier qu'il sert correctement au coup suivant. Sans reprise, le
+     controle echoue sur un incident reseau et se fait lire comme un
+     debordement de page. */
   execFileSync(
     "curl",
-    ["-sSf", "-A", browserAgent, url, "-o", destination],
+    ["-sSf", "--retry", "3", "--retry-all-errors", "-A", browserAgent, url, "-o", destination],
     { stdio: "pipe" },
   );
 }

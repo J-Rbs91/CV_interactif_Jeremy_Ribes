@@ -74,7 +74,7 @@
   font-weight: 500;
   color: var(--forest-700);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   margin-bottom: 5px;
 }
 
@@ -113,7 +113,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
 }
 
@@ -182,10 +182,6 @@
   z-index: 1;
   pointer-events: auto;
   cursor: pointer;
-}
-
-.contact-row button {
-  font: inherit;
 }
 
 .contact-row .ic {
@@ -325,7 +321,6 @@
   appearance: none;
   background: none;
   color: var(--text-dim);
-  font: inherit;
   text-align: left;
   transition:
     color 0.18s ease,
@@ -474,7 +469,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--track-cap);
 }
 
 .content-head-mobile h2 {
@@ -612,7 +607,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   white-space: nowrap;
   padding: 0;
   border: 0;
@@ -649,7 +644,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
 }
 
 .chip-row-lg .chip {
@@ -684,7 +679,7 @@
   font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--track-cap);
   color: var(--text-muted);
   margin-top: var(--space-3);
   margin-bottom: 0;
@@ -756,7 +751,7 @@
   color: var(--text-muted);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--track-cap);
   margin-bottom: var(--space-2);
 }
 
@@ -891,8 +886,9 @@
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: var(--track-cap);
   color: var(--text-dim);
   transition:
     border-color 0.15s ease,
@@ -965,6 +961,11 @@
 }
 
 .contact-modal-title {
+  /* Le titre de la fenetre etait le seul titre de bloc du CV a sortir en
+     Manrope : la famille manquait, l'interlettrage serre d'un titre display
+     etait la, et Manrope le recevait sans rien dire. */
+  font-family: var(--font-display);
+  font-stretch: expanded;
   font-size: var(--fs-lead);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -983,7 +984,11 @@
   flex-direction: column;
   gap: 4px;
   font-size: var(--fs-label);
-  font-weight: 600;
+  /* 500, comme toute la seconde couche. La valeur etait 600, que JetBrains
+     Mono ne charge pas : le navigateur prenait la graisse au-dessus et ces
+     libelles sortaient en 700, plus lourds que les etiquettes qu'ils
+     cotoient. Une graisse absente ne rate pas, elle glisse. */
+  font-weight: 500;
   color: var(--text-dim);
 }
 
@@ -993,7 +998,9 @@
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: var(--fs-body);
-  font-family: inherit;
+  /* La famille est heritee par la regle des controles de formulaire de
+     `base.css`, qui couvre aussi les boutons — ce champ etait le seul a
+     l'avoir demandee pour lui-meme. */
   background: var(--card);
   transition: border-color 0.15s ease;
 }
