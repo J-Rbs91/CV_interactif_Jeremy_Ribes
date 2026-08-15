@@ -32,8 +32,7 @@ export const competences = [
     a4Statement:
       "Développer l’activité tout en maintenant la qualité économique des ventes.",
     a4Proofs: [
-      "Reprise d’un magasin en difficulté",
-      "Actions commerciales locales et référencement",
+      "Actions commerciales locales",
       "Trafic et marge travaillés ensemble",
       "Arbitrage produit en situation de vente",
     ],
@@ -56,9 +55,9 @@ export const competences = [
     a4Statement:
       "Transformer les pratiques implicites en méthodes claires et utilisables.",
     a4Proofs: [
-      "Procédures de contrôle, de dispatch et de retards",
-      "Montages et vérifications en J+1",
-      "Rendez-vous de livraison lissés sur la semaine",
+      "Procédures de contrôle, dispatch, retards",
+      "Vérifications en J+1",
+      "Livraisons lissées sur la semaine",
       "Plannings construits sur l’activité attendue",
     ],
   },
@@ -80,9 +79,9 @@ export const competences = [
     a4Statement:
       "Concevoir des outils qui sécurisent une décision et suppriment les ressaisies.",
     a4Proofs: [
-      "Opti’Profit : arbitrage produit et marge en vente",
-      "Brief’Maker : planning, dossiers, tâches attribuées",
-      "Suivi devis & tiers payant : statut, relance, causes de perte",
+      "Opti’Profit : arbitrage produit et marge",
+      "Brief’Maker : planning, dossiers, tâches",
+      "Suivi devis & tiers payant : statut et relance",
       "Hub magasin : calculs et documents standardisés",
     ],
   },
@@ -107,9 +106,9 @@ export const competences = [
       "Construire des indicateurs qui orientent l’action, pas seulement qui la constatent.",
     a4Proofs: [
       "Indicateurs avancés séparés des retardés",
-      "Délais, relances, dossiers à risque, causes de perte",
+      "Délais, relances, dossiers à risque",
       "Rapprochement automatisé de deux sources",
-      "PANUM : pilotage des causes de sous-performance",
+      "PANUM : causes de sous-performance",
     ],
   },
   {
@@ -134,9 +133,8 @@ export const competences = [
     a4Proofs: [
       "Tâches et responsabilités nominatives",
       "Brief quotidien commun à l’équipe",
-      "Recrutement et formation de deux collaborateurs",
+      "Deux collaborateurs recrutés et formés",
       "Méthodes adoptées dans deux enseignes",
-      "Outils utilisés sans avoir été imposés",
     ],
   },
 ];

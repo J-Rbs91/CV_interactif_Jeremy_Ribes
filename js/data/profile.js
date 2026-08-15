@@ -55,12 +55,22 @@ export const profileContent = {
    aucune fiche ne les porte, elles se lisent en croisant les statuts des six
    outils et le resultat d'un poste. */
 export const a4Content = {
-  /* Deux phrases, pas trois. La premiere dit le deplacement du profil, la
-     seconde la methode — et le gras, relu seul, doit former un enonce
-     complet, comme partout ailleurs. */
+  /* Un paragraphe, et c'est un resserrage assume. Il y en avait deux —
+     le deplacement du profil, puis la methode — qui disaient juste et
+     tenaient six lignes en tete de page. Un lecteur qui accorde trente
+     secondes a une feuille n'en depense pas cinq sur une profession de foi :
+     les deux idees restent, dans une seule phrase chacune, et les trois
+     lignes rendues vont au blanc du bloc suivant.
+
+     Ce qui est parti n'est pas du sens, c'est de la redite : « suivi de la
+     performance et coordination entre objectifs de direction et contraintes
+     d'execution » enonce deux des cinq competences qui suivent, et
+     l'enumeration des quatre formes de reponse redisait la methode que le
+     verbe portait deja.
+
+     Le gras, relu seul, doit toujours former un enonce complet. */
   pitch: [
-    "Professionnel de terrain ayant progressivement <strong>déplacé sa valeur vers l’organisation de l’activité</strong> : formalisation des process, conception d’outils métiers, suivi de la performance et coordination entre objectifs de direction et contraintes d’exécution.",
-    "Capacité à <strong>partir d’un irritant concret, identifier sa cause et apporter la réponse la plus simple</strong> : modification de pratique, clarification d’une responsabilité, suppression d’une étape ou création d’un outil.",
+    "Profil de terrain ayant <strong>déplacé sa valeur vers la structuration de l’activité</strong> : process formalisés, outils métiers conçus sur mesure, pilotage rendu possible. Je pars d’un irritant concret et je tranche — changer une pratique, nommer une responsabilité, ou construire l’outil qui manquait.",
   ],
   /* Trois preuves, et trois seulement : impact economique, adoption terrain,
      transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur

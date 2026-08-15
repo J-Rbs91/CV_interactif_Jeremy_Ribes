@@ -71,6 +71,7 @@ function renderHead() {
   return `<header class="cv1-head">
     <div class="cv1-identity">
       <h1>${contact.name}</h1>
+      <div class="cv1-role">${contact.a4.targetRole}</div>
       <div class="cv1-positioning">${contact.a4.positioning
         .map((item) => `<span>${item}</span>`)
         .join("")}</div>

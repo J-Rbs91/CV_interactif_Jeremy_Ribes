@@ -643,10 +643,19 @@ CV. Elles sont maintenant derrière une porte unique.
   page, et la chronologie un cinquième : le parcours ne raconte plus les
   postes, il donne la profondeur de terrain qui rend les compétences
   crédibles. Une ligne de repères par poste, sans puces.
-- **Hiérarchie de la page**, et elle n'est pas celle du site : nom et
-  positionnement, accroche en deux phrases, cinq compétences prouvées,
+- **Hiérarchie de la page**, et elle n'est pas celle du site : nom, fonction
+  visée et territoires, accroche en un paragraphe, cinq compétences prouvées,
   résultats et adoption, parcours condensé, puis projets / méthodes /
   formation en mentions de pied.
+- **La fonction visée précède les territoires**, et c'est le seul endroit du
+  projet qui la porte. Le bandeau disait très bien ce que je sais faire et pas
+  une fois quel poste je cherche : un lecteur qui trie des candidatures veut
+  d'abord ranger le dossier quelque part, et quatre domaines de compétence ne
+  rangent rien. Elle prend donc la capitale, l'interlettrage et la forêt ; les
+  territoires descendent d'un cran, en encre — deux lignes fortes côte à côte
+  ne hiérarchisent rien. Le site, qu'on lit en entier, se présente par ce
+  qu'il démontre ; une feuille lue en trente secondes se présente par ce
+  qu'elle vise.
 - **`renderCv.js` ne rédige rien.** Chaque chaîne vient de `js/data/`. Une
   phrase composée dans le fichier de rendu serait une copie qui dérive au
   premier ajustement des données — c'est le défaut du `<noscript>` supprimé.
@@ -668,6 +677,18 @@ CV. Elles sont maintenant derrière une porte unique.
 - **L'accroche n'a pas de libellé.** Posée sous le bandeau, sa place dit ce
   qu'elle est, et la gouttière de 30 mm lui coûtait deux lignes de repli pour
   un mot que personne ne lit. C'est le seul bloc du document dans ce cas.
+- **Un paragraphe d'accroche, pas deux.** Le déplacement du profil et la
+  méthode disaient juste et tenaient six lignes en tête de page. Un lecteur
+  qui accorde trente secondes à une feuille n'en dépense pas cinq sur une
+  profession de foi. Les deux idées restent, une phrase chacune ; ce qui est
+  parti était de la redite — deux des cinq compétences qui suivent, et
+  l'énumération des formes de réponse que le verbe portait déjà.
+- **Le blanc rendu par une coupe va aux intervalles, pas au contenu.** C'est
+  toute la différence entre alléger et faire de la place : une page qu'on
+  vide de 48 mots pour y remettre autre chose n'a rien gagné. Les 15 % de
+  texte retirés sur cette passe sont allés aux marges entre compétences,
+  entre blocs et sous l'accroche — et le reste au blanc de pied, qui est la
+  tolérance d'impression du document.
 - **Un code QR, pas des adresses en ligne.** Les quatre URL qui occupaient le
   bandeau ne servaient à rien : le lecteur arrive du site, lui rendre le chemin
   par lequel il est venu ne lui apprend pas grand-chose, et c'était le seul
@@ -685,19 +706,34 @@ CV. Elles sont maintenant derrière une porte unique.
   repliait au milieu d'un item — on lisait « Pilotage par la / donnée ». En
   items déclarés séparément et rendus insécables, la coupure ne peut tomber
   qu'entre deux, où elle se lit.
-- **Ça se vérifie en comptant les pages, jamais à l'œil.** `npm run check:cv`.
+- **Ça se vérifie en imprimant, jamais à l'œil.** `npm run check:cv`.
   `#print-view` est masqué hors impression, et un débordement de trois
   millimètres sort une seconde page presque vide sans rien changer à ce qu'on
   voit dans le navigateur. Le contrôle charge les vraies polices avant de
   mesurer : avec les polices de substitution de Chromium, les lignes se
   replient ailleurs et il certifierait une page qui n'est pas celle qui sort.
+- **Il mesure aussi la réserve, parce que « ça tient » ne dit pas de combien.**
+  Le recto a tenu des mois avec 0,7 mm de blanc sous la dernière ligne : le
+  contrôle passait, et le fichier sortait quand même en deux pages sur un
+  téléphone. Un test binaire ne pouvait pas le voir. La réserve se mesure sans
+  rien mesurer dans le document — on réimprime le même contenu sur des pages
+  de plus en plus courtes, par dichotomie, et la dernière qui tient encore en
+  un feuillet donne le blanc disponible. En dessous de six millimètres, le
+  contrôle échoue.
 - **Quand la page déborde, on retire de la matière — on ne réduit pas le
   corps.** Le recto est déjà à 8,4 pt. Le premier tri est la redite : une
   preuve énoncée deux fois prend la place de celle qui manque. C'est ce qui a
   fait tomber la catégorie de chaque projet transverse, qui nommait ce que le
   texte juste après décrivait déjà, et les résumés de compétences, qui
-  redisaient l'accroche et les postes. Il reste ensuite huit millimètres de
-  réserve : c'est peu, et c'est le budget de tout ajout.
+  redisaient l'accroche et les postes. Le second tri est la longueur des
+  preuves : ce sont des syntagmes de repérage, pas des phrases — « Procédures
+  de contrôle, dispatch, retards » vaut « Procédures de contrôle, de dispatch
+  et de retards » et tient sur une ligne au lieu de deux.
+- **La réserve de pied se mesure, elle ne s'estime pas.** Elle est aujourd'hui
+  de dix millimètres — le document fait 255,6 mm dans une zone imprimable de
+  266. C'est le budget de tout ajout, et c'est aussi ce qui absorbe les écarts
+  de rendu d'un appareil à l'autre : à zéro, la page sort juste ici et en deux
+  pages ailleurs.
 
 ## Impression
 - `css/print.css` recompose le document, il ne rétrécit pas la page : bandeau
