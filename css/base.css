@@ -319,8 +319,9 @@ body {
    et s'y dessinait comme un rectangle. Et rester SOUS la modale (1000) et
    la sequence (9999), qui sont des plans a part entiere.
 
-   Il disparait a l'impression : la regle `*` de print.css coupe toutes les
-   images de fond. */
+   Il disparait a l'impression, mais pas par la regle `*` de print.css comme
+   on l'a cru : elle coupe les images de fond des elements, et ne selectionne
+   aucun pseudo-element. C'est une regle nommee qui l'y retire. */
 body::after {
   content: "";
   position: fixed;

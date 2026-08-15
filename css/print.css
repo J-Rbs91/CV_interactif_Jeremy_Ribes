@@ -20,9 +20,21 @@
     margin: 16mm 15mm 15mm;
   }
 
+  /* `min-height` autant que `height` : `base.css` pose `min-height: 100vh`
+     sur les deux, et en pagination `vh` vaut la zone imprimable. La boite du
+     document faisait donc exactement une page, quel que soit le contenu —
+     260 mm de recto etires a 266. Rien ne s'y voyait : la page restait juste,
+     mais sa tolerance etait nulle, et il suffisait d'un arrondi de moins d'un
+     millimetre a l'impression pour que ce trop-plein de blanc bascule en une
+     seconde page vide. C'est ce que rapportait Chrome sous Android.
+
+     Un document imprime n'a aucune raison d'occuper la page : il fait la
+     hauteur de ce qu'il porte, et la feuille suivante n'existe que s'il y a
+     de la matiere a y mettre. */
   html,
   body {
     height: auto;
+    min-height: 0;
     overflow: visible;
     padding: 0;
     background: #ffffff;
@@ -37,6 +49,15 @@
 
   #print-view {
     display: block;
+  }
+
+  /* Le grain de `base.css` se croyait coupe par la regle `*` ci-dessous, qui
+     retire les images de fond. Elle ne l'atteint pas : `*` ne selectionne
+     aucun pseudo-element. Il s'imprimait donc, en plan fixe, sur chaque page
+     — un voile sur du papier, la ou l'ecran lui demandait juste de faire
+     surface. */
+  body::after {
+    display: none;
   }
 
   * {
