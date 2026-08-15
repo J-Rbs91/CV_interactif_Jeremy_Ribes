@@ -5,38 +5,50 @@ const printViewId = "print-view";
 let printView = null;
 
 /* Deux documents sortent par la meme commande d'impression : la presentation
-   complete, six pages, et le recto A4. Le mode est pose par le bouton juste
-   avant `window.print()`, lu par `mountPrintView()` et **toujours** rendu a
-   sa valeur par defaut au demontage.
+   complete, six pages, et le recto A4. Le bouton clique declare le document
+   attendu (`requestedMode`) ; `mountedMode` retient celui qui est reellement
+   dans la page.
 
-   Ce retour au defaut n'est pas une precaution : c'est lui qui garantit qu'un
-   Ctrl+P — qui n'a traverse aucun bouton et n'a donc rien pu declarer — sorte
-   la presentation complete, y compris apres une impression du recto. Sans
-   remise a zero, le mode devient un etat remanent que rien dans l'interface
-   n'affiche, et le raccourci clavier rendrait un document different selon ce
-   qui a ete imprime avant. */
+   **Deux variables et non une**, parce qu'elles peuvent diverger et que c'est
+   precisement le cas qui casse. Une vue montee une fois puis jamais demontee
+   — un navigateur qui n'emet pas `afterprint` suffit — restait servie telle
+   quelle a l'impression suivante : le second bouton retrouvait `printView`
+   deja present, renoncait a la reconstruire, et sortait le document de
+   l'autre. Comparer les deux modes, plutot que tester la seule presence de la
+   vue, rend l'etat impossible a desynchroniser : ce qui est monte est
+   toujours ce qui a ete demande.
+
+   Le retour au defaut au demontage garantit qu'un Ctrl+P — qui n'a traverse
+   aucun bouton, donc n'a rien pu declarer — sorte la presentation complete, y
+   compris apres une impression du recto. */
 const defaultMode = "integral";
-let printMode = defaultMode;
+let requestedMode = defaultMode;
+let mountedMode = null;
 
 const documents = {
   integral: renderPrintDocument,
   cv: renderCvDocument,
 };
 
-export function setPrintMode(mode) {
-  printMode = documents[mode] ? mode : defaultMode;
-}
-
 function mountPrintView() {
-  if (printView || typeof document === "undefined") {
+  if (typeof document === "undefined") {
     return;
+  }
+
+  if (printView && mountedMode === requestedMode) {
+    return;
+  }
+
+  if (printView) {
+    printView.remove();
   }
 
   printView = document.createElement("div");
   printView.id = printViewId;
   printView.setAttribute("aria-hidden", "true");
-  printView.innerHTML = (documents[printMode] ?? documents[defaultMode])();
+  printView.innerHTML = (documents[requestedMode] ?? documents[defaultMode])();
   document.body.appendChild(printView);
+  mountedMode = requestedMode;
 }
 
 function unmountPrintView() {
@@ -46,18 +58,27 @@ function unmountPrintView() {
 
   printView.remove();
   printView = null;
-  printMode = defaultMode;
+  mountedMode = null;
+  requestedMode = defaultMode;
 }
 
-/* Le document integral n'etait joignable que par la commande d'impression du
-   navigateur. `beforeprint` reste la voie qui compte — c'est elle qui sert
-   un Ctrl+P, quel qu'en soit le declencheur — et le bouton ne fait que
-   l'appeler : rien n'est duplique, et un navigateur qui monterait la vue
-   autrement continue de fonctionner.
+/* **Le bouton monte la vue lui-meme**, il ne se repose pas sur `beforeprint`.
 
-   `window.print()` est synchrone et bloquant : les ecouteurs de `beforeprint`
-   ont donc deja monte la vue quand la boite de dialogue s'ouvre. Ne pas
-   monter la vue ici en plus, ce serait la monter deux fois.
+   C'etait l'inverse : le bouton n'appelait que `window.print()` et laissait
+   `beforeprint` monter le document. Tant qu'il n'y avait qu'un seul document
+   a sortir, l'evenement ne pouvait rien rendre d'autre que le bon, et son
+   absence eventuelle ne coutait qu'une impression vide. Avec deux documents,
+   il porte le choix de l'utilisateur — et le remettre a un evenement dont ce
+   fichier documente deja qu'il n'est pas garanti (voir le repli Safari plus
+   bas) fait dependre ce qui sort du navigateur, pas du bouton presse.
+
+   Monter ici ne duplique rien : `mountPrintView()` est idempotent et se
+   contente de comparer les modes. Un `beforeprint` qui suit trouve la vue
+   deja montee au bon mode et ne fait rien ; un navigateur qui ne l'emet
+   jamais imprime quand meme le document demande.
+
+   `beforeprint` reste indispensable pour la commande d'impression du
+   navigateur, qui ne passe par aucun bouton.
 
    Appele depuis `bindUi()` et non depuis `bindPrint()` : les ecouteurs de
    fenetre se posent une fois, les boutons sont reconstruits a chaque rendu
@@ -66,7 +87,10 @@ function unmountPrintView() {
 export function bindPrintTriggers() {
   document.querySelectorAll("[data-print]").forEach((button) => {
     button.addEventListener("click", () => {
-      setPrintMode(button.dataset.print);
+      const mode = button.dataset.print;
+
+      requestedMode = documents[mode] ? mode : defaultMode;
+      mountPrintView();
       window.print();
     });
   });
