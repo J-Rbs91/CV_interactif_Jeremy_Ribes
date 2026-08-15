@@ -76,7 +76,8 @@ function unmountPrintView() {
   mountedMode = null;
 }
 
-/* **Le bouton monte la vue lui-meme**, il ne se repose pas sur `beforeprint`.
+/* **La commande monte la vue elle-meme**, elle ne se repose pas sur
+   `beforeprint`.
 
    C'etait l'inverse : le bouton n'appelait que `window.print()` et laissait
    `beforeprint` monter le document. Tant qu'il n'y avait qu'un seul document
@@ -92,22 +93,17 @@ function unmountPrintView() {
    jamais imprime quand meme le document demande.
 
    `beforeprint` reste indispensable pour la commande d'impression du
-   navigateur, qui ne passe par aucun bouton.
+   navigateur, qui ne passe par aucune commande du site.
 
-   Appele depuis `bindUi()` et non depuis `bindPrint()` : les ecouteurs de
-   fenetre se posent une fois, les boutons sont reconstruits a chaque rendu
-   et doivent etre relies a chaque fois. Les elements etant neufs, aucun
-   ecouteur ne s'empile. */
-export function bindPrintTriggers() {
-  document.querySelectorAll("[data-print]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const mode = button.dataset.print;
-
-      requestedMode = documents[mode] ? mode : defaultMode;
-      mountPrintView();
-      window.print();
-    });
-  });
+   Une fonction exportee plutot qu'un `[data-print]` relie a chaque rendu :
+   les deux commandes vivent maintenant dans le panneau « Partager &
+   Exporter », qui gere deja sa fermeture avant d'imprimer et sait donc
+   quand appeler. Un attribut relie en aveugle imposerait l'ordre inverse —
+   imprimer, puis fermer par-dessus la fenetre d'impression. */
+export function printDocument(mode) {
+  requestedMode = documents[mode] ? mode : defaultMode;
+  mountPrintView();
+  window.print();
 }
 
 export function bindPrint() {

@@ -21,13 +21,28 @@ export const contact = {
      presentation. `experience` sort du sous-titre le seul fait qui date le
      profil : quatorze ans, avant que le lecteur n'ait rien lu d'autre. */
   a4: {
+    /* La fonction visee, et elle precede les territoires. Le bandeau disait
+       tres bien ce que je sais faire et pas une fois quel poste je cherche :
+       un lecteur qui trie des candidatures cherche d'abord a ranger le
+       dossier quelque part, et quatre domaines de competence ne rangent
+       rien. La fonction le fait en trois mots, les domaines disent ensuite
+       ce qu'elle recouvre ici.
+
+       Elle n'existe que sur le recto : le site, qu'on lit en entier, se
+       presente par ce qu'il demontre. Une feuille lue en trente secondes se
+       presente par ce qu'elle vise. */
+    targetRole: "Coordinateur performance & organisation",
     /* Quatre territoires, declares separement et non en une chaine. Assemblee,
        la ligne se repliait au milieu de l'un d'eux — on lisait « Pilotage par
        la / donnee ». En items, la coupure ne peut tomber qu'entre deux, ou
-       elle se lit. */
+       elle se lit.
+
+       Raccourcis depuis que la fonction les surmonte : ils ne portent plus
+       l'annonce, ils la qualifient, et quatre syntagmes complets sous un
+       intitule en capitales faisaient deux lignes pour une. */
     positioning: [
       "Structuration de l’activité",
-      "Organisation & process",
+      "Process",
       "Outils métiers",
       "Pilotage par la donnée",
     ],

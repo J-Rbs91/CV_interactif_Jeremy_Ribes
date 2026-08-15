@@ -20,9 +20,21 @@
     margin: 16mm 15mm 15mm;
   }
 
+  /* `min-height` autant que `height` : `base.css` pose `min-height: 100vh`
+     sur les deux, et en pagination `vh` vaut la zone imprimable. La boite du
+     document faisait donc exactement une page, quel que soit le contenu —
+     260 mm de recto etires a 266. Rien ne s'y voyait : la page restait juste,
+     mais sa tolerance etait nulle, et il suffisait d'un arrondi de moins d'un
+     millimetre a l'impression pour que ce trop-plein de blanc bascule en une
+     seconde page vide. C'est ce que rapportait Chrome sous Android.
+
+     Un document imprime n'a aucune raison d'occuper la page : il fait la
+     hauteur de ce qu'il porte, et la feuille suivante n'existe que s'il y a
+     de la matiere a y mettre. */
   html,
   body {
     height: auto;
+    min-height: 0;
     overflow: visible;
     padding: 0;
     background: #ffffff;
@@ -37,6 +49,15 @@
 
   #print-view {
     display: block;
+  }
+
+  /* Le grain de `base.css` se croyait coupe par la regle `*` ci-dessous, qui
+     retire les images de fond. Elle ne l'atteint pas : `*` ne selectionne
+     aucun pseudo-element. Il s'imprimait donc, en plan fixe, sur chaque page
+     — un voile sur du papier, la ou l'ecran lui demandait juste de faire
+     surface. */
+  body::after {
+    display: none;
   }
 
   * {
@@ -633,10 +654,11 @@
   .nav-list,
   .mobile-nav-sticky,
   .contact-modal-overlay,
+  .export-overlay,
   .contact-form-trigger,
-  .share-trigger,
   .live-products,
-  .icon {
+  .icon,
+  .icon-bold {
     display: none !important;
   }
 
@@ -764,18 +786,32 @@
     color: var(--ink-900);
   }
 
-  /* Le territoire professionnel, en une ligne. C'est la premiere chose lue
-     apres le nom et elle doit se lire comme une adresse de poste. */
+  /* La fonction visee. C'est la premiere chose lue apres le nom, et c'est le
+     seul endroit de la feuille qui dise a quoi on candidate : elle prend donc
+     la capitale, l'interlettrage et la couleur qui la separent de tout le
+     reste. Les territoires, qui portaient cette charge, passent en dessous et
+     redescendent d'un cran — deux lignes fortes cote a cote ne hierarchisent
+     rien. */
+  .cv1-role {
+    margin-top: 1.8mm;
+    font-size: 8.6pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    color: var(--forest-700);
+  }
+
   /* Une seule ligne, et c'est une contrainte de sens : ce sont quatre
      territoires separes par des points medians, et une coupure tombe
      forcement au milieu de l'un d'eux — on lisait « Pilotage / par la
      donnee ». Toute reformulation se remesure. */
   .cv1-positioning {
-    margin-top: 1.8mm;
-    font-size: 8.4pt;
-    font-weight: 800;
+    margin-top: 1.4mm;
+    font-size: 8.2pt;
+    font-weight: 600;
     line-height: 1.35;
-    color: var(--forest-700);
+    color: var(--ink-700);
   }
 
   .cv1-positioning span {
@@ -785,7 +821,7 @@
   .cv1-positioning span:not(:last-child)::after {
     content: " · ";
     white-space: normal;
-    color: var(--forest-300);
+    color: var(--ink-300);
   }
 
   .cv1-facts {
@@ -800,7 +836,7 @@
     grid-template-columns: 30mm 1fr;
     column-gap: 5mm;
     align-items: baseline;
-    margin-top: 3mm;
+    margin-top: 3.2mm;
   }
 
   .cv1-key {
@@ -823,8 +859,8 @@
      30 mm lui coutait deux lignes de repli pour un mot que personne ne lit.
      C'est le seul bloc du document dans ce cas. */
   .cv1-pitch {
-    padding-bottom: 4.5mm;
-    margin-top: 4mm;
+    padding-bottom: 5mm;
+    margin-top: 4.2mm;
     border-bottom: 0.5pt solid var(--ink-100);
   }
 
@@ -833,13 +869,16 @@
   }
 
   /* --- Les trois blocs de demonstration --------------------------------- */
+  /* Les millimetres rendus par la soustraction ne reviennent pas au contenu :
+     ils vont aux intervalles. C'est tout l'objet de la coupe — une page moins
+     dense, pas une page qui se remplit d'autre chose. */
   .cv1-part {
-    margin-top: 5mm;
+    margin-top: 5.4mm;
   }
 
   .cv1-part-title {
     padding-bottom: 1.6mm;
-    margin-bottom: 3.4mm;
+    margin-bottom: 3.5mm;
     border-bottom: 0.75pt solid var(--ink-300);
     font-family: var(--font-display);
     font-size: 8.6pt;
@@ -851,7 +890,7 @@
 
   /* --- Competences : l'enonce, puis les faits --------------------------- */
   .cv1-comp + .cv1-comp {
-    margin-top: 2.9mm;
+    margin-top: 3.2mm;
   }
 
   /* Encre, et pas la couleur de nature. A l'ecran, `--n-ink` fait sens : le
@@ -876,9 +915,9 @@
      noyaient — cinq lignes de faits par competence, vingt-cinq sur la page,
      et plus aucun intitule ne ressortait. */
   .cv1-comp-proofs {
-    margin-top: 1.1mm;
+    margin-top: 1.3mm;
     font-size: 7.2pt;
-    line-height: 1.35;
+    line-height: 1.4;
     color: var(--text-muted);
   }
 
@@ -933,7 +972,7 @@
 
   /* --- Parcours : un cinquieme de la page ------------------------------- */
   .cv1-job + .cv1-job {
-    margin-top: 2.8mm;
+    margin-top: 3mm;
   }
 
   .cv1-job-head {
@@ -977,7 +1016,7 @@
 
   /* --- Mentions de pied ------------------------------------------------- */
   .cv1-project + .cv1-project {
-    margin-top: 1.8mm;
+    margin-top: 2.2mm;
   }
 
   .cv1-project-title {

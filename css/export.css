@@ -1,0 +1,468 @@
+/* =========================================================================
+   PARTAGER & EXPORTER
+   -------------------------------------------------------------------------
+   Le panneau qui a remplace les trois commandes de la ligne de contact
+   (voir js/render/renderExport.js pour ce qu'il regroupe et pourquoi).
+
+   **Il est compose comme le recto A4, et non comme une modale de site.**
+   C'est la regle dont le reste decoule : gouttiere de libelle en mono
+   capitale, filets fins, titre sous un trait epais, colonnes separees par
+   un trait plutot que par une carte, aucun rayon. Le panneau donne acces au
+   document — autant qu'il en ait l'apparence avant de l'ouvrir.
+
+   Ce qui distingue ce fichier de css/print.css : celui-la compose une page
+   de papier, sous contrainte de hauteur, en millimetres. Celui-ci compose
+   un ecran, sous contrainte de pouce, en pixels. Les deux se ressemblent et
+   ne partagent aucune classe — c'est deja la regle entre le recto et la
+   presentation complete, et pour la meme raison : un reglage pris pour le
+   papier ne doit pas pouvoir casser l'ecran par surprise.
+
+   Une seule couleur d'accent, comme sur le recto : l'encre porte tout, la
+   foret marque la ligne d'identite. La flamme n'entre pas ici — elle est
+   reservee a ce qui se mesure, et rien ne se mesure dans un panneau
+   d'actions.
+   ========================================================================= */
+
+.export-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background: rgba(12, 39, 64, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--e-enter);
+}
+
+.export-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* La feuille. Blanc franc et non `--card`, qui est translucide : le panneau
+   doit se lire comme un document pose sur la page, pas comme une couche de
+   plus dans le degrade. Une seule elevation, celle d'un objet reellement
+   au-dessus du contenu. */
+.export-sheet {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(88vh, 760px);
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  background: #ffffff;
+  border: 1px solid var(--ink-200);
+  box-shadow: 0 24px 60px rgba(12, 39, 64, 0.24);
+  transform: translateY(10px);
+  transition: transform 0.24s var(--e-enter);
+}
+
+.export-overlay.is-open .export-sheet {
+  transform: translateY(0);
+}
+
+.export-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-300);
+  cursor: pointer;
+  transition: color 0.15s var(--e-enter);
+}
+
+.export-close:hover {
+  color: var(--ink-900);
+}
+
+.export-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- Bandeau : le meme ordre que le recto ------------------------------- */
+.export-head {
+  padding-bottom: var(--space-2);
+  border-bottom: 3px solid var(--ink-900);
+}
+
+.export-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.export-title {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink-900);
+}
+
+.export-subject {
+  margin-top: 6px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--forest-700);
+}
+
+/* --- Sections ---------------------------------------------------------- */
+.export-part {
+  margin-top: var(--space-3);
+}
+
+.export-part-title {
+  padding-bottom: 6px;
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--ink-200);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-700);
+}
+
+/* --- Canaux : trois colonnes separees par un filet ---------------------- */
+/* Le recto separe ses trois cellules de resultats par un filet de 0,5 pt
+   plutot que par une bordure complete. Meme geste ici : six canaux, deux
+   rangees, et rien qui ressemble a six cartes. */
+.export-channels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.export-channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  border: 0;
+  border-bottom: 1px solid var(--ink-100);
+  background: transparent;
+  color: var(--ink-800);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s var(--e-enter),
+    color 0.15s var(--e-enter);
+}
+
+.export-channel:nth-child(3n + 2),
+.export-channel:nth-child(3n) {
+  border-left: 1px solid var(--ink-100);
+}
+
+.export-channel:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.export-channel:hover,
+.export-channel:focus-visible {
+  background: var(--ink-50);
+  color: var(--ink-900);
+}
+
+.export-channel-mark svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.export-channel-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.export-channel:hover .export-channel-label,
+.export-channel:focus-visible .export-channel-label {
+  color: var(--ink-800);
+}
+
+/* Le partage du systeme n'existe que sur un appareil qui en a un : il prend
+   toute la largeur sous la grille, la ou il ne concurrence aucun canal. */
+.export-native {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: 12px;
+  border: 1px solid var(--ink-900);
+  background: var(--ink-900);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.15s var(--e-enter);
+}
+
+.export-native:hover {
+  background: var(--ink-800);
+}
+
+.export-native svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.export-native-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* --- Lignes a libelle : la gouttiere du recto, en pixels ---------------- */
+.export-row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-100);
+}
+
+.export-row:last-child {
+  border-bottom: 0;
+}
+
+.export-key {
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.export-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* L'adresse est longue et n'a pas a etre lue en entier : elle est la pour
+   qu'on la reconnaisse, et le bouton d'a cote pour qu'on n'ait jamais a la
+   recopier. Elle se coupe donc plutot que de replier la ligne. */
+.export-url {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-700);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.export-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 7px 12px;
+  border: 1px solid var(--ink-300);
+  background: transparent;
+  color: var(--ink-800);
+  cursor: pointer;
+  transition:
+    border-color 0.15s var(--e-enter),
+    background-color 0.15s var(--e-enter),
+    color 0.15s var(--e-enter);
+}
+
+.export-action:hover {
+  border-color: var(--ink-900);
+  background: var(--ink-50);
+}
+
+.export-action svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.export-action-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* La confirmation se dit sur le bouton : c'est la que le regard est, et la
+   foret est deja la couleur de ce qui a abouti dans le reste du CV. */
+.export-action.is-copied {
+  border-color: var(--forest-500);
+  background: var(--forest-50);
+  color: var(--forest-700);
+}
+
+.export-qr {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.export-qr img {
+  flex: none;
+  width: 56px;
+  height: 56px;
+}
+
+.export-qr-text {
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+/* --- Documents : la ligne de matiere du recto --------------------------- */
+/* Marque, libelle en mono, puis le document et ce qu'il contient. C'est la
+   grille des blocs du recto, avec la marque en plus : sans elle, deux lignes
+   de texte se suivaient sans qu'on voie ou commencait la seconde. */
+.export-doc {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: start;
+  width: 100%;
+  padding: 14px 0;
+  border: 0;
+  border-bottom: 1px solid var(--ink-100);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s var(--e-enter);
+}
+
+.export-doc:last-of-type {
+  border-bottom: 0;
+}
+
+.export-doc:hover,
+.export-doc:focus-visible {
+  background: var(--ink-50);
+}
+
+.export-doc-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.export-doc-mark {
+  flex: none;
+  color: var(--ink-600);
+}
+
+.export-doc-mark svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.export-doc-key {
+  padding-top: 3px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.export-doc-title {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--ink-900);
+}
+
+.export-doc-text {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-700);
+}
+
+.export-note {
+  margin-top: 10px;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* --- Etroit : la feuille vient du bas ----------------------------------- */
+/* Sur un telephone, un panneau centre laisse deux bandes de fond en haut et
+   en bas et se pose loin du pouce. Il remonte donc du bord bas, qui est
+   aussi d'ou vient le geste. */
+@media (max-width: 700px) {
+  .export-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .export-sheet {
+    width: 100%;
+    max-height: 92vh;
+    padding: var(--space-3) var(--space-3) var(--space-4);
+    border: 0;
+    border-top: 3px solid var(--ink-900);
+    transform: translateY(16px);
+  }
+
+  .export-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: var(--space-1);
+  }
+
+  /* La gouttiere ne tient pas a cote de deux lignes de texte sur 360 px : le
+     libelle passe au-dessus du titre, aligne sur lui, et garde son role de
+     reperage. Les lignes du dessus gardent la leur, qui n'a qu'un element a
+     porter. */
+  .export-doc {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .export-doc-key {
+    padding-top: 0;
+    padding-left: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .export-overlay,
+  .export-sheet {
+    transition: none;
+  }
+
+  .export-sheet {
+    transform: none;
+  }
+}

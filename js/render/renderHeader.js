@@ -5,6 +5,7 @@ import {
   renderIntroStrip,
   renderLiveProducts,
 } from "./renderContact.js";
+import { renderExportPanel } from "./renderExport.js";
 import { icon } from "../ui/icons.js";
 
 function getActiveSection(activeSection) {
@@ -114,6 +115,7 @@ export function renderSidebar(activeSection) {
     ${renderNavigation(activeSection)}
     ${renderIntroStrip()}
     ${renderContactModal()}
+    ${renderExportPanel()}
   </div>`;
 }
 
@@ -154,5 +156,6 @@ export function renderMobileShell(activeSection, sectionContent) {
       </div>
     </div>
     ${renderContactModal()}
+    ${renderExportPanel()}
   </div>`;
 }

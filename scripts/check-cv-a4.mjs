@@ -112,13 +112,23 @@ try {
   process.exit(1);
 }
 
-const page = `<!doctype html>
+/* La page d'essai se compose a la demande : le controle en imprime plusieurs,
+   identiques au contenu pres de la taille de page injectee (voir la mesure de
+   reserve plus bas). `pageHeight` a `null` laisse `@page` de `print.css`
+   decider, soit une A4. */
+function buildPage(pageHeight) {
+  const override = pageHeight
+    ? `<style>@media print { @page { size: 210mm ${pageHeight}mm; } }</style>`
+    : "";
+
+  return `<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
     <base href="${pathToFileURL(root).href}" />
     <link rel="stylesheet" href="${fontsHref}" />
     ${styles}
+    ${override}
   </head>
   <body>
     <!-- Le document d'essai n'a pas d'\`#app\` a masquer, mais il garde l'\`id\`
@@ -127,29 +137,35 @@ const page = `<!doctype html>
     <div id="print-view">${renderCvDocument()}</div>
   </body>
 </html>`;
-
-writeFileSync(htmlPath, page, "utf8");
-
-execFileSync(
-  chromium,
-  [
-    "--headless=new",
-    "--no-sandbox",
-    "--disable-gpu",
-    "--no-pdf-header-footer",
-    `--print-to-pdf=${pdfPath}`,
-    pathToFileURL(htmlPath).href,
-  ],
-  { stdio: "pipe" },
-);
+}
 
 /* Le nombre de pages se lit sur l'arbre du PDF : `/Type /Pages` porte un
    `/Count`. On prend le plus grand, la racine etant le noeud qui totalise. */
-const pdf = readFileSync(pdfPath, "latin1");
-const counts = [...pdf.matchAll(/\/Count\s+(\d+)/g)].map((match) =>
-  Number(match[1]),
-);
-const pages = counts.length ? Math.max(...counts) : 0;
+function countPages(pageHeight) {
+  writeFileSync(htmlPath, buildPage(pageHeight), "utf8");
+
+  execFileSync(
+    chromium,
+    [
+      "--headless=new",
+      "--no-sandbox",
+      "--disable-gpu",
+      "--no-pdf-header-footer",
+      `--print-to-pdf=${pdfPath}`,
+      pathToFileURL(htmlPath).href,
+    ],
+    { stdio: "pipe" },
+  );
+
+  const pdf = readFileSync(pdfPath, "latin1");
+  const counts = [...pdf.matchAll(/\/Count\s+(\d+)/g)].map((match) =>
+    Number(match[1]),
+  );
+
+  return counts.length ? Math.max(...counts) : 0;
+}
+
+const pages = countPages(null);
 
 if (pages !== 1) {
   console.error(
@@ -159,4 +175,46 @@ if (pages !== 1) {
   process.exit(1);
 }
 
-console.log("Le recto A4 tient en une page.");
+/* --- La reserve de pied -----------------------------------------------------
+   Tenir en une page ne dit pas de combien. Le recto a tenu pendant des mois
+   avec 0,7 mm de blanc sous la derniere ligne : la mesure passait, et le
+   fichier sortait quand meme en deux pages sur un telephone, la seconde vide.
+   Un controle binaire — ça tient / ça ne tient pas — ne pouvait pas le voir.
+
+   La reserve se mesure sans rien mesurer dans le document : on reimprime le
+   meme contenu sur des pages de plus en plus courtes et on cherche la
+   derniere qui tient encore en un feuillet. La difference avec l'A4 est le
+   blanc disponible, et elle est prise par le moteur d'impression reel, avec
+   les vraies polices — pas par un calcul sur des hauteurs de ligne.
+
+   Recherche dichotomique : sept impressions pour un millimetre de precision,
+   la ou un pas de un en aurait demande cinquante. */
+const A4_HEIGHT = 297;
+const MIN_RESERVE = 6;
+
+let fits = A4_HEIGHT;
+let overflows = 200;
+
+while (fits - overflows > 1) {
+  const middle = Math.round((fits + overflows) / 2);
+
+  if (countPages(middle) === 1) {
+    fits = middle;
+  } else {
+    overflows = middle;
+  }
+}
+
+const reserve = A4_HEIGHT - fits;
+
+if (reserve < MIN_RESERVE) {
+  console.error(
+    `Le recto tient en une page, mais il ne reste que ${reserve} mm de blanc en pied.`,
+  );
+  console.error(
+    `En dessous de ${MIN_RESERVE} mm, la page sort juste ici et en deux pages ailleurs : le rendu d'un telephone ou d'un pilote d'imprimante ne tombe pas au meme millimetre.`,
+  );
+  process.exit(1);
+}
+
+console.log(`Le recto A4 tient en une page, ${reserve} mm de blanc en pied.`);
