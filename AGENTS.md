@@ -407,6 +407,14 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   aussi depuis le bouton la monterait deux fois. Les déclencheurs se relient
   dans `bindUi()` — les écouteurs de fenêtre se posent une fois, les boutons
   sont reconstruits à chaque rendu.
+- **Cette porte s'appelle « Présentation complète », jamais « CV complet ».**
+  Un CV est un recto A4 : le mot promet une forme, et le document en fait
+  six pages, toutes fiches dépliées. L'écart ne se constate qu'après le clic,
+  quand le geste est déjà engagé, et ce qui s'ouvre alors n'est pas un CV
+  trop long — c'est un autre objet, un dossier. Le libellé « CV complet ·
+  PDF » reste réservé au recto A4 le jour où il existera ; il ne doit pas
+  désigner la vue intégrale entre-temps, sous peine de rendre le vrai CV
+  innommable quand il arrivera.
 - **Le rail étroit porte `short`, pas `label`.** À 390 px il n'affiche que
   trois entrées sur six et les coupe en pleine lettre. Le masque de débord
   dit qu'il y en a d'autres ; il ne dit pas combien. La mention du bandeau

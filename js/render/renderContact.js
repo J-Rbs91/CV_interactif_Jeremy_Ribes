@@ -28,21 +28,29 @@ function renderShareButton(itemClassName) {
    sections puis ouvrir les onze cartes, soit dix-sept interactions pour un
    contenu que le document sait rendre d'un bloc.
 
-   C'est aussi ce que fait un recruteur qui verse le CV a un dossier. */
-function renderFullCvButton(itemClassName) {
+   C'est aussi ce que fait un recruteur qui verse le CV a un dossier.
+
+   Le bouton disait « CV complet · PDF ». Un CV est un recto A4 : c'est la
+   forme que le mot promet, et le document en fait six pages. L'ecart ne se
+   voit qu'apres le clic, quand le lecteur a deja engage son geste — et ce
+   qu'il decouvre alors n'est pas un CV trop long, c'est autre chose, un
+   dossier qui deplie chaque fiche. Le libelle nomme donc ce qui s'ouvre
+   vraiment. « CV complet · PDF » reste disponible pour le jour ou le recto
+   A4 existera, et il devra alors etre ce document-la, pas celui-ci. */
+function renderFullPresentationButton(itemClassName) {
   return `<button
       type="button"
       class="${buildClassName("contact-form-trigger", itemClassName)}"
       data-print
-      title="Ouvrir le CV entier, toutes fiches dépliées"
+      title="Ouvrir la présentation entière, toutes fiches dépliées — à imprimer ou enregistrer en PDF"
     >
-      <span class="ic">${icon("printer")}</span> CV complet · PDF
+      <span class="ic">${icon("printer")}</span> Présentation complète
     </button>`;
 }
 
 function renderContactItem(item, itemClassName) {
   if (item.type === "contact-form") {
-    return `${renderShareButton(itemClassName)}${renderFullCvButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
+    return `${renderShareButton(itemClassName)}${renderFullPresentationButton(itemClassName)}<button type="button" class="${buildClassName("contact-form-trigger", itemClassName)}" data-open-contact>
       <span class="ic">${icon(item.icon)}</span> ${item.text}
     </button>`;
   }
