@@ -11,6 +11,33 @@ Les mesures sont reproductibles ; la méthode est donnée en fin de document.
 
 ---
 
+## État des suites
+
+| Constat | Suite |
+|---|---|
+| B1 · défilement mobile | corrigé — le bandeau se cale en tête, la section commence dessous |
+| B2 · modale au clavier | corrigé — `inert` à la fermeture, focus rendu au déclencheur |
+| I1 · longueur de ligne | corrigé — `--mesure` à 62ch, étendue à toute la prose. Pire cas : 78 signes |
+| I2 · vue complète | corrigé — commande « CV complet · PDF » dans la colonne d'identité |
+| I3 · registre des preuves | corrigé — statuts et libellé de résultat en police de lecture |
+| I4 · chiffres noyés | corrigé — la fiche Krys expose 771 envois et 9 RDV hors du texte |
+| I5 · navigation mobile | corrigé en partie — libellés courts, repérage « Section n sur 6 », premier contenu remonté de 853 à 781 px. Le rail montre toujours 3 entrées sur 6 : le faire tenir en six demanderait de repenser le composant, pas de le régler |
+| I6 · onze portes identiques | corrigé — un libellé par carte, tiré de son arbitrage |
+| A1 · résumé en Arial | corrigé — `font: inherit` sur `.comp-toggle` |
+| **A2 · largeur perdue** | **retiré — le constat était faux, voir plus bas** |
+| A3 · gras sans squelette | corrigé — un passage par bloc, sous 30 % du bloc |
+| A4 · séparateurs orphelins | corrigé — point médian en `::after` sur l'étiquette précédente |
+| A5 · bouton « Passer » | corrigé — 11 px, angle supérieur droit. **La durée de la séquence n'a pas été touchée** |
+
+Deux points sont hors périmètre par décision explicite et n'ont reçu aucune modification :
+**la photo** et **la durée de la séquence d'ouverture**.
+
+Les critères de validation ci-dessous ont été repassés sur le rendu après correction ; les
+résultats sont dans le tableau, et le contraste a été recontrôlé sur les six sections sans
+régression.
+
+---
+
 ## Contexte
 
 CV interactif publié à une URL, envoyée à des recruteurs, des dirigeants et des cabinets.
@@ -361,28 +388,31 @@ retourne Manrope.
 
 ---
 
-### A2 — 45 % de la largeur perdue là où le lecteur défile le plus
+### A2 — 45 % de la largeur perdue — **constat retiré**
 
-**Constat.** À 1 440 px, la colonne de contenu fait 1 080 px. Les cartes de Compétences et
-d'Outils en occupent ~600 : le reste est vide sur toute la hauteur. Les six cartes de
-Compétences occupent 872 px de haut en une colonne, et la section déborde de l'écran.
+**Ce constat était faux et n'a pas été appliqué.** Il affirmait que Compétences « déborde de
+l'écran » et tenait sur trois écrans à 1 440 px. Vérification faite, la section tient en
+**1,11 écran** : j'avais lu la hauteur du conteneur (872 px) comme une hauteur de contenu, alors
+que `scrollHeight` et `clientHeight` y sont égaux — c'est-à-dire qu'il n'y a pas de débordement.
 
-Ce n'est **pas** un argument pour élargir les cartes : la mesure de 600 px est bonne, c'est I1
-qui demande de la tenir. C'est un argument pour utiliser la largeur autrement. Formation le fait
-déjà, et sa grille à deux colonnes est la plus reposante du document.
+Mesures réelles à 1 440 px, en écrans de défilement :
 
-**Impact.** Défilement supplémentaire sur un écran à moitié vide. Sur un document dont l'enjeu
-est qu'on aille jusqu'au bout, chaque écran de défilement évité est un lecteur retenu.
+| Section | Écrans |
+|---|---|
+| Formation | 1,08 |
+| Compétences | 1,11 |
+| Profil | 1,22 |
+| Expériences | 1,51 |
+| Projets | 1,85 |
+| Outils | 2,20 |
 
-**Gravité : amélioration.**
+L'observation de départ reste vraie — la colonne fait 1 080 px, les cartes en occupent ~600 —
+mais le coût que je lui prêtais n'existe pas sur Compétences. Et les deux sections qui défilent
+vraiment sont Outils et Projets, dont les cartes sont numérotées ou séquentielles : deux
+colonnes y casseraient l'ordre de lecture, ce que le constat excluait lui-même.
 
-**Modification technique.** Grille à deux colonnes au-delà de 1 200 px pour `.comp-card`, sur le
-modèle de la grille de Formation, chaque colonne conservant `--mesure`. Compétences passe de
-trois écrans à un et demi. À ne pas appliquer à Outils, dont les cartes sont numérotées : la
-numérotation impose une lecture séquentielle, que deux colonnes casseraient.
-
-**Critère de validation.** À 1 440 px, la section Compétences tient en un écran et demi, sans
-qu'aucune carte ne dépasse 78 signes par ligne.
+Passer Compétences en deux colonnes aurait donc cassé le rythme vertical pour un gain nul, et
+créé le trou caractéristique d'une carte dépliée dans une grille. **Rien à faire.**
 
 ---
 

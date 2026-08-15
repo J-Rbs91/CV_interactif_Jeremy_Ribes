@@ -15,12 +15,20 @@
   gap: var(--space-4);
 }
 
+/* `font: inherit` comme sur `.tool-summary`, et pour la meme raison : un
+   bouton n'herite pas de la famille typographique, il retombe sur celle de
+   l'agent utilisateur. Le resume de chaque carte se composait donc en Arial
+   pendant que le reste de la page etait en Manrope — six blocs par ecran,
+   la ligne la plus repetee de la section. L'ecart ne se nomme pas a ce
+   corps, mais une texture qui change sans raison se lit comme un defaut
+   d'affichage. */
 .comp-toggle {
   width: 100%;
   max-width: var(--mesure);
   border: 0;
   background: transparent;
   color: inherit;
+  font: inherit;
   padding: 0;
   display: flex;
   align-items: flex-start;
@@ -215,9 +223,13 @@
   white-space: nowrap;
 }
 
+/* La mesure porte sur la liste, pas sur chaque puce : bornee au niveau de
+   l'element, la puce se serait detachee de son chevron des que la colonne
+   depasse la borne. */
 .tl-bullets {
   list-style: none;
   padding: 0;
+  max-width: var(--mesure);
 }
 
 .tl-bullets li {
@@ -250,6 +262,7 @@
   line-height: 1.6;
   color: var(--text);
   margin-bottom: var(--space-1);
+  max-width: var(--mesure);
 }
 
 /* Le résultat ferme l'expérience qui en porte un. Un filet, pas une carte :
@@ -261,13 +274,18 @@
   border-left: 2px solid var(--n-mark);
 }
 
+/* Meme raison que `.tool-status`. « Sur les deux mois qui ont suivi, ces
+   actions ont contribue a » est une phrase, et c'est elle qui rend le +83 %
+   defendable : sans sa base, le chiffre se lit comme une affirmation
+   invérifiable. Une phrase de soixante signes en capitales espacees se
+   dechiffre au lieu de se lire, et personne ne dechiffre une legende. */
 .tl-outcome-label {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text-dim);
   margin-bottom: 6px;
+  max-width: var(--mesure);
 }
 
 .tl-outcome .stats-spotlight {
@@ -281,6 +299,7 @@
   font-size: var(--fs-xs);
   line-height: 1.5;
   color: var(--text-muted);
+  max-width: var(--mesure);
 }
 
 .tl-outcome-text {
@@ -288,6 +307,7 @@
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text-dim);
+  max-width: var(--mesure);
 }
 
 .tool-card {
@@ -429,13 +449,30 @@
   padding-bottom: var(--space-1);
 }
 
+/* Le statut sort de la seconde couche, et c'est un deplacement de fond.
+
+   La regle est bonne : « tout ce qui donne du contexte sans etre le message
+   passe en mono ». Elle etait mal appliquee ici. « Transmis a la demande du
+   directeur regional GrandVision » et « Reste en service apres mon depart »
+   ne donnent pas de contexte — ce sont les seules preuves d'adoption par des
+   tiers de toute la section, la difference entre « il a fait des outils » et
+   « ses outils sont utilises sans lui ». Elles etaient composees en 11 px,
+   capitales, avec 0,16em d'interlettrage, au plancher du contraste : les
+   quatre facteurs de ralentissement a la fois, sur ce qu'il fallait lire.
+
+   Elles passent donc dans la police de lecture, en bas de casse. Corps
+   secondaire et non corps courant : le statut qualifie l'outil, il ne
+   concurrence pas son titre — le retrait se joue sur la nuance et la taille,
+   plus sur la lisibilite.
+
+   Ce qui CLASSE reste en mono : `.tool-category`, `.chip`, les dates, les
+   sous-titres de projet. La frontiere est la, et pas ailleurs. */
 .tool-status {
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text-dim);
 }
 
 .tool-summary-text {

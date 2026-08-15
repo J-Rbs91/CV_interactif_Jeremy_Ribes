@@ -4,6 +4,7 @@ const EMAILJS_PUBLIC_KEY = "XaKCNJspsS14ZNmOl";
 
 let emailjsInitialized = false;
 let escapeListenerBound = false;
+let lastContactTrigger = null;
 
 function ensureEmailJSInit() {
   if (emailjsInitialized || typeof emailjs === "undefined") {
@@ -27,7 +28,7 @@ function openContactModal() {
   }
 
   modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
+  modal.removeAttribute("inert");
   modal.querySelector("input[name='from_name']")?.focus();
 }
 
@@ -39,7 +40,18 @@ function closeContactModal() {
   }
 
   modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
+
+  /* Rendre le focus avant de poser `inert`, et dans cet ordre. Un element
+     qui devient inerte pendant qu'il porte le focus le perd au profit du
+     <body> : au clavier, on repartirait du haut de la page a chaque
+     fermeture. On revient donc au bouton qui a ouvert, ce qui est aussi ce
+     qu'on attend d'un aller-retour. */
+  if (modal.contains(document.activeElement)) {
+    (lastContactTrigger ?? document.querySelector("[data-open-contact]"))?.focus();
+  }
+
+  modal.setAttribute("inert", "");
+  lastContactTrigger = null;
 
   const form = modal.querySelector("form");
   if (form) {
@@ -109,7 +121,10 @@ function bindEscapeClose() {
 
 export function bindContactForm() {
   document.querySelectorAll("[data-open-contact]").forEach((button) => {
-    button.addEventListener("click", openContactModal);
+    button.addEventListener("click", () => {
+      lastContactTrigger = button;
+      openContactModal();
+    });
   });
 
   const modal = getContactModal();

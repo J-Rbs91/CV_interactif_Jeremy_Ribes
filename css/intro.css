@@ -439,10 +439,18 @@ html.intro-handoff .identity h1 {
   animation: intro-trace-x 9.1s linear both;
 }
 
+/* La duree de la sequence n'est pas en cause et ne bouge pas : c'est un
+   parti pris, documente et tenu. Le cout de SORTIE, lui, etait mal regle.
+   Le bouton etait a 9 px — le plus petit texte du document, sous le plancher
+   de l'echelle — dans l'angle inferieur droit, c'est-a-dire le dernier
+   endroit qu'un oeil explore. Il porte 11 px, le palier de libelle du CV, et
+   remonte dans l'angle superieur droit, ou la convention le place et ou on
+   le cherche. Il reste discret : la sequence garde la priorite visuelle,
+   mais qui veut en sortir trouve la porte. */
 .intro .intro-skip {
   position: absolute;
   right: 18px;
-  bottom: 16px;
+  top: 16px;
   z-index: 4;
   padding: 7px 12px;
   border: 1px solid transparent;
@@ -450,7 +458,7 @@ html.intro-handoff .identity h1 {
   background: transparent;
   color: var(--encre-doux);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;

@@ -550,10 +550,16 @@
   display: none;
 }
 
+/* Le chapeau d'Outils et les blocs du Profil passent par ici : ce sont les
+   seuls textes courants que la mesure ne bornait pas, et le chapeau montait
+   a 140 signes par ligne — le maximum du document. Bornes ici et non chez
+   leurs conteneurs, parce qu'un `.card-text` sert aussi dans une colonne de
+   `.grid-2` deja plus etroite que la mesure, ou la borne ne fait rien. */
 .card-text {
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text);
+  max-width: var(--mesure);
 }
 
 .card-text.dim {
@@ -653,11 +659,19 @@
 
 /* Sans leur cadre, deux etiquettes voisines se lisaient comme une seule
    expression. Le point median les separe — c'est deja la regle du papier
-   (css/print.css), l'ecran l'applique maintenant aussi. */
-.tag + .tag::before,
-.chip + .chip::before {
+   (css/print.css), l'ecran l'applique maintenant aussi.
+
+   Le separateur est porte par l'etiquette qui PRECEDE, pas par celle qui
+   suit. Les rangees sont des boites flex : chaque etiquette y passe a la
+   ligne d'un seul tenant, separateur compris. Pose en `::before`, le point
+   descendait donc avec l'etiquette suivante et ouvrait la ligne — ou il se
+   lit comme une puce. En 390 px, une rangee de quatre etiquettes donnait
+   trois listes apparentes la ou il y a une enumeration. En `::after` il
+   reste sur la ligne qu'il ferme, ce qui est son role. */
+.tag:not(:last-child)::after,
+.chip:not(:last-child)::after {
   content: "·";
-  margin-right: var(--space-2);
+  margin-left: var(--space-2);
   /* --ink-300 sur ce fond, c'est 1,9:1 : le séparateur disparaissait et deux
      étiquettes se recollaient — précisément ce qu'il est là pour empêcher.
      Neutre et subordonné aux étiquettes, mais visible. */
@@ -1059,4 +1073,32 @@
   color: var(--flame-700);
   font-size: var(--fs-sm);
   margin-top: 8px;
+}
+
+/* Le resume etroit occupait 673 px avant la navigation, et le premier
+   contenu de CV commencait a 853 — neuf pixels sous la ligne de flottaison
+   d'un telephone courant. Le lecteur mobile voyait donc un ecran entier
+   d'identite et pas un mot du CV.
+
+   Rien n'est retire : on reprend le blanc, qui etait calibre pour la colonne
+   large ou il a de la place a perdre. L'identite et l'accroche se resserrent
+   d'un cran, et l'accroche revient a l'interligne du texte courant — 1,65
+   sur dix lignes, c'est quarante pixels de pur intervalle. */
+@media (max-width: 900px) {
+  .identity-mobile {
+    padding: var(--space-2) 0 var(--space-2);
+  }
+
+  .live-products-mobile {
+    padding: var(--space-1) 0;
+  }
+
+  .intro-strip-mobile {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .intro-strip-mobile p {
+    line-height: 1.5;
+  }
 }

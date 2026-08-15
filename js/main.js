@@ -17,7 +17,7 @@ import { bindAccordion, syncAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
-import { bindPrint } from "./ui/print.js";
+import { bindPrint, bindPrintTriggers } from "./ui/print.js";
 import {
   playSectionEntry as animateSectionEntry,
   playSectionLeave,
@@ -39,6 +39,7 @@ const state = {
   hasInitializedMobileNav: false,
   shouldAnimateSection: true,
   hasPlayedSectionEntry: false,
+  shouldResetMobileScroll: false,
 };
 
 /* La sortie de l'ecran courant dure le temps d'une animation, pendant
@@ -113,6 +114,58 @@ function restoreDesktopScrollPosition() {
   if (contentBody) {
     contentBody.scrollTop = state.desktopScrollTop;
   }
+}
+
+/* En etroit, le conteneur de defilement est `#app` lui-meme, et `render()`
+   remplace son contenu sans le remplacer, lui : son `scrollTop` survit donc
+   au changement de section, borne a la nouvelle hauteur. Depuis 1 400 px
+   dans Outils, un clic sur Competences atterrissait a 993 — soit 140 px
+   sous le haut de la section demandee, titre hors ecran et premiere carte
+   coupee en deux. Le lecteur demandait une section et recevait le milieu
+   d'une autre.
+
+   En large le probleme ne se pose pas : `.content-body` est reconstruit a
+   chaque rendu, donc remis a zero, et `restoreDesktopScrollPosition()` lui
+   repose la valeur voulue. La symetrie manquait ici, c'est tout.
+
+   On cale sur le bandeau de navigation, pas sur le haut du document. Le
+   resume d'identite occupe six cents pixels : y renvoyer a chaque clic
+   ferait relire six fois le meme en-tete, et la section demandee
+   repartirait sous la ligne de flottaison. Le bandeau colle en tete, la
+   section commence juste dessous — on garde la carte sous les yeux et on
+   arrive sur le contenu.
+
+   Repli sur zero si le bandeau manque : mieux vaut le haut du document
+   qu'une position heritee de la section precedente.
+
+   Deliberement pas de defilement anime : on ne parcourt pas une distance,
+   on change d'ecran. */
+function resetMobileScrollPosition() {
+  const appElement = document.getElementById("app");
+
+  if (!appElement) {
+    return;
+  }
+
+  const navigationShell = document.querySelector("[data-mobile-nav-sticky]");
+
+  if (!navigationShell) {
+    appElement.scrollTop = 0;
+    return;
+  }
+
+  /* On remet a zero AVANT de mesurer, et ce n'est pas une precaution : le
+     bandeau est colle. Mesure depuis une position defilee, sa boite est
+     celle de son point d'accroche — zero — et l'ecart calcule vaut zero,
+     donc la position ne bouge pas. Remis en tete, il retrouve sa place
+     naturelle dans le flux, qui est la seule qu'on cherche a connaitre. */
+  appElement.scrollTop = 0;
+
+  const layoutOffset =
+    navigationShell.getBoundingClientRect().top -
+    appElement.getBoundingClientRect().top;
+
+  appElement.scrollTop = Math.max(0, layoutOffset);
 }
 
 /* Une carte qu'on vient d'ouvrir doit rester visible. Le report d'un
@@ -249,6 +302,7 @@ function commitSectionState(sectionId) {
   state.expandedCompetenceId = null;
   state.expandedTool = null;
   state.desktopScrollTop = 0;
+  state.shouldResetMobileScroll = true;
   state.activeSection = sectionId;
   state.shouldAnimateSection = true;
 }
@@ -351,6 +405,7 @@ function bindUi() {
 
   bindContactForm();
   bindShare();
+  bindPrintTriggers();
   bindTypewriter();
   initializeModal();
 }
@@ -613,6 +668,16 @@ function render(options = {}) {
   if (!state.isMobileView) {
     restoreDesktopScrollPosition();
   }
+
+  /* Le drapeau, et non `state.isMobileView` seul : la bascule large ↔ etroit
+     est aussi un rendu en etroit, et elle doit garder la position acquise —
+     c'est la seule raison d'etre de `preserveDesktopScrollPosition()`. Seul
+     un changement de section demande la remise en tete. */
+  if (state.isMobileView && state.shouldResetMobileScroll) {
+    resetMobileScrollPosition();
+  }
+
+  state.shouldResetMobileScroll = false;
 
   if (state.isMobileView) {
     bindMobileNavigationUi();
