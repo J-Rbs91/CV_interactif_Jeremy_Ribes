@@ -950,13 +950,23 @@
   border: 1px solid var(--border);
 }
 
+/* Meme raison que la croix du panneau d'export : sur un telephone, c'est la
+   sortie de la couche, et un glyphe « x » ne mesure que treize pixels de large.
+   La zone est portee a 44 px, le glyphe ne bouge pas. */
 .contact-modal-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: none;
   background: transparent;
   font-size: var(--fs-lead);
+  line-height: 1;
   cursor: pointer;
 }
 
