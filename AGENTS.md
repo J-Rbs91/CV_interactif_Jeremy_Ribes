@@ -29,6 +29,12 @@
   Chromium local et échoue s'il sort en plus d'une page. Il rapatrie les
   polices réelles avant de mesurer — il demande donc le réseau, et n'est pas
   dans le workflow de déploiement pour cette raison.
+- `scripts/check-navigation.mjs` : `npm run check:nav` conduit le CV dans le
+  Chromium local et déclenche de vrais retours d'historique. Il échoue si un
+  pas de côté entre sections empile une entrée, si une couche survit au geste
+  retour, ou si une couche fermée ressuscite. Contrairement à `check:cv` et
+  `check:typo`, il ne demande **aucun réseau** : la navigation ne dépend pas
+  des polices.
 - `scripts/check-typo.mjs` : `npm run check:typo` rend les trois surfaces —
   site, présentation complète, recto A4 — dans le Chromium local et relève
   ce que le navigateur a **réellement** composé, famille par famille et
@@ -405,8 +411,22 @@ JavaScript. Or le document livré ne contient qu'un `#app` vide.
 
 ## Circulation — ce qui se casse sans se voir
 
-Trois mécanismes de navigation n'ont aucun symptôme visible dans le code
+Quatre mécanismes de navigation n'ont aucun symptôme visible dans le code
 quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
+
+- **Le geste retour rejoue la pile d'historique, jamais l'arbre du
+  document.** Les six sections sont des **frères** : passer de l'une à
+  l'autre remplace l'entrée courante au lieu d'en ajouter une, sinon quitter
+  le CV coûterait autant d'appuis que de sections consultées. Le panneau
+  d'export et la modale de contact sont des **couches** : elles empilent une
+  entrée à l'ouverture et la consomment à la fermeture, sinon le geste retour
+  quitte la page au lieu de refermer le panneau — défaut invisible sur un
+  ordinateur, où personne n'appuie sur retour. Rien n'est intercepté : c'est
+  le navigateur qui dépile. Toutes les fermetures — bouton, Échap, clic sur
+  le fond, geste système — passent par `fermerCouche()`, ce qui est la seule
+  façon qu'elles aboutissent au même endroit. Le contrat et le raisonnement
+  sont dans `js/ui/backNavigation.js` ; `npm run check:nav` le vérifie dans
+  un vrai navigateur, avec de vrais parcours d'historique.
 
 - **En étroit, le conteneur qui défile est `#app` lui-même**, et `render()`
   remplace son contenu sans le remplacer, lui : son `scrollTop` survit au

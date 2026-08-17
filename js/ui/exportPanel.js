@@ -1,4 +1,5 @@
 import { boldIcon } from "./icons.js";
+import { fermerCouche, ouvrirCouche } from "./backNavigation.js";
 import { printDocument } from "./print.js";
 import { canShareNatively, copyShareUrl, shareNatively } from "./share.js";
 
@@ -31,6 +32,28 @@ function openPanel(trigger) {
   /* Le premier canal, pas le bouton de fermeture : au clavier comme au
      lecteur d'ecran, on entre dans le panneau par ce qu'il propose. */
   panel.querySelector(".export-channel")?.focus();
+
+  /* Le panneau est une couche posee sur le CV : le geste retour du telephone
+     doit le refermer, pas quitter la page. */
+  ouvrirCouche("export", closePanel);
+}
+
+/* Fermeture demandee par l'interface. Elle depile, et c'est la pile qui
+   appellera `closePanel` : le bouton, Echap, le clic sur le fond et le geste
+   retour suivent ainsi exactement le meme chemin. */
+function demanderFermeture() {
+  if (!isOpen()) {
+    return false;
+  }
+
+  if (fermerCouche()) {
+    return true;
+  }
+
+  /* Aucune couche empilee — pushState refuse, ou panneau ouvert autrement :
+     on ferme quand meme, plutot que de laisser le panneau captif. */
+  closePanel();
+  return true;
 }
 
 /* Meme ordre que la modale de contact, et pour la meme raison : un element
@@ -115,7 +138,7 @@ async function handleCopy(action) {
    de quitter. Le panneau se ferme donc d'abord, et le document part au
    cadre suivant, une fois la fermeture peinte. */
 function handleExport(mode) {
-  closePanel();
+  demanderFermeture();
 
   window.requestAnimationFrame(() => {
     printDocument(mode);
@@ -126,7 +149,7 @@ async function handleNativeShare() {
   const shared = await shareNatively();
 
   if (shared) {
-    closePanel();
+    demanderFermeture();
   }
 }
 
@@ -137,7 +160,7 @@ function bindEscapeClose() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && isOpen()) {
-      closePanel();
+      demanderFermeture();
     }
   });
 
@@ -160,13 +183,13 @@ export function bindExportPanel() {
     return;
   }
 
-  panel.querySelector("[data-close-export]")?.addEventListener("click", closePanel);
+  panel.querySelector("[data-close-export]")?.addEventListener("click", demanderFermeture);
 
   /* Le fond ferme, la feuille non : le clic ne compte que s'il tombe hors
      du document. */
   panel.addEventListener("click", (event) => {
     if (event.target === panel) {
-      closePanel();
+      demanderFermeture();
     }
   });
 
@@ -175,7 +198,7 @@ export function bindExportPanel() {
   panel.querySelectorAll("[data-share-channel]").forEach((channel) => {
     channel.addEventListener("click", () => {
       if (!channel.hasAttribute("target")) {
-        closePanel();
+        demanderFermeture();
       }
     });
   });

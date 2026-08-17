@@ -7,6 +7,7 @@
     "build": "node scripts/build-cv-integral.mjs",
     "verify": "node scripts/build-cv-integral.mjs --verify",
     "check:cv": "node scripts/check-cv-a4.mjs",
-    "check:typo": "node scripts/check-typo.mjs"
+    "check:typo": "node scripts/check-typo.mjs",
+    "check:nav": "node scripts/check-navigation.mjs"
   }
 }
