@@ -69,15 +69,20 @@
   transform: translateY(0);
 }
 
+/* La sortie de la couche fait 44 px de cote, pas 30. Sur un iPhone il n'y a
+   pas de bouton retour materiel : cette croix est la sortie, et une sortie
+   qu'on rate au doigt n'en est pas une. La marque, elle, reste a 14 px — c'est
+   la zone qui grandit, pas le dessin. Le decalage compense l'agrandissement
+   pour que la croix reste optiquement ou elle etait. */
 .export-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 7px;
+  right: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   background: transparent;

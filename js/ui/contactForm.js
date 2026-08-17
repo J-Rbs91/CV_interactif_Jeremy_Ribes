@@ -1,3 +1,5 @@
+import { fermerCouche, ouvrirCouche } from "./backNavigation.js";
+
 const EMAILJS_SERVICE_ID = "service_tpynp8t";
 const EMAILJS_TEMPLATE_ID = "template_k8zwk94";
 const EMAILJS_PUBLIC_KEY = "XaKCNJspsS14ZNmOl";
@@ -30,6 +32,29 @@ function openContactModal() {
   modal.classList.add("is-open");
   modal.removeAttribute("inert");
   modal.querySelector("input[name='from_name']")?.focus();
+
+  /* Meme contrat que le panneau d'export : la modale est une couche posee sur
+     le CV, le geste retour du telephone la referme au lieu de quitter la page
+     — et le message en cours de redaction reste. */
+  ouvrirCouche("contact", closeContactModal);
+}
+
+/* Fermeture demandee par l'interface. Elle depile, et c'est la pile qui
+   appellera `closeContactModal` : bouton, Echap, clic sur le fond et geste
+   retour suivent le meme chemin. */
+function demanderFermetureContact() {
+  const modal = getContactModal();
+
+  if (!modal?.classList.contains("is-open")) {
+    return false;
+  }
+
+  if (fermerCouche()) {
+    return true;
+  }
+
+  closeContactModal();
+  return true;
 }
 
 function closeContactModal() {
@@ -110,10 +135,7 @@ function bindEscapeClose() {
       return;
     }
 
-    const modal = getContactModal();
-    if (modal?.classList.contains("is-open")) {
-      closeContactModal();
-    }
+    demanderFermetureContact();
   });
 
   escapeListenerBound = true;
@@ -134,11 +156,11 @@ export function bindContactForm() {
   }
 
   modal.querySelector("[data-close-contact]")
-    ?.addEventListener("click", closeContactModal);
+    ?.addEventListener("click", demanderFermetureContact);
 
   modal.addEventListener("click", (event) => {
     if (event.target === modal) {
-      closeContactModal();
+      demanderFermetureContact();
     }
   });
 

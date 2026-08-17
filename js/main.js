@@ -17,6 +17,8 @@ import { bindAccordion, syncAccordion } from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
+import { poserSection, sectionDeLAdresse } from "./ui/backNavigation.js";
+import { sections } from "./data/sections.js";
 import { bindExportPanel } from "./ui/exportPanel.js";
 import { bindPrint } from "./ui/print.js";
 import {
@@ -28,8 +30,14 @@ import {
 } from "./ui/sectionTransition.js";
 import { bindTypewriter } from "./ui/typewriter.js";
 
+/* Une section demandee par l'adresse prime sur le defaut : un lien partage,
+   un rechargement ou une reprise d'onglet doivent retrouver ce qui etait
+   affiche, pas renvoyer en tete. Un fragment inconnu retombe sur Profil. */
+const DEFAULT_SECTION = "profil";
+const sectionIds = sections.map((section) => section.id);
+
 const state = {
-  activeSection: "profil",
+  activeSection: sectionDeLAdresse(sectionIds) ?? DEFAULT_SECTION,
   expandedCompetenceId: null,
   expandedTool: null,
   desktopScrollTop: 0,
@@ -298,7 +306,14 @@ function markActiveNavigationItem(sectionId) {
 /* On arrive dans une section les cartes repliees, et on la retrouve repliee
    en y revenant : l'etat d'ouverture appartient a la visite en cours, pas au
    document. */
+/* Les six sections sont des freres : passer de l'une a l'autre REMPLACE
+   l'entree d'historique au lieu d'en ajouter une. C'est ce qui fait que le
+   nombre d'appuis sur retour pour quitter le CV ne depend pas du nombre de
+   sections consultees — le defaut inverse, ou chaque clic de navigation
+   ajoute un appui a payer, est le plus courant des defauts de navigation
+   mobile. Le raisonnement complet est dans js/ui/backNavigation.js. */
 function commitSectionState(sectionId) {
+  poserSection(sectionId);
   state.expandedCompetenceId = null;
   state.expandedTool = null;
   state.desktopScrollTop = 0;
@@ -407,6 +422,32 @@ function bindUi() {
   bindExportPanel();
   bindTypewriter();
   initializeModal();
+}
+
+/* L'adresse est une commande, pas seulement un reflet. Un lien interne, une
+   adresse modifiee a la main, un retour vers une entree d'historique qui
+   portait une autre section : dans les trois cas le document doit suivre.
+   Sans cela la barre d'adresse annoncerait une section et l'ecran en
+   montrerait une autre — et le lecteur croirait le premier.
+
+   Aucune ecriture d'historique ici : l'entree courante est deja celle qu'on
+   applique. `poserSection` la reecrira a l'identique, ce qui ne coute rien et
+   evite d'avoir deux chemins de mise a jour. */
+function bindAddressNavigation() {
+  window.addEventListener("hashchange", () => {
+    const requestedSection = sectionDeLAdresse(sectionIds) ?? DEFAULT_SECTION;
+
+    if (requestedSection === state.activeSection) {
+      return;
+    }
+
+    cancelSectionLeave?.();
+    cancelSectionLeave = null;
+    pendingSectionRequest = null;
+
+    markActiveNavigationItem(requestedSection);
+    applySectionChange(requestedSection, false);
+  });
 }
 
 function initializeViewportDetection() {
@@ -718,6 +759,7 @@ if (typeof document !== "undefined") {
 
   initializeViewportDetection();
   initializeWindowBindings();
+  bindAddressNavigation();
   bindPrint();
 
   if (isIntroArmed) {
