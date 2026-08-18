@@ -21,35 +21,28 @@ export const experiences = [
     context:
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
+      "Système opérationnel reliant dossier, statut, prochaine action, priorité du jour, charge visible en magasin et attribution nommée au brief : pas un outil de suivi et un outil de brief juxtaposés, mais une chaîne où chaque étape alimente la suivante jusqu’à la responsabilité explicite.",
+      "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
-      "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
-      "Contrôle croisé de deux sources indépendantes le logiciel métier et le suivi interne pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
-      "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont utilisés ici par l’équipe.",
+      "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
+      "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont repris ici par l’équipe et intégrés à ce système.",
     ],
     a4Summary:
       "Organisation back-office · outils métiers · suivi de l’activité · procédures · optimisation des flux",
-    /* Les quatre chiffres de la campagne vivaient au milieu d'une puce, en
-       deuxième ligne : au même corps, à la même couleur et dans le même flux
-       que le reste. Or le chiffre est le plus fort aimant visuel d'une page
-       de texte, et le seul élément d'un CV qu'un lecteur en diagonale
-       s'arrête pour vérifier — celui-là ne se voyait pas.
+    /* La campagne portait deux chiffres en flamme (771 envois, 9 RDV) : un
+       volume d'envoi et une conversion CRM ordinaire, pas ce dont ce poste
+       tire sa fierté. Les faire vivre au même corps que le résultat de
+       Générale d'Optique (+83 % CA) les mettait en concurrence avec un
+       chiffre qui, lui, mérite la flamme — et brouillait ce qui distingue
+       vraiment ce poste : des outils utilisés, imbriqués en système, et
+       fiabilisés par des contrôles automatiques.
 
-       Ils prennent donc le traitement déjà en place sur la fiche suivante,
-       qui est le seul endroit du CV qu'on ne peut pas rater. La puce garde
-       ce que les chiffres ne disent pas : la segmentation, la vérification
-       des consentements, la délivrabilité, l'attribution suivie.
-
-       Deux valeurs et non quatre. La règle de rareté de la flamme plafonne
-       à cinq taches par page, et la fiche suivante en porte déjà deux :
-       quatre ici les auraient banalisées, et c'est leur rareté qui fait tout
-       leur poids. On garde le volume traité et le résultat commercial, les
-       deux bouts de la chaîne. */
-    statsLabel: "Campagne e-mail conçue et envoyée depuis la base clients",
-    stats: [
-      { value: "771", label: "envois" },
-      { value: "9 RDV", label: "pris en magasin" },
-    ],
+       Ce résultat n'est donc plus chiffré : il est décrit, et c'est le seul
+       endroit de la fiche où la chaîne complète du système est énoncée
+       comme telle, plutôt que reconstituée à partir de puces séparées. */
+    result:
+      "Le suivi des dossiers, le brief quotidien et le hub d’outils ne sont pas trois outils juxtaposés : ils forment un système où le statut d’un dossier détermine sa prochaine action, alimente la priorité du jour, rend la charge visible en magasin et se retrouve nommément attribué au brief — jusqu’à la responsabilité explicite. Repris par l’équipe, ce système comble un manque d’outillage que je retrouve même dans une enseigne aussi structurée que Krys.",
   },
   {
     role: "Responsable de magasin",
