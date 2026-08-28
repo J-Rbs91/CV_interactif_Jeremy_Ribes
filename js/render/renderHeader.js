@@ -32,6 +32,19 @@ function renderNavItem(section, activeSection, options = {}) {
   </button>`;
 }
 
+function renderMobileNavigationStep(section, direction) {
+  const isPrevious = direction === "previous";
+  const actionLabel = isPrevious ? "Section précédente" : "Section suivante";
+  const symbol = isPrevious ? "←" : "→";
+  const targetLabel = section ? (section.short ?? section.label) : "indisponible";
+  const dataSection = section ? ` data-section="${section.id}"` : "";
+  const disabled = section ? "" : " disabled";
+
+  return `<button type="button" class="mobile-nav-step mobile-nav-step-${direction}"${dataSection}${disabled} aria-label="${actionLabel} : ${targetLabel}">
+    <span aria-hidden="true">${symbol}</span>
+  </button>`;
+}
+
 function renderNavigation(activeSection, options = {}) {
   const { compact = false } = options;
   const navigationClassName = compact ? "mobile-nav" : "nav-list";
@@ -42,16 +55,25 @@ function renderNavigation(activeSection, options = {}) {
        COMBIEN : le lecteur ignorait l'etendue de ce qui l'attendait, ce qui
        est precisement le travail d'une navigation. La mention passe donc
        d'une consigne d'usage — « balayer pour voir les autres sections » — a
-       un reperage : ou l'on est, et sur combien. Une affordance qui a besoin
-       d'une notice se reprend, elle ne se commente pas. */
-    const position = sections.findIndex(({ id }) => id === activeSection) + 1;
+       un reperage : ou l'on est, et sur combien.
+
+       Le swipe reste un raccourci naturel, mais il n'est plus le seul chemin
+       manifeste : deux commandes precedent/suivant, de taille tactile, rendent
+       les sections hors champ atteignables sans apprentissage du geste. */
+    const currentIndex = sections.findIndex(({ id }) => id === activeSection);
+    const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+    const position = safeIndex + 1;
+    const previousSection = safeIndex > 0 ? sections[safeIndex - 1] : null;
+    const nextSection =
+      safeIndex < sections.length - 1 ? sections[safeIndex + 1] : null;
 
     return `<div class="mobile-nav-shell" data-mobile-nav-shell>
       <div class="mobile-nav-meta">
         <div class="mobile-nav-title">Navigation</div>
-        <div class="mobile-nav-hint">Section ${position || 1} sur ${sections.length}</div>
+        <div class="mobile-nav-hint">Section ${position} sur ${sections.length}</div>
       </div>
       <div class="mobile-nav-viewport" data-mobile-nav-viewport>
+        ${renderMobileNavigationStep(previousSection, "previous")}
         <div class="${navigationClassName}" data-mobile-nav>
           ${sections
             .map((section) =>
@@ -59,6 +81,7 @@ function renderNavigation(activeSection, options = {}) {
             )
             .join("")}
         </div>
+        ${renderMobileNavigationStep(nextSection, "next")}
       </div>
     </div>`;
   }
@@ -133,6 +156,17 @@ export function renderContentHeader(activeSection, options = {}) {
 }
 
 export function renderMobileShell(activeSection, sectionContent) {
+  /* En mobile, l'accroche generale reste disponible dans Profil, mais elle ne
+     bloque plus l'acces au premier signal de contenu professionnel : le titre
+     de section et la navigation arrivent avant elle. Dans les autres sections,
+     elle ne se repete pas — le lecteur a explicitement demande autre chose. */
+  const profileIntro =
+    activeSection === "profil"
+      ? renderIntroStrip({
+          className: "intro-strip-mobile intro-strip-mobile-profile",
+        })
+      : "";
+
   return `<div class="mobile-shell">
     <div class="mobile-summary">
       ${renderIdentity({
@@ -142,7 +176,6 @@ export function renderMobileShell(activeSection, sectionContent) {
         itemClassName: "contact-pill",
       })}
       ${renderLiveProducts({ className: "live-products-mobile" })}
-      ${renderIntroStrip({ className: "intro-strip-mobile" })}
     </div>
 
     <div class="mobile-nav-sticky" data-mobile-nav-sticky>
@@ -151,6 +184,7 @@ export function renderMobileShell(activeSection, sectionContent) {
 
     <div class="mobile-main">
       ${renderContentHeader(activeSection, { className: "content-head-mobile" })}
+      ${profileIntro}
       <div class="content-body content-body-mobile">
         ${sectionContent}
       </div>

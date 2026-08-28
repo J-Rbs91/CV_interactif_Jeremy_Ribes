@@ -376,3 +376,138 @@
     padding-right: var(--space-2);
   }
 }
+
+/* =========================================================================
+   PASSE UXER — AFFORDANCE MOBILE ET ZONE TABLETTE
+   -------------------------------------------------------------------------
+   Le breakpoint a 900 px reste le changement de structure : sous cette
+   largeur, le CV devient un flux mobile. Entre 901 et 1100 px, on ne force
+   ni le mobile ni le desktop plein format : on conserve les deux panneaux,
+   mais on rend de la largeur a la matiere et on reduit les grilles.
+   ========================================================================= */
+
+/* Le rail horizontal reste utilisable au swipe, mais le geste n'est plus le
+   seul chemin vers les sections hors champ. Les commandes laterales font
+   44 px : le glyphe est discret, la cible ne l'est pas. */
+.mobile-nav-viewport {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.mobile-nav {
+  min-width: 0;
+}
+
+.mobile-nav-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-lead);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mobile-nav-step:not(:disabled):hover {
+  color: var(--text);
+}
+
+.mobile-nav-step:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.mobile-nav-step:focus-visible {
+  outline: 2px solid var(--ink-600);
+  outline-offset: -2px;
+}
+
+.mobile-nav-step:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* Sur mobile, l'accroche generale appartient a Profil. Elle vient apres le
+   titre de section : le premier ecran donne donc plus tot un signal de
+   contenu professionnel sans supprimer une ligne du texte. */
+.app-mobile .intro-strip-mobile-profile {
+  margin: 0 0 var(--space-3) calc(var(--axis) + var(--rail-gap));
+  padding: 0 0 var(--space-2) var(--space-2);
+  border-top: 0;
+}
+
+.app-mobile .intro-strip-mobile-profile::before {
+  top: 0;
+  bottom: var(--space-2);
+}
+
+/* Les commandes de contact et les produits en ligne etaient lisibles mais
+   plus proches du minimum accessible que d'une cible confortable au doigt.
+   On agrandit la zone, pas le texte ni le decor. */
+.app-mobile .contact-row-mobile a,
+.app-mobile .contact-row-mobile button,
+.app-mobile .live-products-mobile .live-product {
+  min-height: 44px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .panel-left {
+    width: clamp(288px, 31vw, 316px);
+    min-width: 0;
+    padding: 0 var(--space-2);
+  }
+
+  .panel-right {
+    --axis: 24px;
+    --rail-gap: var(--space-2);
+  }
+
+  .content-head {
+    padding: var(--space-4) var(--space-3) var(--space-3)
+      calc(var(--axis) + var(--rail-gap));
+    gap: var(--space-1);
+  }
+
+  .panel-right .content-head h2 {
+    font-size: 42px;
+  }
+
+  .content-body {
+    padding: var(--space-3) var(--space-3) var(--space-5)
+      calc(var(--axis) + var(--rail-gap));
+    gap: var(--space-3);
+  }
+
+  .panel-right .grid-2 {
+    gap: var(--space-3);
+  }
+
+  .panel-right .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Sous ~980 px, une seconde colonne ne rend plus de contenu : elle ne fait
+   que couper la mesure de lecture. La structure reste desktop, mais les
+   grilles deviennent un flux unique jusqu'au breakpoint mobile. */
+@media (min-width: 901px) and (max-width: 980px) {
+  .panel-right .grid-2,
+  .panel-right .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-left .identity-photo {
+    width: 80px;
+    height: 80px;
+  }
+}
