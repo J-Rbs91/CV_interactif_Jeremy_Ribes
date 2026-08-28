@@ -14,6 +14,7 @@ Le système courant suit désormais une règle plus directe :
 | **Secondaire** | slate dérivé | contexte, dates, métadonnées, libellés |
 | **Preuve** | cuivre sombre | résultats qui doivent arrêter le regard |
 | **Forêt** | vert profond | landing uniquement, pour raconter l'hybridité du profil |
+| **Papier** | ivoire très léger | support de lecture, adoucit l'écran sans devenir beige |
 
 La hiérarchie principale vient d'abord de la typographie, de l'espace, des axes, des retraits et de la graisse. La couleur n'est plus chargée de différencier des catégories de contenu que le lecteur ne connaît pas.
 
@@ -26,6 +27,7 @@ La lecture visuelle attendue est :
 1. **Encre** : information à lire.
 2. **Slate** : information qui documente ou contextualise.
 3. **Cuivre** : preuve rare qui mérite un arrêt du regard.
+4. **Papier chaud** : support calme qui ne concurrence aucun de ces niveaux.
 
 Une couleur de preuve n'est pas une couleur d'action. Les liens conservent donc l'Encre ; leur affordance est portée par le soulignement, la flèche, le focus et le comportement du contrôle.
 
@@ -43,9 +45,9 @@ TEXTE   principal   #0B1F33
         secondaire #40566A
         métadonnée #56697A
 
-PAPIER  haut       #F7F8FA
-        milieu     #F3F5F7
-        bas        #EEF2F5
+PAPIER  haut       #F7F5F0
+        milieu     #F5F2EC
+        bas        #F1EEE8
 ```
 
 La gamme Forêt historique reste disponible dans `css/base.css` pour la landing. Elle n'est plus une couleur structurelle du CV courant.
@@ -101,31 +103,39 @@ Le vert est donc conservé pour cet usage uniquement.
 
 La landing ne possède toujours pas sa propre palette : elle consomme les tokens globaux. Le fond papier est commun à la landing et au CV afin de préserver le raccord.
 
-## Fond
+## Fond — papier chaud léger
 
-Le précédent fond bleu consommait en permanence une partie du budget chromatique.
+Le fond bleu historique consommait en permanence une partie du budget chromatique. La première variante Editorial Signal, plus neutre, restait cependant très froide et très proche perceptuellement d'une feuille blanche rétroéclairée.
 
-Le fond courant est un papier froid très léger :
+Le support courant est donc légèrement réchauffé :
 
 ```text
-#F7F8FA → #F3F5F7 → #EEF2F5
+#F7F5F0 → #F5F2EC → #F1EEE8
 ```
 
-Il reste suffisamment matérialisé pour ne pas donner un blanc générique, mais assez neutre pour laisser l'Encre, la photo et le cuivre porter la hiérarchie.
+L'objectif n'est pas une esthétique beige ou vintage. Le fond doit rester presque neutre à première lecture, avec juste assez de chaleur pour :
+
+- réduire la dureté lumineuse d'un grand écran clair ;
+- donner une sensation de papier éditorial plutôt que d'interface blanche ;
+- laisser le bleu nuit de l'Encre rester net ;
+- renforcer le cuivre par contraste de température sans ajouter une nouvelle couleur d'accent ;
+- conserver la continuité visuelle entre landing et CV.
+
+Les surfaces secondaires évitent elles aussi le blanc pur ; elles restent dans la même famille de papier.
 
 ## Contraste
 
-Les valeurs ont été choisies sur le point le plus défavorable du nouveau fond, `#EEF2F5`.
+Les valeurs ont été recalculées sur le point le plus défavorable du fond courant, `#F1EEE8`.
 
 Ordres de grandeur :
 
-| Token | Contraste sur `#EEF2F5` | Usage |
+| Token | Contraste sur `#F1EEE8` | Usage |
 | --- | ---: | --- |
-| `#0B1F33` | ~14,8:1 | texte principal |
-| `#40566A` | ~6,8:1 | texte secondaire |
-| `#56697A` | ~5,0:1 | petits libellés / métadonnées |
-| `#A84512` | ~5,3:1 | texte de preuve |
-| `#B9531C` | ~4,3:1 | marque de preuve, focus, filet ; pas le petit texte courant |
+| `#0B1F33` | ~14,4:1 | texte principal |
+| `#40566A` | ~6,6:1 | texte secondaire |
+| `#56697A` | ~4,9:1 | petits libellés / métadonnées |
+| `#A84512` | ~5,1:1 | texte de preuve |
+| `#B9531C` | ~4,2:1 | marque de preuve, focus, filet ; pas le petit texte courant |
 
 Le principe reste le même : un cran de marque n'est pas automatiquement un cran de texte.
 
@@ -146,13 +156,15 @@ Les produits en ligne sont donc rendus en Encre, même s'ils restent des éléme
 
 ## Impression
 
-Le papier suit la même doctrine :
+Le papier suit la même doctrine chromatique pour les contenus :
 
 - titres et contenu : Encre ;
 - contexte : Encre/slate en retrait ;
 - preuves fortes : cuivre ;
 - liens en ligne : Encre, pas cuivre ;
 - pas de vert structurel dans le document imprimé.
+
+L'impression physique reste blanche : le papier chaud est une décision d'écran destinée à la lecture rétroéclairée, pas une encre de fond à imprimer.
 
 ## Implémentation
 
