@@ -36,25 +36,28 @@
   --flame-100: #f7dfd3;
   --flame-50: #fcf2ed;
 
-  /* Texte secondaire et surface papier. */
+  /* Texte secondaire et surface papier. Le support est volontairement
+     légèrement chaud : il doit évoquer un papier éditorial, pas une feuille
+     blanche rétroéclairée. La chaleur reste assez faible pour que l'Encre
+     garde sa netteté et que le cuivre reste le seul signal chaud fort. */
   --text: #0b1f33;
   --text-dim: #40566a;
   --text-muted: #56697a;
-  --bg: #f7f8fa;
-  --bg2: #fbfcfd;
-  --card: rgba(255, 255, 255, 0.9);
-  --card-hover: #ffffff;
+  --bg: #f7f5f0;
+  --bg2: #fbf9f5;
+  --card: rgba(251, 249, 245, 0.92);
+  --card-hover: #fdfbf7;
   --border: rgba(11, 31, 51, 0.11);
   --border-strong: rgba(11, 31, 51, 0.18);
 
   --fond-page:
     radial-gradient(
       120% 90% at 22% 8%,
-      rgba(255, 255, 255, 0.74),
+      rgba(255, 253, 249, 0.72),
       transparent 58%
     ),
-    linear-gradient(168deg, #f7f8fa 0%, #f3f5f7 56%, #eef2f5 100%);
-  --fond-page-base: #eef2f5;
+    linear-gradient(168deg, #f7f5f0 0%, #f5f2ec 56%, #f1eee8 100%);
+  --fond-page-base: #f1eee8;
 
   --shadow-sm: 0 10px 30px rgba(11, 31, 51, 0.06);
   --shadow-md: 0 18px 45px rgba(11, 31, 51, 0.1);
@@ -110,16 +113,17 @@
   --n-line: var(--ink-200);
 }
 
-/* Le papier plus neutre doit être identique des deux côtés du raccord. La
-   landing garde sa composition Encre + Forêt, mais plus son ancien fond bleu. */
+/* Le papier chaud est identique des deux côtés du raccord. La landing garde
+   sa composition Encre + Forêt, mais ne revient ni au bleu historique ni au
+   blanc froid : le support reste continu pendant le handoff. */
 html.intro-armed .intro {
   background:
     radial-gradient(
       120% 90% at 22% 8%,
-      rgba(255, 255, 255, 0.74),
+      rgba(255, 253, 249, 0.72),
       transparent 58%
     ),
-    linear-gradient(168deg, #f7f8fa 0%, #f3f5f7 56%, #eef2f5 100%);
+    linear-gradient(168deg, #f7f5f0 0%, #f5f2ec 56%, #f1eee8 100%);
 }
 
 /* Le PDF suit la même règle : les produits en ligne sont des liens, pas des
