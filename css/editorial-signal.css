@@ -1,0 +1,140 @@
+/* =========================================================================
+   EDITORIAL SIGNAL — passe UXER palette
+   -------------------------------------------------------------------------
+   La couleur ne code plus la taxonomie interne du contenu. Le CV courant
+   suit deux niveaux chromatiques seulement :
+
+     ENCRE   = lecture, structure, navigation, titres, produits, compétences
+     PREUVE  = signal rare, réservé aux résultats qui doivent arrêter l'œil
+
+   La donnée `nature` reste inchangée pour conserver la sémantique du modèle,
+   mais `cadre` et `produit` partagent désormais la même voix visuelle.
+
+   La forêt reste disponible uniquement pour la landing : sur un écran vide,
+   elle raconte l'hybridité du profil. Dans l'application, elle est remappée
+   vers l'encre pour ne plus créer une légende implicite à apprendre.
+   ========================================================================= */
+
+:root {
+  /* Encre éditoriale : plus neutre et plus profonde. */
+  --ink-900: #0b1f33;
+  --ink-800: #112d47;
+  --ink-700: #193f5e;
+  --ink-600: #2c5f86;
+  --ink-500: #467c9f;
+  --ink-300: #8fa9bb;
+  --ink-200: #c8d2db;
+  --ink-100: #e0e6ea;
+  --ink-50: #f2f5f7;
+
+  /* Accent preuve : cuivre sombre, pas orange d'interface. */
+  --flame-700: #a84512;
+  --flame-600: #b9531c;
+  --flame-500: #c96632;
+  --flame-400: #d88055;
+  --flame-200: #efc4ae;
+  --flame-100: #f7dfd3;
+  --flame-50: #fcf2ed;
+
+  /* Texte secondaire et surface papier. Le support est volontairement
+     légèrement chaud : il doit évoquer un papier éditorial, pas une feuille
+     blanche rétroéclairée. La chaleur reste assez faible pour que l'Encre
+     garde sa netteté et que le cuivre reste le seul signal chaud fort. */
+  --text: #0b1f33;
+  --text-dim: #40566a;
+  --text-muted: #56697a;
+  --bg: #f7f5f0;
+  --bg2: #fbf9f5;
+  --card: rgba(251, 249, 245, 0.92);
+  --card-hover: #fdfbf7;
+  --border: rgba(11, 31, 51, 0.11);
+  --border-strong: rgba(11, 31, 51, 0.18);
+
+  --fond-page:
+    radial-gradient(
+      120% 90% at 22% 8%,
+      rgba(255, 253, 249, 0.72),
+      transparent 58%
+    ),
+    linear-gradient(168deg, #f7f5f0 0%, #f5f2ec 56%, #f1eee8 100%);
+  --fond-page-base: #f1eee8;
+
+  --shadow-sm: 0 10px 30px rgba(11, 31, 51, 0.06);
+  --shadow-md: 0 18px 45px rgba(11, 31, 51, 0.1);
+}
+
+/* La taxonomie reste dans les données, mais elle ne dicte plus une teinte.
+   Cadre et produit se distinguent par le contenu, la typographie et la
+   composition — pas par une seconde couleur structurelle. */
+.n-cadre,
+.n-produit {
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
+}
+
+.n-preuve {
+  --n-ink: var(--flame-700);
+  --n-mark: var(--flame-600);
+  --n-surf: var(--flame-50);
+  --n-line: var(--flame-200);
+}
+
+.n-socle {
+  --n-ink: var(--ink-700);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
+}
+
+/* Les composants historiques qui appellent encore directement la gamme
+   forêt dans l'application héritent ici d'une équivalence encre. La landing
+   n'est pas enfant de .app : elle conserve donc le vert d'origine. */
+.app {
+  --forest-900: var(--ink-900);
+  --forest-800: var(--ink-800);
+  --forest-700: var(--ink-700);
+  --forest-600: var(--ink-600);
+  --forest-500: var(--ink-500);
+  --forest-300: var(--ink-300);
+  --forest-200: var(--ink-200);
+  --forest-100: var(--ink-100);
+  --forest-50: var(--ink-50);
+}
+
+/* Une URL vérifiable reste une preuve au niveau des données, mais à l'écran
+   c'est d'abord une action. Son soulignement et sa flèche portent déjà
+   l'affordance : elle n'a pas besoin de consommer la couleur de preuve. */
+.live-product.n-preuve {
+  --n-ink: var(--ink-800);
+  --n-mark: var(--ink-600);
+  --n-surf: var(--ink-50);
+  --n-line: var(--ink-200);
+}
+
+/* Le papier chaud est identique des deux côtés du raccord. La landing garde
+   sa composition Encre + Forêt, mais ne revient ni au bleu historique ni au
+   blanc froid : le support reste continu pendant le handoff. */
+html.intro-armed .intro {
+  background:
+    radial-gradient(
+      120% 90% at 22% 8%,
+      rgba(255, 253, 249, 0.72),
+      transparent 58%
+    ),
+    linear-gradient(168deg, #f7f5f0 0%, #f5f2ec 56%, #f1eee8 100%);
+}
+
+/* Le PDF suit la même règle : les produits en ligne sont des liens, pas des
+   preuves visuelles. Le positionnement redevient lui aussi une information
+   de structure, pas une seconde famille chromatique. */
+@media print {
+  .print-role {
+    color: var(--ink-700);
+  }
+
+  .print-live-item {
+    color: var(--ink-800);
+  }
+}

@@ -12,6 +12,18 @@
 (function () {
   "use strict";
 
+  /* Passe UXER Editorial Signal. Le script est bloquant dans <head>, donc la
+     feuille est déclarée avant le premier rendu et vient après toutes les
+     feuilles statiques. Elle peut ainsi modifier la direction chromatique
+     sans dupliquer le document généré ni introduire une palette propre à la
+     landing. Le contenu sans JavaScript conserve le repli historique : sa
+     priorité est l'accès au texte intégral, pas l'identité visuelle du SPA. */
+  var editorialPalette = document.createElement("link");
+  editorialPalette.rel = "stylesheet";
+  editorialPalette.href = "./css/editorial-signal.css";
+  editorialPalette.setAttribute("data-editorial-signal", "");
+  document.head.appendChild(editorialPalette);
+
   var STORAGE_KEY = "cv-intro-played";
   var TOTAL_DURATION = 9100;
   var COUNTER_START = 3700;
