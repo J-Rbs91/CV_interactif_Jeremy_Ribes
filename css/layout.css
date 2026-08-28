@@ -478,7 +478,7 @@
     gap: var(--space-1);
   }
 
-  .content-head h2 {
+  .panel-right .content-head h2 {
     font-size: 42px;
   }
 
@@ -488,11 +488,11 @@
     gap: var(--space-3);
   }
 
-  .grid-2 {
+  .panel-right .grid-2 {
     gap: var(--space-3);
   }
 
-  .grid-3 {
+  .panel-right .grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -501,12 +501,12 @@
    que couper la mesure de lecture. La structure reste desktop, mais les
    grilles deviennent un flux unique jusqu'au breakpoint mobile. */
 @media (min-width: 901px) and (max-width: 980px) {
-  .grid-2,
-  .grid-3 {
+  .panel-right .grid-2,
+  .panel-right .grid-3 {
     grid-template-columns: 1fr;
   }
 
-  .identity-photo {
+  .panel-left .identity-photo {
     width: 80px;
     height: 80px;
   }
