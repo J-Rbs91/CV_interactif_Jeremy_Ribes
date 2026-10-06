@@ -21,12 +21,11 @@ export const experiences = [
     context:
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
-      "Je regarde l’activité commerciale comme une chaîne : ce qui entre, ce qui bloque, ce qui doit être repris, qui doit agir et ce qui finit réellement par se concrétiser. Quand l’outillage ne permet pas cette lecture, je le construis : suivi des devis et TP, prochaines actions, charge, priorités et brief quotidien reliés entre eux. L’objectif n’est pas d’ajouter des outils, mais de faire circuler l’information jusqu’à l’action et de rendre visibles les points sur lesquels l’équipe peut réellement agir.",
+      "Lecture de l’activité commerciale comme une chaîne : ce qui entre, ce qui bloque, ce qui doit être repris, qui doit agir et ce qui finit réellement par se concrétiser. Outillage construit là où cette lecture manquait : suivi des devis et du tiers payant, prochaines actions, charge, priorités et brief quotidien, reliés entre eux. Le but n’est pas d’ajouter des outils, mais de faire circuler l’information jusqu’à l’action et de rendre visibles les points sur lesquels l’équipe peut réellement agir.",
       "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
-      "Le suivi des devis et le brief quotidien conçus dans mon poste précédent sont repris ici par l’équipe et intégrés à ce système.",
     ],
     a4Summary:
       "Organisation back-office · outils métiers · suivi de l’activité · procédures · optimisation des flux",
@@ -38,11 +37,12 @@ export const experiences = [
        vraiment ce poste : des outils utilisés, imbriqués en système, et
        fiabilisés par des contrôles automatiques.
 
-       Ce résultat n'est donc plus chiffré : il est décrit, et c'est le seul
-       endroit de la fiche où la chaîne complète du système est énoncée
-       comme telle, plutôt que reconstituée à partir de puces séparées. */
+       Ce résultat n'est donc plus chiffré, mais il reste un fait : l'usage
+       quotidien et la reprise sans demande. La chaîne du système est énoncée
+       une seule fois, par la première puce ; le résultat ne la redit pas, il
+       établit qu'elle sert. */
     result:
-      "Le suivi des dossiers, le brief quotidien et le hub d’outils ne sont pas trois outils juxtaposés : ils forment un système où le statut d’un dossier détermine sa prochaine action, alimente la priorité du jour, rend la charge visible en magasin et se retrouve nommément attribué au brief — jusqu’à la responsabilité explicite. Repris par l’équipe, ce système comble un manque d’outillage que je retrouve même dans une enseigne aussi structurée que Krys.",
+      "Trois outils utilisés chaque jour par l’équipe : suivi des devis, brief quotidien et hub d’outils du magasin. Les deux premiers, conçus dans mon poste précédent, ont été repris ici parce qu’ils servaient, sans que personne ne les ait demandés.",
   },
   {
     role: "Responsable de magasin",
