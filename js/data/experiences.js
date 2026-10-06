@@ -21,7 +21,7 @@ export const experiences = [
     context:
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
-      "Système opérationnel reliant dossier, statut, prochaine action, priorité du jour, charge visible en magasin et attribution nommée au brief : pas un outil de suivi et un outil de brief juxtaposés, mais une chaîne où chaque étape alimente la suivante jusqu’à la responsabilité explicite.",
+      "Conception d’un outil de suivi des devis relié au brief du matin : chaque devis affiche sa prochaine action, les priorités du jour en découlent, et chaque tâche est attribuée à une personne.",
       "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
