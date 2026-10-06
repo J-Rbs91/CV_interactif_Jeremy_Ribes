@@ -21,7 +21,7 @@ export const experiences = [
     context:
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
-      "Conception d’un outil de suivi des devis relié au brief du matin : chaque devis affiche sa prochaine action, les priorités du jour en découlent, et chaque tâche est attribuée à une personne.",
+      "Je regarde l’activité commerciale comme une chaîne : ce qui entre, ce qui bloque, ce qui doit être repris, qui doit agir et ce qui finit réellement par se concrétiser. Quand l’outillage ne permet pas cette lecture, je le construis : suivi des devis et TP, prochaines actions, charge, priorités et brief quotidien reliés entre eux. L’objectif n’est pas d’ajouter des outils, mais de faire circuler l’information jusqu’à l’action et de rendre visibles les points sur lesquels l’équipe peut réellement agir.",
       "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
