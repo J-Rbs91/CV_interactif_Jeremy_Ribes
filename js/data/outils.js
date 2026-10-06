@@ -82,7 +82,7 @@ export const outils = [
     summary:
       "Suivi partagé qui tient chaque devis de son édition à sa conclusion : statut du tiers payant, prochaine action datée, motif de perte et historique des échanges avec le client.",
     context:
-      "Un devis se perd rarement d’un coup : il traîne. Il manque une pièce, la prise en charge de la mutuelle ne revient pas, ou personne ne fait la relance. Sans suivi commun, chacun redécouvre le dossier à chaque fois, et le magasin ne sait ni ce qu’il perd, ni pourquoi.",
+      "Un devis se perd rarement d’un coup : il traîne. Il manque une pièce, l’accord de prise en charge n’aboutit pas, ou personne ne fait la relance. Sans suivi commun, chacun redécouvre le dossier à chaque fois, et le magasin ne sait ni ce qu’il perd, ni pourquoi.",
     arbitrage:
       "Avant de construire quoi que ce soit, il fallait décider à partir de quand un dossier devient à risque, qui en est responsable, et surtout ce que l’équipe accepterait de saisir. Un suivi plus détaillé aurait été plus précis, mais personne ne l’aurait rempli. J’ai choisi le niveau de détail que l’équipe peut tenir au quotidien.",
     action:
