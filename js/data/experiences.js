@@ -21,7 +21,7 @@ export const experiences = [
     context:
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
-      "Lecture de l’activité commerciale comme une chaîne : ce qui entre, ce qui bloque, ce qui doit être repris, qui doit agir et ce qui finit réellement par se concrétiser. Outillage construit là où cette lecture manquait : suivi des devis et du tiers payant, prochaines actions, charge, priorités et brief quotidien, reliés entre eux. Le but n’est pas d’ajouter des outils, mais de faire circuler l’information jusqu’à l’action et de rendre visibles les points sur lesquels l’équipe peut réellement agir.",
+      "Mise en place d’un système de pilotage reliant suivi des devis et du tiers payant, prochaine action, charge par collaborateur et brief quotidien. Les outils s’alimentent entre eux : les dossiers à reprendre deviennent des priorités visibles, puis des actions attribuées à chacun. La direction voit où l’activité bloque et qui doit agir.",
       "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
       "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
@@ -56,7 +56,7 @@ export const experiences = [
       "Stratégie de présence locale proposée et mise en place : actions ciblées, référencement local et collecte d’avis Google.",
       "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des horaires et des règles de présence pour aligner les effectifs sur la charge réelle.",
       "Instauration d’un brief de début de journée et d’un suivi commun des devis : tâches de back-office attribuées nommément, dossiers à reprendre visibles de toute l’équipe.",
-      "Conception d’Opti’Profit pour amener l’arbitrage produit besoin technique, budget, réseaux de soins, marge au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
+      "Conception d’Opti’Profit pour amener l’arbitrage produit (besoin technique, budget, réseaux de soins, marge) au moment de la vente, plutôt que de demander qu’il soit appris à l’avance.",
     ],
     a4Summary:
       "Redynamisation commerciale · organisation du point de vente · recrutement et formation · conception d’outils",
