@@ -4,7 +4,7 @@ export const contact = {
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Professionnel de terrain avec 14 ans d’expérience en environnement commercial, j’ai progressivement orienté mon parcours vers ce qui me mobilise le plus : structurer l’activité, formaliser les procédures et rendre le pilotage possible  en construisant, quand il le fallait, les outils qui manquaient pour le tenir.",
+    "Après 14 ans sur le terrain commercial, j’ai orienté mon parcours vers ce qui me motive le plus : organiser l’activité, écrire les procédures et donner à la direction les moyens de piloter, en construisant les outils qui manquaient quand il le fallait.",
   /* L'adresse du CV en ligne. Elle ne sert à rien à l'écran — on y est déjà —
      mais le recto A4 se détache de son support : imprimé ou versé à un
      dossier, il ne porte plus aucun chemin de retour, et le formulaire de

@@ -4,7 +4,7 @@ export const projetsTransverses = [
     subtitle: "Conception produit & pilotage · en ligne, développement continu",
     bullets: [
       "Traduction des besoins d’un salon à prestations récurrentes en parcours, règles métier et fonctionnalités : clients, réservations, planning, fidélité, campagnes commerciales et indicateurs. Module de caisse et exports comptables en cours.",
-      "Formalisation des règles métier, des invariants, des scénarios limites et des plans de tests nécessaires au contrôle déterministe des fonctionnalités sensibles.",
+      "Écriture des règles métier, des cas limites et des plans de tests, pour vérifier de façon fiable le comportement des fonctions sensibles.",
       "Pilotage du projet : cadrage fonctionnel, priorisation des évolutions, validation des usages et préparation du déploiement.",
     ],
     link: { label: "Découvrir KuT", url: "https://kut.panum.fr/" },
@@ -17,7 +17,7 @@ export const projetsTransverses = [
       {
         title: "Sécurisation fonctionnelle",
         nature: "cadre",
-        text: "Écrire les invariants et les cas limites avant le code, pour que le comportement des fonctions sensibles soit vérifiable.",
+        text: "Écrire les règles et les cas limites avant le code, pour pouvoir vérifier ensuite que tout fonctionne comme prévu.",
       },
     ],
   },
@@ -25,7 +25,7 @@ export const projetsTransverses = [
     title: "L’Ortabels : projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
     bullets: [
-      "Planifier des cultures suppose d’anticiper des stades de développement qui dépendent des températures, pas du calendrier : un semis se pilote en degrés-jours cumulés, pas en semaines.",
+      "Le développement d’une culture dépend de la chaleur accumulée (les degrés-jours), et non du nombre de semaines écoulées. Le calendrier seul ne suffit donc pas pour planifier.",
       "Conception d’un outil exploitant les températures locales, les degrés-jours et les modèles de croissance thermique pour estimer les fenêtres de semis, les stades de développement et les périodes de récolte.",
       "Structuration du projet maraîcher lui-même : planification des cultures, organisation des rotations et suivi des séries.",
     ],
@@ -34,12 +34,12 @@ export const projetsTransverses = [
       {
         title: "Modèles prédictifs",
         nature: "produit",
-        text: "Transformer une série de données brutes en repères de décision datés et directement utilisables.",
+        text: "Transformer des données brutes en dates concrètes pour décider quand semer et quand récolter.",
       },
       {
-        title: "Architecture de gestion",
+        title: "Organisation",
         nature: "cadre",
-        text: "Même logique qu’un back-office structuré : séquencer, planifier, rendre visible et coordonner.",
+        text: "La même logique qu’un back-office bien organisé : planifier les étapes et rendre visible ce qui doit être fait.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const projetsTransverses = [
     ],
     transferableSkills: [
       {
-        title: "Ingénierie de la donnée",
+        title: "Analyse de données",
         nature: "produit",
-        text: "Traduire des flux de données hétérogènes en indicateurs de performance immédiatement actionnables.",
+        text: "Rassembler des données de sources différentes pour en tirer des indicateurs utilisables tout de suite.",
       },
       {
-        title: "Optimisation de la rentabilité",
+        title: "Rentabilité",
         nature: "produit",
-        text: "Identifier les leviers de profitabilité qui sécurisent la marge sans casser le positionnement commercial.",
+        text: "Trouver comment protéger la marge sans changer le positionnement de l’établissement.",
       },
     ],
   },

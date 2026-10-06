@@ -15,23 +15,23 @@
    Sous 30 %, le gras redevient un relief. */
 export const profileContent = {
   quote:
-    "« Rendre une activité plus lisible et plus pilotable, sans l’alourdir. »",
+    "Rendre une activité plus lisible et plus facile à piloter, sans l’alourdir.",
   intro:
-    "J’ai <strong>déplacé ma valeur du face à face client vers l’organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, accompagnement et repères de pilotage. Ce qui était une part annexe de mon travail est devenu un levier de développement, et j’ai construit les outils qui manquaient pour le tenir.",
+    "J’ai <strong>progressivement élargi mon rôle de la vente à l’organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, accompagnement de l’équipe et indicateurs de pilotage. Cette part de mon travail, d’abord secondaire, est devenue centrale, et j’ai construit les outils qui manquaient pour la tenir.",
   cards: [
     {
       title: "Positionnement",
       nature: "cadre",
-      text: "Je fais l’interface entre une direction qui porte des objectifs et une équipe qui vit les contraintes d’exécution. Traduire l’objectif en méthode acceptable, et faire remonter ce que le terrain sait et que le pilotage ignore.",
+      text: "Je fais le lien entre la direction, qui fixe les objectifs, et l’équipe, qui vit les contraintes du quotidien. Je traduis les objectifs en méthodes applicables, et je fais remonter à la direction ce que le terrain voit et qu’elle ne voit pas.",
     },
     {
       title: "Méthode",
       nature: "produit",
-      text: "<strong>Je pars d’un irritant précis</strong> (une ressaisie, un oubli, un calcul refait à la main), je cherche ce qui le produit, <strong>puis je tranche</strong> : une pratique à changer, une responsabilité à nommer, une étape à supprimer et, quand rien de tout cela ne suffit, le support qui manquait. La réponse se vérifie au premier usage, et sans attendre qu’on me la demande.",
+      text: "<strong>Je pars d’un problème précis</strong> (une ressaisie, un oubli, un calcul refait à la main) et je cherche d’où il vient. <strong>Puis je choisis la réponse</strong> : changer une pratique, nommer un responsable, supprimer une étape ou, si cela ne suffit pas, créer l’outil qui manque. Je n’attends pas qu’on me le demande, et je vérifie dès la première utilisation que la réponse fonctionne.",
     },
   ],
   expertise:
-    "<strong>Concevoir les outils et les procédures qui manquent</strong> à une activité pour être pilotée : ce qu’il faut décider, ce qu’il faut suivre, et ce qu’il faut cesser de refaire à la main.",
+    "<strong>Concevoir les outils et les procédures qui manquent</strong> pour piloter une activité, et supprimer le travail refait à la main.",
   contributionTags: [
     { label: "Procédures écrites", nature: "cadre" },
     { label: "Outils de suivi", nature: "produit" },
@@ -41,7 +41,7 @@ export const profileContent = {
     { label: "Conduite du changement", nature: "cadre" },
   ],
   target:
-    "<strong>Un rôle transverse dédié à la structuration de l’activité</strong> : formaliser les process, outiller le suivi et rendre le pilotage possible. Je me positionne sur les fonctions organisation, process et outils métiers, au sein d’un réseau commercial ou de service client, ou dans un environnement en croissance soumis à de fortes contraintes opérationnelles.",
+    "<strong>Un rôle transverse dédié à l’organisation de l’activité</strong>, sur des fonctions organisation, process ou outils métiers. Je vise ce type de poste dans un réseau commercial, un service client, ou une entreprise en croissance soumise à de fortes contraintes opérationnelles.",
 };
 
 /* Contenus propres au recto A4 (js/render/renderCv.js). Ils vivent ici et non
@@ -70,7 +70,7 @@ export const a4Content = {
 
      Le gras, relu seul, doit toujours former un enonce complet. */
   pitch: [
-    "Profil de terrain ayant <strong>déplacé sa valeur vers la structuration de l’activité</strong> : process formalisés, outils métiers conçus sur mesure, pilotage rendu possible. Je pars d’un irritant concret et je tranche — changer une pratique, nommer une responsabilité, ou construire l’outil qui manquait.",
+    "Profil de terrain <strong>tourné vers l’organisation de l’activité</strong> : process formalisés, outils métiers conçus sur mesure, pilotage rendu possible. Je pars d’un problème concret et je choisis la réponse : changer une pratique, nommer un responsable ou construire l’outil qui manque.",
   ],
   /* Trois preuves, et trois seulement : impact economique, adoption terrain,
      transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur
@@ -151,17 +151,17 @@ export const formationContent = {
     {
       title: "Formalisation de process",
       nature: "cadre",
-      text: "Procédures de back-office et guides de traitement, priorisés selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent.",
+      text: "Procédures de back-office et guides de traitement, priorisés selon le modèle de Kano.",
     },
     {
       title: "Attribution des responsabilités",
       nature: "cadre",
-      text: "Nommer qui traite quoi, et à quelle échéance. Une tâche partagée sans responsable identifié n’est traitée par personne c’est ce que règlent le brief quotidien et le suivi des devis.",
+      text: "Nommer qui traite quoi, et pour quand. Une tâche sans responsable n’est traitée par personne : le brief quotidien et le suivi des devis règlent ce problème.",
     },
     {
       title: "Indicateurs avancés & retardés",
       nature: "produit",
-      text: "Séparer ce qui constate un résultat déjà joué de ce sur quoi on peut encore agir : délais de traitement, discipline de relance, dossiers à risque, causes de perte. C’est la logique qui structure PANUM.",
+      text: "Distinguer les chiffres qui constatent un résultat de ceux sur lesquels on peut encore agir (délais, relances, dossiers à risque). C’est la logique de PANUM.",
     },
     {
       title: "Analyse de données & modélisation",
@@ -185,5 +185,5 @@ export const formationContent = {
     },
   ],
   quote:
-    "« Mon apprentissage est continu et orienté vers des problèmes concrets du terrain. »",
+    "J’apprends à partir des problèmes que je rencontre sur le terrain.",
 };

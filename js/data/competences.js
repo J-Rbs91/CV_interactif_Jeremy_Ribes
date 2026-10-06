@@ -23,7 +23,7 @@ export const competences = [
     enjeu:
       "Relancer un magasin en difficulté sans acheter le chiffre par la remise.",
     miseEnPlace:
-      "J’ai travaillé les deux côtés en même temps. Le flux, par des actions locales ciblées, le référencement local et la collecte d’avis Google. La qualité économique de chaque vente, par un outil d’arbitrage produit utilisé directement en situation de vente.",
+      "J’ai travaillé deux leviers en parallèle. Pour faire venir des clients : actions locales ciblées, référencement local et collecte d’avis Google. Pour préserver la marge de chaque vente : un outil d’aide au choix du produit, utilisé pendant la vente.",
     exemple:
       "L’outil fait ressortir le mix produit le plus pertinent selon le budget du client, les contraintes techniques, les offres en cours et les réseaux de soins.",
     resultat:
@@ -43,14 +43,14 @@ export const competences = [
     summary:
       "Transformer des pratiques implicites en procédures écrites et réellement utilisées.",
     nature: "cadre",
-    detailLabel: "Niveler la charge",
+    detailLabel: "Répartir la charge",
     tags: ["Procédures", "Back-office", "Nivellement de charge", "Priorisation"],
     enjeu:
-      "Réduire les flottements d’organisation et les zones d’incertitude du fonctionnement quotidien.",
+      "Éviter les oublis et les « qui s’en occupe ? » du quotidien.",
     miseEnPlace:
       "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
     exemple:
-      "Deux applications du même principe : <strong>niveler la charge plutôt que dimensionner sur le pic</strong>. Les rendez-vous de livraison répartis sur la semaine ont fait tomber la surcharge du samedi ; les plannings construits sur l’activité attendue, plutôt que sur un roulement fixe, ont aligné les effectifs sur le flux réel.",
+      "Un même principe appliqué deux fois : <strong>répartir la charge au lieu de subir le pic</strong>. Les rendez-vous de livraison étalés sur la semaine ont supprimé la surcharge du samedi, et les plannings construits sur l’activité prévue ont ajusté les effectifs au flux de clients.",
     a4Rank: 1,
     a4Statement:
       "Transformer les pratiques implicites en méthodes claires et utilisables.",
@@ -68,13 +68,13 @@ export const competences = [
       "Concevoir et développer moi-même les outils qui manquent à l’activité.",
     nature: "produit",
     detailLabel: "Partir de l’usage",
-    tags: ["Irritant observé", "Adoption sans formation", "Google Apps Script", "Web", "Automatisation"],
+    tags: ["Problème observé", "Adoption sans formation", "Google Apps Script", "Web", "Automatisation"],
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
     miseEnPlace:
       "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
     exemple:
-      "Je pars de l’usage observé, pas de la spécification. Un outil qui demande une formation pour être utilisé ne sera pas utilisé.",
+      "Je conçois chaque outil à partir de ce que je vois l’équipe faire au quotidien, et je le veux utilisable sans formation : sinon, il n’est pas utilisé.",
     a4Rank: 2,
     a4Statement:
       "Concevoir des outils qui sécurisent une décision et suppriment les ressaisies.",
@@ -89,21 +89,21 @@ export const competences = [
     id: "pilotage-donnee",
     title: "Pilotage par la donnée",
     summary:
-      "Concevoir des indicateurs qui expliquent la performance, pas seulement qui la décrivent.",
+      "Concevoir des indicateurs qui expliquent la performance et montrent où agir.",
     nature: "produit",
     detailLabel: "Constater ou agir",
     tags: ["Indicateurs avancés", "Contrôles automatisés", "Reporting"],
     enjeu:
-      "Passer d’un reporting qui constate à un reporting qui dit où agir.",
+      "Montrer où agir avant que le résultat soit joué.",
     miseEnPlace:
       "Je sépare les <strong>indicateurs retardés</strong>, qui constatent un résultat déjà joué, des <strong>indicateurs avancés</strong>, sur lesquels on peut encore agir : délais de traitement, discipline de relance, dossiers à risque, pertes évitables et santé du portefeuille. J’ai également mis en place des contrôles automatisés rapprochant le logiciel métier et les suivis internes.",
     exemple:
-      "C’est la logique qui structure PANUM : comprendre pourquoi une vente se perd, et sur quel levier agir en priorité.",
+      "C’est la logique de PANUM : comprendre pourquoi une vente se perd, et quoi faire en priorité.",
     resultat:
-      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils rapprochent deux sources indépendantes, dont l’une est l’outil que j’ai conçu : le contrôle peut établir qu’il n’a pas été renseigné.",
+      "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils vérifient aussi mon propre outil : un dossier oublié dans le suivi des devis est repéré.",
     a4Rank: 4,
     a4Statement:
-      "Construire des indicateurs qui orientent l’action, pas seulement qui la constatent.",
+      "Construire des indicateurs qui montrent où agir.",
     a4Proofs: [
       "Indicateurs avancés séparés des retardés",
       "Délais, relances, dossiers à risque",
@@ -122,7 +122,7 @@ export const competences = [
     enjeu:
       "Faire adopter des méthodes dans des environnements où tout ce qui ajoute de la complexité est rejeté d’office.",
     miseEnPlace:
-      "Je traduis les objectifs de la direction en méthodes concrètes, et je fais remonter ce que le terrain sait et que le pilotage ignore. L’adhésion vient du bénéfice immédiat : moins d’oublis, moins de ressaisie, charge mieux répartie.",
+      "Je présente chaque nouvelle méthode par ce qu’elle retire du travail de l’équipe : moins d’oublis, moins de ressaisie, une charge mieux répartie. C’est ce gain immédiat qui la fait adopter.",
     exemple:
       "Suivis quotidiens et procédures de back-office adoptés par les équipes, dans deux enseignes différentes.",
     resultat:

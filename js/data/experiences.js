@@ -22,7 +22,7 @@ export const experiences = [
       "Poste de vente sur lequel j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
     bullets: [
       "Mise en place d’un système de pilotage reliant suivi des devis et du tiers payant, prochaine action, charge par collaborateur et brief quotidien. Les outils s’alimentent entre eux : les dossiers à reprendre deviennent des priorités visibles, puis des actions attribuées à chacun. La direction voit où l’activité bloque et qui doit agir.",
-      "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
+      "Contrôles automatisés des saisies dans le suivi des devis, et comparaison avec le logiciel métier pour repérer les dossiers non suivis et mesurer l’écart.",
       "Méthode de back-office éprouvée chez Générale d’Optique, défendue auprès de la direction et de l’équipe en place jusqu’à son adoption : procédures de contrôle des commandes, de dispatch et de traitement des retards, vérifications à J+1, rendez-vous de livraison lissés sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
@@ -80,10 +80,10 @@ export const experiences = [
     date: "2012 → 2023",
     recency: "past",
     context:
-      "Onze ans en magasin, sur trois enseignes et trois organisations différentes.",
+      "Onze ans en magasin, dans trois enseignes.",
     bullets: [
       "Vente conseil et traitement des dossiers complexes : contraintes techniques, réseaux de soins, tiers payant.",
-      "Trois enseignes, trois politiques commerciales et trois manières d’organiser un magasin : c’est de là que vient ma lecture des contraintes réelles d’un point de vente.",
+      "Trois façons différentes d’organiser un magasin, vécues de l’intérieur : c’est là que j’ai appris ce qui fonctionne vraiment en point de vente.",
       "Bascule progressive vers les sujets d’organisation : méthodes de travail, fiabilisation des calculs récurrents et du suivi des dossiers.",
     ],
     a4Summary:
