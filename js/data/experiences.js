@@ -23,7 +23,7 @@ export const experiences = [
     bullets: [
       "Mise en place d’un système de pilotage reliant suivi des devis et du tiers payant, prochaine action, charge par collaborateur et brief quotidien. Les outils s’alimentent entre eux : les dossiers à reprendre deviennent des priorités visibles, puis des actions attribuées à chacun. La direction voit où l’activité bloque et qui doit agir.",
       "Workflows automatisés pour détecter les irrégularités de saisie dans l’outil de suivi, complétés par un contrôle croisé avec le logiciel métier pour identifier les dossiers non tracés et mesurer l’écart. Y compris quand l’écart vient de l’outil que j’ai conçu.",
-      "Rédaction et mise en place des procédures de back-office : contrôle des commandes, dispatch, traitement des retards. Lissage des rendez-vous de livraison pour répartir la charge sur la semaine.",
+      "Méthode de back-office éprouvée chez Générale d’Optique, adaptée à l’organisation Krys : procédures de contrôle des commandes, de dispatch et de traitement des retards, vérifications à J+1, rendez-vous de livraison lissés sur la semaine.",
       "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
       "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
     ],
