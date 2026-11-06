@@ -57,6 +57,7 @@ export const outils = [
     link: {
       label: "Découvrir le hub",
       url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
+      printLabel: "Hub Outils Opticien",
     },
     summary:
       "Un hub web utilisé chaque jour en magasin : demandes aux médecins, clôture de caisse et calculs optiques réunis dans une même interface pour éviter les ressaisies.",
