@@ -104,7 +104,7 @@ export const a4Content = {
       text: "Gestionnaire de planning resté en service après mon départ, Opti’Profit transmis à une direction régionale, brief et suivi repris dans une autre enseigne.",
     },
   ],
-  /* Une entree : ces projets prouvent que la methode se
+  /* Deux entrees : ces projets prouvent que la methode se
      transfere hors de l'optique, ils ne composent pas un second parcours.
      L'Ortabels et Renta Menu se disent ensemble parce qu'ils prouvent la meme
      chose — modeliser pour decider — et separes ils prendraient deux fois la
@@ -117,6 +117,10 @@ export const a4Content = {
      & pilotage », « Modelisation & aide a la decision » : elle nommait ce que
      le texte juste apres decrivait deja, et cette redite coutait la ligne. */
   projects: [
+    {
+      title: "Hub Outils Opticien",
+      text: "Tâches de magasin regroupées en un point d’entrée, sans serveur.",
+    },
     {
       title: "L’Ortabels · Renta Menu",
       text: "Données métier transformées en outils de décision.",

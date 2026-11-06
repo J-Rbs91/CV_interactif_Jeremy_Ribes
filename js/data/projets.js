@@ -1,5 +1,27 @@
 export const projetsTransverses = [
   {
+    title: "Hub Outils Opticien : plusieurs outils de magasin, un seul point d’entrée",
+    subtitle: "Conception produit & pilotage · en ligne, utilisé en magasin",
+    bullets: [
+      "Regroupement des tâches courtes et répétées d’un magasin d’optique en un seul site : demande au médecin avec export PDF, clôture de caisse avec contrôle de l’écart, calcul d’épaisseur des verres avec vue 3D.",
+      "Coordonnées du magasin saisies une seule fois et reprises par tous les outils. Aucun serveur, aucune donnée patient transmise : tout reste sur le poste. Déployable dans un autre magasin sans toucher au code.",
+      "Choix assumé de ne pas ouvrir un outil terminé, la campagne e-mail : écrire à des clients engage la responsabilité du magasin. Les règles à réunir avant l’ouverture sont documentées.",
+    ],
+    link: { label: "Découvrir le hub", url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/" },
+    transferableSkills: [
+      {
+        title: "Conception produit",
+        nature: "produit",
+        text: "Partir des tâches réelles d’un magasin et les regrouper en outils que l’équipe utilise sans formation.",
+      },
+      {
+        title: "Sécurisation fonctionnelle",
+        nature: "cadre",
+        text: "Fixer ce que l’outil ne fait pas (données patient, envoi commercial) avant de décider ce qu’il fait.",
+      },
+    ],
+  },
+  {
     title: "L’Ortabels : projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
     bullets: [
