@@ -6,6 +6,11 @@
 - `js/data/` : contenus et métadonnées affichés.
 - `js/render/` : fonctions de rendu HTML.
 - `js/ui/` : interactions UI simples.
+- `explorations/` : pages autonomes qui comparent des directions de design sur
+  le contenu réel, **non publiées** (le déploiement ne copie que `index.html`,
+  `css/`, `js/` et `assets/`). Les sources sont dans `explorations/src/` ;
+  `node scripts/build-explorations.mjs` injecte les données de `js/data/*.js`
+  et la photo. Elles ne partagent aucun CSS avec le CV : ce sont des maquettes.
 - `css/aurora.css` + `js/ui/spotlight.js` : le fond (« Aurora Background »,
   reproduit en CSS), le verre des blocs de lecture et la lumière sous le
   pointeur. Deux thèmes, suivis sur l'appareil — voir « Aurore, verre,

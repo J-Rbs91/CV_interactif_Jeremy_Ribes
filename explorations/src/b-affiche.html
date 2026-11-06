@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exploration B — Affiche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* EXPLORATION B — « Affiche »
+   Références : « Portfolio Hero » d'Alex Kane (21st.dev) pour le nom géant, le
+   portrait posé au milieu des lettres et l'accent fluo ; les listes d'index
+   (Project Index, Impact Experience) pour la suite : de très gros noms, qui
+   changent de couleur au survol et se déplient.
+   Un seul accent, le fluo, et il n'est jamais du texte courant. Le cuivre des
+   preuves ne change pas : c'est l'unique autre couleur du document. */
+:root { --bg:#0a0a0a; --fg:#f2f2ee; --dim:#8b8e92; --line:#222; --acc:#c9ff2f; --hot:#ff9d63; --disp:"Archivo", "Manrope", sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--fg); font:400 16px/1.6 "Manrope", sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+::selection { background:var(--acc); color:#000; }
+.mono { font-family:"JetBrains Mono", monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+
+/* ---------- Affiche ---------- */
+.top { position:fixed; inset:0 0 auto; display:flex; justify-content:space-between; padding:20px 28px; z-index:20; mix-blend-mode:difference; color:#fff; }
+.top nav { display:flex; gap:22px; }
+.hero { min-height:100vh; min-height:100dvh; display:grid; place-items:center; position:relative; padding:90px 0 70px; overflow:hidden; }
+.name { font-family:var(--disp); font-stretch:125%; font-weight:800; text-transform:uppercase; color:var(--acc); line-height:.8; letter-spacing:-.035em; font-size:clamp(54px, 16.6vw, 300px); text-align:center; position:relative; }
+.name span { display:block; }
+.photo { position:absolute; left:50%; top:50%; width:clamp(120px, 19vw, 300px); aspect-ratio:1; transform:translate(-50%,-52%); border-radius:50%; overflow:hidden; z-index:3; box-shadow:0 0 0 6px var(--bg); }
+.photo img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(1.05); display:block; }
+.photo::after { content:""; position:absolute; inset:0; background:var(--acc); mix-blend-mode:multiply; opacity:.55; }
+.tag { position:absolute; bottom:36px; left:0; right:0; text-align:center; color:var(--dim); z-index:4; padding:0 20px; }
+.tag b { color:var(--fg); font-weight:500; }
+.arrow { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); font-size:18px; color:var(--dim); animation:bob 2.2s ease-in-out infinite; }
+@keyframes bob { 50% { transform:translate(-50%, 6px); } }
+
+/* ---------- Bandeau ---------- */
+.ticker { background:var(--acc); color:#000; overflow:hidden; white-space:nowrap; padding:14px 0; }
+.ticker div { display:inline-block; animation:tick 38s linear infinite; font:800 clamp(18px,2.4vw,30px)/1 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.01em; }
+.ticker span { margin:0 28px; }
+@keyframes tick { to { transform:translateX(-50%); } }
+
+/* ---------- Sections ---------- */
+main { padding:0 28px; max-width:1500px; margin:0 auto; }
+.sec { padding:130px 0 0; }
+.sec > h2 { font:800 clamp(30px, 8vw, 128px)/.9 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.04em; color:transparent; -webkit-text-stroke:1.5px var(--acc); margin-bottom:46px; }
+.sec > h2 small { font:500 12px/1 "JetBrains Mono", monospace; letter-spacing:.14em; -webkit-text-stroke:0; color:var(--dim); vertical-align:top; margin-left:10px; }
+details { border-top:1px solid var(--line); }
+details:last-of-type { border-bottom:1px solid var(--line); }
+summary { list-style:none; cursor:pointer; display:grid; grid-template-columns:minmax(120px, 11%) 1fr auto; gap:18px; align-items:baseline; padding:20px 0; transition:padding .3s cubic-bezier(.62,0,.24,1), color .2s; }
+summary::-webkit-details-marker { display:none; }
+summary .n { color:var(--dim); }
+summary .t { font:800 clamp(26px, 5.2vw, 76px)/.98 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.03em; }
+summary .t small { display:block; font:500 12px/1.5 "JetBrains Mono", monospace; letter-spacing:.14em; color:var(--dim); margin-top:10px; text-transform:uppercase; }
+summary .s { color:var(--dim); text-align:right; max-width:30ch; font-size:14px; }
+summary:hover { color:var(--acc); padding-left:14px; }
+details[open] > summary { color:var(--acc); }
+.body { display:grid; grid-template-columns:minmax(120px, 11%) 1fr; gap:18px; padding:4px 0 44px; }
+.body .in { max-width:84ch; display:grid; gap:12px; color:#d6d7d4; }
+.body ul { list-style:none; display:grid; gap:10px; }
+.body li { padding-left:22px; position:relative; }
+.body li::before { content:"→"; position:absolute; left:0; color:var(--acc); }
+.lab { color:var(--dim); margin-top:10px; }
+.proof { display:flex; gap:40px; flex-wrap:wrap; font:800 clamp(34px,5vw,64px)/1 var(--disp); font-stretch:125%; color:var(--hot); letter-spacing:-.03em; }
+.proof small { display:block; font:500 12px/1.4 "JetBrains Mono", monospace; letter-spacing:.14em; color:var(--dim); margin-top:6px; text-transform:uppercase; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; }
+.chips span { border:1px solid #333; border-radius:99px; padding:3px 12px; font:500 12px/1.6 "JetBrains Mono", monospace; letter-spacing:.06em; color:var(--dim); }
+.big { font:800 clamp(30px, 6vw, 88px)/1.02 var(--disp); font-stretch:125%; letter-spacing:-.03em; text-transform:uppercase; padding:60px 0 20px; max-width:18ch; }
+.big em { font-style:normal; color:var(--acc); }
+.contact { margin:150px 0 0; padding:36px 0 60px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; }
+.contact a { font:800 clamp(40px, 10vw, 150px)/.9 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.04em; color:var(--acc); }
+.contact a:hover { color:var(--fg); }
+
+@media (max-width: 760px) {
+  .top nav { display:none; }
+  summary { grid-template-columns:1fr auto; }
+  summary .n { display:none; }
+  summary .s { display:none; }
+  .body { grid-template-columns:1fr; }
+  .body > span { display:none; }
+}
+@media (prefers-reduced-motion: reduce) { .ticker div, .arrow { animation:none; } }
+</style>
+</head>
+<body>
+<div class="top mono"><span id="brand"></span><nav id="nav"></nav></div>
+
+<header class="hero">
+  <h1 class="name" id="name"></h1>
+  <div class="photo"><img id="photo" alt="Portrait de Jérémy Ribes" /></div>
+  <p class="tag mono" id="tag"></p>
+  <div class="arrow" aria-hidden="true">↓</div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
+<main id="doc"></main>
+
+<script>/*__CV__*/</script>
+<script>
+const $ = (s) => document.querySelector(s);
+const pad = (n) => String(n + 1).padStart(2, "0");
+const C = window.CV;
+const [first, ...rest] = C.contact.name.split(" ");
+
+$("#brand").textContent = C.contact.name;
+$("#name").innerHTML = `<span>${first}</span><span>${rest.join(" ")}</span>`;
+$("#photo").src = window.PHOTO;
+$("#tag").innerHTML = `<b>${C.contact.role}</b><br>${C.contact.secondaryRole.split(" · ")[0]}`;
+const items = C.contact.secondaryRole.split(" · ");
+$("#ticker").innerHTML = [...items, ...items, ...items, ...items].map((t) => `<span>${t}</span>`).join("✦");
+const nav = [["Expériences", "experiences"], ["Outils", "outils"], ["Projets", "projets"], ["Compétences", "competences"], ["Formation", "formation"]];
+$("#nav").innerHTML = nav.map(([l, id]) => `<a href="#${id}">${l}</a>`).join("");
+
+const row = (n, title, sub, side, body) => `<details><summary><span class="n mono">${n}</span><span class="t">${title}${sub ? `<small>${sub}</small>` : ""}</span><span class="s">${side || ""}</span></summary><div class="body"><span></span><div class="in">${body}</div></div></details>`;
+const lab = (t) => `<div class="lab mono">${t}</div>`;
+const sec = (id, title, count, inner) => `<section class="sec" id="${id}"><h2>${title}<small>${count}</small></h2>${inner}</section>`;
+
+const exp = C.experiences.map((e) => {
+  const stats = e.stats ? `<div class="proof">${e.stats.map((s) => `<div>${s.value}${s.label ? `<small>${s.label}</small>` : ""}</div>`).join("")}</div><p style="color:var(--dim);font-size:14px">${e.statsLabel} — ${e.statsBase}</p>` : "";
+  return row(e.date, e.company, e.role, "", `${e.context ? `<p>${e.context}</p>` : ""}<ul>${e.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${stats}${e.result ? `<p>${e.result}</p>` : ""}`);
+}).join("");
+
+const out = C.outils.map((o, i) => row(pad(i), o.title, o.category, o.status,
+  `<p>${o.summary}</p>${lab("Situation")}<p>${o.context}</p>${o.arbitrage ? lab("Décision") + `<p>${o.arbitrage}</p>` : ""}${lab("Réponse")}<p>${o.action}</p>${lab("Résultat")}<p>${o.results}</p><div class="chips">${o.chips.map((c) => `<span>${c}</span>`).join("")}</div>${o.link ? `<p><a style="color:var(--acc)" href="${o.link.url}">${o.link.label} ↗</a></p>` : ""}`)).join("");
+
+const prj = C.projets.map((p, i) => row(pad(i), p.short, p.subtitle, "",
+  `<ul>${p.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${lab("Compétences transférables")}<ul>${p.transferableSkills.map((t) => `<li><b>${t.title}</b> — ${t.text}</li>`).join("")}</ul>${p.link ? `<p><a style="color:var(--acc)" href="${p.link.url}">${p.link.label} ↗</a></p>` : ""}`)).join("");
+
+const comp = C.competences.map((c, i) => row(pad(i), c.title, "", c.summary,
+  `${lab("Enjeu traité")}<p>${c.enjeu}</p>${lab("Ce que j’ai mis en place")}<p>${c.miseEnPlace}</p>${lab("Exemple concret")}<p>${c.exemple}</p>${lab("Résultat observable")}<p>${c.resultat}</p><div class="chips">${c.tags.map((t) => `<span>${t}</span>`).join("")}</div>`)).join("");
+
+const f = C.formation;
+const form = row(f.year, f.title, f.subtitle, "", "<p>" + f.continuousSkills.map((s) => `<b>${s.title}</b> — ${s.text}`).join("</p><p>") + "</p>") + `<p class="big">${f.quote.replace("problèmes", "<em>problèmes</em>")}</p>`;
+
+$("#doc").innerHTML =
+  `<p class="big">${C.profile.quote.replace("plus lisible", "<em>plus lisible</em>")}</p>` +
+  sec("experiences", "Expériences", `${C.experiences.length} postes`, exp) + sec("outils", "Outils", `${C.outils.length} outils`, out) + sec("projets", "Projets", `${C.projets.length} projets`, prj) + sec("competences", "Compétences", `${C.competences.length} domaines`, comp) + sec("formation", "Formation", f.year, form) +
+  `<div class="contact"><a href="${C.contact.site.url}">Me contacter ↗</a><span class="mono" style="color:var(--dim)">${C.contact.name}<br>${C.contact.items[0].text}</span></div>`;
+</script>
+</body>
+</html>

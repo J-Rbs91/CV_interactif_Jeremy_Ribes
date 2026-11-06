@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exploration A — Résumé terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* EXPLORATION A — « Résumé terminal »
+   Référence : Jessi.cv (21st.dev, « Portfolio Hero with paper shaders »).
+   Ce qu'on en reprend : un écran noir, une seule police (mono), le CV
+   comme liste de lignes — entreprise, poste, années —, des liens en pied de
+   colonne, et à droite une trame de points qui vit. Ce qu'on n'en reprend
+   pas : le rose. Une seule couleur ici, le cuivre, et seulement sur les
+   chiffres mesurés. */
+:root { --bg:#050505; --fg:#ececec; --dim:#8c9098; --faint:#3a3e45; --line:#1f2227; --hot:#ff9d63; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--fg); font:400 12px/1.65 "JetBrains Mono", ui-monospace, monospace; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+a:hover { background:var(--fg); color:var(--bg); }
+::selection { background:var(--fg); color:var(--bg); }
+
+/* ---------- Écran d'ouverture ---------- */
+.hero { display:grid; grid-template-columns:minmax(320px, 36%) 1fr; min-height:100vh; min-height:100dvh; position:relative; }
+.hero-text { display:flex; flex-direction:column; justify-content:space-between; padding:28px 28px 24px; position:relative; z-index:2; }
+.brand { color:var(--dim); }
+.id h1 { font:700 12px/1.4 inherit; letter-spacing:.02em; text-transform:uppercase; }
+.id .role { text-transform:uppercase; margin-top:2px; }
+.id .sub { color:var(--dim); margin-top:14px; max-width:34ch; }
+.resume { margin-top:34px; display:grid; grid-template-columns:auto 1fr auto; column-gap:18px; row-gap:2px; }
+.resume a { display:contents; }
+.resume a > span { padding:1px 0; white-space:nowrap; }
+.resume a:hover > span { background:var(--fg); color:var(--bg) !important; }
+.resume .yr { color:var(--dim); text-align:right; }
+.links { display:flex; flex-wrap:wrap; gap:6px 14px; color:var(--dim); }
+.links a { color:var(--fg); }
+.hero-art { position:relative; min-height:50vh; }
+.hero-art canvas { position:absolute; inset:0; width:100%; height:100%; image-rendering:pixelated; }
+.hero-art::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg, var(--bg) 0%, transparent 18%); pointer-events:none; }
+.cue { position:absolute; left:28px; bottom:24px; z-index:3; color:var(--dim); }
+
+/* ---------- Document ---------- */
+main { max-width:1180px; padding:0 28px 120px; }
+.sec { padding-top:88px; }
+.sec > h2 { display:flex; gap:14px; align-items:baseline; font:500 12px/1 inherit; text-transform:uppercase; letter-spacing:.06em; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.sec > h2 i { font-style:normal; color:var(--dim); }
+details { border-bottom:1px solid var(--line); }
+summary { list-style:none; cursor:pointer; display:grid; grid-template-columns:130px minmax(0,1.1fr) minmax(0,1.3fr) 20px; gap:16px; padding:11px 8px; align-items:baseline; }
+summary::-webkit-details-marker { display:none; }
+summary:hover, details[open] > summary { background:var(--fg); color:var(--bg); }
+summary:hover .dim, details[open] > summary .dim { color:#55595f; }
+summary .dim { color:var(--dim); }
+summary .pm { text-align:right; }
+details[open] > summary .pm::before { content:"−"; }
+details:not([open]) > summary .pm::before { content:"+"; }
+.body { display:grid; grid-template-columns:130px minmax(0,1fr); gap:16px; padding:18px 8px 26px; }
+.body > div { max-width:78ch; }
+.body p { color:#cfd2d6; margin-bottom:10px; }
+.body ul { list-style:none; display:grid; gap:8px; }
+.body li { padding-left:16px; position:relative; color:#cfd2d6; }
+.body li::before { content:"→"; position:absolute; left:0; color:var(--dim); }
+.lab { color:var(--dim); text-transform:uppercase; font-size:11px; margin:14px 0 4px; }
+.lab:first-child { margin-top:0; }
+.proof { display:flex; gap:28px; margin:14px 0 4px; color:var(--hot); font-size:20px; font-weight:500; }
+.proof small { display:block; font-size:11px; color:var(--dim); }
+.tags { color:var(--dim); margin-top:12px; }
+.quote { padding:28px 8px; max-width:60ch; font-size:16px; line-height:1.5; }
+.foot { margin-top:96px; padding-top:18px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; color:var(--dim); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns:1fr; min-height:0; }
+  .hero-art { order:-1; height:42vh; min-height:0; }
+  .hero-art::after { background:linear-gradient(0deg, var(--bg) 0%, transparent 30%); }
+  .hero-text { gap:36px; }
+  .cue { display:none; }
+  .resume { grid-template-columns:1fr; row-gap:10px; }
+  .resume a { display:grid; grid-template-columns:1fr auto; column-gap:12px; }
+  .resume a > span { white-space:normal; }
+  .resume a > span:nth-child(2) { grid-column:1; grid-row:2; }
+  .resume a > .yr { grid-column:2; grid-row:1; }
+  summary { grid-template-columns:1fr 20px; row-gap:0; }
+  summary > :nth-child(3) { grid-column:1; }
+  summary > :nth-child(1) { grid-column:1; }
+  summary .pm { grid-row:1; grid-column:2; }
+  .body { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-text">
+    <div class="brand">jeremy-ribes.cv</div>
+    <div class="id">
+      <h1 id="name"></h1>
+      <div class="role" id="role"></div>
+      <div class="sub" id="sub"></div>
+      <div class="resume" id="resume"></div>
+    </div>
+    <nav class="links" id="links"></nav>
+  </div>
+  <div class="hero-art"><canvas id="dither" aria-hidden="true"></canvas><div class="cue">↓ défiler</div></div>
+</header>
+<main id="doc"></main>
+
+<script>/*__CV__*/</script>
+<script>
+const $ = (s) => document.querySelector(s);
+const pad = (n) => String(n + 1).padStart(2, "0");
+const C = window.CV;
+
+/* ---- identité ---- */
+$("#name").textContent = C.contact.name;
+$("#role").textContent = C.contact.role;
+$("#sub").textContent = C.contact.secondaryRole;
+$("#resume").innerHTML = C.experiences.map((e) =>
+  `<a href="#experiences"><span>${e.company.split(" · ")[0]}${e.company.includes("·") ? " …" : ""}</span><span class="dim" style="color:var(--dim)">${e.role}</span><span class="yr">${e.date.replace(" → ", " → ")}</span></a>`).join("");
+const secs = [["Expériences", "experiences"], ["Outils", "outils"], ["Projets", "projets"], ["Compétences", "competences"], ["Formation", "formation"]];
+$("#links").innerHTML = secs.map(([l, id]) => `<a href="#${id}">${l}</a>`).join("") + `<a href="${C.contact.site.url}">Version interactive ↗</a>`;
+
+/* ---- document ---- */
+const row = (a, b, c, body) => `<details><summary><span class="dim">${a}</span><span>${b}</span><span class="dim">${c}</span><span class="pm"></span></summary><div class="body"><span></span><div>${body}</div></div></details>`;
+const lab = (t) => `<div class="lab">${t}</div>`;
+const sec = (id, n, title, inner) => `<section class="sec" id="${id}"><h2><i>${n}</i>${title}</h2>${inner}</section>`;
+
+const exp = C.experiences.map((e) => {
+  const stats = e.stats ? `<div class="proof">${e.stats.map((s) => `<div>${s.value}${s.label ? `<small>${s.label}</small>` : ""}</div>`).join("")}</div><p class="dim" style="color:var(--dim)">${e.statsLabel} — ${e.statsBase}</p>` : "";
+  const body = `${e.context ? `<p>${e.context}</p>` : ""}<ul>${e.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${stats}${e.result ? `${lab("Résultat")}<p>${e.result}</p>` : ""}`;
+  return row(e.date, e.company, e.role, body);
+}).join("");
+
+const out = C.outils.map((o, i) => row(pad(i), o.title, o.category,
+  `<p>${o.summary}</p>${lab("Situation")}<p>${o.context}</p>${o.arbitrage ? lab("Décision") + `<p>${o.arbitrage}</p>` : ""}${lab("Réponse")}<p>${o.action}</p>${lab("Résultat")}<p>${o.results}</p><div class="tags">${o.chips.join(" · ")} — <b style="font-weight:500">${o.status}</b></div>${o.link ? `<p style="margin-top:12px"><a href="${o.link.url}">${o.link.label} ↗</a></p>` : ""}`)).join("");
+
+const prj = C.projets.map((p, i) => row(pad(i), p.short, p.subtitle,
+  `<ul>${p.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${lab("Compétences transférables")}<ul>${p.transferableSkills.map((t) => `<li><b style="font-weight:500">${t.title}</b> — ${t.text}</li>`).join("")}</ul>${p.link ? `<p style="margin-top:12px"><a href="${p.link.url}">${p.link.label} ↗</a></p>` : ""}`)).join("");
+
+const comp = C.competences.map((c, i) => row(pad(i), c.title, c.summary,
+  `${lab("Enjeu traité")}<p>${c.enjeu}</p>${lab("Ce que j’ai mis en place")}<p>${c.miseEnPlace}</p>${lab("Exemple concret")}<p>${c.exemple}</p>${lab("Résultat observable")}<p>${c.resultat}</p><div class="tags">${c.tags.join(" · ")}</div>`)).join("");
+
+const f = C.formation;
+const form = `<div style="padding:14px 8px;display:grid;grid-template-columns:130px 1fr;gap:16px"><span style="color:var(--dim)">${f.year}</span><span>${f.title} <span style="color:var(--dim)">— ${f.subtitle}</span></span></div>` +
+  f.continuousSkills.map((s, i) => row(pad(i), s.title, "", `<p>${s.text}</p>`)).join("") + `<p class="quote">${f.quote}</p>`;
+
+$("#doc").innerHTML = sec("experiences", "01", "Expériences", exp) + sec("outils", "02", "Outils", out) + sec("projets", "03", "Projets transverses", prj) + sec("competences", "04", "Compétences", comp) + sec("formation", "05", "Formation", form) +
+  `<div class="foot"><span>${C.contact.name} — ${C.contact.items[0].text}</span><a href="${C.contact.site.url}">${C.contact.site.host} ↗</a></div>`;
+
+/* ---- la trame ----
+   Un champ de lumière (quatre masses qui dérivent) seuillé par une matrice de
+   Bayer 4×4 : c'est ce qui fait la trame de points. Dessinée à basse
+   résolution et agrandie sans lissage — chaque point est un pixel du canvas. */
+const cv = $("#dither"), g = cv.getContext("2d");
+const CELL = 5, BAYER = [0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+let w = 0, h = 0, img;
+function fit() { w = Math.ceil(cv.clientWidth / CELL); h = Math.ceil(cv.clientHeight / CELL); cv.width = w; cv.height = h; img = g.createImageData(w, h); }
+function draw(t) {
+  const s = t / 1000, ar = w / h, d = img.data;
+  const B = [[.30+.12*Math.sin(s*.31), .35+.16*Math.cos(s*.23), .20], [.72+.10*Math.cos(s*.27), .30+.14*Math.sin(s*.35), .17], [.55+.14*Math.sin(s*.19), .72+.10*Math.cos(s*.29), .22], [.20+.08*Math.cos(s*.41), .80+.08*Math.sin(s*.17), .13]];
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    let v = 0;
+    /* Un cône par masse : la valeur décroît du centre au bord, donc la trame
+       passe de points pleins à points épars — c'est ce dégradé qui lui donne
+       son relief, un disque plein n'en a aucun. */
+    for (const [bx, by, r] of B) { const dx = (x / w - bx) * ar, dy = y / h - by, t = 1 - Math.sqrt(dx * dx + dy * dy) / (r * 1.9); if (t > 0) v += t * t; }
+    v = Math.min(1, v * .85);
+    const on = v > (BAYER[(y & 3) * 4 + (x & 3)] + .5) / 16;
+    const i = (y * w + x) * 4; d[i] = d[i+1] = d[i+2] = on ? 236 : 5; d[i+3] = 255;
+  }
+  g.putImageData(img, 0, 0);
+}
+fit(); addEventListener("resize", fit);
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let last = 0;
+(function loop(t) { if (still) { draw(4000); return; } if (t - last > 40) { draw(t); last = t; } requestAnimationFrame(loop); })(0);
+</script>
+</body>
+</html>
