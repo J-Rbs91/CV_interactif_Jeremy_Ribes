@@ -1,6 +1,12 @@
 import { experiences } from "../data/experiences.js";
 import { formationContent, profileContent } from "../data/profile.js";
-import { renderBulletList, renderSmallCard, renderTagRow } from "./renderUtils.js";
+import {
+  natureClass,
+  renderBulletList,
+  renderDiscloseCommand,
+  renderSmallCard,
+  renderTagRow,
+} from "./renderUtils.js";
 
 /* La photo a rejoint l'identité, à droite du nom : elle y est visible depuis
    toutes les sections, pas seulement depuis celle-ci. La citation reprend
@@ -49,51 +55,120 @@ function renderStat(item) {
       </div>`;
 }
 
-/* Bloc facultatif : rendu uniquement si l'expérience déclare `stats` ou
-   `result`. */
-function renderOutcome(experience) {
-  const { statsLabel, stats, statsBase, result } = experience;
+/* Les chiffres restent visibles fermés. C'est la règle du CV : un résultat
+   mesuré sort du corps de texte, et il ne doit pas attendre un clic pour se
+   lire — le lecteur qui n'ouvre rien doit quand même repartir avec +83 %.
 
-  if (!stats && !result) {
+   Ils sont posés **hors du bouton** : un <div> dans un <button> n'est pas du
+   contenu admis, et le résumé ne porte que du contenu de phrasé. Leur base de
+   comparaison les suit immédiatement : séparée d'eux, elle ne se rapporterait
+   plus à rien de lisible. */
+function renderStatsBlock(experience) {
+  const { statsLabel, stats, statsBase } = experience;
+
+  if (!stats) {
+    return "";
+  }
+
+  return `
+    <div class="tl-outcome exp-proof n-preuve">
+      ${statsLabel ? `<div class="tl-outcome-label">${statsLabel}</div>` : ""}
+      <div class="stats-spotlight">
+        ${stats.map(renderStat).join('<div class="stats-divider"></div>')}
+      </div>
+      ${statsBase ? `<p class="tl-outcome-base">${statsBase}</p>` : ""}
+    </div>`;
+}
+
+/* Le texte du résultat, lui, appartient au panneau : il conclut les puces qui
+   le précèdent, et lu seul il ne dirait rien. */
+function renderResult(experience) {
+  if (!experience.result) {
     return "";
   }
 
   return `
     <div class="tl-outcome n-preuve">
-      ${statsLabel ? `<div class="tl-outcome-label">${statsLabel}</div>` : ""}
-      ${
-        stats
-          ? `<div class="stats-spotlight">
-              ${stats.map(renderStat).join('<div class="stats-divider"></div>')}
-            </div>`
-          : ""
-      }
-      ${
-        /* La base suit immédiatement les chiffres qu'elle qualifie : séparée
-           d'eux par le texte de résultat, elle ne se rapporterait plus à
-           rien de lisible. */
-        statsBase ? `<p class="tl-outcome-base">${statsBase}</p>` : ""
-      }
-      ${result ? `<p class="tl-outcome-text">${result}</p>` : ""}
+      <p class="tl-outcome-text">${experience.result}</p>
     </div>`;
 }
 
-export function renderExperiencesSection() {
-  return experiences
+/* Chaque enseigne est un item insécable, et le point médian reste collé à
+   celle qui précède. La coupure ne peut donc tomber qu'entre deux enseignes,
+   où elle se lit — jamais dans « Grand / Optical », jamais avec une puce
+   orpheline en tête de ligne. Le texte assemblé est celui de la donnée,
+   mot pour mot : « GrandOptical · Krys · Lissac ». */
+function renderCompany(company) {
+  const items = company.split(" · ");
+
+  return items
     .map(
-      (experience) => `
-        <div class="timeline-item tl-${experience.recency}">
-          <div class="tl-header">
-            <span class="tl-role">${experience.role}</span>
-            <span class="tl-company">${experience.company}</span>
-            <span class="tl-date">${experience.date}</span>
-          </div>
-          ${experience.context ? `<p class="tl-context">${experience.context}</p>` : ""}
-          ${renderBulletList(experience.bullets)}
-          ${renderOutcome(experience)}
-        </div>
-      `,
+      (item, index) =>
+        `<span class="exp-co">${item}${index < items.length - 1 ? " ·" : ""}</span>`,
     )
+    .join(" ");
+}
+
+/* Troisième famille du composant d'accordéon (js/ui/accordion.js), mêmes
+   règles que les Outils et les Compétences : le panneau est toujours dans le
+   document, replié, `inert` ; le résumé est un <button> à contenu de phrasé ;
+   aucune fiche n'est ouverte à l'arrivée.
+
+   Le panneau porte le cadrage dans une colonne et les puces dans l'autre :
+   le cadrage dit dans quelle situation les puces ont été menées, il se lit
+   avant elles et à côté d'elles. Le poste et la période ne sont pas répétés
+   dans le panneau : ils sont dans la ligne juste au-dessus. */
+function renderExperience(experience, expandedId, expandAll) {
+  const isExpanded = expandAll || expandedId === experience.id;
+  const panelId = `exp-panel-${experience.id}`;
+  const buttonId = `exp-toggle-${experience.id}`;
+
+  return `
+    <article class="timeline-item exp-card tl-${experience.recency} ${natureClass("cadre")}${isExpanded ? " is-open" : ""}">
+      <button
+        type="button"
+        id="${buttonId}"
+        class="exp-summary"
+        data-experience="${experience.id}"
+        aria-expanded="${isExpanded ? "true" : "false"}"
+        aria-controls="${panelId}"
+      >
+        <span class="tl-header">
+          <span class="tl-date">${experience.date}</span>
+          <span class="exp-name">
+            <span class="tl-company">${renderCompany(experience.company)}</span>
+            <span class="tl-role">${experience.role}</span>
+          </span>
+          ${renderDiscloseCommand(experience.detailLabel)}
+        </span>
+      </button>
+      ${renderStatsBlock(experience)}
+      <div
+        id="${panelId}"
+        class="exp-panel"
+        role="region"
+        aria-labelledby="${buttonId}"
+        aria-hidden="${isExpanded ? "false" : "true"}"
+        ${isExpanded ? "" : "inert"}
+      >
+        <div class="exp-details">
+          <div class="exp-details-grid">
+            ${experience.context ? `<p class="tl-context">${experience.context}</p>` : ""}
+            <div class="exp-story">
+              ${renderBulletList(experience.bullets)}
+              ${renderResult(experience)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
+export function renderExperiencesSection(expandedId = null, options = {}) {
+  const { expandAll = false } = options;
+
+  return experiences
+    .map((experience) => renderExperience(experience, expandedId, expandAll))
     .join("");
 }
 

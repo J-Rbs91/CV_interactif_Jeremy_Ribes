@@ -1,4 +1,4 @@
-/* Les deux accordéons du CV — Outils et Compétences.
+/* Les trois accordéons du CV — Outils, Compétences et Expériences.
 
    Une bascule ne re-rend plus sa section. Le re-rendu recréait la carte déjà
    ouverte : le panneau naissait à `grid-template-rows: 1fr` sans jamais être
@@ -20,6 +20,11 @@ const FAMILIES = {
     card: ".comp-card",
     attribute: "data-competence",
     panel: ".comp-details",
+  },
+  experience: {
+    card: ".exp-card",
+    attribute: "data-experience",
+    panel: ".exp-panel",
   },
 };
 
@@ -65,7 +70,11 @@ export function syncAccordion(family, openId) {
   return openCard;
 }
 
-export function bindAccordion({ onToolToggle, onCompetenceToggle }) {
+export function bindAccordion({
+  onToolToggle,
+  onCompetenceToggle,
+  onExperienceToggle,
+}) {
   document.querySelectorAll("[data-tool]").forEach((element) => {
     element.addEventListener("click", () => {
       onToolToggle?.(element.dataset.tool);
@@ -75,6 +84,39 @@ export function bindAccordion({ onToolToggle, onCompetenceToggle }) {
   document.querySelectorAll("[data-competence]").forEach((element) => {
     element.addEventListener("click", () => {
       onCompetenceToggle?.(element.dataset.competence);
+    });
+  });
+
+  document.querySelectorAll("[data-experience]").forEach((element) => {
+    element.addEventListener("click", () => {
+      onExperienceToggle?.(element.dataset.experience);
+    });
+  });
+}
+
+/* Le lavis d'une expérience naît là où le pointeur est entré. Une seule
+   écriture à l'entrée — pas de `pointermove`, qui ferait recalculer le style
+   à chaque pixel pour un effet que personne ne verrait suivre. Souris
+   seulement : au doigt, « survol » n'existe pas, et l'origine posée au hasard
+   d'un toucher ne dirait rien. */
+export function bindExperienceWash() {
+  document.querySelectorAll(".exp-summary").forEach((summary) => {
+    const name = summary.querySelector(".exp-name");
+
+    if (!name) {
+      return;
+    }
+
+    summary.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") {
+        return;
+      }
+
+      const box = name.getBoundingClientRect();
+      const ratio = box.width > 0 ? (event.clientX - box.left) / box.width : 0.3;
+      const clamped = Math.min(0.9, Math.max(0.1, ratio));
+
+      name.style.setProperty("--wash-x", `${Math.round(clamped * 100)}%`);
     });
   });
 }

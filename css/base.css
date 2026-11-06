@@ -102,6 +102,9 @@
      un ecran vide. Le titre de section reprend ce rapport : il redevient
      un evenement, pas une etiquette. */
   --fs-display: 54px; /* titre de section */
+  --fs-wordmark: 36px; /* nom d'employeur : plafond. La taille reelle suit la
+                          largeur de la colonne (voir .tl-company) : le nom
+                          le plus long tient sur une ligne, a toute largeur */
   --fs-metric: 32px; /* chiffre de preuve, titre de section en etroit */
   --fs-quote: 26px; /* citation detachee */
   --fs-lead: 22px; /* nom, titre de fenetre, annee */

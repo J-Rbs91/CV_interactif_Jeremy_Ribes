@@ -259,7 +259,8 @@
   }
 
   .comp-details-inner,
-  .tool-details {
+  .tool-details,
+  .exp-details {
     margin-left: 0;
   }
 
@@ -271,6 +272,8 @@
      dessous prenait toute la largeur. */
   .tool-summary,
   .tool-main,
+  .exp-summary,
+  .exp-details-grid,
   .comp-toggle,
   .comp-toggle-main,
   .comp-details-inner,
@@ -358,7 +361,8 @@
 
   .comp-toggle,
   .comp-details-inner,
-  .tool-details {
+  .tool-details,
+  .exp-details {
     display: block;
     padding: 0;
     border: none;
@@ -480,6 +484,87 @@
     margin-bottom: 1mm;
   }
 
+  /* Les trois accordéons déplient tout à l'impression. Pour les expériences,
+     le bouton redevient un bloc, la marque redevient une ligne de texte, et
+     le poste repasse devant l'employeur — l'ordre que le papier avait avant
+     que l'écran ne mette l'employeur en marque. */
+  .exp-summary {
+    display: block;
+    padding: 0;
+    border: none;
+  }
+
+  /* Le papier garde l'ordre qu'il avait : cadrage, puces, chiffres, résultat.
+     À l'écran les chiffres sont posés au-dessus du panneau, pour rester
+     visibles fermés ; ici tout est ouvert, donc on aplatit les trois
+     conteneurs (`display: contents`) et on réordonne les enfants de la fiche.
+
+     `container-type: normal` : les requêtes de conteneur de l'écran
+     (colonne de cadrage à gauche, taille de la marque) ne doivent pas jouer
+     sur la page. */
+  .exp-card {
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-panel,
+  .exp-details,
+  .exp-details-grid,
+  .exp-story {
+    display: contents !important;
+  }
+
+  .exp-summary {
+    order: 0;
+  }
+
+  .exp-card .tl-context {
+    order: 1;
+  }
+
+  .exp-card .tl-bullets {
+    order: 2;
+  }
+
+  .exp-card .exp-proof {
+    order: 3;
+  }
+
+  .exp-story > .tl-outcome {
+    order: 4;
+  }
+
+  .exp-name {
+    display: flex;
+    align-items: baseline;
+    gap: 5mm;
+  }
+
+  .exp-name::before {
+    display: none !important;
+  }
+
+  .tl-company {
+    display: inline;
+    order: 1;
+    font-family: var(--font-sans);
+    font-stretch: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .tl-role {
+    display: inline;
+    margin: 0;
+    font-family: var(--font-display);
+    font-stretch: expanded;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
   .tl-date {
     order: -1;
     width: 30mm;
@@ -522,7 +607,8 @@
   /* --- Cadrage & résultat d'expérience ----------------------------------- */
   /* Alignés sur les puces, à 35 mm : le cadrage, les puces et le résultat
      forment une seule colonne de matière à droite du libellé de date. */
-  .tl-context {
+  .tl-context,
+  .exp-details-grid .tl-context {
     margin: 0 0 1mm 35mm;
     font-size: 9.5pt;
     line-height: 1.45;

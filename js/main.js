@@ -13,7 +13,11 @@ import {
 } from "./render/renderCompetences.js";
 import { renderOutilsSection } from "./render/renderOutils.js";
 import { renderProjetSection } from "./render/renderProjets.js";
-import { bindAccordion, syncAccordion } from "./ui/accordion.js";
+import {
+  bindAccordion,
+  bindExperienceWash,
+  syncAccordion,
+} from "./ui/accordion.js";
 import { bindContactForm } from "./ui/contactForm.js";
 import { initializeModal } from "./ui/modal.js";
 import { bindNavigation } from "./ui/navigation.js";
@@ -40,6 +44,7 @@ const state = {
   activeSection: sectionDeLAdresse(sectionIds) ?? DEFAULT_SECTION,
   expandedCompetenceId: null,
   expandedTool: null,
+  expandedExperience: null,
   desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
@@ -279,7 +284,7 @@ function renderCurrentSection() {
     case "outils":
       return renderOutilsSection(state.expandedTool);
     case "experience":
-      return renderExperiencesSection();
+      return renderExperiencesSection(state.expandedExperience);
     case "projet":
       return renderProjetSection();
     case "formation":
@@ -316,6 +321,7 @@ function commitSectionState(sectionId) {
   poserSection(sectionId);
   state.expandedCompetenceId = null;
   state.expandedTool = null;
+  state.expandedExperience = null;
   state.desktopScrollTop = 0;
   state.shouldResetMobileScroll = true;
   state.activeSection = sectionId;
@@ -416,7 +422,16 @@ function bindUi() {
         syncAccordion("competence", state.expandedCompetenceId),
       );
     },
+    onExperienceToggle: (experienceId) => {
+      markAccordionAsDiscovered();
+      state.expandedExperience =
+        state.expandedExperience === experienceId ? null : experienceId;
+      scrollAccordionIntoView(
+        syncAccordion("experience", state.expandedExperience),
+      );
+    },
   });
+  bindExperienceWash();
 
   bindContactForm();
   bindExportPanel();
