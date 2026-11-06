@@ -42,7 +42,10 @@
      garde sa netteté et que le cuivre reste le seul signal chaud fort. */
   --text: #0b1f33;
   --text-dim: #40566a;
-  --text-muted: #56697a;
+  /* #56697a tombait à 3,7:1 sur le fond le plus sombre de l'aurore
+     (css/aurora.css) ; #4d6073 y reste au-dessus de 4,5:1 et se distingue
+     encore de --text-dim. */
+  --text-muted: #4a5d70;
   --bg: #f7f5f0;
   --bg2: #fbf9f5;
   --card: rgba(251, 249, 245, 0.92);
@@ -117,13 +120,7 @@
    sa composition Encre + Forêt, mais ne revient ni au bleu historique ni au
    blanc froid : le support reste continu pendant le handoff. */
 html.intro-armed .intro {
-  background:
-    radial-gradient(
-      120% 90% at 22% 8%,
-      rgba(255, 253, 249, 0.72),
-      transparent 58%
-    ),
-    linear-gradient(168deg, #f7f5f0 0%, #f5f2ec 56%, #f1eee8 100%);
+  background: var(--fond-page);
 }
 
 /* Le PDF suit la même règle : les produits en ligne sont des liens, pas des
@@ -136,5 +133,63 @@ html.intro-armed .intro {
 
   .print-live-item {
     color: var(--ink-800);
+  }
+}
+
+/* =========================================================================
+   THÈME SOMBRE
+   -------------------------------------------------------------------------
+   L'échelle d'encre est retournée : 900 ↔ 50, 800 ↔ 100, 700 ↔ 200,
+   600 ↔ 300, 500 reste au milieu. Presque tout le CV consomme ces jetons —
+   le texte est en `--ink-900`, les filets en `--ink-200`, les surfaces en
+   `--ink-50` — donc retourner l'échelle retourne le CV, sans réécrire une
+   règle. La forêt, déjà remappée vers l'encre plus haut, suit.
+
+   `screen` et non seulement `prefers-color-scheme` : le papier n'a pas de
+   thème. Sans cette borne, un lecteur dont l'appareil est sombre imprimerait
+   du texte clair sur du blanc.
+
+   Les tons de texte sont bornés par le contraste, mesuré sur le fond le plus
+   clair que l'aurore atteint — voir `AGENTS.md` § Aurore.
+   ========================================================================= */
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --ink-900: #edf2f7;
+    --ink-800: #dbe4ee;
+    --ink-700: #c2d0de;
+    --ink-600: #a3b7cb;
+    --ink-500: #8199b0;
+    --ink-300: #4a5f74;
+    --ink-200: #2b3947;
+    --ink-100: #1c2631;
+    --ink-50: #131a22;
+
+    /* Le cuivre se lève : en texte sur fond sombre, c'est le cran clair de
+       la gamme qui porte le contraste, pas le cran foncé. */
+    --flame-700: #f4a77c;
+    --flame-600: #ee8f5a;
+    --flame-500: #e57a3f;
+    --flame-400: #d96a2f;
+    --flame-200: #5a2f18;
+    --flame-100: #3d2314;
+    --flame-50: #2a1a10;
+
+    --text: #edf2f7;
+    --text-dim: #c4cfda;
+    --text-muted: #b2c0cc;
+    --bg: #0c1015;
+    --bg2: #11161d;
+    --card: #11161d;
+    --card-hover: #151c25;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+
+    --fond-page: linear-gradient(#0c1015, #0c1015);
+    --fond-page-base: #0c1015;
+
+    --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.45);
   }
 }

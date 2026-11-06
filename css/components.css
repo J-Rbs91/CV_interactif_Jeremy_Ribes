@@ -1029,7 +1029,7 @@
 
 .contact-submit {
   background: var(--ink-800);
-  color: white;
+  color: var(--bg);
   border: none;
   border-radius: var(--radius-sm);
   padding: 12px;

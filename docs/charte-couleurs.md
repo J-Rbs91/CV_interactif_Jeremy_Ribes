@@ -173,3 +173,22 @@ L'impression physique reste blanche : le papier chaud est une décision d'écran
 Elle est chargée avant le premier rendu par `js/ui/intro.js` et vient après les feuilles historiques. Cette couche permet de modifier la direction chromatique sans réécrire les composants ni supprimer la sémantique `nature` des données.
 
 Les feuilles historiques restent la base fonctionnelle ; la couche Editorial Signal porte la décision visuelle actuelle.
+
+## Thème sombre et aurore
+
+Le CV suit le réglage de l'appareil (`prefers-color-scheme`). Le thème sombre
+**retourne l'échelle d'encre** (900 ↔ 50, 800 ↔ 100, 700 ↔ 200, 600 ↔ 300) ; la
+forêt, remappée vers l'encre, et la preuve suivent. Il est borné à `screen` : le
+papier n'a pas de thème.
+
+```text
+SOMBRE  fond #0C1015   surface #11161D   fenêtres #11161D
+        texte #EDF2F7  secondaire #C4CFDA  atténué #B2C0CC
+        preuve (cuivre) 700 #F4A77C   600 #EE8F5A
+CLAIR   texte atténué #4A5D70 (était #56697A)
+```
+
+Le fond est une **aurore grise** : aucune teinte, des bandes verticales de
+lumière. Les jetons de texte sont bornés par le contraste mesuré sur son pire
+pixel, pas sur la couleur de page : c'est ce qui a ramené le texte atténué de
+`#56697A` à `#4A5D70` en clair. Voir `AGENTS.md` § Aurore, verre, lumière.

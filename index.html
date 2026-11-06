@@ -8,6 +8,7 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>CV Interactif de J&eacute;r&eacute;my Ribes</title>
     <script type="application/ld+json">
       {
@@ -143,11 +144,15 @@
     <link rel="stylesheet" href="./css/components.css" />
     <link rel="stylesheet" href="./css/sections.css" />
     <link rel="stylesheet" href="./css/export.css" />
+    <link rel="stylesheet" href="./css/aurora.css" />
     <link rel="stylesheet" href="./css/print.css" />
     <link rel="stylesheet" href="./css/intro.css" />
     <script src="./js/ui/intro.js"></script>
   </head>
   <body>
+    <!-- Le fond (css/aurora.css). Décoratif et sans texte : il précède le
+         bloc #cv-integral sans rien lui retirer. -->
+    <div class="aurora" aria-hidden="true"><div class="aurora-layer"></div></div>
     <!-- CV-INTEGRAL:DEBUT — bloc genere, ne pas editer a la main -->
         <div id="cv-integral" lang="fr">
           <div class="print-doc">
@@ -1011,6 +1016,10 @@
     <div class="app" id="app"></div>
 
     <div class="intro" data-intro>
+      <!-- Le même fond que celui du CV, au même instant de sa dérive : les
+           deux animations partent au premier rendu, donc la page apparaît sur
+           la surface qu'elle avait déjà. -->
+      <div class="aurora" aria-hidden="true"><div class="aurora-layer"></div></div>
       <div class="intro-grain"></div>
 
       <div class="intro-viewport" aria-hidden="true">

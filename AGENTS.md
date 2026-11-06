@@ -6,6 +6,11 @@
 - `js/data/` : contenus et métadonnées affichés.
 - `js/render/` : fonctions de rendu HTML.
 - `js/ui/` : interactions UI simples.
+- `css/aurora.css` + `js/ui/spotlight.js` : le fond (« Aurora Background »,
+  reproduit en CSS), le verre des blocs de lecture et la lumière sous le
+  pointeur. Deux thèmes, suivis sur l'appareil — voir « Aurore, verre,
+  lumière ». `css/editorial-signal.css` porte la palette réellement affichée
+  et son thème sombre.
 - `js/ui/accordion.js` : les **trois** familles d'accordéon (Outils,
   Compétences, Expériences), table `FAMILIES`. `js/ui/tabs.js` : les onglets
   de Projets, motif WAI-ARIA Tabs. Les deux ne re-rendent rien (voir « Les trois
@@ -205,9 +210,12 @@ créait la rupture, bien avant les questions de style. Sept décisions la
 referment, et aucune ne doit être défaite isolément — c'est leur ensemble
 qui tient.
 
-- **Aucun cadre.** `.app` n'a plus ni rayon, ni ombre, ni bordure, ni
-  `backdrop-filter`, et `body` n'a plus de marge : le CV occupe la page
-  comme la séquence occupe l'écran. Ne pas remettre le CV dans une fenêtre.
+- **Aucun cadre autour du CV.** `.app` n'a plus ni rayon, ni ombre, ni
+  bordure, ni `backdrop-filter`, et `body` n'a plus de marge : le CV occupe la
+  page comme la séquence occupe l'écran. Ne pas remettre le CV dans une
+  fenêtre. *Amendé : les blocs de lecture à l'intérieur, eux, sont en verre
+  (voir « Aurore, verre, lumière »). Ce n'est pas un cadre autour de la page,
+  c'est une matière posée sur un fond qui a de la profondeur.*
 - **Un axe, pas des rails.** Un filet d'un pixel (`--ink-200`) court sur
   toute la hauteur, posé par `.panel-right::before` en large et
   `.mobile-main::before` en étroit. Les blocs s'y accrochent à
@@ -242,10 +250,10 @@ qui tient.
 - **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
   plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
   séparées par un point médian — la règle que `css/print.css` appliquait
-  déjà au papier. La couleur est de l'encre, jamais une surface. Deux
-  exceptions, et elles sont des commandes : la pastille nommée des accordéons
-  (aplat translucide de la nature de la carte) et la pile de cartes de la
-  section Projets — voir « Registre ».
+  déjà au papier. La couleur est de l'encre, jamais une surface. Exceptions :
+  la pastille nommée des accordéons (aplat translucide de la nature de la
+  carte), la pile de cartes de la section Projets — voir « Registre » — et le
+  verre des blocs de lecture, qui est une surface sans teinte.
 - **Une seule voix pour les titres.** Archivo à chasse élargie sur tous les
   titres de bloc, plus seulement sur le nom et les titres de section.
 - **Un seul grain.** `--grain`, posé sur `body::after` et consommé aussi
@@ -445,6 +453,70 @@ après cette refonte** (la colonne y fait 567 px). Le `ch` vaut la largeur du
 globale : la changer touche toutes les sections, et se décide sur le rendu en
 comptant les signes — environ 52ch pour entrer dans la plage.
 
+
+## Aurore, verre, lumière
+Le CV était du papier : un aplat, des filets, du texte. Lisible, et daté. Trois
+matières lui donnent de la profondeur (`css/aurora.css`), et rien d'autre :
+
+- **Le fond est « Aurora Background »** (21st.dev, Aceternity UI), reproduit
+  valeur pour valeur en CSS : dégradés à 100°, flou de 10 px, masque elliptique
+  sur l'angle haut-droit, second calque animé en 60 s et mélangé en
+  « différence » avec le premier. Le CV est en HTML/CSS pur : le composant
+  d'origine (React, Tailwind, framer-motion) n'est pas installé, seule sa
+  construction est reprise. Deux éléments dans `index.html` (`.aurora` >
+  `.aurora-layer`), l'un sous le CV, l'autre dans la séquence d'ouverture.
+- **Aucune teinte.** Une première version posait des taches bleues, violettes
+  et turquoise : un rendu coloré, qui n'est pas celui du composant. Ses bandes
+  sont grises parce que le mélange « différence » les désature — c'est cette
+  désaturation qu'on garde, et `saturate(0.4)` l'accentue : le composant garde
+  un fond bleuté que la référence montrée n'a pas.
+- **Le verre** (`--glass-fill`, `--glass-edge`, `--glass-blur`) est posé sur une
+  liste explicite de composants : colonne d'identité, `.card`, `.card-sm`,
+  `.comp-card`, `.formation-card`, `.punchline-box`. Un composant qui n'y figure
+  pas reste à plat — les lignes des Expériences et des Outils sont des
+  registres, pas des cartes. En sombre le verre est un voile **sombre**, pas
+  blanc : un voile blanc éclaircit le fond jusqu'à rendre illisible un texte
+  clair.
+- **La lumière** : `js/ui/spotlight.js` écrit `--mx` et `--my` sur la carte
+  survolée, une fois par image au plus, souris seulement. Le CSS dessine une
+  tache neutre (`--spot`) ; opacité seulement.
+- **L'opacité de l'aurore n'est pas celle du composant (0,5)** : 0,22 en clair,
+  0,3 en sombre. Mesurée sur le pire pixel — quatre instants de la dérive, six
+  sections, deux largeurs, deux thèmes —, l'opacité d'origine faisait tomber le
+  texte atténué à 2,5:1 en sombre et 3,9:1 en clair. **Remonter cette valeur se
+  remesure** : on masque le texte (`color: transparent`), on capture, et on
+  calcule le contraste du jeton de texte contre le pixel le plus clair (sombre)
+  ou le plus sombre (clair). Un percentile, pas le minimum : les filets
+  d'1 px sont statiques et n'ont pas de texte dessus.
+- **Deux thèmes, suivis sur le réglage de l'appareil** (`prefers-color-scheme`),
+  pas sur un bouton. Le thème sombre **retourne l'échelle d'encre** dans
+  `css/editorial-signal.css` (900 ↔ 50, 800 ↔ 100, 700 ↔ 200, 600 ↔ 300) : le
+  CV consomme ces jetons presque partout — texte en `--ink-900`, filets en
+  `--ink-200`, surfaces en `--ink-50` — donc retourner l'échelle retourne le
+  CV sans réécrire une règle. Tout ce qui était écrit en dur (`#fff`,
+  `white`) devait passer par un jeton : trois endroits l'étaient, le bouton
+  d'envoi, la fenêtre d'export et son bouton.
+- **Le thème sombre est borné à `screen`.** Le papier n'a pas de thème : sans
+  cette borne, un lecteur dont l'appareil est sombre imprimerait du texte
+  clair sur du blanc. Vérifié : le PDF est identique, appareil clair ou
+  sombre.
+- **`--card` est opaque en sombre.** Réglé à 5 % d'opacité d'abord, comme un
+  verre : la fenêtre de contact, qui consomme `--card`, devenait transparente
+  et laissait lire la navigation à travers. Le verre a ses propres jetons ; les
+  fenêtres modales, elles, doivent rester pleines.
+- **L'aurore est dans la séquence d'ouverture aussi**, au même instant de sa
+  dérive : les deux animations partent au premier rendu. Le fond de la
+  séquence est `--fond-page`, déclaré une fois dans `editorial-signal.css`
+  — il était écrit en dur à deux endroits.
+- **Elle précède `#cv-integral` dans le document.** « Rien de décoratif ne doit
+  précéder le CV dans le texte » vaut pour le texte : ces éléments n'en ont pas
+  et sont `aria-hidden`.
+- **Elle disparaît à l'impression** (`display: none` sous `@media print`), et
+  `prefers-reduced-motion` fige son second calque.
+- **Coût.** Le second calque anime `background-position` sous un flou et un
+  mélange : c'est la construction d'origine, et elle n'est pas gratuite sur un
+  téléphone d'entrée de gamme. Le verre (`backdrop-filter`) y ajoute le sien.
+  Si l'on doit alléger, c'est d'abord ce calque qu'on fige en étroit.
 
 ## L'accroche se tape (`js/ui/typewriter.js`)
 Le paragraphe de la colonne d'identité s'écrit lettre à lettre, comme sous
@@ -740,10 +812,15 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   `css/editorial-signal.css`, qui remappe la forêt vers l'encre et la flamme
   vers un cuivre (`#a84512`) : à l'écran, `cadre` et `produit` partagent la même
   encre (`--n-mark: var(--ink-600)`), et la forêt n'existe plus que dans la
-  séquence d'ouverture. Les paragraphes ci-dessus décrivent le modèle de
-  données ; `docs/charte-couleurs.md` décrit ce qui se voit. Un lavis, un filet
-  ou une pastille qui consomme `--n-mark` suit donc la palette courante sans
-  rien savoir de la forêt.
+  séquence d'ouverture, en clair. Les paragraphes ci-dessus décrivent le modèle
+  de données ; `docs/charte-couleurs.md` décrit ce qui se voit. Un lavis, un
+  filet ou une pastille qui consomme `--n-mark` suit donc la palette courante
+  sans rien savoir de la forêt — ni du thème : en sombre, l'échelle d'encre est
+  retournée et tout suit.
+- **Le texte atténué est `#4a5d70` en clair et `#b2c0cc` en sombre**, bornés par
+  le contraste mesuré sur l'aurore (voir « Aurore, verre, lumière »). Les
+  anciennes valeurs (`#56697a`, `#52667c`) tombaient à 3,9:1 sur le fond le plus
+  sombre de l'aurore.
 - Pas d'emoji dans l'interface : ils sont multicolores et contredisent la
   charte. Ajouter un tracé à `js/ui/icons.js` et appeler `icon("nom")`.
 

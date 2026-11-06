@@ -33,6 +33,7 @@ import {
   setSectionDirection,
 } from "./ui/sectionTransition.js";
 import { bindProjectTabs } from "./ui/tabs.js";
+import { bindSpotlight } from "./ui/spotlight.js";
 import { bindTypewriter } from "./ui/typewriter.js";
 
 /* Une section demandee par l'adresse prime sur le defaut : un lien partage,
@@ -435,6 +436,7 @@ function bindUi() {
     },
   });
   bindExperienceWash();
+  bindSpotlight();
   bindProjectTabs({
     onSelect: (projectId) => {
       state.activeProject = projectId;
