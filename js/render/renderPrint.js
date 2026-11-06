@@ -49,11 +49,9 @@ function renderLiveLine() {
     return "";
   }
 
-  /* Le séparateur est du texte, pas un `::before`. Une puce posée en CSS ne
-     s'imprime que sous `@media print` et n'entre dans aucune extraction :
-     hors de ce contexte les adresses se lisaient « panum.frkut.panum.fr ».
-     Écrite dans le document, elle sépare partout — à l'écran, au papier, et
-     pour qui lit la page sans la mettre en page. */
+  /* Le séparateur est du texte, pas un `::before`. Une puce posée en CSS
+     n'entre pas dans les extractions de texte ; ici elle doit être lisible
+     à l'écran, au papier et par les lecteurs sans mise en page. */
   return `<div class="print-live">
     <span class="print-live-label">En ligne</span>
     <span class="print-live-items">${products
