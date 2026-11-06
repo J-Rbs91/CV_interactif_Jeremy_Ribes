@@ -4,7 +4,7 @@ export const contact = {
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Après 14 ans sur le terrain commercial, j’ai orienté mon parcours vers ce qui me motive le plus : organiser l’activité, écrire les procédures et donner à la direction les moyens de piloter, en construisant les outils qui manquaient quand il le fallait.",
+    "Opticien de formation et ancien responsable de magasin, j’ai progressivement élargi mon activité à l’organisation, au pilotage et à la conception d’outils métiers. Je souhaite désormais en faire ma fonction principale, dans l’optique ou ailleurs, en m’appuyant sur des réalisations concrètes.",
   /* L'adresse du CV en ligne. Elle ne sert à rien à l'écran — on y est déjà —
      mais le recto A4 se détache de son support : imprimé ou versé à un
      dossier, il ne porte plus aucun chemin de retour, et le formulaire de
