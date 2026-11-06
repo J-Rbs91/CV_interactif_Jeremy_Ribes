@@ -12,8 +12,28 @@
    la meme chose que `bullets` en plus court, elles disent autre chose — le
    territoire du poste, pas ses realisations, qui sont deja portees par les
    competences. Un rang de puce n'aurait pas pu produire ca. */
+/* `id` et `detailLabel` — les experiences deviennent depliables (voir
+   js/ui/accordion.js, famille « experience »).
+
+   `id` : un identifiant stable, pas un rang. Il sert de cle au bouton
+   (`data-experience`), a `aria-controls` et a l'etat d'ouverture. Derive de
+   la position, il changerait en meme temps que l'ordre de la chronologie, et
+   un panneau ouvert se refermerait sur une autre fiche.
+
+   `detailLabel` : le libelle de la commande fermee. Meme regle que pour les
+   outils — deux cartes voisines ne portent jamais le meme libelle, sinon la
+   commande dit « il y a quelque chose dessous » sans dire laquelle vaut le
+   clic. Chacun nomme ce que la fiche a de propre : le systeme pour Krys, la
+   reprise pour Generale d'Optique, la duree pour les onze ans de terrain.
+
+   Pas de champ `span` (annees de debut et de fin). Le lavis de la ligne
+   module son intensite par `recency`, que les trois entrees portent deja ;
+   une longueur proportionnelle a la duree aurait ajoute une donnee a tenir
+   d'accord avec `date`, pour un ecart de trente pixels. */
 export const experiences = [
   {
+    id: "krys",
+    detailLabel: "Le système de pilotage",
     role: "Opticien collaborateur",
     company: "Krys",
     date: "2025 → aujourd’hui",
@@ -45,6 +65,8 @@ export const experiences = [
       "Trois outils utilisés chaque jour par l’équipe : suivi des devis, brief quotidien et hub d’outils du magasin. Les deux premiers, conçus dans mon poste précédent, ont été repris ici parce qu’ils servaient, sans que personne ne les ait demandés.",
   },
   {
+    id: "generale-optique",
+    detailLabel: "La reprise du magasin",
     role: "Responsable de magasin",
     company: "Générale d’Optique",
     date: "2024 → 2025",
@@ -75,6 +97,8 @@ export const experiences = [
       "Réorganisation et implication saluées par la direction régionale. Le brief quotidien et le suivi des devis conçus pour ce poste sont aujourd’hui utilisés par mon équipe, dans une autre enseigne.",
   },
   {
+    id: "terrain",
+    detailLabel: "Onze ans, trois organisations",
     role: "Opticien collaborateur",
     company: "GrandOptical · Krys · Lissac",
     date: "2012 → 2023",

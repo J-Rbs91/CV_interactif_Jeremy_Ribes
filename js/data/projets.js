@@ -1,5 +1,19 @@
+/* `id` et `short` — les projets se presentent en onglets (voir
+   js/render/renderProjets.js).
+
+   `id` relie l'onglet a son panneau (`aria-controls`, `aria-labelledby`).
+   `short` est le libelle de l'onglet : le nom du produit, sans sa
+   description.
+
+   Les deux sont declares, jamais derives du `title`. Le titre se decoupe a
+   « : » — `getLiveProducts()` le fait deja pour la ligne « Produits en
+   ligne » — mais ce decoupage suppose que chaque titre suive la meme forme.
+   Le jour ou un titre n'en a plus, l'onglet afficherait une phrase entiere,
+   et rien dans le code ne le signalerait. */
 export const projetsTransverses = [
   {
+    id: "kut",
+    short: "KuT",
     title: "KuT : logiciel de gestion pour salons et activités de bien-être",
     subtitle: "Conception produit & pilotage · en ligne, développement continu",
     bullets: [
@@ -22,6 +36,8 @@ export const projetsTransverses = [
     ],
   },
   {
+    id: "ortabels",
+    short: "L’Ortabels",
     title: "L’Ortabels : projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
     bullets: [
@@ -44,6 +60,8 @@ export const projetsTransverses = [
     ],
   },
   {
+    id: "renta-menu",
+    short: "Renta Menu",
     title: "Renta Menu : pilotage de la rentabilité en restauration",
     subtitle: "Outil décisionnel · Rentabilité en restauration",
     bullets: [
