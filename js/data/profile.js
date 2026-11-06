@@ -82,7 +82,7 @@ export const a4Content = {
     {
       nature: "produit",
       value: "3 outils en usage quotidien",
-      text: "Suivi des devis, brief quotidien et hub d’outils, utilisés chaque jour par l’équipe en magasin.",
+      text: "Suivi des devis, Brief’Maker et Hub Outils Opticien, utilisés chaque jour en magasin.",
     },
     /* Deux formulations ecartees avant celle-ci. « Repris hors de leur
        contexte » disait un concept, pas un fait, et se lisait comme un
@@ -159,7 +159,7 @@ export const formationContent = {
     {
       title: "Développement web & desktop",
       nature: "produit",
-      text: "Hub d’outils magasin, interfaces d’aide à la vente, application de suivi commercial.",
+      text: "Hub Outils Opticien, interfaces d’aide à la vente, application de suivi commercial.",
     },
     {
       title: "Mise en production",

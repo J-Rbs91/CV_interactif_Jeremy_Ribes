@@ -72,7 +72,7 @@ export const competences = [
     enjeu:
       "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
     miseEnPlace:
-      "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, hub d’outils du magasin.",
+      "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, Hub Outils Opticien.",
     exemple:
       "Je conçois chaque outil à partir de ce que je vois l’équipe faire au quotidien, et je le veux utilisable sans formation : sinon, il n’est pas utilisé.",
     a4Rank: 2,
@@ -82,7 +82,7 @@ export const competences = [
       "Opti’Profit : arbitrage produit et marge",
       "Brief’Maker : planning, dossiers, tâches",
       "Suivi devis & tiers payant : statut et relance",
-      "Hub magasin : calculs et documents standardisés",
+      "Hub Outils Opticien : caisse, documents, calculs",
     ],
   },
   {

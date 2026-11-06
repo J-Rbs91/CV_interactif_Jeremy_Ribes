@@ -57,7 +57,7 @@ function renderLiveLine() {
     <span class="print-live-items">${products
       .map(
         (product) =>
-          `<span class="print-live-item">${linkHost(product.url)}</span>`,
+          `<span class="print-live-item">${product.printLabel ?? linkHost(product.url)}</span>`,
       )
       .join(" · ")}</span>
   </div>`;
