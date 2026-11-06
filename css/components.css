@@ -587,11 +587,6 @@
   margin-top: var(--space-1);
 }
 
-.cv-target .cv-target-limits {
-  color: var(--text-dim);
-}
-
-
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
