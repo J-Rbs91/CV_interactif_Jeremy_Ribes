@@ -25,7 +25,7 @@ function renderSectionBody(sectionId) {
     case "experience":
       return renderExperiencesSection(null, { expandAll: true });
     case "projet":
-      return renderProjetSection();
+      return renderProjetSection({ expandAll: true });
     case "formation":
       return renderFormationSection();
     default:

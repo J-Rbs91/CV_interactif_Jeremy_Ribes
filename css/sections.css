@@ -1064,3 +1064,177 @@ html:not(.accordion-decouvert) .comp-toggle:focus-visible .accordion-cmd {
   flex-direction: column;
   align-items: flex-start;
 }
+
+/* =========================================================================
+   PROJETS — une vitrine à onglets
+   Trois projets, un seul visible. Les onglets sont des boutons (js/ui/tabs.js,
+   motif WAI-ARIA Tabs) ; ce que le CSS en fait dépend de la largeur DE LA
+   VITRINE, pas de celle de la fenêtre : le panneau latéral et la gouttière
+   prennent une part qui varie, la vitrine, elle, sait ce qu'il lui reste.
+
+   Deux dispositions, un seul balisage :
+   - à plat (par défaut, et sur téléphone) : trois lignes séparées par un
+     filet, le projet actif marqué par un filet de 2 px sous son nom ;
+   - en pile (vitrine d'au moins 60 rem) : trois cartes en perspective, celle
+     de l'onglet actif devant. C'est le seul endroit du CV qui a des cartes.
+     La règle « aucun cadre, aucun aplat » vaut pour tout ce qui se lit ; ici
+     ce sont des commandes, et une pile ne se lit comme une pile que si ses
+     éléments ont une surface pour se recouvrir.
+
+   Le marquage de l'onglet actif est le même dans les deux : encre, plus un
+   filet de 2 px — jamais une pastille pleine.
+   ========================================================================= */
+.proj-showcase {
+  container-type: inline-size;
+}
+
+.proj-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.proj-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.proj-tab {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  width: 100%;
+  margin: 0;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--n-line);
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  color: var(--text-dim);
+  text-align: left;
+  cursor: pointer;
+}
+
+.proj-tab:first-child {
+  border-top: 1px solid var(--n-line);
+}
+
+.proj-tab-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--track-cap);
+  color: var(--text-muted);
+}
+
+.proj-tab-name {
+  font-family: var(--font-display);
+  font-stretch: expanded;
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.proj-tab[aria-selected="true"] {
+  color: var(--n-ink);
+}
+
+.proj-tab[aria-selected="true"] .proj-tab-name {
+  border-bottom-color: var(--n-mark);
+}
+
+.proj-tab:focus-visible {
+  outline: 2px solid var(--n-mark);
+  outline-offset: 3px;
+}
+
+/* Le panneau reprend le balisage du document imprimé. Le sous-titre passe
+   au-dessus du nom : il classe le projet (« Conception produit & pilotage »),
+   le nom le désigne, et on lit d'abord dans quel registre on entre. */
+.proj-panel:focus-visible {
+  outline: 2px solid var(--n-mark);
+  outline-offset: 6px;
+}
+
+.proj-panel .project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.proj-panel .project-sub {
+  order: -1;
+  margin-bottom: 4px;
+}
+
+.proj-panel .project-title {
+  font-size: var(--fs-lead);
+  margin-bottom: var(--space-2);
+}
+
+.proj-panel .project-link {
+  align-self: flex-start;
+}
+
+/* La pile. Chaque carte porte son rang `--k` : 0 devant, 2 au fond. Le rang
+   se lit deux fois — le décalage (les cartes du fond dépassent en haut et à
+   gauche de celle de devant, qui les recouvre) et la profondeur — et rien
+   d'autre ne change d'un état à l'autre, donc un clic ne fait qu'écrire trois
+   nombres.
+
+   Le survol soulève la carte d'un demi-rem : il confirme où l'on va cliquer,
+   il ne déplace rien d'autre. `transform` et `color` seulement. */
+@container (min-width: 60rem) {
+  .proj-layout {
+    grid-template-columns: 19rem minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .proj-stack {
+    position: relative;
+    display: block;
+    height: 13rem;
+    margin-top: var(--space-3);
+  }
+
+  .proj-tab {
+    --lift: 0rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16.5rem;
+    height: 5rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--n-line);
+    background: var(--bg2);
+    box-shadow: var(--shadow-sm, none);
+    transform-origin: left top;
+    z-index: calc(3 - var(--k));
+    transform: translate(
+        calc(2.5rem - var(--k) * 1.25rem),
+        calc((2 - var(--k)) * 3.75rem + var(--lift))
+      )
+      skewY(-5deg);
+    transition:
+      transform 0.45s var(--e-move),
+      color 0.2s ease;
+  }
+
+  .proj-tab:first-child {
+    border-top: 1px solid var(--n-line);
+  }
+
+  .proj-tab:hover {
+    --lift: -0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proj-tab {
+    transition: none;
+  }
+}

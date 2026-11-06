@@ -32,6 +32,7 @@ import {
   resolveSectionDirection,
   setSectionDirection,
 } from "./ui/sectionTransition.js";
+import { bindProjectTabs } from "./ui/tabs.js";
 import { bindTypewriter } from "./ui/typewriter.js";
 
 /* Une section demandee par l'adresse prime sur le defaut : un lien partage,
@@ -45,6 +46,7 @@ const state = {
   expandedCompetenceId: null,
   expandedTool: null,
   expandedExperience: null,
+  activeProject: null,
   desktopScrollTop: 0,
   isMobileView: false,
   mobileNavScrollLeft: 0,
@@ -286,7 +288,7 @@ function renderCurrentSection() {
     case "experience":
       return renderExperiencesSection(state.expandedExperience);
     case "projet":
-      return renderProjetSection();
+      return renderProjetSection({ activeId: state.activeProject });
     case "formation":
       return renderFormationSection();
     default:
@@ -322,6 +324,7 @@ function commitSectionState(sectionId) {
   state.expandedCompetenceId = null;
   state.expandedTool = null;
   state.expandedExperience = null;
+  state.activeProject = null;
   state.desktopScrollTop = 0;
   state.shouldResetMobileScroll = true;
   state.activeSection = sectionId;
@@ -432,6 +435,11 @@ function bindUi() {
     },
   });
   bindExperienceWash();
+  bindProjectTabs({
+    onSelect: (projectId) => {
+      state.activeProject = projectId;
+    },
+  });
 
   bindContactForm();
   bindExportPanel();
