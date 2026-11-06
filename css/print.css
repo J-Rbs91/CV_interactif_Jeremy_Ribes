@@ -466,6 +466,14 @@
     margin-top: 2mm;
   }
 
+  /* Les étiquettes ont quitté le résumé : elles ferment la fiche, alignées
+     sur la colonne de matière. */
+  .tool-detail-chips {
+    margin: 1.5mm 0 0 35mm;
+    padding: 0;
+    border: none;
+  }
+
   /* --- Expériences : la date fait colonne ------------------------------- */
   .timeline-item {
     padding: 0 0 3mm;

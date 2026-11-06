@@ -528,16 +528,18 @@
   /* Le numéro tient une colonne en drapeau : chiffre, puis matière. Le
      détail s'aligne sur la matière — sinon deux bords gauches se succèdent
      et l'œil ne sait plus lequel structure. */
-  --tool-indent: calc(var(--space-3) + var(--space-2));
+  --tool-indent: calc(var(--space-4) + var(--space-2));
   background: none;
   border: 0;
   border-radius: 0;
+  /* Une liste d'outils est un registre : des lignes séparées par un filet,
+     comme les expériences, et non des blocs séparés par du vide. Le numéro
+     tient maintenant deux chiffres (« 01 »), d'où le retrait élargi : à 22 px
+     en mono, « 01 » fait 26 px et débordait de l'ancienne colonne de 24. */
+  border-top: 1px solid var(--n-line);
+  padding-top: var(--space-3);
   overflow: visible;
   box-shadow: none;
-}
-
-.tool-card + .tool-card {
-  margin-top: var(--space-4);
 }
 
 /* La zone de resume etait un <div> muni d'un `cursor: pointer` : rien ne
@@ -582,7 +584,7 @@
   border-radius: 0;
   width: auto;
   height: auto;
-  min-width: var(--space-3);
+  min-width: var(--space-4);
   display: flex;
   align-items: baseline;
   justify-content: flex-start;
@@ -643,6 +645,31 @@
 /* `center` et non `baseline` : la commande est devenue une pastille, et une
    pastille alignee sur la ligne de base de son texte pend sous le statut
    qu'elle cotoie. C'est sa boite qu'on aligne maintenant, pas son texte. */
+/* Au survol, la ligne visée avance de six pixels : c'est elle qui se détache,
+   sans que les autres changent. On aurait pu estomper les voisines — mais un
+   texte rendu translucide passe sous 4,5:1, et le survol d'une souris n'est
+   pas une raison de rendre le reste illisible. `transform` seulement, et là
+   où le survol existe : au doigt, `:hover` reste collé après le toucher. */
+.tool-main {
+  transition: transform 0.28s var(--e-move);
+}
+
+@media (hover: hover) {
+  .tool-summary:hover .tool-main {
+    transform: translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-main {
+    transition: none;
+  }
+
+  .tool-summary:hover .tool-main {
+    transform: none;
+  }
+}
+
 .tool-footline {
   display: flex;
   align-items: center;
@@ -927,6 +954,16 @@ html:not(.accordion-decouvert) .comp-toggle:focus-visible .accordion-cmd {
 .tool-card.is-open .tool-details {
   padding: var(--space-2) 0 var(--space-1);
   border-top: 1px solid var(--n-line);
+}
+
+.tool-detail-chips {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--n-line);
+}
+
+.tool-detail-chips .chip-row {
+  margin-top: 0;
 }
 
 .tool-detail-grid {

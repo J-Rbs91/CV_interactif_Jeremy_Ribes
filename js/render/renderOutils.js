@@ -34,14 +34,13 @@ function renderOutilCard(outil, index, expandedTool, expandAll) {
         aria-expanded="${isExpanded ? "true" : "false"}"
         aria-controls="${panelId}"
       >
-        <span class="tool-mark">${index + 1}</span>
+        <span class="tool-mark">${String(index + 1).padStart(2, "0")}</span>
         <span class="tool-main">
           <span class="tool-topline">
             <span class="tool-title">${outil.title}</span>
             <span class="tool-category">${outil.category}</span>
           </span>
           <span class="tool-summary-text">${outil.summary}</span>
-          ${renderAccentTags(outil.chips, { className: "chip-row-lg", element: "span" })}
           <span class="tool-footline">
             ${renderDiscloseCommand(outil.detailLabel)}
             <span class="tool-status">${outil.status}</span>
@@ -88,6 +87,15 @@ function renderOutilCard(outil, index, expandedTool, expandAll) {
               <div class="detail-text">${outil.results}</div>
             </div>
           </div>
+          ${
+            /* Les étiquettes descendent dans le panneau. Fermée, la ligne
+               dit ce que l'outil est, pour qui, et où il en est : titre,
+               catégorie, une phrase, un statut. Cinq mots-clés de plus
+               doublaient la hauteur de chaque ligne et faisaient de la liste
+               un mur, là où on cherche à choisir laquelle ouvrir. Elles
+               restent dans le document — et au papier, où tout est ouvert. */
+            `<div class="tool-detail-chips">${renderAccentTags(outil.chips, { className: "chip-row-lg" })}</div>`
+          }
         </div>
       </div>
     </article>
