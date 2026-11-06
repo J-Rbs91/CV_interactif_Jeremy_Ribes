@@ -41,6 +41,7 @@ export function getLiveProducts() {
       .map((outil) => ({
         name: outil.title,
         url: outil.link.url,
+        printLabel: outil.link.printLabel,
         nature: "preuve",
       })),
     ...projetsTransverses
