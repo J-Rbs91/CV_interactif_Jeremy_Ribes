@@ -5,9 +5,6 @@
    Il était dispersé sur des fragments (« outils », « procédures », « irritant
    précis ») qui ne formaient aucune phrase : la couche attirait l'attention
    sans rien rendre, et hachait la lecture continue de ceux qui lisent tout.
-   Un passage par bloc, et il se suffit. Aucun texte métier n'a changé :
-   seules les bornes du gras ont bougé.
-
    Un seul passage fort par bloc, lisible isolément et nettement minoritaire.
    Le texte éditorial reste la source de vérité pour le site et les exports. */
 export const profileContent = {
@@ -41,9 +38,9 @@ export const profileContent = {
     context: "L’optique est le secteur dans lequel j’ai acquis ma légitimité. C’est aussi celui où les possibilités d’évolution vers les fonctions qui m’intéressent sont limitées dans mon rayon de mobilité.",
     ambition: "<strong>Je veux faire de l’organisation, du pilotage et des outils métiers le cœur de mon prochain poste</strong>, dans l’optique ou dans un autre secteur.",
     roles: [
-        "Coordinateur opérationnel ou de performance",
-        "Chargé de projet organisation et méthodes",
-        "Chef de projet outils métiers"
+      "Coordinateur opérationnel ou de performance",
+      "Chargé de projet organisation et méthodes",
+      "Chef de projet outils métiers",
     ],
     limits: "Je n’ai pas encore occupé ces fonctions sous ces intitulés. Je présente ici les responsabilités effectivement assumées, les résultats auxquels j’ai contribué et les compétences que je pourrais transposer, en apprenant les spécificités d’un nouvel environnement.",
   },
@@ -68,7 +65,7 @@ export const a4Content = {
 
      Le gras, relu seul, doit toujours former un énoncé intelligible. */
   pitch: [
-    "Opticien de formation et ancien responsable de magasin, j’ai <strong>développé des compétences d’organisation, de pilotage et d’outillage métiers</strong> dans l’optique. Les perspectives locales y étant limitées, je vise désormais des fonctions transversales de coordination ou de projets, y compris dans d’autres secteurs.",
+    "Opticien de formation et ancien responsable de magasin, j’ai <strong>développé des compétences en organisation, pilotage et outils métiers</strong>. Les perspectives locales dans l’optique sont limitées : je vise des fonctions transversales de coordination ou de projet, dans l’optique ou ailleurs.",
   ],
   /* Trois preuves, et trois seulement : impact economique, adoption terrain,
      transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur
