@@ -562,6 +562,36 @@
   font-size: var(--fs-sm);
 }
 
+/* Lecture progressive du projet professionnel : contexte, ambition,
+   fonctions concrètes, puis limites. Aucun style décoratif nouveau. */
+.cv-target p {
+  margin: 0;
+}
+
+.cv-target p + p,
+.cv-target .cv-target-label {
+  margin-top: var(--space-3);
+}
+
+.cv-target .cv-target-label {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cv-target-roles {
+  margin: var(--space-2) 0 var(--space-3);
+  padding-left: 1.25em;
+}
+
+.cv-target-roles li + li {
+  margin-top: var(--space-1);
+}
+
+.cv-target .cv-target-limits {
+  color: var(--text-dim);
+}
+
+
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
