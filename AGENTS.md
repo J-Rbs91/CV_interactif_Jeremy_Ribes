@@ -6,6 +6,10 @@
 - `js/data/` : contenus et métadonnées affichés.
 - `js/render/` : fonctions de rendu HTML.
 - `js/ui/` : interactions UI simples.
+- `js/ui/accordion.js` : les **trois** familles d'accordéon (Outils,
+  Compétences, Expériences), table `FAMILIES`. `js/ui/tabs.js` : les onglets
+  de Projets, motif WAI-ARIA Tabs. Les deux ne re-rendent rien (voir « Les trois
+  accordéons » et « Registre »).
 - `js/ui/icons.js` : **deux** jeux d'icônes en `currentColor`. `icon()` rend
   la grille 24 en trait de 1,8, pour les repères posés dans une ligne de
   texte. `boldIcon()` rend la grille 256 en aplat — les logos de réseaux et
@@ -60,7 +64,7 @@
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
   cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
 - `docs/charte-couleurs.md` : charte colorimétrique sémantique.
-- `docs/charte-typographique.md` : les trois familles, les neuf paliers, les
+- `docs/charte-typographique.md` : les trois familles, les dix paliers, les
   trois interlettrages et les deux pièges qui ne s'écrivent nulle part.
 - `.github/workflows/deploy-pages.yml` : publication sur GitHub Pages. Le
   déploiement ne passe plus par le workflow géré par GitHub, qui n'était pas
@@ -238,7 +242,10 @@ qui tient.
 - **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
   plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
   séparées par un point médian — la règle que `css/print.css` appliquait
-  déjà au papier. La couleur est de l'encre, jamais une surface.
+  déjà au papier. La couleur est de l'encre, jamais une surface. Deux
+  exceptions, et elles sont des commandes : la pastille nommée des accordéons
+  (aplat translucide de la nature de la carte) et la pile de cartes de la
+  section Projets — voir « Registre ».
 - **Une seule voix pour les titres.** Archivo à chasse élargie sur tous les
   titres de bloc, plus seulement sur le nom et les titres de section.
 - **Un seul grain.** `--grain`, posé sur `body::after` et consommé aussi
@@ -250,7 +257,7 @@ qui tient.
   entrent décalés (`playSectionEntry` dans `js/main.js`) — au changement
   de section seulement, jamais sur l'ouverture d'un accordéon.
 
-## Les deux accordéons — Outils et Compétences
+## Les trois accordéons — Outils, Compétences et Expériences
 Même composant, mêmes règles. Trois d'entre elles se sont perdues une fois
 et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
 
@@ -318,6 +325,126 @@ et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
   personne et devient du bruit. Les règles de survol reprennent ce préfixe
   `html:not(.accordion-decouvert)` : sans lui elles passent sous celle du
   battement, qui compte une classe de plus.
+- **Une famille s'ajoute dans `FAMILIES`** (`js/ui/accordion.js`) — sélecteur
+  de la carte, attribut du bouton, sélecteur du panneau — et `bindAccordion`
+  gagne un rappel. Les Expériences sont la troisième : `.exp-card`,
+  `data-experience`, `.exp-panel`. Sa pastille bat comme les autres (mêmes
+  sélecteurs, même décalage de trois temps) ; ce qui lui est propre — le
+  lavis, la marque, les chiffres visibles fermés — est dans « Registre ».
+
+## Registre — Expériences, Outils, Projets
+Les trois sections qui portent le parcours et ses preuves se lisent comme un
+registre : des lignes séparées par un filet, un nom fort, une commande nommée.
+Ce ne sont pas des cartes. Ce qui suit ne se voit pas dans le code — seulement
+à l'écran, quand une largeur ou une donnée change.
+
+**Expériences** (`renderExperiencesSection`, `css/sections.css`)
+- **L'employeur est la marque, et sa taille suit la carte, pas la fenêtre.**
+  `.tl-company` : Archivo 800 à chasse élargie, en capitales par
+  `text-transform` — la donnée reste en casse normale pour les extracteurs.
+  Taille = (largeur de la carte − colonne de période) / 15, bornée par
+  `--fs-wordmark` en haut et `--fs-body` en bas, via `100cqw`. Le nom le plus
+  long qui doit tenir sur une ligne, « Générale d'Optique », mesure 14,3 em dans
+  cette police : 15 laisse 4 % de marge. Un `clamp()` sur `vw` ne suffisait pas
+  — à 1 000 px de fenêtre la colonne n'a pas la largeur qu'elle a à 1 440, et
+  le nom sortait. Un plancher à `--fs-title` (19 px) faisait déborder le nom de
+  19 px à 320 px de fenêtre. **Tout nom d'employeur plus long que 14,3 em
+  casse ce diviseur** : remesurer avant d'ajouter une expérience.
+- **Les enseignes ne se coupent qu'entre elles.** `renderCompany` rend chaque
+  enseigne dans un item insécable (`.exp-co`) et laisse le point médian collé à
+  celle qui précède. Le texte assemblé reste celui de la donnée,
+  « GrandOptical · Krys · Lissac », et la coupure ne peut ni tomber dans
+  « Grand / Optical » ni ouvrir une ligne par un point orphelin.
+- **L'interlettrage de la marque est de −0,02 em**, comme tous les titres
+  Archivo, et non `--track-cap-title`. À 36 px, 0,14 em ajouterait 2,5 em au
+  nom le plus long (de 14,3 à 16,8 em) et défait le calcul ci-dessus ;
+  `--track-cap-title` est réglé pour des capitales de petit corps (14,7 px au
+  papier), pas de 36.
+- **Les chiffres restent visibles fermés, hors du bouton.** C'est la règle du
+  CV : un résultat mesuré sort du corps de texte, et il ne doit pas attendre un
+  clic. `statsLabel` et `statsBase` les suivent : un écart sans sa base est une
+  affirmation invérifiable. Ils sont posés **à côté** du `<button>` et non
+  dedans : un `<div>` dans un bouton n'est pas du contenu admis. Le texte du
+  résultat, lui, vit dans le panneau.
+- **Le lavis** (`.exp-name::before`) est la preuve que la ligne répond : une
+  tache d'encre diluée derrière la marque, au survol (souris seulement), au
+  focus et à l'ouverture. Il est de la nature de la ligne, donc l'encre —
+  **jamais la flamme**, réservée aux chiffres. Son intensité suit `recency`
+  (22 %, 15 %, 10 %) : un poste ancien est plus pâle. Opacité et transformation
+  seulement. Son origine (`--wash-x`) est écrite une fois, à l'entrée du
+  pointeur, par `bindExperienceWash()` : pas de `pointermove`. Le poste, posé
+  dessus, est en `--text-dim` et non `--text-muted` : c'est le seul des deux
+  tons qui reste au-dessus de 4,5:1 sur le lavis le plus fort (mesuré : 5,54:1).
+- **Le panneau ne répète ni le poste ni la période** : ils sont dans la ligne
+  juste au-dessus. La colonne de gauche porte le cadrage (`context`), celle de
+  droite les puces et le résultat. Les deux colonnes se décident sur la largeur
+  de la carte (`@container`, 60 rem), pas sur celle de la fenêtre.
+- **`id` et `detailLabel` sont des données**, jamais dérivés du rang ni du
+  libellé : un `id` tiré de la position changerait avec l'ordre de la
+  chronologie, et un panneau ouvert se refermerait sur une autre fiche. Il n'y
+  a pas de champ `span` (années de début et de fin) : `recency` suffit au lavis,
+  et une durée aurait été une donnée de plus à tenir d'accord avec `date`.
+- **Au papier, l'ordre d'origine est rétabli** — cadrage, puces, chiffres,
+  résultat. À l'écran les chiffres sont posés au-dessus du panneau ; la
+  présentation complète aplatit les conteneurs (`display: contents`) et
+  réordonne les enfants de la fiche. `container-type: normal` y coupe les
+  requêtes de conteneur de l'écran : sans cela le retrait de 35 mm du cadrage
+  disparaissait et la colonne de gauche se recomposait sur la page.
+
+**Outils** (`renderOutilsSection`)
+- **Les étiquettes sont dans le panneau.** Fermée, une ligne dit le titre, la
+  catégorie, une phrase et un statut. Cinq mots-clés de plus doublaient sa
+  hauteur et faisaient de la liste un mur, là où on cherche à choisir laquelle
+  ouvrir. Elles restent dans le document, et au papier, où tout est ouvert.
+- **Le numéro tient deux chiffres.** « 01 » en mono 22 px fait 26 px et
+  débordait de l'ancienne colonne de 24 : `--tool-indent` est passé à 48 px, et
+  le détail comme le lien s'alignent dessus.
+- **Au survol, la ligne visée avance de 6 px, et rien d'autre ne bouge.** On
+  n'estompe pas les voisines : un texte rendu translucide passe sous 4,5:1, et
+  le survol d'une souris n'est pas une raison de rendre le reste illisible.
+- **La catégorie reste en mono capitales** : c'est ce qui classe (voir
+  Typographie), pas ce qui affirme.
+
+**Projets** (`renderProjetSection`, `js/ui/tabs.js`)
+- **Trois projets, un seul visible**, en onglets WAI-ARIA : tabulation
+  itinérante, flèches (les quatre), Début, Fin, activation automatique. Les
+  `aria-controls` / `aria-labelledby` sont vérifiés dans les deux sens.
+  `id` et `short` sont déclarés dans les données et jamais tirés du titre :
+  `getLiveProducts()` coupe encore le titre à « : », et ce découpage suppose
+  que chaque titre suive la même forme.
+- **Un onglet n'est ni une section ni une couche.** Il n'écrit aucune entrée
+  d'historique (voir Circulation) et ne re-rend rien : un re-rendu ferait
+  perdre le focus au bouton qu'on vient d'actionner. `state.activeProject` n'est
+  là que pour survivre à une bascule large ↔ étroit ; il est remis à `null` à
+  chaque changement de section, donc la section se retrouve sur le premier
+  onglet.
+- **Deux dispositions, un seul balisage, choisies sur la largeur de la
+  vitrine** (`@container`, 60 rem) : à plat — trois lignes séparées par un
+  filet, y compris sur téléphone — ou en pile de cartes en perspective, la
+  carte de l'onglet actif devant. `--k` est le rang de la carte (0 devant) ; il
+  est posé au rendu pour que la pile naisse dans son état d'arrivée, et c'est
+  la seule chose que le CSS en lit.
+- **La pile est le seul endroit du CV qui a des cartes** : surface, bordure,
+  ombre. « Aucun aplat » vaut pour ce qui se lit ; ici ce sont des commandes,
+  et une pile ne se lit comme une pile que si ses éléments ont une surface
+  pour se recouvrir. L'onglet actif est marqué de la même façon dans les deux
+  dispositions : encre et filet de 2 px sous le nom, jamais une pastille pleine.
+- **Le panneau réutilise le balisage du document imprimé** (`renderProjet`) :
+  un seul gabarit pour les deux surfaces, donc aucun texte qui existe dans
+  l'une et pas dans l'autre. En `expandAll` il n'y a pas d'onglets — les trois
+  projets sont rendus à la suite, pour le papier et pour `#cv-integral`.
+- **Pas d'aperçu visuel.** Aucune capture de projet n'existe dans
+  `assets/img/`, et un espace réservé ou une maquette inventée seraient plus
+  trompeurs qu'un panneau sans image. Une capture ajoutée vient dans le panneau.
+
+**Constat ouvert — la mesure de lecture.** `--mesure: 62ch` est censée donner
+45 à 75 signes par ligne. Mesuré dans Chromium avec les vraies polices, elle
+en donne 75 à 89 sur les puces, les résumés et les détails, **avant comme
+après cette refonte** (la colonne y fait 567 px). Le `ch` vaut la largeur du
+« 0 » de Manrope, plus large que la moyenne de ses lettres. La valeur est
+globale : la changer touche toutes les sections, et se décide sur le rendu en
+comptant les signes — environ 52ch pour entrer dans la plage.
+
 
 ## L'accroche se tape (`js/ui/typewriter.js`)
 Le paragraphe de la colonne d'identité s'écrit lettre à lettre, comme sous
@@ -428,6 +555,13 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   sont dans `js/ui/backNavigation.js` ; `npm run check:nav` le vérifie dans
   un vrai navigateur, avec de vrais parcours d'historique.
 
+- **Un onglet n'est ni une section ni une couche.** Les onglets de Projets
+  n'écrivent aucune entrée d'historique : ce n'est pas une destination qu'on
+  voudrait retrouver au geste retour, et en empiler une ferait payer un appui
+  de plus par projet consulté. Ils ne re-rendent rien non plus — le bouton
+  qu'on vient d'actionner garderait son focus ou le perdrait selon l'humeur du
+  re-rendu. `npm run check:nav` ne les couvre pas : le contrôle se fait à la
+  main (changer d'onglet, puis retour : on quitte la section, pas l'onglet).
 - **En étroit, le conteneur qui défile est `#app` lui-même**, et `render()`
   remplace son contenu sans le remplacer, lui : son `scrollTop` survit au
   changement de section, borné à la nouvelle hauteur. Depuis 1 400 px dans
@@ -489,8 +623,9 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   tout leur poids.
 
 ## Typographie
-- Neuf paliers déclarés en tête de `css/base.css` (`--fs-display` →
-  `--fs-label`), un rôle chacun. **Aucune taille en dur** dans
+- Dix paliers déclarés en tête de `css/base.css` (`--fs-display` →
+  `--fs-label`, dont `--fs-wordmark`, le nom d'employeur : un plafond, la taille
+  réelle suit la colonne), un rôle chacun. **Aucune taille en dur** dans
   `layout.css`, `components.css` ni `sections.css` : toute nouvelle règle
   consomme un palier. Le CV avait dix valeurs approximatives dont
   soixante-douze éléments au même corps — la hiérarchie retombait sur les
@@ -601,6 +736,14 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 - Aucune couleur en dur dans `js/`. Référentiel : en tête de `css/base.css`.
 - La flamme est réservée aux chiffres mesurés et aux adresses en ligne. Un
   titre de compétence ou un nom d'outil n'est pas une preuve.
+- **Palette réellement affichée.** `js/ui/intro.js` injecte
+  `css/editorial-signal.css`, qui remappe la forêt vers l'encre et la flamme
+  vers un cuivre (`#a84512`) : à l'écran, `cadre` et `produit` partagent la même
+  encre (`--n-mark: var(--ink-600)`), et la forêt n'existe plus que dans la
+  séquence d'ouverture. Les paragraphes ci-dessus décrivent le modèle de
+  données ; `docs/charte-couleurs.md` décrit ce qui se voit. Un lavis, un filet
+  ou une pastille qui consomme `--n-mark` suit donc la palette courante sans
+  rien savoir de la forêt.
 - Pas d'emoji dans l'interface : ils sont multicolores et contredisent la
   charte. Ajouter un tracé à `js/ui/icons.js` et appeler `icon("nom")`.
 
@@ -823,7 +966,15 @@ CV. Elles sont maintenant derrière une porte unique.
   propres tailles en points.
 - Toute nouvelle section doit être ajoutée à `renderSectionBody()` dans
   `js/render/renderPrint.js`, sinon elle disparaît du PDF.
-- Un accordéon doit accepter `{ expandAll: true }` pour être imprimable.
+- Un accordéon doit accepter `{ expandAll: true }` pour être imprimable —
+  Outils, Compétences **et Expériences** — et la section Projets, qui n'a pas
+  d'accordéon mais des onglets, rend alors les trois projets à la suite, sans
+  onglets. Le papier et `#cv-integral` partagent ces rendus : un texte absent
+  du papier est absent des robots.
+- **Se vérifie sur le texte du PDF, sans tenir compte de la casse.** Le papier
+  met catégories, étiquettes et sous-titres en capitales par `text-transform` :
+  une extraction qui compare la casse déclare « absents » des textes présents.
+  Deux fausses alertes l'ont montré pendant la refonte du registre.
 - Toute borne de largeur posée pour l'écran doit être relâchée ici. Le
   papier a déjà sa colonne ; une mesure oubliée sur un conteneur de tête
   rogne son contenu pendant que le bloc juste dessous prend toute la

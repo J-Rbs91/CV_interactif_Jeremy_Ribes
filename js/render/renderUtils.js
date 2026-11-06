@@ -9,10 +9,11 @@ export function linkHost(url) {
   return new URL(url).host.replace(/^www\./, "");
 }
 
-/* `element` : les deux accordéons posent leurs étiquettes à l'intérieur du
-   bouton de dépliage, et un <div> dans un <button> n'est pas du contenu
-   admis — le navigateur referme le bouton avant la rangée, et une partie de
-   la carte se retrouve hors de la zone cliquable. */
+/* `element` : les Compétences posent leurs étiquettes à l'intérieur du
+   bouton de dépliage (les Outils les rangent dans leur panneau, les
+   Expériences n'en ont pas), et un <div> dans un <button> n'est pas du
+   contenu admis — le navigateur referme le bouton avant la rangée, et une
+   partie de la carte se retrouve hors de la zone cliquable. */
 export function renderAccentTags(tags, options = {}) {
   const { className = "", element = "div" } = options;
   const chipRowClassName = ["chip-row", className].filter(Boolean).join(" ");
@@ -22,7 +23,8 @@ export function renderAccentTags(tags, options = {}) {
   </${element}>`;
 }
 
-/* La commande de dépliage, commune aux Outils et aux Compétences.
+/* La commande de dépliage, commune aux Outils, aux Compétences et aux
+   Expériences.
 
    Un chevron seul ne dit pas qu'on peut déplier : posé à l'extrémité droite
    d'une colonne large, il se lit comme un ornement de fin de ligne. Le mot,

@@ -28,7 +28,7 @@ bloc est en Archivo sur le site, il l'est aussi sur le papier.
 
 | Surface                    | Fichiers                                   | Ce qui lui est propre                              |
 | -------------------------- | ------------------------------------------ | -------------------------------------------------- |
-| **Site**                   | `base` · `layout` · `components` · `sections` · `export` | neuf paliers de taille, `--fs-display` → `--fs-label` |
+| **Site**                   | `base` · `layout` · `components` · `sections` · `export` | dix paliers de taille, `--fs-display` → `--fs-label` |
 | **Présentation complète**  | `print.css`, règles `.print-*`             | ses propres tailles en points ; mono en 700         |
 | **Recto A4**               | `print.css`, règles `.cv1-*`               | idem, plus la contrainte d'une page                 |
 
@@ -41,6 +41,7 @@ autre système, seulement une divergence.
 
 ```
 --fs-display  54 px   titre de section
+--fs-wordmark 36 px   nom d'employeur : plafond, la taille suit la colonne
 --fs-metric   32 px   chiffre de preuve, titre de section en étroit
 --fs-quote    26 px   citation détachée
 --fs-lead     22 px   nom, titre de fenêtre, année
@@ -52,6 +53,11 @@ autre système, seulement une divergence.
 ```
 
 Aucune taille en dur : toute nouvelle règle consomme un palier.
+
+`--fs-wordmark` est un plafond, pas une taille : `.tl-company` calcule la
+sienne sur la largeur de la carte (`100cqw`), parce que le nom d'employeur le
+plus long doit tenir sur une ligne à toute largeur. Le calcul et ses bornes
+sont dans `AGENTS.md` § Registre.
 
 ## L'interlettrage des capitales
 
