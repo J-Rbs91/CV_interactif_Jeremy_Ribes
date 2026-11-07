@@ -1,16 +1,16 @@
 export const contact = {
   name: "Jérémy Ribes",
-  role: "Structuration de l’activité & outils métiers",
+  role: "Organisation opérationnelle & outils métiers",
   /* L’accueil annonce le parcours et la fonction recherchée dès le premier
      écran, sans laisser croire que ce poste a déjà été occupé. */
   hero: {
-    background: "Opticien · ancien responsable de magasin",
-    target: "Je vise : coordination opérationnelle ou projets métiers",
+    background: "Opticien depuis 2012 · expérience en management",
+    target: "Projet professionnel : coordination et outils métiers",
   },
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Opticien de formation et ancien responsable de magasin, j’ai progressivement élargi mon activité à l’organisation et au pilotage du travail. Je recherche aujourd’hui des fonctions de coordination opérationnelle ou de gestion de projets d’organisation et d’outils métiers, dans l’optique ou ailleurs.",
+    "Opticien depuis 2012, j’ai été responsable de magasin et conçu plusieurs outils utilisés quotidiennement par les équipes. Je recherche aujourd’hui un poste en coordination opérationnelle ou en gestion de projets d’organisation et d’outils métiers, dans l’optique ou ailleurs.",
   /* L'adresse du CV en ligne. Elle ne sert à rien à l'écran — on y est déjà —
      mais le recto A4 se détache de son support : imprimé ou versé à un
      dossier, il ne porte plus aucun chemin de retour, et le formulaire de
@@ -37,7 +37,7 @@ export const contact = {
        Elle n'existe que sur le recto : le site, qu'on lit en entier, se
        presente par ce qu'il demontre. Une feuille lue en trente secondes se
        presente par ce qu'elle vise. */
-    targetRole: "Coordinateur performance & organisation",
+    targetRole: "Coordination opérationnelle & projets métiers",
     /* Quatre territoires, declares separement et non en une chaine. Assemblee,
        la ligne se repliait au milieu de l'un d'eux — on lisait « Pilotage par
        la / donnee ». En items, la coupure ne peut tomber qu'entre deux, ou
@@ -52,7 +52,7 @@ export const contact = {
       "Outils métiers",
       "Pilotage par la donnée",
     ],
-    experience: "14 ans d’expérience en environnement commercial",
+    experience: "14 ans d’expérience dans l’optique",
   },
   site: {
     host: "j-rbs91.github.io/CV_interactif_Jeremy_Ribes",
