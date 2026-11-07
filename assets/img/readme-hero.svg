@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="456" viewBox="0 0 1280 456" role="img" aria-labelledby="title desc">
+  <title id="title">Jérémy Ribes, CV interactif</title>
+  <desc id="desc">Affiche noire avec le nom Jérémy Ribes en grandes lettres vert fluo, inspirée du design du CV.</desc>
+  <rect width="1280" height="456" fill="#0A0A0A"/>
+  <g font-family="JetBrains Mono, Consolas, monospace" font-size="16" letter-spacing="2.4" fill="#9A9DA1">
+    <text x="64" y="54">CV INTERACTIF</text>
+    <text x="1216" y="54" text-anchor="end">ORGANISATION / OUTILS MÉTIERS</text>
+  </g>
+  <path d="M64 82H1216" stroke="#313131" stroke-width="2"/>
+  <g font-family="Archivo, Arial Black, Arial, sans-serif" font-stretch="expanded" font-weight="800" letter-spacing="-6" fill="#C9FF2F">
+    <text x="52" y="224" font-size="166">JÉRÉMY</text>
+    <text x="52" y="374" font-size="166">RIBES</text>
+  </g>
+  <path d="M934 121V369" stroke="#C9FF2F" stroke-width="4"/>
+  <g font-family="JetBrains Mono, Consolas, monospace" font-size="19" letter-spacing="1.2" fill="#F2F2EE">
+    <text x="962" y="164">DU TERRAIN</text>
+    <text x="962" y="195">AUX PROJETS</text>
+    <text x="962" y="226">MÉTIERS</text>
+  </g>
+  <g font-family="JetBrains Mono, Consolas, monospace" font-size="15" letter-spacing="1.6" fill="#9A9DA1">
+    <text x="964" y="340">OPTICIEN</text>
+    <text x="964" y="362">DEPUIS 2012</text>
+  </g>
+  <path d="M64 409H1216" stroke="#313131" stroke-width="2"/>
+  <g font-family="JetBrains Mono, Consolas, monospace" font-size="15" letter-spacing="1.5" fill="#F2F2EE">
+    <text x="64" y="440">LE TERRAIN COMME POINT DE DÉPART.</text>
+    <text x="1216" y="440" text-anchor="end" fill="#9A9DA1">MONTPELLIER / FRANCE</text>
+  </g>
+</svg>
