@@ -49,17 +49,14 @@ function renderLiveLine() {
     return "";
   }
 
-  /* Le séparateur est du texte, pas un `::before`. Une puce posée en CSS ne
-     s'imprime que sous `@media print` et n'entre dans aucune extraction :
-     hors de ce contexte les adresses se lisaient « panum.frkut.panum.fr ».
-     Écrite dans le document, elle sépare partout — à l'écran, au papier, et
-     pour qui lit la page sans la mettre en page. */
+  /* Le séparateur doit être textuel pour rester lisible lors des exports.
+     Le Hub est identifié par un nom, pas par le domaine GitHub Pages. */
   return `<div class="print-live">
     <span class="print-live-label">En ligne</span>
     <span class="print-live-items">${products
       .map(
         (product) =>
-          `<span class="print-live-item">${linkHost(product.url)}</span>`,
+          `<span class="print-live-item">${product.printLabel ?? linkHost(product.url)}</span>`,
       )
       .join(" · ")}</span>
   </div>`;
