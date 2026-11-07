@@ -32,8 +32,8 @@ function renderContactItems(itemClassName = "") {
     .join("");
 }
 
-/* Bandeau des produits en ligne, dérivé des liens déclarés dans outils.js et
-   projets.js. `liveProduct: false` exclut une entrée du bandeau. */
+/* Bandeau des produits en ligne : `liveProduct: false` permet de montrer
+   le Hub en Outils et en Projets sans dupliquer son lien ici. */
 export function getLiveProducts() {
   return [
     ...outils
@@ -41,10 +41,11 @@ export function getLiveProducts() {
       .map((outil) => ({
         name: outil.title,
         url: outil.link.url,
+        printLabel: outil.link.printLabel,
         nature: "preuve",
       })),
     ...projetsTransverses
-      .filter((projet) => projet.link)
+      .filter((projet) => projet.link && projet.liveProduct !== false)
       .map((projet) => ({
         name: projet.title.split(" : ")[0],
         url: projet.link.url,
