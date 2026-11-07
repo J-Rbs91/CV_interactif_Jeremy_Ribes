@@ -26,7 +26,7 @@
    Un seul accent, réglable. Le cuivre des preuves, lui, ne bouge pas. */
 @property --w  { syntax:"<number>"; inherits:false; initial-value:125; }
 @property --wg { syntax:"<number>"; inherits:false; initial-value:800; }
-:root { --bg:#0a0a0a; --fg:#f2f2ee; --dim:#9a9da1; --line:#222; --acc:#c9ff2f; --hot:#ff9d63; --disp:"Archivo","Manrope",sans-serif; --e:cubic-bezier(.62,0,.24,1); }
+:root { --bg:#0a0a0a; --fg:#f2f2ee; --dim:#9a9da1; --line:#222; --acc:#cfe3ff; --hot:#ff9d63; --disp:"Archivo","Manrope",sans-serif; --e:cubic-bezier(.62,0,.24,1); }
 * { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
 body { background:var(--bg); color:var(--fg); font:400 16px/1.6 "Manrope",sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
@@ -47,8 +47,11 @@ a { color:inherit; text-decoration:none; }
 .name .l { display:inline-block; font-variation-settings:"wdth" var(--w), "wght" var(--wg); transition:--w .35s var(--e), --wg .35s var(--e); }
 .photo { position:absolute; left:50%; top:50%; width:clamp(120px,19vw,300px); aspect-ratio:1; border-radius:50%; overflow:hidden; z-index:3; box-shadow:0 0 0 6px var(--bg);
   transform:translate(calc(-50% + var(--px) * 22px), calc(-52% + var(--py) * 22px)); transition:transform .5s var(--e); }
-.photo img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.15) brightness(1.05); }
-.photo::after { content:""; position:absolute; inset:0; background:var(--acc); mix-blend-mode:multiply; opacity:.55; }
+/* Bichromie : la photo passe en niveaux de gris, puis la couleur du lettrage est
+   multipliée dessus — le noir reste noir, le blanc devient exactement la couleur
+   de l'accent. Changer l'accent change donc la photo avec lui. */
+.photo img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.2) brightness(1.12); }
+.photo::after { content:""; position:absolute; inset:0; background:var(--acc); mix-blend-mode:multiply; opacity:1; }
 [data-photo="nb"] .photo::after { display:none; }
 [data-photo="couleur"] .photo::after { display:none; }
 [data-photo="couleur"] .photo img { filter:none; }
@@ -91,6 +94,13 @@ main { padding:0 28px; max-width:1500px; margin:0 auto; }
 @supports (animation-timeline:view()) {
   [data-titles="contour"] .sec > h2 { background:linear-gradient(var(--acc),var(--acc)) no-repeat 0 0 / 0% 100%; -webkit-background-clip:text; background-clip:text; animation:fill linear both; animation-timeline:view(); animation-range:entry 25% cover 38%; }
   @keyframes fill { to { background-size:100% 100%; } }
+}
+/* Repli : les navigateurs sans `animation-timeline` reçoivent la même progression
+   par script (--p, de 0 à 1). Même rendu, même plage. */
+.no-timeline[data-titles="contour"] .sec > h2 { background:linear-gradient(var(--acc),var(--acc)) no-repeat 0 0 / calc(var(--p,0) * 100%) 100%; -webkit-background-clip:text; background-clip:text; }
+/* Mouvement réduit : pas de remplissage progressif, le titre est plein. */
+@media (prefers-reduced-motion:reduce) {
+  .sec > h2 { color:var(--acc) !important; -webkit-text-stroke:0 !important; background:none !important; animation:none !important; }
 }
 details { border-top:1px solid var(--line); position:relative; }
 details:last-of-type { border-bottom:1px solid var(--line); }
@@ -247,16 +257,24 @@ if (canMove) {
   hero.addEventListener("pointerleave", () => { mx = my = -1e5; hero.style.setProperty("--px", 0); hero.style.setProperty("--py", 0); if (!raf) raf = requestAnimationFrame(tick); });
 }
 
+/* ---- remplissage des titres : repli sans animation-timeline ---- */
+if (!CSS.supports("animation-timeline: view()")) {
+  document.documentElement.classList.add("no-timeline");
+  const hs = [...document.querySelectorAll(".sec > h2")];
+  const upd = () => hs.forEach((h) => { const r = h.getBoundingClientRect(), vh = innerHeight; const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.38))); h.style.setProperty("--p", p.toFixed(3)); });
+  addEventListener("scroll", () => requestAnimationFrame(upd), { passive: true }); addEventListener("resize", upd); upd();
+}
+
 /* ---- réglages ---- */
 const ACC = { fluo: "#c9ff2f", cuivre: "#ff9d63", glace: "#cfe3ff", blanc: "#f2f2ee" };
-let T = { acc: "fluo", photo: "duo", titles: "contour" };
-try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages") || "{}")); } catch (e) {}
+let T = { acc: "glace", photo: "duo", titles: "contour" };
+try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-2") || "{}")); } catch (e) {}
 const q = new URLSearchParams(location.search); for (const k of ["acc", "photo", "titles"]) if (q.get(k)) T[k] = q.get(k);
 function apply() {
   document.documentElement.style.setProperty("--acc", ACC[T.acc] || ACC.fluo);
   document.body.dataset.photo = T.photo; document.body.dataset.titles = T.titles;
   document.querySelectorAll(".tweaks button").forEach((b) => b.setAttribute("aria-pressed", String(T[b.dataset.k] === b.dataset.v)));
-  try { localStorage.setItem("b-reglages", JSON.stringify(T)); } catch (e) {}
+  try { localStorage.setItem("b-reglages-2", JSON.stringify(T)); } catch (e) {}
 }
 document.querySelectorAll(".tweaks button").forEach((b) => b.addEventListener("click", () => { T[b.dataset.k] = b.dataset.v; apply(); }));
 if (innerWidth < 760) { $("#tweaks").dataset.closed = "true"; $("#tw-x").textContent = "+"; }
