@@ -112,15 +112,15 @@ function renderProfile() {
       </div>
     </div>
     <details class="s-profile-more">
-      <summary>Mon parcours, ma méthode et les limites de mon expérience</summary>
+      <summary>Mon parcours et ma façon de travailler</summary>
       <div class="s-profile">
         <div class="s-block">
-          ${label("Pourquoi j’envisage d’autres secteurs")}
+          ${label("Mon orientation")}
           <p>${context}</p>
           <p>${ambition}</p>
         </div>
         <div class="s-block">
-          ${label("Ce que je n’ai pas encore exercé")}
+          ${label("Ce que présente ce CV")}
           <p>${limits}</p>
         </div>
         ${profileContent.cards
