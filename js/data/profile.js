@@ -8,6 +8,8 @@
    Un seul passage fort par bloc, lisible isolément et nettement minoritaire.
    Le texte éditorial reste la source de vérité pour le site et les exports. */
 export const profileContent = {
+  /* Accroche courte pour le site. La citation complète reste dans le PDF. */
+  headline: "De l’optique à l’organisation.",
   quote:
     "Rendre une activité plus lisible et plus facile à piloter, sans l’alourdir.",
   intro:
