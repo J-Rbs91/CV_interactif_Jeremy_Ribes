@@ -21,7 +21,7 @@ import { competences } from "../data/competences.js";
 import { experiences } from "../data/experiences.js";
 import { outils } from "../data/outils.js";
 import { projetsTransverses } from "../data/projets.js";
-import { formationContent, profileContent } from "../data/profile.js";
+import { a4Content, formationContent, profileContent } from "../data/profile.js";
 import { sections } from "../data/sections.js";
 import { getLiveProducts, renderContactModal } from "./renderContact.js";
 import { renderExportPanel } from "./renderExport.js";
@@ -90,51 +90,53 @@ const experienceId = (experience) => `exp-${experience.id}`;
 
 /* ---------- Profil ----------------------------------------------------- */
 
-function renderTarget() {
-  const { context, ambition, roles, limits } = profileContent.target;
-
-  return `<p>${context}</p>
-    <p class="s-strong">${ambition}</p>
-    ${label("Fonctions recherchées")}
-    <ul class="s-list">${roles.map((role) => `<li>${role}</li>`).join("")}</ul>
-    <p class="s-dim">${limits}</p>`;
-}
-
+/* L'essentiel est visible sans interaction : parcours, cible et preuve.
+   Les justifications, la méthode et les limites restent accessibles dans un
+   <details> natif, sans nouveau JavaScript ni seconde source de vérité. */
 function renderProfile() {
-  const quote = profileContent.quote.replace(
-    "plus lisible",
-    "<em>plus lisible</em>",
-  );
+  const { context, ambition, roles, limits } = profileContent.target;
+  const proof = a4Content.proofs.find((item) => item.value === "3 outils en usage quotidien");
 
   return `
-    <p class="s-big">${quote}</p>
+    <p class="s-big">${profileContent.headline}</p>
     <p class="s-lead">${contact.intro}</p>
     <div class="s-profile">
       <div class="s-block">
-        ${label("Profil professionnel")}
-        <p>${profileContent.intro}</p>
+        ${label("Fonctions recherchées")}
+        <ul class="s-list">${roles.map((role) => `<li>${role}</li>`).join("")}</ul>
       </div>
-      ${profileContent.cards
-        .map(
-          (card) => `<div class="s-block">
-            ${label(card.title)}
-            <p>${card.text}</p>
-          </div>`,
-        )
-        .join("")}
       <div class="s-block">
-        ${label("Expertise clé")}
+        ${label("Ce que je peux apporter")}
         <p>${profileContent.expertise}</p>
+        ${proof ? `<p class="s-dim">${proof.value} : ${proof.text}</p>` : ""}
       </div>
-      <div class="s-block">
-        ${label("Ce que j’apporte")}
-        ${chips(profileContent.contributionTags.map((tag) => tag.label))}
+    </div>
+    <details class="s-profile-more">
+      <summary>Mon parcours, ma méthode et les limites de mon expérience</summary>
+      <div class="s-profile">
+        <div class="s-block">
+          ${label("Pourquoi j’envisage d’autres secteurs")}
+          <p>${context}</p>
+          <p>${ambition}</p>
+        </div>
+        <div class="s-block">
+          ${label("Ce que je n’ai pas encore exercé")}
+          <p>${limits}</p>
+        </div>
+        ${profileContent.cards
+          .map(
+            (card) => `<div class="s-block">
+              ${label(card.title)}
+              <p>${card.text}</p>
+            </div>`,
+          )
+          .join("")}
+        <div class="s-block s-wide">
+          ${label("Compétences mobilisées")}
+          ${chips(profileContent.contributionTags.map((tag) => tag.label))}
+        </div>
       </div>
-      <div class="s-block s-wide">
-        ${label("Ce que je vise")}
-        ${renderTarget()}
-      </div>
-    </div>`;
+    </details>`;
 }
 
 /* ---------- Expériences ------------------------------------------------ */
