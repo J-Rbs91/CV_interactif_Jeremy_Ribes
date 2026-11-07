@@ -31,7 +31,7 @@ function openPanel(trigger) {
 
   /* Le premier canal, pas le bouton de fermeture : au clavier comme au
      lecteur d'ecran, on entre dans le panneau par ce qu'il propose. */
-  panel.querySelector(".export-channel")?.focus();
+  panel.querySelector(".p-channel")?.focus();
 
   /* Le panneau est une couche posee sur le CV : le geste retour du telephone
      doit le refermer, pas quitter la page. */

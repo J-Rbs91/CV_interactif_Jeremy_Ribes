@@ -112,6 +112,7 @@ règle.
 ## Portée
 
 Ce document décrit le système des feuilles historiques (`base.css`, `components.css`,
-`sections.css`, `export.css`) : le panneau d'export, la modale et le papier. La
+`sections.css`) : le papier et la vue intégrale. Le panneau d'export et la modale
+ont leur feuille, `css/panels.css`. La
 page (`css/site.css`) a sa propre échelle, fluide, dans les mêmes trois familles ;
 voir `AGENTS.md` § La page.

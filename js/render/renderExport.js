@@ -16,14 +16,16 @@ import { canShareNatively, shareChannels } from "../ui/share.js";
    circule ; de l'autre les documents, qui se deposent. C'est la seule
    distinction dont le lecteur a besoin, et elle se lit avant de cliquer.
 
-   **Le panneau est compose comme le recto A4**, pas comme une modale de
-   site. Meme gouttiere de libelle en mono capitale, memes filets fins,
-   meme titre sous un trait epais, meme absence de carte et de rayon. Ce
-   n'est pas une citation de style : le panneau donne acces au document, et
-   il vaut mieux qu'il en ait deja l'air.
+   **Le panneau parle la langue de la page** (css/panels.css) : noir, un seul
+   accent, un titre géant en Archivo, des lignes séparées par un filet qui
+   passent au fluo au survol, le même geste que les lignes d'index. Il s'ouvre
+   comme un tiroir plutôt qu'une fenêtre : sur téléphone il prend l'écran.
 
-   Le rendu est un attribut du shell, comme la modale de contact : il est
-   reconstruit a chaque rendu de section et ne porte donc aucun etat. */
+   Il est monté une fois avec la page et ne porte aucun état : tout ce qui
+   change (ouvert, copié) est une classe posée par js/ui/exportPanel.js.
+
+   Les accroches `data-*` sont le contrat avec ce script et avec
+   `npm run check:nav` ; les classes `p-*` ne sont que de la mise en forme. */
 
 function renderChannel(channel) {
   /* `target` et `rel` sur les seuls canaux web. `mailto:` et `sms:` passent
@@ -33,9 +35,10 @@ function renderChannel(channel) {
     ? ' target="_blank" rel="noopener noreferrer"'
     : "";
 
-  return `<a class="export-channel" href="${channel.href}"${target} data-share-channel="${channel.id}">
-    <span class="export-channel-mark">${boldIcon(channel.icon)}</span>
-    <span class="export-channel-label">${channel.label}</span>
+  return `<a class="p-channel" href="${channel.href}"${target} data-share-channel="${channel.id}">
+    <span class="p-mark">${boldIcon(channel.icon)}</span>
+    <span class="p-channel-label">${channel.label}</span>
+    <span class="p-arrow" aria-hidden="true">${channel.newTab ? "↗" : "→"}</span>
   </a>`;
 }
 
@@ -48,90 +51,63 @@ function renderNativeShare() {
     return "";
   }
 
-  return `<button type="button" class="export-native" data-native-share>
-    <span class="export-channel-mark">${boldIcon("device-mobile")}</span>
-    <span class="export-native-label">Partager depuis l’appareil</span>
+  return `<button type="button" class="p-channel p-native" data-native-share>
+    <span class="p-mark">${boldIcon("device-mobile")}</span>
+    <span class="p-channel-label">Partager depuis l’appareil</span>
+    <span class="p-arrow" aria-hidden="true">→</span>
   </button>`;
 }
 
-/* Meme gouttiere de libelle que les lignes du dessus, et c'est la seule
-   raison pour laquelle la marque est dans la colonne de matiere et non a
-   gauche du libelle : une gouttiere qui se decale d'un bloc a l'autre n'est
-   plus une colonne, c'est un alignement approximatif. Le recto tient la
-   sienne sur toute la page, celui-ci sur tout le panneau. */
 function renderDocument(mode, key, title, text) {
-  return `<button type="button" class="export-doc" data-export-document="${mode}">
-    <span class="export-doc-key">${key}</span>
-    <span class="export-doc-main">
-      <span class="export-doc-mark">${boldIcon(mode === "cv" ? "file-pdf" : "files")}</span>
-      <span class="export-doc-body">
-        <span class="export-doc-title">${title}</span>
-        <span class="export-doc-text">${text}</span>
-      </span>
-    </span>
+  return `<button type="button" class="p-doc" data-export-document="${mode}">
+    <span class="p-doc-key s-mono">${key}</span>
+    <span class="p-doc-title">${title}</span>
+    <span class="p-doc-text">${text}</span>
+    <span class="p-arrow" aria-hidden="true">↓</span>
   </button>`;
 }
 
 /* Le code QR existe deja : `assets/img/qr-cv.svg` est celui du recto A4, ou
    il rouvre le chemin depuis le papier. Ici il fait l'inverse — il fait
    passer le CV de l'ecran ou on le lit au telephone qu'on a en main, ce
-   qu'aucun des six canaux ne fait sans passer par un compte. */
+   qu'aucun des six canaux ne fait sans passer par un compte.
+
+   Il est pose sur une tuile claire : ses modules sont d'encre sombre sur fond
+   transparent, donc invisibles sur le noir du panneau — un code qu'aucun
+   telephone ne lirait. */
 function renderQr() {
-  return `<div class="export-row export-qr-row">
-    <div class="export-key">Scanner</div>
-    <div class="export-val export-qr">
-      <img src="./assets/img/qr-cv.svg" width="37" height="37" alt="Code QR vers le CV interactif de ${contact.name}" />
-      <span class="export-qr-text">Ouvrir le CV sur un téléphone, sans saisir l’adresse.</span>
-    </div>
+  return `<div class="p-qr">
+    <span class="p-qr-tile"><img src="./assets/img/qr-cv.svg" width="37" height="37" alt="Code QR vers le CV interactif de ${contact.name}" /></span>
+    <span class="p-qr-text">Ouvrir le CV sur un téléphone, sans saisir l’adresse.</span>
   </div>`;
 }
 
-export function renderExportTrigger(itemClassName = "") {
-  const className = ["contact-form-trigger", "export-trigger", itemClassName]
-    .filter(Boolean)
-    .join(" ");
-
-  return `<button
-      type="button"
-      class="${className}"
-      data-open-export
-      aria-haspopup="dialog"
-      title="Partager le lien du CV, ou en exporter les documents en PDF"
-    >
-      <span class="ic">${boldIcon("share-network")}</span> Partager &amp; Exporter
-    </button>`;
-}
-
 export function renderExportPanel() {
-  return `<div id="export-panel" class="export-overlay" inert>
-    <div class="export-sheet" role="dialog" aria-modal="true" aria-labelledby="export-panel-title">
-      <button type="button" class="export-close" data-close-export aria-label="Fermer">${boldIcon("close")}</button>
+  return `<div id="export-panel" class="p-overlay" inert>
+    <div class="p-sheet" role="dialog" aria-modal="true" aria-labelledby="export-panel-title">
+      <button type="button" class="p-close s-mono" data-close-export aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button>
 
-      <header class="export-head">
-        <div class="export-kicker">CV interactif</div>
-        <h2 class="export-title" id="export-panel-title">Partager &amp; Exporter</h2>
-        <div class="export-subject">${contact.name} · ${contact.role}</div>
+      <header class="p-head">
+        <div class="p-kicker s-mono">CV interactif</div>
+        <h2 class="p-title" id="export-panel-title">Partager<br />&amp; Exporter</h2>
+        <div class="p-subject s-mono">${contact.name} · ${contact.role}</div>
       </header>
 
-      <section class="export-part">
-        <h3 class="export-part-title">Partager le lien</h3>
-        <div class="export-channels">${shareChannels.map(renderChannel).join("")}</div>
-        ${renderNativeShare()}
-        <div class="export-row">
-          <div class="export-key">Lien</div>
-          <div class="export-val export-link">
-            <span class="export-url">${contact.site.host}</span>
-            <button type="button" class="export-action" data-copy-link>
-              <span class="export-action-mark" data-copy-mark>${boldIcon("copy")}</span>
-              <span class="export-action-label" data-copy-label>Copier</span>
-            </button>
-          </div>
+      <section class="p-part">
+        <h3 class="p-part-title s-mono"><span>01</span>Partager le lien</h3>
+        <div class="p-channels">${shareChannels.map(renderChannel).join("")}${renderNativeShare()}</div>
+        <div class="p-link">
+          <span class="p-url s-mono">${contact.site.host}</span>
+          <button type="button" class="p-copy s-mono" data-copy-link>
+            <span class="p-copy-mark" data-copy-mark>${boldIcon("copy")}</span>
+            <span data-copy-label>Copier</span>
+          </button>
         </div>
         ${renderQr()}
       </section>
 
-      <section class="export-part">
-        <h3 class="export-part-title">Exporter</h3>
+      <section class="p-part">
+        <h3 class="p-part-title s-mono"><span>02</span>Exporter</h3>
         ${renderDocument(
           "cv",
           "PDF · 1 page",
@@ -144,7 +120,7 @@ export function renderExportPanel() {
           "Présentation complète",
           "Toutes les sections, toutes les fiches dépliées, dans l’ordre du site.",
         )}
-        <p class="export-note">Les deux s’ouvrent dans la fenêtre d’impression : imprimer, ou enregistrer en PDF.</p>
+        <p class="p-note">Les deux s’ouvrent dans la fenêtre d’impression : imprimer, ou enregistrer en PDF.</p>
       </section>
     </div>
   </div>`;

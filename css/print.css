@@ -786,9 +786,7 @@
   /* --- Ce qui n'a pas de sens sur papier -------------------------------- */
   .nav-list,
   .mobile-nav-sticky,
-  .contact-modal-overlay,
-  .export-overlay,
-  .contact-form-trigger,
+  .p-overlay,
   .live-products,
   .icon,
   .icon-bold {

@@ -1,6 +1,7 @@
 import { contact } from "../data/contact.js";
 import { outils } from "../data/outils.js";
 import { projetsTransverses } from "../data/projets.js";
+import { boldIcon } from "../ui/icons.js";
 
 function buildClassName(baseClassName, itemClassName) {
   return [baseClassName, itemClassName].filter(Boolean).join(" ");
@@ -99,26 +100,32 @@ export function renderIntroStrip(options = {}) {
    d'accessibilite, ce qui rend `aria-hidden` redondant : le poser en plus
    reintroduirait la contradiction qu'on corrige. */
 export function renderContactModal() {
-  return `<div id="contact-modal" class="contact-modal-overlay" inert>
-    <div class="contact-modal-body" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
-      <button type="button" class="contact-modal-close" data-close-contact aria-label="Fermer">&times;</button>
-      <div class="contact-modal-title" id="contact-modal-title">Me contacter</div>
-      <form class="contact-form">
-        <label class="contact-label">
-          Nom
+  return `<div id="contact-modal" class="p-overlay" inert>
+    <div class="p-sheet contact-modal-body" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+      <button type="button" class="p-close s-mono" data-close-contact aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button>
+
+      <header class="p-head">
+        <div class="p-kicker s-mono">CV interactif</div>
+        <h2 class="p-title" id="contact-modal-title">Me<br />contacter</h2>
+        <div class="p-subject s-mono">${contact.name} · ${contact.role}</div>
+      </header>
+
+      <form class="contact-form p-form">
+        <label class="p-field">
+          <span class="p-label s-mono"><span>01</span>Nom</span>
           <input type="text" name="from_name" required autocomplete="name" minlength="2" maxlength="100" />
         </label>
-        <label class="contact-label">
-          Email
+        <label class="p-field">
+          <span class="p-label s-mono"><span>02</span>Email</span>
           <input type="email" name="from_email" required autocomplete="email" maxlength="150" />
         </label>
-        <label class="contact-label">
-          Message
+        <label class="p-field">
+          <span class="p-label s-mono"><span>03</span>Message</span>
           <textarea name="message" rows="5" required minlength="10" maxlength="2000"></textarea>
         </label>
-        <button type="submit" class="contact-submit">Envoyer</button>
+        <button type="submit" class="contact-submit p-submit">Envoyer</button>
       </form>
-      <div class="contact-feedback" data-contact-feedback></div>
+      <div class="contact-feedback" data-contact-feedback role="status" aria-live="polite"></div>
     </div>
   </div>`;
 }

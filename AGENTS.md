@@ -33,9 +33,10 @@
 - `js/render/renderCv.js` : le **recto A4**, second document servi par la même
   commande d'impression. `js/ui/print.js` choisit entre les deux selon le mode
   demandé (voir « Deux documents », plus bas).
-- `js/render/renderExport.js` + `js/ui/exportPanel.js` + `css/export.css` : le
+- `js/render/renderExport.js` + `js/ui/exportPanel.js` + `css/panels.css` : le
   panneau **« Partager & Exporter »**, seule porte vers le lien et vers les
-  deux documents (voir la section dédiée).
+  deux documents (voir la section dédiée). `css/panels.css` habille aussi la
+  modale « Me contacter » : mêmes tiroirs, mêmes classes `p-*`.
 - `js/ui/share.js` : la charge de partage, les six canaux et la copie du lien.
   L'URL vient de `contact.site` — le recto la porte aussi, et deux copies
   d'une même adresse finissent par diverger.
@@ -306,8 +307,8 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 
 ## Typographie
 **Portée.** Les règles de cette section décrivent le système des feuilles
-historiques (`base.css`, `components.css`, `sections.css`, `export.css`) — donc le
-panneau d'export, la modale et le papier. **La page (`site.css`) a sa propre
+historiques (`base.css`, `components.css`, `sections.css`) — donc le papier et la vue
+intégrale. Le panneau d'export et la modale ont leur feuille (`panels.css`). **La page (`site.css`) a sa propre
 échelle**, fluide (`clamp()` en `vw` pour les titres), dans les mêmes trois
 familles. Elle garde trois règles de cette section : une graisse hors de la liste
 servie est un défaut silencieux (`npm run check:typo`), `<strong>` est fixé à 700,
@@ -500,16 +501,21 @@ CV. Elles sont maintenant derrière une porte unique.
 - **Le panneau classe, il n'énumère pas.** D'un côté le lien, qui circule ; de
   l'autre les documents, qui se déposent. C'est la seule distinction dont le
   lecteur a besoin, et elle se lit avant de cliquer.
-- **Il est composé comme le recto A4, pas comme une modale de site.** Même
-  gouttière de libellé en mono capitale, mêmes filets fins, même titre sous un
-  trait épais, aucune carte, aucun rayon. Le panneau donne accès au document :
-  autant qu'il en ait déjà l'air. La gouttière est constante sur tout le
-  panneau — une gouttière qui se décale d'un bloc à l'autre n'est plus une
-  colonne.
-- **`css/export.css` ne partage aucune classe avec `css/print.css`**, pour la
-  raison qui sépare déjà le recto de la présentation complète : l'un compose
-  du papier sous contrainte de hauteur en millimètres, l'autre un écran sous
-  contrainte de pouce en pixels.
+- **Il parle la langue de la page, pas celle du papier.** Noir, un seul accent,
+  titre géant en Archivo, lignes séparées par un filet qui passent à l'accent au
+  survol — le geste des lignes d'index. Ce n'est pas une fenêtre posée au milieu
+  de l'écran : c'est un tiroir à droite, et sur téléphone il prend l'écran. La
+  modale « Me contacter » est le même tiroir (`.p-overlay` / `.p-sheet`), champs
+  soulignés sans cadre ; le focus se voit par le filet qui passe à l'accent.
+- **`css/panels.css` ne partage aucune classe avec `css/print.css` ni avec la
+  page** (`p-*` contre `s-*`) : l'un compose un écran en pixels, l'autre du
+  papier en millimètres, et un nom commun laisserait l'ancien style s'appliquer.
+  Les accroches de comportement (`#export-panel`, `#contact-modal`, `.is-open`,
+  `inert`, `data-*`) sont indépendantes de la mise en forme : `check:nav` les
+  vise, ne pas les renommer avec les classes.
+- **Le QR est posé sur une tuile claire.** Ses modules sont d'encre sombre sur
+  fond transparent : sur le noir ils disparaissent, et aucun téléphone ne lirait
+  le code. 96 px au minimum.
 - **Six canaux, et pas un de plus.** LinkedIn d'abord — le seul dont le
   partage vaut recommandation professionnelle ; WhatsApp et SMS ensuite, parce
   qu'un lien de CV se transfère d'un téléphone à l'autre plus souvent qu'il ne

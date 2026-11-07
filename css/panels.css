@@ -1,0 +1,161 @@
+/* =========================================================================
+   PARTAGER & EXPORTER · ME CONTACTER
+   -------------------------------------------------------------------------
+   Les deux panneaux qui s'ouvrent par-dessus la page. Ils parlent sa langue :
+   noir, un seul accent (le fluo), un titre géant en Archivo, des lignes
+   séparées par un filet qui passent à l'accent au survol — le même geste que
+   les lignes d'index. Ce ne sont pas des fenêtres posées au milieu de l'écran :
+   ce sont des tiroirs, et sur téléphone ils prennent l'écran.
+
+   Remplace css/export.css et le style de la modale, qui parlaient l'ancienne
+   langue (encre sur papier, gouttière de libellé). Les accroches de
+   comportement n'ont pas bougé : `#export-panel`, `#contact-modal`, `.is-open`,
+   `inert`, les `data-*`. Seules les classes `p-*` sont de la mise en forme.
+
+   Les jetons `--s-*` viennent de css/site.css. Écran seulement : le papier
+   masque `.site` entier, panneaux compris.
+   ========================================================================= */
+
+/* ---------- Le voile et le tiroir ------------------------------------- */
+.p-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; justify-content: flex-end;
+  background: rgba(10, 10, 10, 0.72);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.p-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.p-sheet {
+  position: relative;
+  width: min(680px, 100vw); height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0 44px 64px;
+  background: var(--s-bg); border-left: 1px solid var(--s-line);
+  transform: translateX(32px); transition: transform 0.45s var(--s-e);
+}
+.p-overlay.is-open .p-sheet { transform: none; }
+
+/* La commande de fermeture reste en haut quand le tiroir défile : un panneau
+   de cette hauteur ne doit pas obliger à remonter pour en sortir. */
+.p-close {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  width: calc(100% + 12px); margin-left: -12px; padding: 22px 0 14px 12px;
+  background: linear-gradient(var(--s-bg) 70%, transparent);
+  border: 0; cursor: pointer; color: var(--s-dim); transition: color 0.2s;
+}
+.p-close:hover { color: var(--s-acc); }
+.p-close .icon-bold { width: 14px; height: 14px; }
+
+.p-head { padding-top: 6px; }
+.p-kicker { color: var(--s-dim); }
+.p-title {
+  margin: 14px 0 18px; font: 800 min(60px, 8.8vw)/0.9 var(--s-disp); font-stretch: 125%;
+  text-transform: uppercase; letter-spacing: -0.04em; color: var(--s-acc);
+}
+.p-subject { color: var(--s-dim); }
+
+/* ---------- Parties --------------------------------------------------- */
+.p-part { margin-top: 46px; }
+.p-part-title {
+  display: flex; gap: 14px; margin: 0; padding-bottom: 12px;
+  color: var(--s-dim); border-bottom: 1px solid var(--s-line); font-weight: 500;
+}
+
+/* Une ligne : un geste. Même mécanique que les lignes d'index de la page — le
+   texte passe à l'accent, la ligne avance, la flèche suit. */
+.p-channel, .p-doc {
+  position: relative; display: grid; align-items: center; width: 100%;
+  background: none; border: 0; border-bottom: 1px solid var(--s-line);
+  color: var(--s-fg); text-align: left; cursor: pointer; text-decoration: none;
+  transition: color 0.2s, padding 0.35s var(--s-e);
+}
+.p-channel:hover, .p-doc:hover { color: var(--s-acc); padding-left: 10px; }
+.p-arrow { color: var(--s-dim); transition: transform 0.35s var(--s-e), color 0.2s; }
+.p-channel:hover .p-arrow, .p-doc:hover .p-arrow { color: var(--s-acc); transform: translate(4px, -2px); }
+
+.p-channels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+.p-channel { grid-template-columns: 24px 1fr auto; gap: 14px; padding: 17px 0; }
+.p-channel-label { font: 800 18px/1 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.02em; }
+.p-mark .icon-bold { display: block; width: 22px; height: 22px; }
+.p-native { grid-column: 1 / -1; }
+
+.p-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--s-line); }
+.p-url { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--s-dim); text-transform: none; letter-spacing: 0.04em; }
+.p-copy {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; cursor: pointer;
+  padding: 9px 18px; background: none; color: var(--s-fg);
+  border: 1px solid #333; border-radius: 99px; transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.p-copy:hover { color: var(--s-acc); border-color: var(--s-acc); }
+.p-copy .icon-bold { display: block; width: 14px; height: 14px; }
+/* La confirmation se dit sur le bouton lui-même, là où le geste a eu lieu. */
+.p-copy.is-copied { background: var(--s-acc); border-color: var(--s-acc); color: #000; }
+
+/* Le QR est pris sur une tuile claire : ses modules sont d'encre sombre sur fond
+   transparent, donc invisibles sur le noir — un code qu'aucun téléphone ne lirait.
+   96 px : au-dessous, les 37 modules passent sous le seuil de lecture. */
+.p-qr { display: flex; align-items: center; gap: 22px; padding: 24px 0 4px; }
+.p-qr-tile { display: block; flex-shrink: 0; padding: 10px; background: #f2f2ee; border-radius: 6px; line-height: 0; }
+.p-qr-tile img { display: block; width: 96px; height: 96px; }
+.p-qr-text { max-width: 28ch; color: var(--s-dim); font-size: 14.5px; }
+
+/* Documents : une clé mono, un titre fort, une phrase, une flèche vers le bas. */
+.p-doc {
+  grid-template-columns: 1fr auto; grid-template-areas: "key arrow" "title arrow" "text arrow";
+  column-gap: 24px; row-gap: 8px; padding: 26px 0;
+}
+.p-doc-key { grid-area: key; color: var(--s-dim); }
+.p-doc-title { grid-area: title; font: 800 clamp(24px, 4vw, 34px)/1 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.03em; }
+.p-doc-text { grid-area: text; max-width: 46ch; color: var(--s-dim); font-size: 15px; line-height: 1.5; }
+.p-doc .p-arrow { grid-area: arrow; align-self: center; font-size: 28px; }
+.p-doc:hover .p-arrow { transform: translateY(5px); }
+.p-note { margin: 20px 0 0; color: var(--s-dim); font-size: 13.5px; }
+
+/* ---------- Formulaire de contact ------------------------------------- */
+.p-form { display: grid; gap: 36px; margin-top: 46px; }
+.p-field { display: grid; gap: 6px; }
+.p-label { display: flex; gap: 14px; color: var(--s-dim); }
+.p-field input, .p-field textarea {
+  width: 100%; padding: 8px 0 12px; background: none; color: var(--s-fg);
+  border: 0; border-bottom: 1px solid #333; border-radius: 0; outline: none;
+  font: 500 22px/1.4 var(--font-sans); transition: border-color 0.2s, box-shadow 0.2s;
+}
+.p-field textarea { min-height: 140px; resize: vertical; }
+/* Un champ pris au clavier se voit par son filet, qui passe à l'accent et
+   s'épaissit d'un pixel — le contour d'un champ sans cadre n'aurait rien à
+   entourer. */
+.p-field input:focus, .p-field textarea:focus { border-bottom-color: var(--s-acc); box-shadow: 0 1px 0 var(--s-acc); }
+.p-field input:-webkit-autofill, .p-field textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--s-fg); caret-color: var(--s-fg); transition: background-color 9999s ease 0s;
+}
+
+.p-submit {
+  justify-self: start; cursor: pointer; padding: 16px 34px; background: none; color: var(--s-acc);
+  border: 1px solid var(--s-acc); border-radius: 99px;
+  font: 800 18px/1 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.01em;
+  transition: background 0.2s, color 0.2s;
+}
+.p-submit::after { content: " ↗"; }
+.p-submit:hover:not(:disabled) { background: var(--s-acc); color: #000; }
+.p-submit:disabled { opacity: 0.5; cursor: progress; }
+
+.contact-feedback { min-height: 1.5em; margin-top: 26px; font: 500 12px/1.6 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--s-dim); }
+.contact-feedback.is-success { color: var(--s-acc); }
+.contact-feedback.is-error { color: var(--s-fg); border-left: 2px solid var(--s-hot); padding-left: 12px; }
+
+/* ---------- Téléphone : le tiroir prend l'écran ------------------------- */
+@media (max-width: 700px) {
+  .p-sheet { width: 100vw; padding: 0 22px 48px; border-left: 0; transform: translateY(24px); }
+  .p-channels { grid-template-columns: 1fr; }
+  .p-part { margin-top: 38px; }
+  .p-qr { gap: 18px; }
+  .p-field input, .p-field textarea { font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-overlay, .p-sheet, .p-channel, .p-doc, .p-arrow { transition: none; }
+}
+
+@media print { .p-overlay { display: none !important; } }
