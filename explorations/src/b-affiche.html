@@ -59,7 +59,11 @@ a { color:inherit; text-decoration:none; }
    multipliée dessus — le noir reste noir, le blanc devient exactement la couleur
    de l'accent. Changer l'accent change donc la photo avec lui. */
 .photo img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(1) contrast(1.2) brightness(1.12); }
-.photo::after { content:""; position:absolute; inset:0; background:var(--acc); mix-blend-mode:multiply; opacity:1; }
+/* La teinte multipliée sur la photo n'est pas l'accent pur mais l'accent mélangé à un
+   blanc cassé, dans une proportion réglable (--photo-sat). Multiplier un gris par
+   une couleur sature les clairs au maximum ; la mélanger d'abord à du blanc garde
+   la photo dans la famille du lettrage sans l'y plonger. */
+.photo::after { content:""; position:absolute; inset:0; background:color-mix(in srgb, var(--acc) var(--photo-sat,50%), #e8e8e4); mix-blend-mode:multiply; opacity:1; }
 [data-photo="nb"] .photo::after { display:none; }
 [data-photo="couleur"] .photo::after { display:none; }
 [data-photo="couleur"] .photo img { filter:none; }
@@ -256,6 +260,7 @@ html:not(.intro-lock) .skip { display:none; }
   <div class="rows">
     <div class="r"><span>Accent</span><button class="sw" data-k="acc" data-v="fluo" style="background:#c9ff2f" aria-label="Fluo"></button><button class="sw" data-k="acc" data-v="cuivre" style="background:#ff9d63" aria-label="Cuivre"></button><button class="sw" data-k="acc" data-v="glace" style="background:#cfe3ff" aria-label="Glace"></button><button class="sw" data-k="acc" data-v="blanc" style="background:#f2f2ee" aria-label="Blanc"></button></div>
     <div class="r"><span>Photo</span><button data-k="photo" data-v="duo">Duo</button><button data-k="photo" data-v="nb">N&amp;B</button><button data-k="photo" data-v="couleur">Couleur</button><button data-k="photo" data-v="off">Aucune</button></div>
+    <div class="r"><span>Teinte</span><button data-k="tint" data-v="pleine">Pleine</button><button data-k="tint" data-v="douce">Douce</button><button data-k="tint" data-v="subtile">Subtile</button></div>
     <div class="r"><span>Titres</span><button data-k="titles" data-v="contour">Contour</button><button data-k="titles" data-v="plein">Plein</button></div>
   </div>
 </aside>
@@ -372,14 +377,15 @@ else {
 
 /* ---- réglages ---- */
 const ACC = { fluo: "#c9ff2f", cuivre: "#ff9d63", glace: "#cfe3ff", blanc: "#f2f2ee" };
-let T = { acc: "fluo", photo: "duo", titles: "contour" };
-try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-3") || "{}")); } catch (e) {}
-const q = new URLSearchParams(location.search); for (const k of ["acc", "photo", "titles"]) if (q.get(k)) T[k] = q.get(k);
+let T = { acc: "fluo", photo: "duo", titles: "contour", tint: "douce" };
+const TINT = { pleine: "100%", douce: "50%", subtile: "25%" };
+try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-4") || "{}")); } catch (e) {}
+const q = new URLSearchParams(location.search); for (const k of ["acc", "photo", "titles", "tint"]) if (q.get(k)) T[k] = q.get(k);
 function apply() {
   document.documentElement.style.setProperty("--acc", ACC[T.acc] || ACC.fluo);
-  document.body.dataset.photo = T.photo; document.body.dataset.titles = T.titles;
+  document.documentElement.style.setProperty("--photo-sat", TINT[T.tint] || TINT.douce); document.body.dataset.photo = T.photo; document.body.dataset.titles = T.titles;
   document.querySelectorAll(".tweaks button").forEach((b) => b.setAttribute("aria-pressed", String(T[b.dataset.k] === b.dataset.v)));
-  try { localStorage.setItem("b-reglages-3", JSON.stringify(T)); } catch (e) {}
+  try { localStorage.setItem("b-reglages-4", JSON.stringify(T)); } catch (e) {}
 }
 document.querySelectorAll(".tweaks button").forEach((b) => b.addEventListener("click", () => { T[b.dataset.k] = b.dataset.v; apply(); }));
 if (innerWidth < 760) { $("#tweaks").dataset.closed = "true"; $("#tw-x").textContent = "+"; }
