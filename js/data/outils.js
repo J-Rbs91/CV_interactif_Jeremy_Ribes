@@ -14,18 +14,18 @@ export const outils = [
     category: "Aide à la décision commerciale",
     nature: "produit",
     status: "Transmis à la demande du directeur régional GrandVision",
-    detailLabel: "Pourquoi pas une formation",
+    detailLabel: "Le choix des produits",
     chips: ["Arbitrage en vente", "Réseaux de soins", "Rentabilité", "Temps réel", "Google Apps Script"],
     summary:
-      "Outil utilisé pendant la vente pour trouver le meilleur compromis entre besoin technique, budget du client et marge du magasin.",
+      "Pendant la vente, l’outil affiche les 10 produits à plus forte marge parmi ceux qui respectent les contraintes techniques, les préférences et le budget du client.",
     context:
-      "Le bon produit dépend du besoin technique, du budget, des contraintes du réseau de soins et de la marge. L’information est répartie entre les catalogues fournisseurs et les grilles tarifaires des mutuelles, et la décision se prend en quelques secondes, avec le client en face.",
+      "En magasin, il faut rapprocher les contraintes techniques, les souhaits du client, son budget et les accords de prise en charge. Les informations sont dispersées entre les catalogues fournisseurs et les grilles des mutuelles.",
     arbitrage:
-      "Une formation ou une grille écrite ne suffisaient pas : les catalogues et les accords changent souvent, et ce qu’on apprend à l’avance est oublié ou dépassé au moment de vendre. J’ai donc choisi d’apporter l’information au moment de la vente, au lieu de demander au vendeur de la retenir.",
+      "J’ai choisi de regrouper ces informations dans l’outil utilisé au moment de la vente. Les catalogues et les accords changent régulièrement : une grille imprimée aurait demandé des mises à jour constantes.",
     action:
-      "Rassemblement des catalogues fournisseurs et des grilles mutuelles en une source unique, filtrage des produits compatibles avec le besoin et le budget, et mise en évidence de l’écart de marge entre deux solutions équivalentes pour le client. Développé sous Google Apps Script.",
+      "Développement sous Google Apps Script d’un classement des produits compatibles avec le besoin du client et son budget. Les dix premières propositions sont triées selon la marge. Le prix final et la remise restent visibles pendant la vente.",
     results:
-      "Les vendeurs n’ont plus eu à comparer les catalogues devant le client, et le choix du produit est devenu clair au moment de la vente. Utilisé pendant toute la durée de mon poste. Conçu sur mon temps personnel, l’outil m’appartient. Je l’ai transmis à la demande du directeur régional de GrandVision, qui l’envisageait pour le réseau de magasins franchisés de la Générale d’Optique.",
+      "Utilisé pendant toute la durée de mon poste pour éviter les comparaisons manuelles de catalogues. Je l’ai conçu sur mon temps personnel et transmis à la demande du directeur régional de GrandVision, qui envisageait de le proposer aux magasins franchisés de Générale d’Optique.",
   },
   {
     id: "briefmaker",
@@ -36,15 +36,15 @@ export const outils = [
     detailLabel: "Nommer qui fait quoi",
     chips: ["Coordination d’équipe", "Attribution des tâches", "Priorisation", "Back-office", "Agrégation", "Agenda Google"],
     summary:
-      "Le brief du début de journée : planning, agenda et dossiers en cours sur une seule vue, et les tâches réparties nommément entre les collaborateurs.",
+      "Chaque matin, Brief’Maker regroupe le planning, les rendez-vous, les dossiers à suivre et les tâches attribuées à chaque collaborateur.",
     context:
-      "L’information se perdait d’une équipe à l’autre, et les tâches de back-office n’apparaissaient nulle part : chaque équipe pensait que l’autre s’en était occupée. Il en résultait des oublis, et une vision floue de l’activité pour la direction.",
+      "Au changement d’équipe, certaines tâches de back-office n’étaient pas reprises. Le planning, les rendez-vous et les suivis étaient consultés séparément, sans liste commune des tâches à traiter.",
     arbitrage:
-      "Il fallait d’abord un moment dans la journée où chaque tâche est attribuée à quelqu’un. C’est cette décision qui résout le problème. Mais aucun responsable n’allait rassembler quatre sources d’information à la main chaque matin : c’est pour cela qu’un outil est devenu nécessaire.",
+      "J’ai mis en place un brief quotidien avec une attribution nominative des tâches. Pour qu’il soit utilisable chaque matin, j’ai automatisé la récupération des informations déjà disponibles.",
     action:
-      "Une feuille de brief qui rassemble automatiquement les informations du jour (planning de l’équipe, rendez-vous de l’agenda, suivi des dossiers, devis et tiers payant), puis attribue les tâches à chaque collaborateur et permet de saisir les indicateurs et les informations managériales.",
+      "La feuille rassemble le planning, l’agenda, les devis et les dossiers de tiers payant. Elle permet de répartir les tâches, puis de consigner les indicateurs et les informations utiles au suivi de l’équipe.",
     results:
-      "Utilisé chaque jour dans le magasin où je travaille aujourd’hui. Personne ne l’avait demandé : l’équipe l’a adopté parce qu’il lui servait.",
+      "Utilisé quotidiennement dans mon magasin actuel, après avoir été conçu pour mon poste précédent.",
   },
   {
     id: "hub-opticien",
@@ -62,13 +62,13 @@ export const outils = [
     summary:
       "Un hub web utilisé chaque jour en magasin : demandes aux médecins, clôture de caisse et calculs optiques réunis dans une même interface pour éviter les ressaisies.",
     context:
-      "Ces tâches s’appuyaient sur des documents dispersés, des calculs refaits à la main et les mêmes informations ressaisies chaque fois. Chacune paraît mineure, mais répétées chaque jour, elles prennent du temps et laissent passer des erreurs.",
+      "Les documents destinés aux médecins, les calculs optiques et la clôture de caisse utilisaient plusieurs fichiers. Les coordonnées du magasin étaient ressaisies et certains calculs repris à la main.",
     arbitrage:
-      "Une procédure n’aurait rien changé : les collaborateurs travaillaient bien, c’est la tâche qui était mal outillée. Un mode opératoire aurait ajouté une lecture à une tâche de deux minutes, et personne ne l’aurait suivi. J’ai préféré ne rien demander de plus à l’équipe et supprimer la ressaisie, ce qui supprime aussi les écarts entre collaborateurs.",
+      "J’ai réuni ces tâches dans une interface unique, avec les informations du magasin renseignées une seule fois. Les collaborateurs conservent leurs habitudes, avec moins de saisies à refaire.",
     action:
       "Regroupement de ces usages en un point d’entrée unique : demandes et comptes rendus au médecin normalisés avec export PDF et envoi par mail, clôture de caisse reprenant le comptage de la veille et contrôlant l’écart avec le logiciel métier, calcul d’épaisseur et de décentrement avec représentation à l’échelle 1:1 du verre taillé et monté. Les coordonnées du magasin sont saisies une fois et alimentent tous les outils ; les données restent sur le poste, sans transmission serveur.",
     results:
-      "En service dans le magasin : les documents sont identiques quel que soit le collaborateur qui les produit, et les calculs récurrents ne se refont plus à la main.",
+      "L’équipe utilise le hub chaque jour. Les documents suivent le même modèle pour tous les collaborateurs et les calculs sont effectués dans l’application.",
   },
   {
     id: "suivi-devis",
@@ -81,13 +81,13 @@ export const outils = [
     summary:
       "Suivi partagé qui tient chaque devis de son édition à sa conclusion : statut du tiers payant, prochaine action datée, motif de perte et historique des échanges avec le client.",
     context:
-      "Un devis se perd rarement d’un coup : il traîne. Il manque une pièce, l’accord de prise en charge n’aboutit pas, ou personne ne fait la relance. Sans suivi commun, chacun redécouvre le dossier à chaque fois, et le magasin ne sait ni ce qu’il perd, ni pourquoi.",
+      "Certains devis restaient sans suite : pièce manquante, prise en charge en attente ou relance oubliée. L’équipe n’avait pas de vue commune des dossiers et de leur prochaine échéance.",
     arbitrage:
-      "Avant de construire quoi que ce soit, il fallait décider à partir de quand un dossier devient à risque, qui en est responsable, et surtout ce que l’équipe accepterait de saisir. Un suivi plus détaillé aurait été plus précis, mais personne ne l’aurait rempli. J’ai choisi le niveau de détail que l’équipe peut tenir au quotidien.",
+      "J’ai défini les statuts utiles au suivi, la prochaine action et le collaborateur responsable. J’ai limité les saisies à ce que l’équipe peut réellement renseigner chaque jour.",
     action:
       "Matérialisation de ces règles en un suivi partagé : neuf statuts de tiers payant, plateforme et mutuelle, date de prochaine action, motif de blocage ou de perte, profil d’achat, collaborateur en charge, et historique daté des échanges avec le client.",
     results:
-      "Rempli chaque jour par l’équipe, sans que personne ait eu à l’imposer. Ses colonnes ont servi de base à PANUM : statuts de financement, motifs, profils d’achat et historiques y sont repris tels quels.",
+      "Le suivi est renseigné quotidiennement par l’équipe. Ses statuts, motifs, profils d’achat et historiques ont ensuite servi de base à PANUM.",
   },
   {
     id: "panum",
@@ -101,9 +101,9 @@ export const outils = [
     summary:
       "Solution de suivi commercial et de pilotage de la performance : centraliser les dossiers, prioriser les relances et rendre visibles les causes de sous-performance.",
     context:
-      "Le suivi des devis et du tiers payant repose souvent sur des pratiques hétérogènes. Résultat : des dossiers qui stagnent, des relances oubliées, et un management qui ne sait pas précisément pourquoi les ventes se perdent.",
+      "D’un magasin à l’autre, les devis et les prises en charge ne sont pas suivis de la même manière. Il devient difficile de repérer les relances oubliées et de comprendre pourquoi certains dossiers n’aboutissent pas.",
     arbitrage:
-      "Le suivi partagé fonctionnait pour l’équipe, mais pas pour piloter un réseau. Un tableur ne permet pas de donner à chacun une vue adaptée à son niveau hiérarchique, ni de garder l’historique d’un blocage pour en comprendre la cause. Il fallait donc un vrai logiciel, construit autour des responsabilités de chaque niveau.",
+      "Le tableur répondait aux besoins d’une équipe. Pour un réseau de magasins, j’ai conçu une application avec des vues adaptées aux collaborateurs, aux managers et à la direction, ainsi qu’un historique des blocages.",
     action:
       "Modélisation de la hiérarchie d’un réseau direction, management, collaborateurs avec les périmètres de visibilité correspondants, historisation des épisodes de blocage pour en mesurer les causes, et traitement des données personnelles intégré dès la conception.",
     results:
@@ -120,12 +120,12 @@ export const outils = [
     summary:
       "Outil de construction de planning alignant les effectifs présents sur la charge réelle et les contraintes d’ouverture du point de vente.",
     context:
-      "On attribuait les tensions d’organisation aux personnes. Elles venaient en fait d’un décalage entre les effectifs présents, la charge de travail et les contraintes d’ouverture du magasin.",
+      "Les plannings provoquaient des tensions régulières. Certains créneaux étaient trop chargés et d’autres manquaient de personnel au regard de l’activité du magasin.",
     arbitrage:
-      "La vraie décision était de revoir les règles : horaires d’ouverture, plages de présence et répartition des créneaux. L’outil ne décide rien à la place du responsable : il permet d’appliquer ces règles chaque semaine, au lieu de tout refaire de tête et de renégocier chaque planning.",
+      "J’ai revu les horaires et la répartition des effectifs en fonction de l’activité du magasin, puis développé un outil pour établir les plannings sur cette base.",
     action:
-      "Développement d’un outil de construction de planning ajustant les effectifs à l’activité attendue à partir des contraintes d’exploitation du point de vente.",
+      "Le gestionnaire prend en compte les horaires d’ouverture, les règles de présence et les besoins en effectifs par créneau.",
     results:
-      "Les conflits d’organisation récurrents ont cessé pendant la durée de mon poste, et le coût du personnel s’est aligné sur le flux réel. Après mon départ, un collaborateur l’a repris pour construire ses plannings. Une version simplifiée, qui affiche le planning type selon la date, est intégrée à Brief’Maker pour montrer le planning du jour.",
+      "Les tensions récurrentes sur les plannings ont cessé pendant mon poste et la présence des équipes a été ajustée à l’activité. Après mon départ, un collaborateur a continué à utiliser le gestionnaire. Une version simplifiée affiche aussi le planning du jour dans Brief’Maker.",
   },
 ];
