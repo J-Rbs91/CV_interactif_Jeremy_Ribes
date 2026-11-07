@@ -605,10 +605,9 @@ JavaScript. Or le document livré ne contient qu'un `#app` vide.
   contenu est un fragment inerte absent de l'arbre du document. `bindOverlay`
   les met en place au chargement, avant que `.is-playing` n'arme quoi que ce
   soit.
-- **Une séparation portée par le CSS n'est jamais extraite.** Les adresses en
-  ligne étaient séparées par un `::before` sous `@media print` : hors
-  impression elles se lisaient « panum.frkut.panum.fr ». Le séparateur est
-  maintenant écrit dans le document.
+- **Une séparation portée par le CSS n'est jamais extraite.** Les liens
+  publiés doivent conserver des séparateurs textuels, y compris hors
+  impression, pour rester lisibles par les lecteurs sans mise en page.
 - Le JSON-LD `Person` du `<head>` reste un filet, pas la solution : beaucoup
   d'extracteurs l'ignorent. Il doit néanmoins rester cohérent avec les
   données lorsqu'on modifie un intitulé, une date ou un chiffre.
