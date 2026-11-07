@@ -284,7 +284,7 @@ function renderHero() {
     <header class="s-hero" id="accueil">
       <h1 class="s-name" aria-label="${contact.name}">${word(first)}${word(rest.join(" "))}</h1>
       <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
-      <p class="s-tag s-mono"><b>${contact.role}</b><br />${territories[0]}</p>
+      <p class="s-tag s-mono"><b>${contact.hero.background}</b><br />${contact.hero.target}</p>
       <div class="s-arrow" aria-hidden="true">↓</div>
     </header>
     <div class="s-ticker" aria-hidden="true"><div>${strip.map((item) => `<span>${item}</span>`).join("")}</div></div>`;
