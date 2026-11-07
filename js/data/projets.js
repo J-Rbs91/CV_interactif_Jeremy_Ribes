@@ -12,7 +12,7 @@ export const projetsTransverses = [
     bullets: [
       "Réunion des tâches courtes et répétées d’un magasin d’optique dans une seule application web : documents pour les médecins, clôture de caisse et calculs d’épaisseur et de décentrement des verres.",
       "Paramétrage unique des informations du magasin, documents standardisés, contrôle des écarts de caisse et calculs reproductibles pour limiter les ressaisies.",
-      "Mise en service dans le magasin où je travaille : l’équipe utilise quotidiennement ces outils. Le choix d’une interface simple évite d’ajouter de nouvelles procédures à des tâches rapides.",
+      "L’équipe utilise ces outils chaque jour en magasin. Une interface commune permet d’y accéder sans multiplier les fichiers.",
     ],
     /* Déjà présent dans les Outils : éviter un doublon dans « Produits en ligne ». */
     liveProduct: false,
@@ -24,12 +24,12 @@ export const projetsTransverses = [
       {
         title: "Conception produit",
         nature: "produit",
-        text: "Transformer plusieurs besoins de terrain en une interface commune, sans multiplier les outils isolés.",
+        text: "Regrouper des tâches différentes dans une application adaptée aux usages du magasin.",
       },
       {
         title: "Fiabilisation des pratiques",
         nature: "cadre",
-        text: "Uniformiser les documents et les calculs sans demander aux collaborateurs davantage de saisies.",
+        text: "Utiliser les mêmes modèles de documents et les mêmes calculs dans toute l’équipe.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const projetsTransverses = [
     title: "L’Ortabels : projet maraîcher et outil d’aide à la décision",
     subtitle: "Modélisation agronomique · en ligne, développement continu",
     bullets: [
-      "Le développement d’une culture dépend de la chaleur accumulée (les degrés-jours), et non du nombre de semaines écoulées. Le calendrier seul ne suffit donc pas pour planifier.",
+      "Pour planifier les cultures, je prends en compte les températures accumulées (degrés-jours), qui influencent les dates de développement et de récolte.",
       "Conception d’un outil exploitant les températures locales, les degrés-jours et les modèles de croissance thermique pour estimer les fenêtres de semis, les stades de développement et les périodes de récolte.",
       "Structuration du projet maraîcher lui-même : planification des cultures, organisation des rotations et suivi des séries.",
     ],
@@ -48,12 +48,12 @@ export const projetsTransverses = [
       {
         title: "Modèles prédictifs",
         nature: "produit",
-        text: "Transformer des données brutes en dates concrètes pour décider quand semer et quand récolter.",
+        text: "Estimer les périodes de semis et de récolte à partir des températures locales.",
       },
       {
         title: "Organisation",
         nature: "cadre",
-        text: "La même logique qu’un back-office bien organisé : planifier les étapes et rendre visible ce qui doit être fait.",
+        text: "Organiser les rotations, les séries et les différentes étapes des cultures.",
       },
     ],
   },
@@ -72,12 +72,12 @@ export const projetsTransverses = [
       {
         title: "Analyse de données",
         nature: "produit",
-        text: "Rassembler des données de sources différentes pour en tirer des indicateurs utilisables tout de suite.",
+        text: "Rapprocher coûts, prix et volumes pour calculer les marges et le seuil de rentabilité.",
       },
       {
         title: "Rentabilité",
         nature: "produit",
-        text: "Trouver comment protéger la marge sans changer le positionnement de l’établissement.",
+        text: "Mesurer les effets du prix de vente, du coût matière et des effectifs sur la marge.",
       },
     ],
   },
