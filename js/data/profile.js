@@ -9,25 +9,25 @@
    Le texte éditorial reste la source de vérité pour le site et les exports. */
 export const profileContent = {
   /* Accroche courte pour le site. La citation complète reste dans le PDF. */
-  headline: "De l’optique à l’organisation.",
+  headline: "Organisation et outils métiers.",
   quote:
-    "Rendre une activité plus lisible et plus facile à piloter, sans l’alourdir.",
+    "Le terrain reste mon point de départ, même quand je travaille sur des outils.",
   intro:
-    "Opticien de formation et ancien responsable de magasin, <strong>j’ai progressivement élargi mon activité à l’organisation et au pilotage</strong> : procédures, suivi des dossiers, plannings, indicateurs et outils métiers. Ce travail, d’abord complémentaire à la vente, est devenu celui que je souhaite exercer à titre principal.",
+    "Opticien depuis 2012, j’ai occupé un poste de responsable de magasin, réorganisé des méthodes de travail et conçu des outils utilisés par les équipes. <strong>Je souhaite aujourd’hui consacrer mon activité à l’organisation, au pilotage et aux projets d’outils métiers.</strong>",
   cards: [
     {
       title: "Positionnement",
       nature: "cadre",
-      text: "Je fais le lien entre la direction, qui fixe les objectifs, et l’équipe, qui vit les contraintes du quotidien. Je traduis les objectifs en méthodes applicables, et je fais remonter à la direction ce que le terrain voit et qu’elle ne voit pas.",
+      text: "Je fais le lien entre les objectifs de la direction et les contraintes de terrain. J’adapte les méthodes et les outils à ce qui se passe réellement en magasin.",
     },
     {
       title: "Méthode",
       nature: "produit",
-      text: "<strong>Je pars d’un problème précis</strong> (une ressaisie, un oubli, un calcul refait à la main) et je cherche d’où il vient. <strong>Puis je choisis la réponse</strong> : changer une pratique, nommer un responsable, supprimer une étape ou, si cela ne suffit pas, créer l’outil qui manque. Je n’attends pas qu’on me le demande, et je vérifie dès la première utilisation que la réponse fonctionne.",
+      text: "Quand un oubli, une ressaisie ou un retard revient souvent, je regarde comment le travail est organisé. Je peux revoir une procédure, préciser qui fait quoi ou développer un outil. Je vérifie ensuite avec l’équipe que la solution fonctionne au quotidien.",
     },
   ],
   expertise:
-    "<strong>Concevoir les outils et les procédures qui manquent</strong> pour piloter une activité, et supprimer le travail refait à la main.",
+    "<strong>Organisation du travail et conception d’outils métiers</strong> : suivi des dossiers, répartition des tâches, contrôles et indicateurs.",
   contributionTags: [
     { label: "Procédures écrites", nature: "cadre" },
     { label: "Outils de suivi", nature: "produit" },
@@ -37,14 +37,14 @@ export const profileContent = {
     { label: "Conduite du changement", nature: "cadre" },
   ],
   target: {
-    context: "L’optique est le secteur dans lequel j’ai acquis ma légitimité. C’est aussi celui où les possibilités d’évolution vers les fonctions qui m’intéressent sont limitées dans mon rayon de mobilité.",
-    ambition: "<strong>Je veux faire de l’organisation, du pilotage et des outils métiers le cœur de mon prochain poste</strong>, dans l’optique ou dans un autre secteur.",
+    context: "L’optique m’a apporté une expérience concrète de la vente, du management et du fonctionnement d’un magasin. Je souhaite aussi mettre cette expérience à profit dans d’autres secteurs.",
+    ambition: "<strong>Je recherche des fonctions de coordination opérationnelle, d’amélioration des méthodes ou de projets d’outils métiers</strong>, dans l’optique ou ailleurs.",
     roles: [
       "Coordinateur opérationnel ou de performance",
       "Chargé de projet organisation et méthodes",
       "Chef de projet outils métiers",
     ],
-    limits: "Je n’ai pas encore occupé ces fonctions sous ces intitulés. Je présente ici les responsabilités effectivement assumées, les résultats auxquels j’ai contribué et les compétences que je pourrais transposer, en apprenant les spécificités d’un nouvel environnement.",
+    limits: "Je présente ici les responsabilités effectivement assumées, les résultats auxquels j’ai contribué et les compétences que je pourrais transposer, en apprenant les spécificités d’un nouvel environnement.",
   },
 };
 
@@ -67,7 +67,7 @@ export const a4Content = {
 
      Le gras, relu seul, doit toujours former un énoncé intelligible. */
   pitch: [
-    "Opticien de formation et ancien responsable de magasin, j’ai <strong>développé des compétences en organisation, pilotage et outils métiers</strong>. Les perspectives locales dans l’optique sont limitées : je vise des fonctions transversales de coordination ou de projet, dans l’optique ou ailleurs.",
+    "Opticien depuis 2012, j’ai été responsable de magasin et <strong>conçu des outils aujourd’hui utilisés par les équipes</strong>. Je vise la coordination opérationnelle et les projets d’outils métiers, dans l’optique ou ailleurs.",
   ],
   /* Trois preuves, et trois seulement : impact economique, adoption terrain,
      transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur
@@ -97,8 +97,8 @@ export const a4Content = {
        generalise doit au moins etre porte par ce qui le suit directement. */
     {
       nature: "produit",
-      value: "Maintenus après mon départ",
-      text: "Gestionnaire de planning resté en service après mon départ, Opti’Profit transmis à une direction régionale, brief et suivi repris dans une autre enseigne.",
+      value: "Outils repris ou transmis",
+      text: "Gestionnaire de planning repris après mon départ, Opti’Profit transmis à une direction régionale, brief et suivi utilisés dans une autre enseigne.",
     },
   ],
   /* Un seul bloc de projets transverses dans le recto A4 : L’Ortabels et
@@ -141,7 +141,7 @@ export const formationContent = {
     {
       title: "Attribution des responsabilités",
       nature: "cadre",
-      text: "Nommer qui traite quoi, et pour quand. Une tâche sans responsable n’est traitée par personne : le brief quotidien et le suivi des devis règlent ce problème.",
+      text: "Nommer qui traite quoi, et pour quand. Le brief quotidien et le suivi des devis rendent les responsables et les échéances visibles.",
     },
     {
       title: "Indicateurs avancés & retardés",
@@ -170,5 +170,5 @@ export const formationContent = {
     },
   ],
   quote:
-    "J’apprends à partir des problèmes que je rencontre sur le terrain.",
+    "J’ai appris à développer des outils à partir des besoins rencontrés en magasin.",
 };
