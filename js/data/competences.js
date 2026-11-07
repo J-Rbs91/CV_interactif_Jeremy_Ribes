@@ -16,16 +16,16 @@ export const competences = [
     id: "pilotage-commercial",
     title: "Pilotage commercial & rentabilité",
     summary:
-      "Développer le flux clients en tenant la marge sur chaque vente.",
+      "Développer l’activité commerciale en surveillant la marge.",
     nature: "produit",
-    detailLabel: "Relancer sans remise",
+    detailLabel: "Relance commerciale et marge",
     tags: ["Flux clients", "Marge", "Référencement local"],
     enjeu:
-      "Relancer un magasin en difficulté sans acheter le chiffre par la remise.",
+      "Relancer la fréquentation d’un magasin en difficulté et améliorer la rentabilité des ventes.",
     miseEnPlace:
-      "J’ai travaillé deux leviers en parallèle. Pour faire venir des clients : actions locales ciblées, référencement local et collecte d’avis Google. Pour préserver la marge de chaque vente : un outil d’aide au choix du produit, utilisé pendant la vente.",
+      "J’ai mis en place des actions locales pour faire venir des clients, travaillé le référencement du magasin et développé Opti’Profit pour mieux choisir les produits pendant la vente.",
     exemple:
-      "L’outil fait ressortir le mix produit le plus pertinent selon le budget du client, les contraintes techniques, les offres en cours et les réseaux de soins.",
+      "Opti’Profit classe les dix produits compatibles les plus rentables, en tenant compte du besoin technique, du réseau de soins, des préférences et du budget du client.",
     resultat:
       "Chez Générale d’Optique, ces actions ont contribué à +83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, mesurés par rapport à la moyenne des seize mois précédents.",
     a4Rank: 3,
@@ -41,19 +41,19 @@ export const competences = [
     id: "organisation-process",
     title: "Organisation & formalisation des process",
     summary:
-      "Transformer des pratiques implicites en procédures écrites et réellement utilisées.",
+      "Écrire des procédures de back-office et les faire appliquer par l’équipe.",
     nature: "cadre",
     detailLabel: "Répartir la charge",
     tags: ["Procédures", "Back-office", "Nivellement de charge", "Priorisation"],
     enjeu:
-      "Éviter les oublis et les « qui s’en occupe ? » du quotidien.",
+      "Clarifier le traitement des commandes, les retards et les responsabilités de chacun.",
     miseEnPlace:
-      "Procédure de contrôle et de dispatch back-office, priorisation des dossiers complets et incomplets, organisation J+1 des montages et vérifications, cadrage des rendez-vous de livraison. Je priorise selon une logique inspirée du modèle de Kano : sécuriser d’abord ce qui crée de l’insatisfaction quand c’est absent, renforcer ensuite ce qui améliore l’expérience.",
+      "J’ai formalisé les contrôles de commandes, le traitement des dossiers incomplets et des retards, les vérifications à J+1 et l’organisation des rendez-vous de livraison. Pour prioriser les améliorations, je me suis appuyé sur le modèle de Kano.",
     exemple:
-      "Un même principe appliqué deux fois : <strong>répartir la charge au lieu de subir le pic</strong>. Les rendez-vous de livraison étalés sur la semaine ont supprimé la surcharge du samedi, et les plannings construits sur l’activité prévue ont ajusté les effectifs au flux de clients.",
+      "<strong>J’ai réparti les rendez-vous de livraison sur la semaine</strong> pour réduire la surcharge du samedi. J’ai également revu les plannings selon l’activité prévue du magasin.",
     a4Rank: 1,
     a4Statement:
-      "Transformer les pratiques implicites en méthodes claires et utilisables.",
+      "Formaliser les procédures de magasin et organiser leur application.",
     a4Proofs: [
       "Procédures de contrôle, dispatch, retards",
       "Vérifications en J+1",
@@ -65,16 +65,16 @@ export const competences = [
     id: "outils-metiers",
     title: "Conception d’outils métiers",
     summary:
-      "Concevoir et développer moi-même les outils qui manquent à l’activité.",
+      "Développer des outils à partir des besoins rencontrés en magasin.",
     nature: "produit",
     detailLabel: "Partir de l’usage",
     tags: ["Problème observé", "Adoption sans formation", "Google Apps Script", "Web", "Automatisation"],
     enjeu:
-      "Donner au terrain des repères concrets quand la bonne décision dépend de plusieurs contraintes à la fois.",
+      "Réduire les ressaisies et faciliter les décisions qui nécessitent plusieurs informations.",
     miseEnPlace:
       "Je conçois et je développe moi-même, sous Google Sheets et Apps Script comme en web : arbitrage produit en vente, calcul de dégression de verres techniques, suivi des devis et du tiers payant, brief quotidien, planification des effectifs, Hub Outils Opticien.",
     exemple:
-      "Je conçois chaque outil à partir de ce que je vois l’équipe faire au quotidien, et je le veux utilisable sans formation : sinon, il n’est pas utilisé.",
+      "Je teste les outils sur les tâches habituelles de l’équipe et j’ajuste l’interface en fonction des retours.",
     a4Rank: 2,
     a4Statement:
       "Concevoir des outils qui sécurisent une décision et suppriment les ressaisies.",
@@ -89,16 +89,16 @@ export const competences = [
     id: "pilotage-donnee",
     title: "Pilotage par la donnée",
     summary:
-      "Concevoir des indicateurs qui expliquent la performance et montrent où agir.",
+      "Suivre les dossiers, les délais et les causes de perte commerciale.",
     nature: "produit",
     detailLabel: "Constater ou agir",
     tags: ["Indicateurs avancés", "Contrôles automatisés", "Reporting"],
     enjeu:
-      "Montrer où agir avant que le résultat soit joué.",
+      "Repérer les dossiers à risque avant qu’ils ne soient perdus.",
     miseEnPlace:
-      "Je sépare les <strong>indicateurs retardés</strong>, qui constatent un résultat déjà joué, des <strong>indicateurs avancés</strong>, sur lesquels on peut encore agir : délais de traitement, discipline de relance, dossiers à risque, pertes évitables et santé du portefeuille. J’ai également mis en place des contrôles automatisés rapprochant le logiciel métier et les suivis internes.",
+      "Je distingue les <strong>résultats constatés</strong> (ventes conclues ou perdues) des données qui permettent encore d’agir : délais, relances prévues, dossiers bloqués. J’ai aussi automatisé des contrôles entre le logiciel métier et les suivis internes.",
     exemple:
-      "C’est la logique de PANUM : comprendre pourquoi une vente se perd, et quoi faire en priorité.",
+      "Dans PANUM, les motifs de blocage et l’historique des dossiers servent à organiser les relances.",
     resultat:
       "Ces contrôles ont fait apparaître des dossiers absents des suivis internes, qui échappaient jusque-là au pilotage. Ils vérifient aussi mon propre outil : un dossier oublié dans le suivi des devis est repéré.",
     a4Rank: 4,
@@ -115,21 +115,21 @@ export const competences = [
     id: "coordination-changement",
     title: "Coordination & conduite du changement",
     summary:
-      "Traduire des objectifs en méthodes de travail que l’équipe accepte.",
+      "Faire le lien entre les objectifs de la direction et les contraintes de terrain.",
     nature: "cadre",
     detailLabel: "Faire adopter",
     tags: ["Direction", "Terrain", "Adhésion"],
     enjeu:
-      "Faire adopter des méthodes dans des environnements où tout ce qui ajoute de la complexité est rejeté d’office.",
+      "Faire évoluer les pratiques sans ajouter de saisies ni compliquer le travail quotidien.",
     miseEnPlace:
-      "Je présente chaque nouvelle méthode par ce qu’elle retire du travail de l’équipe : moins d’oublis, moins de ressaisie, une charge mieux répartie. C’est ce gain immédiat qui la fait adopter.",
+      "Je présente les changements à l’équipe, j’explique ce qu’ils modifient concrètement et j’adapte les procédures à ses retours.",
     exemple:
       "Suivis quotidiens et procédures de back-office adoptés par les équipes, dans deux enseignes différentes.",
     resultat:
       "Chez Générale d’Optique, la réorganisation et mon implication ont été saluées par la direction régionale.",
     a4Rank: 5,
     a4Statement:
-      "Relier les objectifs de la direction aux contraintes concrètes des équipes.",
+      "Relier les objectifs de la direction aux contraintes du magasin.",
     a4Proofs: [
       "Tâches et responsabilités nominatives",
       "Brief quotidien commun à l’équipe",
