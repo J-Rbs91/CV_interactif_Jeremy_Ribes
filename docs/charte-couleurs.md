@@ -192,3 +192,11 @@ Le fond est une **aurore grise** : aucune teinte, des bandes verticales de
 lumière. Les jetons de texte sont bornés par le contraste mesuré sur son pire
 pixel, pas sur la couleur de page : c'est ce qui a ramené le texte atténué de
 `#56697A` à `#4A5D70` en clair. Voir `AGENTS.md` § Aurore, verre, lumière.
+
+## La page, aujourd'hui
+
+La page est **noire, à un seul accent** : le fluo `#C9FF2F` (`--s-acc`), et le
+cuivre `#FF9D63` (`--s-hot`) réservé aux chiffres mesurés. Contrastes sur
+`#0A0A0A` : texte `#D6D7D4` 13,7:1, atténué `#9A9DA1` 7,3:1, accent 16,8:1, cuivre
+9,7:1. Les sections précédentes décrivent le modèle de données (`nature`) et le
+papier, qui ne changent pas.

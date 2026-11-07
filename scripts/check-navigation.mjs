@@ -211,7 +211,7 @@ function verifier(nom, condition, detail) {
 }
 
 const sectionAffichee = () =>
-  evaluate("document.querySelector('.nav-item.active')?.dataset.section ?? null");
+  evaluate("document.querySelector('.s-nav-item.active')?.dataset.section ?? null");
 const longueurHistorique = () => evaluate("window.history.length");
 const coucheOuverte = (selecteur) =>
   evaluate(`Boolean(document.querySelector(${JSON.stringify(selecteur)}))`);
@@ -281,7 +281,7 @@ try {
     );
     verifier(
       `${couche.nom} — on est toujours sur le CV`,
-      (await evaluate("document.querySelectorAll('.nav-item').length")) > 0,
+      (await evaluate("document.querySelectorAll('.s-nav-item').length")) > 0,
       "page quittee",
     );
 

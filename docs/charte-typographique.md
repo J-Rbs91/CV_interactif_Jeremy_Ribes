@@ -108,3 +108,10 @@ Le premier échoue sur les deux pièges ci-dessus et imprime l'inventaire comple
 des combinaisons famille / graisse / corps / interlettrage réellement
 composées. C'est ce qui rend une dérive visible avant qu'elle ne devienne une
 règle.
+
+## Portée
+
+Ce document décrit le système des feuilles historiques (`base.css`, `components.css`,
+`sections.css`, `export.css`) : le panneau d'export, la modale et le papier. La
+page (`css/site.css`) a sa propre échelle, fluide, dans les mêmes trois familles ;
+voir `AGENTS.md` § La page.

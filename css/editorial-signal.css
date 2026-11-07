@@ -137,8 +137,12 @@ html.intro-armed .intro {
 }
 
 /* =========================================================================
-   THÈME SOMBRE
+   THÈME SOMBRE — le seul thème de l'écran
    -------------------------------------------------------------------------
+   La page est noire, quel que soit le réglage de l'appareil : c'est son parti
+   pris, et le panneau d'export comme la modale de contact, qui consomment ces
+   jetons, doivent lui ressembler.
+
    L'échelle d'encre est retournée : 900 ↔ 50, 800 ↔ 100, 700 ↔ 200,
    600 ↔ 300, 500 reste au milieu. Presque tout le CV consomme ces jetons —
    le texte est en `--ink-900`, les filets en `--ink-200`, les surfaces en
@@ -152,7 +156,7 @@ html.intro-armed .intro {
    Les tons de texte sont bornés par le contraste, mesuré sur le fond le plus
    clair que l'aurore atteint — voir `AGENTS.md` § Aurore.
    ========================================================================= */
-@media screen and (prefers-color-scheme: dark) {
+@media screen {
   :root {
     color-scheme: dark;
 

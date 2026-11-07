@@ -122,7 +122,6 @@ const sheets = [
   "css/sections.css",
   "css/export.css",
   "css/print.css",
-  "css/intro.css",
 ]
   .map((href) => `<link rel="stylesheet" href="/${href}" />`)
   .join("\n    ");

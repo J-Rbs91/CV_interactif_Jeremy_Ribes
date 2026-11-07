@@ -6,20 +6,20 @@
 - `js/data/` : contenus et métadonnées affichés.
 - `js/render/` : fonctions de rendu HTML.
 - `js/ui/` : interactions UI simples.
+- `js/render/renderSite.js` + `css/site.css` + `js/ui/site.js` + `js/ui/intro.js` :
+  **la page**, son ouverture et sa navigation (voir « La page » et
+  « L'ouverture »). `js/main.js` la monte une fois.
 - `explorations/` : pages autonomes qui comparent des directions de design sur
   le contenu réel, **non publiées** (le déploiement ne copie que `index.html`,
-  `css/`, `js/` et `assets/`). Les sources sont dans `explorations/src/` ;
-  `node scripts/build-explorations.mjs` injecte les données de `js/data/*.js`
-  et la photo. Elles ne partagent aucun CSS avec le CV : ce sont des maquettes.
-- `css/aurora.css` + `js/ui/spotlight.js` : le fond (« Aurora Background »,
-  reproduit en CSS), le verre des blocs de lecture et la lumière sous le
-  pointeur. Deux thèmes, suivis sur l'appareil — voir « Aurore, verre,
-  lumière ». `css/editorial-signal.css` porte la palette réellement affichée
-  et son thème sombre.
-- `js/ui/accordion.js` : les **trois** familles d'accordéon (Outils,
-  Compétences, Expériences), table `FAMILIES`. `js/ui/tabs.js` : les onglets
-  de Projets, motif WAI-ARIA Tabs. Les deux ne re-rendent rien (voir « Les trois
-  accordéons » et « Registre »).
+  `css/`, `js/` et `assets/`). Sources dans `explorations/src/` ;
+  `node scripts/build-explorations.mjs` injecte les données de `js/data/*.js` et
+  la photo. Elles ne partagent aucun CSS avec le CV : ce sont des maquettes. La
+  direction retenue (B, « Affiche ») est celle de la page.
+- `css/layout.css`, `components.css`, `sections.css` : l'ancien affichage. **Ils ne
+  gouvernent plus l'écran principal** mais restent chargés : la vue d'impression,
+  le panneau d'export et la modale de contact s'en servent. Les renderers
+  `renderOutils/Experiences/Competences/Projets.js` ne servent plus que le papier
+  et le texte intégral (`expandAll`).
 - `js/ui/icons.js` : **deux** jeux d'icônes en `currentColor`. `icon()` rend
   la grille 24 en trait de 1,8, pour les repères posés dans une ligne de
   texte. `boldIcon()` rend la grille 256 en aplat — les logos de réseaux et
@@ -84,488 +84,109 @@
   `assets/` dans `_site` avant de téléverser : toute ressource ajoutée hors
   de ces six entrées doit être déclarée là, sinon elle ne sera pas publiée.
 
-## Landing animée (séquence d'ouverture)
-- Principe : **plan-séquence**. Il n'y a pas d'écrans qui se succèdent.
-  Tout le contenu est posé une fois pour toutes sur un plan unique
-  (`.intro-plane`) et une seule caméra le traverse sans jamais couper.
-  Les mentions déjà lues ne disparaissent pas : la caméra les quitte, et
-  le recul final les révèle alignées sur deux axes.
-- Ne jamais réintroduire d'écrans qui se remplacent : c'est le défaut
-  qu'on a corrigé, il se voit immédiatement.
-- Pas de chiffres dans la séquence. Un résultat sans son contexte ne
-  vaut rien, et le contexte ne tient pas dans le budget de texte : les
-  chiffres restent dans le CV, où ils sont expliqués. La séquence porte
-  le point fort du profil — son caractère hybride — pas la performance.
-- Registre : des **énoncés de compétence**, pas des slogans. « L'expérience
-  de 14 années de terrain », pas « Le terrain ». Chaque énoncé se suffit et
-  reprend le vocabulaire du CV.
-- Deux couches, jamais une seule. L'**énoncé** est ce qu'on lit : grand,
-  encre ou forêt, contrasté. L'**habillage** (`.intro-sat`) est la matière
-  qui l'entoure et le documente : mono, petit, en retrait, entrant et
-  sortant par des bords variés. Sa taille et son ton doivent dire d'eux-mêmes
-  qu'il n'est pas à lire. Un énoncé seul sur fond vide ne tient pas.
-- Budget de lecture : **3 énoncés** d'environ 6 mots, ~1,8 s d'arrêt chacun.
-  Un visiteur lit environ 2 mots par seconde sur un texte qu'il découvre.
-  L'habillage ne compte pas dans ce budget, justement parce qu'on ne le lit
-  pas — mais il ne doit jamais recouvrir l'énoncé.
-- Rythme dicté par la lecture : arrêts de 1,75 à 1,95 s, déplacements de
-  0,55 à 0,65 s. Les arrêts dérivent lentement (timing linéaire) pour que
-  la caméra ne soit jamais figée ; les déplacements utilisent `--e-move`.
-- **Pause finale de 1,5 s** entre la fin du recul (7,15 s) et le début du
-  fondu (8,65 s). Le recul révèle les trois énoncés alignés : sans ce
-  temps d'arrêt, la révélation passe sans être vue. Durée totale 9,1 s,
-  au-delà des 8 s d'origine — c'est un arbitrage assumé en faveur du
-  temps de lecture, le bouton Passer reste disponible à tout moment.
-- Les instants sont absolus dans le CSS (`--entre`, `--sin`, `--trace`…)
-  mais la caméra est en pourcentages de 9,1 s : toute modification de la
-  durée totale impose de recalculer ses deux jeux de keyframes ET
-  `TOTAL_DURATION` dans `js/ui/intro.js`.
-- **Raccord final** (`startHandoff` dans `js/ui/intro.js`). La séquence se
-  terminait sur un fondu : le nom disparaissait à 6,4 vmin au centre et
-  réapparaissait à 22 px en haut à gauche du CV. Ni la taille, ni la
-  position, ni le rythme ne se répondaient — un faux raccord, au sens du
-  montage, et c'est lui qu'on voyait quand on disait « il y a une rupture ».
-  À 8,65 s, un sosie du nom (`.intro-ghost`, posé sur le document, hors du
-  plan donc hors caméra et hors fondu) rejoint la boîte de `.identity h1`
-  en 780 ms, pendant que l'overlay s'efface et que le CV monte
-  (`.app.is-entering`).
-- Les deux boîtes se mesurent au `Range`, pas au `getBoundingClientRect` de
-  l'élément : le `h1` du CV est un bloc, sa boîte fait toute la largeur de
-  la colonne et le nom atterrissait à plus du double de sa taille. On prend
-  la **première ligne** (`getClientRects()[0]`) et non l'union : sur un
-  texte replié, l'union donne la largeur de la ligne la plus longue et la
-  hauteur de toutes, ce qui ne décrit plus aucune boîte réelle.
-- Le rapport d'échelle se mesure **sur le sosie**, pas sur l'original :
-  c'est le sosie qui voyage, lui seul dit ce qui sera réellement dessiné,
-  et la largeur d'arrivée devient celle du `h1` par construction. Le
-  comparer à l'original supposait que les deux aient la même forme —
-  hypothèse fausse dès que la composition en replie un et pas l'autre.
-- L'échelle s'applique au coin de la boîte de bordure du sosie, pas à son
-  texte : l'écart entre les deux se dilate avec elle et doit être reporté
-  sur la translation, sinon le nom rate sa place d'autant.
-- **Le nom ne se replie jamais** (`.intro-mot.is-nom .intro-nom` en
-  `nowrap` en portrait). C'est la seule forme commune aux deux plans. Il
-  héritait du `white-space: normal` de la règle portrait et sa boîte de
-  référence est un plan de largeur nulle : il se coupait en
-  « Jérémy » / « Ribes », soit la moitié de sa largeur réelle, et le
-  raccord arrivait à plus de quatre fois la taille du `h1`, hors écran par
-  la droite, avant de sauter à sa place. Les trois autres énoncés se
-  replient, eux, et le doivent.
-- L'espace avant chaque `<br />` des énoncés n'est pas une coquille : le
-  portrait retire la coupure forcée (`.intro-mot br { display: none }`) et
-  c'est cette espace qui reste pour séparer les deux mots. Sans elle on
-  lisait « 14 annéesde terrain ». En paysage elle tombe en fin de ligne,
-  où elle ne se voit pas.
-- Le raccord renvoie `false` et laisse le fondu d'origine reprendre la main
-  si le nom, le plan ou le `h1` manquent, ou en `prefers-reduced-motion`.
-  Ne jamais le rendre obligatoire : le CV doit rester lisible sans lui.
-- **Le raccord est interruptible** (`cancelHandoff`). Toute sortie anticipée
-  passe par lui avant de retirer l'overlay. Sans cela, « Passer » cliqué
-  entre 8,65 s et 9,43 s retirait la classe `intro-handoff` — donc
-  l'effacement du `h1` — pendant que le sosie continuait sa course : le nom
-  s'affichait deux fois, à deux endroits, pendant un tiers de seconde. Toute
-  nouvelle porte de sortie doit appeler `finish()`, jamais `removeOverlay()`
-  directement.
-- **`raiseApp()` émet `cv:intro-raccord` sur le document.** C'est le seul
-  point de contact entre la séquence et le CV, et il va dans ce sens-là :
-  `js/main.js` met son entrée en escalier en réserve tant que `intro-armed`
-  est posée, et la joue à la réception. Sans ce report, l'entrée partait à
-  l'analyse du document et se déroulait entièrement derrière l'overlay —
-  elle était finie depuis six secondes quand on découvrait la page, c'est-à-
-  dire qu'elle n'existait pas. L'évènement part de `raiseApp()` et non du
-  retrait de l'overlay parce que c'est là que le CV se découvre ; il part
-  aussi quand l'overlay est absent, sinon le CV n'entrerait jamais.
-- Le nom vit dans son propre `<span class="intro-nom">` : mesurer
-  `.intro-mot.is-nom` donnerait la largeur du sous-titre, plus long.
-- Couleur : la séquence ne définit aucune teinte, elle consomme la charte
-  (`--ink-*`, `--forest-*`). Encre pour ce qui cadre, forêt pour ce qui
-  produit — l'énoncé sur les solutions et outils est le seul en forêt.
-  Un habillage reprend la couleur de l'énoncé qu'il documente.
-  La flamme reste hors champ :
-  sa règle de rareté la réserve aux chiffres, absents de la séquence.
-  Ne pas réintroduire de palette propre à la séquence — une landing d'un
-  ton étranger à son CV se lit comme un modèle plaqué.
-- Géométrie en `vmin` : la composition est proportionnelle à l'écran,
-  donc aucune typographie responsive à régler. Le portrait a ses propres
-  coordonnées et sa propre passe de caméra.
-- Pilotage : `js/ui/intro.js` est le seul script classique bloquant du
-  projet (décision avant premier rendu, donc sans clignotement). Il arme
-  la séquence, lance la lecture après chargement des polices, gère le
-  skip et retire l'overlay. Il sait aussi animer un compteur
-  (`data-count-to`), capacité inutilisée depuis que les chiffres sont
-  sortis de la séquence.
-- Toutes les classes de la séquence sont cantonnées sous `.intro` : le CV
-  utilise des noms voisins (`.proof-value`, `.dim`) et les écraserait.
-- La séquence est ignorée si `prefers-reduced-motion: reduce` est actif ou
-  si elle a déjà été jouée dans la session ; `#intro` force la relecture.
-- Vérification, trois contrôles complémentaires : `cadrage.js` (l'énoncé
-  tient dans l'écran à chaque arrêt, huit formats), `sats.js` (aucun
-  élément d'habillage hors champ pendant son arrêt) et `chevauche.js`
-  (aucun habillage ne recouvre l'énoncé). Un contrôle de débordement
-  global n'a pas de sens ici : une partie du plan est volontairement hors
-  champ.
-- L'habillage est volontairement à 4,2:1 et 3,4:1, sous le seuil AA pour
-  du petit texte. C'est un choix : ce n'est pas du contenu, la scène est
-  `aria-hidden` et le CV porte l'information. Les énoncés, eux, restent
-  au-dessus de 7:1.
+## La page — un document qui défile, noir, un seul accent
+Le CV est **une page unique** (`js/render/renderSite.js`, `css/site.css`), pas une
+application à six écrans exclusifs. Elle vient d'une exploration (`explorations/
+b-affiche.html`) calquée sur des portfolios de 21st.dev. Ce qui suit ne se voit
+pas dans le code — seulement à l'écran, quand ça manque.
 
-## Le CV parle la langue de la séquence
-La séquence était une composition, le CV une interface : c'est ce qui
-créait la rupture, bien avant les questions de style. Sept décisions la
-referment, et aucune ne doit être défaite isolément — c'est leur ensemble
-qui tient.
+- **Montée une fois.** `main.js` rend la page puis branche. Plus rien ne la
+  reconstruit : le focus, les fiches ouvertes et la position de défilement ne se
+  perdent donc jamais en cours de lecture. Une fiche est un `<details>` natif :
+  clavier, lecteur d'écran et recherche dans la page sont gérés par le
+  navigateur, et il n'y a plus de `syncAccordion` ni de panneau `inert` à tenir.
+- **Tout est préfixé `s-`.** `components.css`, `sections.css` et `layout.css`
+  restent chargés — la vue d'impression, le panneau d'export et la modale s'en
+  servent — et un nom commun laisserait l'ancien style s'appliquer à la nouvelle
+  page. Ces trois feuilles ne gouvernent plus l'écran principal ; elles sont de la
+  dette à purger par morceaux, pas à étendre.
+- **`renderSite.js` ne rédige rien.** Chaque chaîne vient de `js/data/`. Trois
+  exceptions, toutes des phrases d'appui : la mise en valeur d'un groupe de mots
+  dans les deux citations (`<em>`, sans effet si la phrase change), « Voir le
+  poste », et la phrase d'Opti'Profit (voir plus bas).
+- **Un seul accent : le fluo (`--s-acc`).** Le cuivre (`--s-hot`) est réservé aux
+  chiffres mesurés. La page est **noire quel que soit le réglage de l'appareil** :
+  c'est son parti pris. `editorial-signal.css` porte les jetons sombres sous
+  `@media screen` (et non plus `prefers-color-scheme`) pour que le panneau
+  d'export et la modale, qui les consomment, lui ressemblent. Le papier n'a pas de
+  thème : la borne `screen` empêche d'imprimer du texte clair sur du blanc.
+- **La preuve est rattachée au poste, pas jetée en tête de page.** Le +83 % vit
+  dans la fiche Générale d'Optique : pastille discrète sur la ligne fermée,
+  paragraphe avec sa base de comparaison dans la fiche. Un chiffre sans son
+  contexte ne vaut rien.
+- **Opti'Profit rappelle le chiffre comme CONTEXTE, jamais comme résultat.** Les
+  données disent que relance, équipe et réorganisation ont joué ensemble : la
+  fiche renvoie au poste (« Voir le poste ») et le dit en une phrase. Cette
+  phrase est la seule qui ne vient pas des données ; la retirer ferait attribuer
+  +83 % à un outil, ce qu'aucun entretien ne tiendrait.
+- **Les enseignes ne se coupent qu'entre elles** — mais seulement quand il y en a
+  plusieurs (`company()`). Un nom à une seule enseigne en `nowrap` débordait sur
+  la colonne voisine à toute largeur.
+- **Les titres de section se remplissent au défilement**, de 80 % à 20 % de la
+  hauteur d'écran. Les bornes sont posées sur la position du **haut** du titre
+  (`view(block 20% 20%)`, `entry 0%` → `contain 100%`), pas sur un pourcentage de
+  `cover` : celui-ci dépend de la hauteur du titre, donc de la largeur d'écran.
+  Un remplissage sur 28 % de l'écran était « trop rapide », et dans la moitié
+  basse il n'était pas remarqué. Repli par script (`--p`) pour les navigateurs
+  sans `animation-timeline`, même plage ; mouvement réduit : titres pleins.
+- **Les lettres du nom suivent le pointeur** : chasse (62–125 %) et graisse
+  d'Archivo varient avec la distance. C'est ce qui impose de charger Archivo
+  **à axes variables** (`wdth,wght@62..125,100..900`) dans `index.html`. Les
+  centres des lettres se mesurent une fois, au repos : mesurés en mouvement, ils
+  bougeraient avec l'effet. Souris seulement, jamais pendant l'ouverture. Sur
+  téléphone, où il n'y a pas de pointeur, le nom respire seul, peu.
+- **La photo est une bichromie qui suit le lettrage** : niveaux de gris, puis
+  l'accent mélangé à 25 % à un blanc cassé, multiplié. Multiplier l'accent pur
+  saturait les clairs (81 %) ; à 25 % ils tombent à 23 %.
+- **Le gras est fixé à 700.** `<strong>` dans un paragraphe en 700 devient `bolder`,
+  donc 900 — une graisse que la police ne charge pas, et que `npm run
+  check:typo` fait échouer.
+- **Deux rangées de navigation sous 1100 px.** Le nom, six entrées et deux
+  commandes ne tiennent pas sur une rangée en deçà : les entrées passent sur une
+  seconde, qui défile, avec un masque de débord.
 
-- **Aucun cadre autour du CV.** `.app` n'a plus ni rayon, ni ombre, ni
-  bordure, ni `backdrop-filter`, et `body` n'a plus de marge : le CV occupe la
-  page comme la séquence occupe l'écran. Ne pas remettre le CV dans une
-  fenêtre. *Amendé : les blocs de lecture à l'intérieur, eux, sont en verre
-  (voir « Aurore, verre, lumière »). Ce n'est pas un cadre autour de la page,
-  c'est une matière posée sur un fond qui a de la profondeur.*
-- **Un axe, pas des rails.** Un filet d'un pixel (`--ink-200`) court sur
-  toute la hauteur, posé par `.panel-right::before` en large et
-  `.mobile-main::before` en étroit. Les blocs s'y accrochent à
-  `--axis + --rail-gap`. Les huit rails de 2 px colorés ont disparu : un
-  trait qui se répète est une décoration, pas une structure.
-- **La nature se dit par le texte.** Ce que portait le rail passe à la
-  couleur du titre (`--n-ink`), comme un énoncé de la séquence est
-  lui-même encre ou forêt. Un composant ne pose plus de barre teintée.
-- **La photo est dans l'identité, à droite du nom.** Elle ouvrait le Profil
-  parce que la colonne de gauche porte 810 px de contenu fixe et déborde
-  déjà sous cette hauteur de fenêtre : tout ce qu'on y **empile** pousse la
-  navigation sous la ligne de flottaison. À côté du nom elle ne s'empile
-  pas — `.identity-head` est une grille de deux colonnes, la photo occupe
-  la seconde sur les deux premières lignes de titre, et le bloc ne grandit
-  que de ce que le premier sous-titre reprend en se resserrant : 19 px,
-  contre 96 pour une photo posée dessous. Elle est visible depuis toutes
-  les sections, ce que sa place dans le Profil ne donnait pas.
-- **96 px, et la deuxième ligne de titre repasse dessous.** C'est la plus
-  grande mesure qui laisse au nom les 181 px qu'il demande sur une ligne
-  dans les 307 de la colonne — et il doit y tenir : le raccord de la
-  séquence mesure `getClientRects()[0]`, donc la première ligne seule, et
-  un nom replié le ferait atterrir à la largeur de « Jérémy ».
-  `role2` reprend la largeur entière (`grid-column: 1 / -1`) : coupé court
-  il tombait à quatre lignes de six mots, il en fait deux, et le bloc
-  gagne les 29 px de la différence.
-- **En étroit, la photo descend d'un cran.** Le nom y est en 32 px et
-  demande 264 px : sous 380 px de fenêtre il ne peut plus partager sa ligne
-  avec la photo sans se replier. Elle longe donc les deux sous-titres
-  (`grid-row: 2 / 4`) et le nom garde la largeur entière — c'est la même
-  contrainte de raccord, résolue par la ligne du dessous plutôt que par la
-  taille de la photo, qu'aucune valeur ne sauvait sous 360 px.
-- **Aucun aplat.** Étiquettes, puces, badges, liens et navigation n'ont
-  plus ni fond, ni bordure, ni rayon de 999 px : mono, capitales, `0.16em`,
-  séparées par un point médian — la règle que `css/print.css` appliquait
-  déjà au papier. La couleur est de l'encre, jamais une surface. Exceptions :
-  la pastille nommée des accordéons (aplat translucide de la nature de la
-  carte), la pile de cartes de la section Projets — voir « Registre » — et le
-  verre des blocs de lecture, qui est une surface sans teinte.
-- **Une seule voix pour les titres.** Archivo à chasse élargie sur tous les
-  titres de bloc, plus seulement sur le nom et les titres de section.
-- **Un seul grain.** `--grain`, posé sur `body::after` et consommé aussi
-  par `.intro-grain`. C'est la seule matière commune aux deux moitiés, et
-  elle suffit à les faire tenir sur le même support. Le fond lui-même est
-  déclaré une fois (`--fond-page`) et repris à l'identique par la séquence.
-- **Un seul mouvement.** `--e-move` est la courbe de la caméra ; tout ce
-  qui bouge dans le CV l'utilise. Au changement de section, les blocs
-  entrent décalés (`playSectionEntry` dans `js/main.js`) — au changement
-  de section seulement, jamais sur l'ouverture d'un accordéon.
+## L'ouverture — jouée sur la vraie page
+**Il n'y a pas de séquence séparée.** L'ancienne ouverture était une scène qui se
+fondait vers le CV par un sosie du nom qui voyageait : un raccord à mesurer, donc
+un raccord qui pouvait se décaler. La nouvelle joue **sur la page d'accueil
+elle-même** — les lettres, la photo, la ligne de poste, la barre sont les éléments
+définitifs, animés de leur départ à leur repos. La dernière image est la page :
+il n'y a rien à raccorder.
 
-## Les trois accordéons — Outils, Compétences et Expériences
-Même composant, mêmes règles. Trois d'entre elles se sont perdues une fois
-et se reperdront : elles ne se voient pas dans le code, seulement à l'écran.
-
-- **Une bascule ne re-rend pas sa section.** `js/ui/accordion.js` expose
-  `syncAccordion(famille, idOuvert)`, qui ne touche que les classes et les
-  attributs des cartes déjà montées. Repasser par `render()` recréerait la
-  carte déjà ouverte : le panneau naîtrait à `grid-template-rows: 1fr` sans
-  jamais être passé par `0fr`, donc **aucune transition n'aurait d'état de
-  départ** — le dépliage redeviendrait instantané et le chevron ne
-  tournerait plus, sans qu'une seule ligne de CSS ait bougé. Le bouton qui
-  portait le focus disparaîtrait avec le reste, et le clavier repartirait du
-  haut de la page à chaque ouverture.
-- **Le panneau est toujours dans le document**, replié à `0fr`. `inert` le
-  retire du parcours clavier et de l'arbre d'accessibilité ; surtout pas
-  `hidden`, qui pose `display: none` et coupe la transition pour la même
-  raison. Retrait, filet et marges intérieures ne se posent qu'à
-  l'ouverture : la ligne de grille vaut bien zéro, mais un padding ou une
-  bordure horizontale s'ajouteraient quand même à sa hauteur.
-- **Le résumé est un `<button>`**, avec `aria-expanded` et `aria-controls`.
-  Il ne contient donc que du contenu de phrasé : pas de `<div>`, pas de
-  `<a>` — le lien d'un outil vit à côté, hors du bouton. C'est pourquoi
-  `renderAccentTags` prend une option `element`.
-- **L'affordance est une pastille nommée, pas un chevron.**
-  `renderDiscloseCommand(libellé)` pose le libellé fermé de la carte et
-  « Replier », plus le chevron, dans la langue de la seconde couche. Le
-  chevron seul, à
-  l'extrémité droite d'une colonne large, ne se lisait pas comme une
-  commande — c'était le défaut signalé : on ne voyait pas qu'il y avait
-  quelque chose à déplier. Le mot souligné qui a suivi se lisait, mais
-  comme un lien de plus au milieu des autres commandes soulignées de la
-  carte. Il est maintenant posé sur un aplat translucide de la nature de la
-  carte (`color-mix` sur `--n-mark`), cerclé d'un filet de la même teinte :
-  assez pâle pour ne pas concurrencer le titre, assez coloré pour se lire
-  comme une chose qu'on presse. Les deux libellés sont posés ensemble et
-  CSS n'en montre qu'un : la bascule ne touche alors qu'une classe. Le
-  couple est `aria-hidden`, l'état étant déjà porté par `aria-expanded`.
-- **Aucune carte n'est dépliée à l'arrivée.** Un panneau ouvert d'office
-  prenait la moitié de l'écran avant qu'on ait lu la liste, et masquait le
-  fait que les autres cartes s'ouvrent aussi : ce qui est déjà ouvert ne
-  montre pas qu'on peut ouvrir. Revenir dans une section la retrouve
-  repliée — l'état d'ouverture appartient à la visite en cours, pas au
-  document.
-- **Deux cartes voisines ne portent jamais le même libellé fermé.** Les onze
-  cartes affichaient « Déplier le détail ». Le battement répond à « y a-t-il
-  quelque chose dessous ? » ; il ne répond pas à « laquelle vaut mon
-  clic ? ». Devant onze portes identiques, la réponse rationnelle est de
-  n'en ouvrir aucune — et c'est le contenu le plus dense du CV qui restait
-  derrière. Le libellé vient du champ `detailLabel` des données et nomme
-  l'arbitrage de la fiche, qui est ce qu'elle a de propre. Une fiche ajoutée
-  sans `detailLabel` retombe sur « Déplier le détail » : elle reste
-  utilisable, mais elle rouvre le défaut — le libellé fait partie de la
-  fiche, pas de la mise en forme.
-- **C'est la pastille qui porte l'invitation**, par un battement
-  (`accordion-appel`, `css/sections.css`). Il tient dans un dixième du
-  cycle : six secondes d'immobilité pour une demi-seconde de mouvement de
-  deux pixels — c'est ce rapport qui fait la différence entre un appel et
-  un tic, l'œil étant rattrapé par ce qui bouge après être resté immobile,
-  jamais par ce qui vibre en continu. Les cartes sont décalées de trois
-  temps (`--appel-retard`), sinon la page frémit d'un bloc et se lit comme
-  un défaut d'affichage. Le battement s'arrête sur une carte ouverte, sous
-  la souris, et **définitivement à la première bascule** :
-  `markAccordionAsDiscovered()` pose `accordion-decouvert` sur `<html>` —
-  le seul élément que `render()` ne reconstruit pas, donc la marque survit
-  aux changements de section. La démonstration faite, le mouvement n'apprend plus rien à
-  personne et devient du bruit. Les règles de survol reprennent ce préfixe
-  `html:not(.accordion-decouvert)` : sans lui elles passent sous celle du
-  battement, qui compte une classe de plus.
-- **Une famille s'ajoute dans `FAMILIES`** (`js/ui/accordion.js`) — sélecteur
-  de la carte, attribut du bouton, sélecteur du panneau — et `bindAccordion`
-  gagne un rappel. Les Expériences sont la troisième : `.exp-card`,
-  `data-experience`, `.exp-panel`. Sa pastille bat comme les autres (mêmes
-  sélecteurs, même décalage de trois temps) ; ce qui lui est propre — le
-  lavis, la marque, les chiffres visibles fermés — est dans « Registre ».
-
-## Registre — Expériences, Outils, Projets
-Les trois sections qui portent le parcours et ses preuves se lisent comme un
-registre : des lignes séparées par un filet, un nom fort, une commande nommée.
-Ce ne sont pas des cartes. Ce qui suit ne se voit pas dans le code — seulement
-à l'écran, quand une largeur ou une donnée change.
-
-**Expériences** (`renderExperiencesSection`, `css/sections.css`)
-- **L'employeur est la marque, et sa taille suit la carte, pas la fenêtre.**
-  `.tl-company` : Archivo 800 à chasse élargie, en capitales par
-  `text-transform` — la donnée reste en casse normale pour les extracteurs.
-  Taille = (largeur de la carte − colonne de période) / 15, bornée par
-  `--fs-wordmark` en haut et `--fs-body` en bas, via `100cqw`. Le nom le plus
-  long qui doit tenir sur une ligne, « Générale d'Optique », mesure 14,3 em dans
-  cette police : 15 laisse 4 % de marge. Un `clamp()` sur `vw` ne suffisait pas
-  — à 1 000 px de fenêtre la colonne n'a pas la largeur qu'elle a à 1 440, et
-  le nom sortait. Un plancher à `--fs-title` (19 px) faisait déborder le nom de
-  19 px à 320 px de fenêtre. **Tout nom d'employeur plus long que 14,3 em
-  casse ce diviseur** : remesurer avant d'ajouter une expérience.
-- **Les enseignes ne se coupent qu'entre elles.** `renderCompany` rend chaque
-  enseigne dans un item insécable (`.exp-co`) et laisse le point médian collé à
-  celle qui précède. Le texte assemblé reste celui de la donnée,
-  « GrandOptical · Krys · Lissac », et la coupure ne peut ni tomber dans
-  « Grand / Optical » ni ouvrir une ligne par un point orphelin.
-- **L'interlettrage de la marque est de −0,02 em**, comme tous les titres
-  Archivo, et non `--track-cap-title`. À 36 px, 0,14 em ajouterait 2,5 em au
-  nom le plus long (de 14,3 à 16,8 em) et défait le calcul ci-dessus ;
-  `--track-cap-title` est réglé pour des capitales de petit corps (14,7 px au
-  papier), pas de 36.
-- **Les chiffres restent visibles fermés, hors du bouton.** C'est la règle du
-  CV : un résultat mesuré sort du corps de texte, et il ne doit pas attendre un
-  clic. `statsLabel` et `statsBase` les suivent : un écart sans sa base est une
-  affirmation invérifiable. Ils sont posés **à côté** du `<button>` et non
-  dedans : un `<div>` dans un bouton n'est pas du contenu admis. Le texte du
-  résultat, lui, vit dans le panneau.
-- **Le lavis** (`.exp-name::before`) est la preuve que la ligne répond : une
-  tache d'encre diluée derrière la marque, au survol (souris seulement), au
-  focus et à l'ouverture. Il est de la nature de la ligne, donc l'encre —
-  **jamais la flamme**, réservée aux chiffres. Son intensité suit `recency`
-  (22 %, 15 %, 10 %) : un poste ancien est plus pâle. Opacité et transformation
-  seulement. Son origine (`--wash-x`) est écrite une fois, à l'entrée du
-  pointeur, par `bindExperienceWash()` : pas de `pointermove`. Le poste, posé
-  dessus, est en `--text-dim` et non `--text-muted` : c'est le seul des deux
-  tons qui reste au-dessus de 4,5:1 sur le lavis le plus fort (mesuré : 5,54:1).
-- **Le panneau ne répète ni le poste ni la période** : ils sont dans la ligne
-  juste au-dessus. La colonne de gauche porte le cadrage (`context`), celle de
-  droite les puces et le résultat. Les deux colonnes se décident sur la largeur
-  de la carte (`@container`, 60 rem), pas sur celle de la fenêtre.
-- **`id` et `detailLabel` sont des données**, jamais dérivés du rang ni du
-  libellé : un `id` tiré de la position changerait avec l'ordre de la
-  chronologie, et un panneau ouvert se refermerait sur une autre fiche. Il n'y
-  a pas de champ `span` (années de début et de fin) : `recency` suffit au lavis,
-  et une durée aurait été une donnée de plus à tenir d'accord avec `date`.
-- **Au papier, l'ordre d'origine est rétabli** — cadrage, puces, chiffres,
-  résultat. À l'écran les chiffres sont posés au-dessus du panneau ; la
-  présentation complète aplatit les conteneurs (`display: contents`) et
-  réordonne les enfants de la fiche. `container-type: normal` y coupe les
-  requêtes de conteneur de l'écran : sans cela le retrait de 35 mm du cadrage
-  disparaissait et la colonne de gauche se recomposait sur la page.
-
-**Outils** (`renderOutilsSection`)
-- **Les étiquettes sont dans le panneau.** Fermée, une ligne dit le titre, la
-  catégorie, une phrase et un statut. Cinq mots-clés de plus doublaient sa
-  hauteur et faisaient de la liste un mur, là où on cherche à choisir laquelle
-  ouvrir. Elles restent dans le document, et au papier, où tout est ouvert.
-- **Le numéro tient deux chiffres.** « 01 » en mono 22 px fait 26 px et
-  débordait de l'ancienne colonne de 24 : `--tool-indent` est passé à 48 px, et
-  le détail comme le lien s'alignent dessus.
-- **Au survol, la ligne visée avance de 6 px, et rien d'autre ne bouge.** On
-  n'estompe pas les voisines : un texte rendu translucide passe sous 4,5:1, et
-  le survol d'une souris n'est pas une raison de rendre le reste illisible.
-- **La catégorie reste en mono capitales** : c'est ce qui classe (voir
-  Typographie), pas ce qui affirme.
-
-**Projets** (`renderProjetSection`, `js/ui/tabs.js`)
-- **Trois projets, un seul visible**, en onglets WAI-ARIA : tabulation
-  itinérante, flèches (les quatre), Début, Fin, activation automatique. Les
-  `aria-controls` / `aria-labelledby` sont vérifiés dans les deux sens.
-  `id` et `short` sont déclarés dans les données et jamais tirés du titre :
-  `getLiveProducts()` coupe encore le titre à « : », et ce découpage suppose
-  que chaque titre suive la même forme.
-- **Un onglet n'est ni une section ni une couche.** Il n'écrit aucune entrée
-  d'historique (voir Circulation) et ne re-rend rien : un re-rendu ferait
-  perdre le focus au bouton qu'on vient d'actionner. `state.activeProject` n'est
-  là que pour survivre à une bascule large ↔ étroit ; il est remis à `null` à
-  chaque changement de section, donc la section se retrouve sur le premier
-  onglet.
-- **Deux dispositions, un seul balisage, choisies sur la largeur de la
-  vitrine** (`@container`, 60 rem) : à plat — trois lignes séparées par un
-  filet, y compris sur téléphone — ou en pile de cartes en perspective, la
-  carte de l'onglet actif devant. `--k` est le rang de la carte (0 devant) ; il
-  est posé au rendu pour que la pile naisse dans son état d'arrivée, et c'est
-  la seule chose que le CSS en lit.
-- **La pile est le seul endroit du CV qui a des cartes** : surface, bordure,
-  ombre. « Aucun aplat » vaut pour ce qui se lit ; ici ce sont des commandes,
-  et une pile ne se lit comme une pile que si ses éléments ont une surface
-  pour se recouvrir. L'onglet actif est marqué de la même façon dans les deux
-  dispositions : encre et filet de 2 px sous le nom, jamais une pastille pleine.
-- **Le panneau réutilise le balisage du document imprimé** (`renderProjet`) :
-  un seul gabarit pour les deux surfaces, donc aucun texte qui existe dans
-  l'une et pas dans l'autre. En `expandAll` il n'y a pas d'onglets — les trois
-  projets sont rendus à la suite, pour le papier et pour `#cv-integral`.
-- **Pas d'aperçu visuel.** Aucune capture de projet n'existe dans
-  `assets/img/`, et un espace réservé ou une maquette inventée seraient plus
-  trompeurs qu'un panneau sans image. Une capture ajoutée vient dans le panneau.
-
-**Constat ouvert — la mesure de lecture.** `--mesure: 62ch` est censée donner
-45 à 75 signes par ligne. Mesuré dans Chromium avec les vraies polices, elle
-en donne 75 à 89 sur les puces, les résumés et les détails, **avant comme
-après cette refonte** (la colonne y fait 567 px). Le `ch` vaut la largeur du
-« 0 » de Manrope, plus large que la moyenne de ses lettres. La valeur est
-globale : la changer touche toutes les sections, et se décide sur le rendu en
-comptant les signes — environ 52ch pour entrer dans la plage.
-
-
-## Aurore, verre, lumière
-Le CV était du papier : un aplat, des filets, du texte. Lisible, et daté. Trois
-matières lui donnent de la profondeur (`css/aurora.css`), et rien d'autre :
-
-- **Le fond est « Aurora Background »** (21st.dev, Aceternity UI), reproduit
-  valeur pour valeur en CSS : dégradés à 100°, flou de 10 px, masque elliptique
-  sur l'angle haut-droit, second calque animé en 60 s et mélangé en
-  « différence » avec le premier. Le CV est en HTML/CSS pur : le composant
-  d'origine (React, Tailwind, framer-motion) n'est pas installé, seule sa
-  construction est reprise. Deux éléments dans `index.html` (`.aurora` >
-  `.aurora-layer`), l'un sous le CV, l'autre dans la séquence d'ouverture.
-- **Aucune teinte.** Une première version posait des taches bleues, violettes
-  et turquoise : un rendu coloré, qui n'est pas celui du composant. Ses bandes
-  sont grises parce que le mélange « différence » les désature — c'est cette
-  désaturation qu'on garde, et `saturate(0.4)` l'accentue : le composant garde
-  un fond bleuté que la référence montrée n'a pas.
-- **Le verre** (`--glass-fill`, `--glass-edge`, `--glass-blur`) est posé sur une
-  liste explicite de composants : colonne d'identité, `.card`, `.card-sm`,
-  `.comp-card`, `.formation-card`, `.punchline-box`. Un composant qui n'y figure
-  pas reste à plat — les lignes des Expériences et des Outils sont des
-  registres, pas des cartes. En sombre le verre est un voile **sombre**, pas
-  blanc : un voile blanc éclaircit le fond jusqu'à rendre illisible un texte
-  clair.
-- **La lumière** : `js/ui/spotlight.js` écrit `--mx` et `--my` sur la carte
-  survolée, une fois par image au plus, souris seulement. Le CSS dessine une
-  tache neutre (`--spot`) ; opacité seulement.
-- **L'opacité de l'aurore n'est pas celle du composant (0,5)** : 0,22 en clair,
-  0,3 en sombre. Mesurée sur le pire pixel — quatre instants de la dérive, six
-  sections, deux largeurs, deux thèmes —, l'opacité d'origine faisait tomber le
-  texte atténué à 2,5:1 en sombre et 3,9:1 en clair. **Remonter cette valeur se
-  remesure** : on masque le texte (`color: transparent`), on capture, et on
-  calcule le contraste du jeton de texte contre le pixel le plus clair (sombre)
-  ou le plus sombre (clair). Un percentile, pas le minimum : les filets
-  d'1 px sont statiques et n'ont pas de texte dessus.
-- **Deux thèmes, suivis sur le réglage de l'appareil** (`prefers-color-scheme`),
-  pas sur un bouton. Le thème sombre **retourne l'échelle d'encre** dans
-  `css/editorial-signal.css` (900 ↔ 50, 800 ↔ 100, 700 ↔ 200, 600 ↔ 300) : le
-  CV consomme ces jetons presque partout — texte en `--ink-900`, filets en
-  `--ink-200`, surfaces en `--ink-50` — donc retourner l'échelle retourne le
-  CV sans réécrire une règle. Tout ce qui était écrit en dur (`#fff`,
-  `white`) devait passer par un jeton : trois endroits l'étaient, le bouton
-  d'envoi, la fenêtre d'export et son bouton.
-- **Le thème sombre est borné à `screen`.** Le papier n'a pas de thème : sans
-  cette borne, un lecteur dont l'appareil est sombre imprimerait du texte
-  clair sur du blanc. Vérifié : le PDF est identique, appareil clair ou
-  sombre.
-- **`--card` est opaque en sombre.** Réglé à 5 % d'opacité d'abord, comme un
-  verre : la fenêtre de contact, qui consomme `--card`, devenait transparente
-  et laissait lire la navigation à travers. Le verre a ses propres jetons ; les
-  fenêtres modales, elles, doivent rester pleines.
-- **L'aurore est dans la séquence d'ouverture aussi**, au même instant de sa
-  dérive : les deux animations partent au premier rendu. Le fond de la
-  séquence est `--fond-page`, déclaré une fois dans `editorial-signal.css`
-  — il était écrit en dur à deux endroits.
-- **Elle précède `#cv-integral` dans le document.** « Rien de décoratif ne doit
-  précéder le CV dans le texte » vaut pour le texte : ces éléments n'en ont pas
-  et sont `aria-hidden`.
-- **Elle disparaît à l'impression** (`display: none` sous `@media print`), et
-  `prefers-reduced-motion` fige son second calque.
-- **Coût.** Le second calque anime `background-position` sous un flou et un
-  mélange : c'est la construction d'origine, et elle n'est pas gratuite sur un
-  téléphone d'entrée de gamme. Le verre (`backdrop-filter`) y ajoute le sien.
-  Si l'on doit alléger, c'est d'abord ce calque qu'on fige en étroit.
-
-## L'accroche se tape (`js/ui/typewriter.js`)
-Le paragraphe de la colonne d'identité s'écrit lettre à lettre, comme sous
-une frappe. Quatre décisions le tiennent, et aucune ne se voit dans le code
-— seulement à l'écran quand elle manque.
-
-- **Le texte est posé entier avant d'être tapé.** Le module ne l'ajoute pas
-  au fur et à mesure : il le redécoupe en caractères, les éteint tous
-  (`opacity: 0`) et les rallume un par un. La composition est donc celle du
-  texte complet dès la première image. L'inverse — le procédé habituel —
-  recalcule les coupures de ligne à chaque caractère : le paragraphe grandit
-  d'une ligne d'un coup, la colonne tremble, et sur quatre lignes ça se voit
-  huit fois. Le repli quand rien ne se joue est le paragraphe lui-même,
-  intact dans le document.
-- **Le curseur est de largeur nulle**, son trait peint hors de sa boîte par
-  `::before`. Il se glisse entre le texte tapé et celui qui ne l'est pas
-  encore : un curseur qui occuperait sa place décalerait toute la suite à
-  chaque caractère, et on retomberait exactement sur le défaut que le point
-  précédent évite.
-- **La frappe ne joue qu'une fois par chargement.** Le CV se re-rend à chaque
-  changement de section : la rejouer ferait de l'accroche une animation
-  permanente. Le drapeau se lève avant la première image, pour qu'un
-  re-rendu survenu en pleine frappe retrouve simplement le texte entier.
-- **Elle attend `cv:intro-raccord`** quand la séquence d'ouverture est armée,
-  puis 480 ms de plus. Sans cette attente elle se déroulerait derrière
-  l'overlay et serait finie depuis cinq secondes quand on découvre la page —
-  le même défaut que l'entrée en escalier des blocs, pour la même raison.
-  Les 480 ms laissent le CV finir de monter : deux mouvements simultanés sur
-  le même bloc n'en font lire aucun.
-- La couche animée est `aria-hidden` et le texte réel est restitué à côté,
-  hors champ visuel (`.tw-text-sr`) : un texte éclaté en spans d'un caractère
-  se fait épeler par certains lecteurs d'écran. En
-  `prefers-reduced-motion: reduce`, rien ne se joue et le paragraphe reste
-  tel quel — la règle globale de `css/base.css` ne couvre que le CSS, et
-  cette animation est en JavaScript.
-- **Cadence : 30 ms par caractère plus une dérive de 0 à 24 ms**, et des
-  arrêts aux ponctuations — une dizaine de secondes en tout. Le premier
-  réglage était à 12 ms de moyenne, soit 5 000 signes par minute : aucune
-  main n'écrit à cette vitesse, et on lisait un texte qui se déroule plutôt
-  que quelqu'un qui tape. C'est le défaut le plus facile à réintroduire, en
-  voulant raccourcir. Les 42 ms de moyenne restent au-dessus d'une frappe
-  humaine ordinaire, et c'est assumé : au plausible strict, l'accroche
-  mettrait une demi-minute à se poser. La dérive vaut 80 % de la base, une
-  cadence régulière se reconnaissant immédiatement comme calculée.
+- **Révélation par balayage en dégradé.** Les lettres sont à leur forme définitive
+  dès la première image ; seul un masque (`mask-image`, bord de 45 % de la hauteur)
+  monte du pied des lettres, mot par mot. La photo n'arrive qu'une fois le nom
+  entièrement révélé, puis la ligne de poste, la barre et la flèche. 3,7 s.
+- **`backwards`, jamais `forwards`.** L'état d'arrivée est celui que la feuille
+  déclare déjà ; seuls les `from` sont écrits. Une valeur recopiée dans une
+  keyframe finale divergerait au premier réglage, et ce serait un saut d'une image.
+- **Chaque mot porte une marge intérieure compensée par une marge négative**, en
+  colonne flex : le masque rogne tout ce qui sort de sa boîte, et sans cela
+  l'accent du É et le crochet du J étaient coupés. En flex, car les marges
+  négatives de deux blocs adjacents fusionnent.
+- **Tout démarre après les polices** (`intro-wait`, animations en pause) : sinon le
+  nom serait recomposé en pleine animation quand Archivo remplace la police de
+  repli. La **fin se lit sur les animations finies** de la page : la durée n'est
+  écrite nulle part dans le script, et le verrou de défilement ne peut pas se
+  lever avant la fin.
+- **`scrollbar-gutter: stable`** : sans place réservée, rendre le défilement à la
+  fin décalerait la page de la largeur de la barre.
+- **`js/ui/intro.js` est un script bloquant du `<head>`** qui pose `js-actif`,
+  `intro-play`, `intro-wait`, `intro-lock` avant le premier rendu. **Les animations
+  ne s'appliquent que sous `html.intro-play`** : sans elle (deuxième visite, lien
+  profond, mouvement réduit) la page est à son repos dès la première image. Elles
+  s'appliquaient d'abord en permanence et rejouaient à chaque visite, seul le
+  verrou étant conditionnel. Garde-fou : classes retirées d'office à 8 s si le
+  module principal ne charge jamais.
+- **Jouée une fois par session** (`cv-intro-played`), ignorée sur lien profond
+  (`#outils`) et en mouvement réduit ; `#intro` la force. « Passer », Échap et
+  Entrée sautent à l'état final.
+- **Mesuré, pas estimé** : l'image de fin est comparée à la page au repos
+  (mouvement réduit = aucune animation) — 0 pixel de différence sur grand écran,
+  et 0 pixel au premier instant de la respiration sur téléphone. **Le verrou se
+  teste avec une vraie molette**, jamais avec `scrollTo` : un défilement
+  programmé contourne `overflow: hidden` et « prouvait » un verrou qui n'en était
+  pas un.
 
 ## Lisibilité par les lecteurs automatiques
 
@@ -618,40 +239,28 @@ Quatre mécanismes de navigation n'ont aucun symptôme visible dans le code
 quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 
 - **Le geste retour rejoue la pile d'historique, jamais l'arbre du
-  document.** Les six sections sont des **frères** : passer de l'une à
-  l'autre remplace l'entrée courante au lieu d'en ajouter une, sinon quitter
-  le CV coûterait autant d'appuis que de sections consultées. Le panneau
-  d'export et la modale de contact sont des **couches** : elles empilent une
-  entrée à l'ouverture et la consomment à la fermeture, sinon le geste retour
-  quitte la page au lieu de refermer le panneau — défaut invisible sur un
-  ordinateur, où personne n'appuie sur retour. Rien n'est intercepté : c'est
-  le navigateur qui dépile. Toutes les fermetures — bouton, Échap, clic sur
-  le fond, geste système — passent par `fermerCouche()`, ce qui est la seule
-  façon qu'elles aboutissent au même endroit. Le contrat et le raisonnement
-  sont dans `js/ui/backNavigation.js` ; `npm run check:nav` le vérifie dans
-  un vrai navigateur, avec de vrais parcours d'historique.
-
-- **Un onglet n'est ni une section ni une couche.** Les onglets de Projets
-  n'écrivent aucune entrée d'historique : ce n'est pas une destination qu'on
-  voudrait retrouver au geste retour, et en empiler une ferait payer un appui
-  de plus par projet consulté. Ils ne re-rendent rien non plus — le bouton
-  qu'on vient d'actionner garderait son focus ou le perdrait selon l'humeur du
-  re-rendu. `npm run check:nav` ne les couvre pas : le contrôle se fait à la
-  main (changer d'onglet, puis retour : on quitte la section, pas l'onglet).
-- **En étroit, le conteneur qui défile est `#app` lui-même**, et `render()`
-  remplace son contenu sans le remplacer, lui : son `scrollTop` survit au
-  changement de section, borné à la nouvelle hauteur. Depuis 1 400 px dans
-  Outils, un clic sur Compétences atterrissait à 993 — soit 140 px sous le
-  haut de la section demandée, titre hors écran et première carte coupée en
-  deux. `resetMobileScrollPosition()` cale sur le bandeau de navigation, pas
-  sur le haut du document : le résumé d'identité occupe six cents pixels, y
-  renvoyer ferait relire six fois le même en-tête. La mesure se prend
-  **après avoir remis `scrollTop` à zéro** — le bandeau est collant, mesuré
-  depuis une position défilée il rend sa position d'accroche, l'écart vaut
-  zéro et rien ne bouge. En large le problème ne se pose pas :
-  `.content-body` est reconstruit à chaque rendu. Le drapeau
-  `shouldResetMobileScroll` distingue le changement de section de la bascule
-  large ↔ étroit, qui doit conserver la position acquise.
+  document.** Les six sections sont des **frères** : aller de l'une à l'autre — au
+  clic comme au défilement — **remplace** l'entrée courante (`poserSection`) au
+  lieu d'en ajouter une, sinon quitter le CV coûterait autant d'appuis que de
+  sections lues. Le panneau d'export et la modale de contact sont des **couches** :
+  elles empilent une entrée à l'ouverture et la consomment à la fermeture, sinon le
+  geste retour quitte la page au lieu de refermer le panneau — défaut invisible sur
+  un ordinateur, où personne n'appuie sur retour. Rien n'est intercepté : c'est le
+  navigateur qui dépile. Toutes les fermetures — bouton, Échap, clic sur le fond,
+  geste système — passent par `fermerCouche()`. Le contrat est dans
+  `js/ui/backNavigation.js` ; `npm run check:nav` le vérifie dans un vrai
+  navigateur (ses sélecteurs visent `.s-nav-item`, ses assertions n'ont pas changé).
+- **L'adresse suit le défilement, et elle commande.** `js/ui/site.js` élit comme
+  section affichée la dernière dont le haut a franchi le tiers supérieur de
+  l'écran, et réécrit `#section`. Pendant un défilement lancé par un clic, ce suivi
+  est suspendu : sinon la navigation clignoterait sur chaque section traversée. Une
+  adresse modifiée à la main est suivie (`hashchange`) ; **un fragment inconnu
+  retombe sur Profil** à l'arrivée *et* en cours de session — sans quoi la barre
+  d'adresse annoncerait une section que l'écran ne montre pas (c'est
+  `check:nav` qui l'a détecté).
+- **Une fiche n'est pas une destination.** Ouvrir ou fermer un `<details>` n'écrit
+  aucune entrée d'historique : le geste retour doit quitter la section, pas
+  refermer une fiche.
 - **La modale fermée porte `inert`, jamais `aria-hidden`.** Elle reste dans
   le document en `opacity: 0` pour que sa transition d'ouverture ait un état
   de départ — même raison que les panneaux d'accordéon. Mais elle contient
@@ -674,12 +283,9 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   quand le geste est déjà engagé, et ce qui s'ouvre alors n'est pas un CV
   trop long — c'est un autre objet, un dossier. « CV complet · PDF » désigne
   le recto A4, et lui seul.
-- **Le rail étroit porte `short`, pas `label`.** À 390 px il n'affiche que
-  trois entrées sur six et les coupe en pleine lettre. Le masque de débord
-  dit qu'il y en a d'autres ; il ne dit pas combien. La mention du bandeau
-  porte donc un repérage — « Section 3 sur 6 » — et non une consigne d'usage.
-  Une affordance qui a besoin d'une notice se reprend, elle ne se commente
-  pas.
+- **La navigation porte `short`, pas `label`.** En étroit elle défile sur une
+  seconde rangée ; des libellés longs la rendraient interminable, et `aria-label`
+  garde le nom complet pour les lecteurs d'écran.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
@@ -699,6 +305,13 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   tout leur poids.
 
 ## Typographie
+**Portée.** Les règles de cette section décrivent le système des feuilles
+historiques (`base.css`, `components.css`, `sections.css`, `export.css`) — donc le
+panneau d'export, la modale et le papier. **La page (`site.css`) a sa propre
+échelle**, fluide (`clamp()` en `vw` pour les titres), dans les mêmes trois
+familles. Elle garde trois règles de cette section : une graisse hors de la liste
+servie est un défaut silencieux (`npm run check:typo`), `<strong>` est fixé à 700,
+et `font-stretch: 125%` se déclare partout où Archivo est consommé.
 - Dix paliers déclarés en tête de `css/base.css` (`--fs-display` →
   `--fs-label`, dont `--fs-wordmark`, le nom d'employeur : un plafond, la taille
   réelle suit la colonne), un rôle chacun. **Aucune taille en dur** dans
@@ -744,8 +357,9 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
   45 à 75. La valeur n'était pas fausse, son unité ne dit pas ce qu'on croit
   qu'elle dit. Toute modification de `--mesure` se vérifie sur le rendu, en
   comptant les signes d'une ligne, jamais sur le nombre écrit dans le CSS.
-- **Elle borne toute la prose, pas seulement les accordéons.** Elle ne
-  tenait que les deux accordéons — bouton, résumé et panneau ensemble, sinon
+- **Elle borne toute la prose.** (Règle de l'ancien affichage, encore vraie pour le
+  papier et le panneau d'export ; la page a ses propres mesures dans `site.css`.)
+  Elle ne tenait que les accordéons — bouton, résumé et panneau ensemble, sinon
   le contour de focus encadre du vide. Les puces d'expérience et de projet,
   le contexte de poste et le chapeau d'Outils couraient pendant ce temps
   jusqu'à 136 signes, soit le double, dans les sections qu'un lecteur ouvre
@@ -812,19 +426,13 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 - Aucune couleur en dur dans `js/`. Référentiel : en tête de `css/base.css`.
 - La flamme est réservée aux chiffres mesurés et aux adresses en ligne. Un
   titre de compétence ou un nom d'outil n'est pas une preuve.
-- **Palette réellement affichée.** `js/ui/intro.js` injecte
-  `css/editorial-signal.css`, qui remappe la forêt vers l'encre et la flamme
-  vers un cuivre (`#a84512`) : à l'écran, `cadre` et `produit` partagent la même
-  encre (`--n-mark: var(--ink-600)`), et la forêt n'existe plus que dans la
-  séquence d'ouverture, en clair. Les paragraphes ci-dessus décrivent le modèle
-  de données ; `docs/charte-couleurs.md` décrit ce qui se voit. Un lavis, un
-  filet ou une pastille qui consomme `--n-mark` suit donc la palette courante
-  sans rien savoir de la forêt — ni du thème : en sombre, l'échelle d'encre est
-  retournée et tout suit.
-- **Le texte atténué est `#4a5d70` en clair et `#b2c0cc` en sombre**, bornés par
-  le contraste mesuré sur l'aurore (voir « Aurore, verre, lumière »). Les
-  anciennes valeurs (`#56697a`, `#52667c`) tombaient à 3,9:1 sur le fond le plus
-  sombre de l'aurore.
+- **La page est noire, à un accent.** `css/site.css` porte ses propres jetons
+  (`--s-bg`, `--s-fg`, `--s-dim`, `--s-acc` fluo, `--s-hot` cuivre). Contrastes
+  sur le fond (#0a0a0a) : texte courant 13,7:1, atténué 7,3:1, accent 16,8:1,
+  cuivre 9,7:1. Le panneau d'export et la modale consomment, eux, les jetons
+  d'`editorial-signal.css` (échelle d'encre retournée, sous `@media screen`).
+  Les paragraphes « forêt / flamme » ci-dessus décrivent le modèle de données et le
+  papier ; à l'écran, `nature` n'a plus de couleur.
 - Pas d'emoji dans l'interface : ils sont multicolores et contredisent la
   charte. Ajouter un tracé à `js/ui/icons.js` et appeler `icon("nom")`.
 
@@ -1047,10 +655,11 @@ CV. Elles sont maintenant derrière une porte unique.
   propres tailles en points.
 - Toute nouvelle section doit être ajoutée à `renderSectionBody()` dans
   `js/render/renderPrint.js`, sinon elle disparaît du PDF.
-- Un accordéon doit accepter `{ expandAll: true }` pour être imprimable —
-  Outils, Compétences **et Expériences** — et la section Projets, qui n'a pas
-  d'accordéon mais des onglets, rend alors les trois projets à la suite, sans
-  onglets. Le papier et `#cv-integral` partagent ces rendus : un texte absent
+- Les renderers historiques (Outils, Compétences, Expériences, Projets)
+  acceptent `{ expandAll: true }` : tout est déplié, sans onglets. **Ils ne servent
+  plus que le papier et `#cv-integral`** — la page écran est `renderSite.js`, qui
+  lit les mêmes données. Un texte ajouté aux données paraît donc aux trois
+  endroits ; un texte ajouté à un seul renderer, à un seul. Le papier et `#cv-integral` partagent ces rendus : un texte absent
   du papier est absent des robots.
 - **Se vérifie sur le texte du PDF, sans tenir compte de la casse.** Le papier
   met catégories, étiquettes et sous-titres en capitales par `text-transform` :

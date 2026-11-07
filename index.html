@@ -8,7 +8,8 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a0a0a" />
     <title>CV Interactif de J&eacute;r&eacute;my Ribes</title>
     <script type="application/ld+json">
       {
@@ -136,7 +137,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
@@ -144,15 +145,12 @@
     <link rel="stylesheet" href="./css/components.css" />
     <link rel="stylesheet" href="./css/sections.css" />
     <link rel="stylesheet" href="./css/export.css" />
-    <link rel="stylesheet" href="./css/aurora.css" />
     <link rel="stylesheet" href="./css/print.css" />
-    <link rel="stylesheet" href="./css/intro.css" />
+    <link rel="stylesheet" href="./css/editorial-signal.css" />
+    <link rel="stylesheet" href="./css/site.css" />
     <script src="./js/ui/intro.js"></script>
   </head>
   <body>
-    <!-- Le fond (css/aurora.css). Décoratif et sans texte : il précède le
-         bloc #cv-integral sans rien lui retirer. -->
-    <div class="aurora" aria-hidden="true"><div class="aurora-layer"></div></div>
     <!-- CV-INTEGRAL:DEBUT — bloc genere, ne pas editer a la main -->
         <div id="cv-integral" lang="fr">
           <div class="print-doc">
@@ -997,86 +995,8 @@
         </div>
         <!-- CV-INTEGRAL:FIN -->
 
-    <div class="app" id="app"></div>
+    <div id="app"></div>
 
-    <div class="intro" data-intro>
-      <!-- Le même fond que celui du CV, au même instant de sa dérive : les
-           deux animations partent au premier rendu, donc la page apparaît sur
-           la surface qu'elle avait déjà. -->
-      <div class="aurora" aria-hidden="true"><div class="aurora-layer"></div></div>
-      <div class="intro-grain"></div>
-
-      <div class="intro-viewport" aria-hidden="true">
-        <!-- Le plan de la sequence vit dans un <template> : son contenu est
-             un fragment inerte, absent de l'arbre du document et donc du
-             texte qu'un lecteur automatique en extrait. C'est voulu — ces
-             mots sont un habillage d'ouverture, ils n'ont pas a se
-             presenter comme le CV a qui vient lire le CV. `bindOverlay`
-             les met en place au chargement du document, bien avant que
-             `.is-playing` ne declenche quoi que ce soit. -->
-        <template data-intro-plan>
-          <div class="intro-plane">
-            <span class="intro-axis is-a"></span>
-            <span class="intro-axis is-b"></span>
-            <span class="intro-rule"></span>
-
-            <!-- Quatre mots porteurs. Ils entrent chacun par un bord
-                 different, restent en place et passent au second plan quand
-                 la camera les quitte. -->
-            <!-- Trois enonces. Chacun entre par un bord different, reste en
-                 place et passe au second plan quand la camera le quitte. -->
-            <!-- L'espace avant chaque <br /> n'est pas une coquille : en
-                 portrait la coupure forcee est retiree et c'est cette espace
-                 qui reste pour separer les deux mots — sans elle on lisait
-                 « 14 anneesde terrain ». En paysage elle tombe en fin de
-                 ligne, ou elle ne se voit pas. -->
-            <div class="intro-mot is-1">L&rsquo;exp&eacute;rience de 14 ann&eacute;es <br />de terrain</div>
-            <div class="intro-mot is-2">D&eacute;veloppement de solutions <br />et outils d&eacute;di&eacute;s</div>
-            <div class="intro-mot is-3">Le management <br />par l&rsquo;utilit&eacute;</div>
-
-            <!-- Habillage : la matiere qui entoure l'enonce et le documente.
-                 Sa taille, sa graisse et son ton disent qu'elle n'est pas ce
-                 qu'il faut lire. Elle entre et ressort avec son enonce. -->
-            <span class="intro-sat s01">Vente conseil</span>
-            <span class="intro-sat s02">Relation client</span>
-            <span class="intro-sat s03">Back-office</span>
-            <span class="intro-sat s04">Krys &middot; GrandOptical &middot; Lissac</span>
-            <span class="intro-sat s05">Situations complexes</span>
-            <span class="intro-sat est-foret s06">Google Apps Script</span>
-            <span class="intro-sat est-foret s07">Opti&rsquo;Profit &middot; Brief&rsquo;Maker</span>
-            <span class="intro-sat est-foret s08">PANUM &middot; KuT &middot; L&rsquo;Ortabels</span>
-            <span class="intro-sat est-foret s09">Aide &agrave; la d&eacute;cision</span>
-            <span class="intro-sat est-foret s10">En ligne</span>
-            <span class="intro-sat est-foret s11">Suivi commercial</span>
-            <span class="intro-sat s12">Faire adh&eacute;rer</span>
-            <span class="intro-sat s13">Adoption</span>
-            <span class="intro-sat s14">Structurer sans alourdir</span>
-            <span class="intro-sat s15">D&eacute;montrer l&rsquo;utilit&eacute; concr&egrave;te</span>
-
-            <!-- Le nom est isole dans son propre span : c'est lui, et lui
-                 seul, que le raccord mesure puis deplace vers le h1 du CV.
-                 Mesurer `.intro-mot.is-nom` donnerait la boite du bloc entier,
-                 dont la largeur est celle du sous-titre, plus long. -->
-            <div class="intro-mot is-nom">
-              <span class="intro-nom">J&eacute;r&eacute;my Ribes</span>
-              <span class="intro-role"
-                >Coordinateur de la performance commerciale</span
-              >
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <span class="intro-progress"></span>
-      <button
-        type="button"
-        class="intro-skip"
-        data-intro-skip
-        aria-label="Passer l&rsquo;introduction anim&eacute;e"
-      >
-        Passer
-      </button>
-    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
       integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS"

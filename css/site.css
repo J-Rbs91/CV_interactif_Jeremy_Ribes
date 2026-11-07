@@ -1,0 +1,313 @@
+/* =========================================================================
+   LA PAGE — un document qui défile, noir, un seul accent
+   -------------------------------------------------------------------------
+   Remplace l'application à six écrans. Tout est préfixé `s-` : les feuilles
+   historiques (components.css, sections.css…) restent chargées pour la vue
+   d'impression et le panneau d'export, et un nom commun laisserait l'ancien
+   style s'appliquer à la nouvelle page.
+
+   Un seul accent, le fluo, porté par `--s-acc`. Le cuivre (`--s-hot`) est réservé
+   aux chiffres mesurés. Aucune autre teinte.
+
+   Cette feuille ne s'applique qu'à l'écran : le papier a ses propres feuilles
+   (print.css) et ne voit jamais `.site`, qui est masqué à l'impression.
+   ========================================================================= */
+@property --w  { syntax:"<number>"; inherits:false; initial-value:125; }
+@property --wg { syntax:"<number>"; inherits:false; initial-value:800; }
+@property --r  { syntax:"<percentage>"; inherits:false; initial-value:145%; }
+
+:root {
+  --s-bg: #0a0a0a;
+  --s-fg: #f2f2ee;
+  --s-dim: #9a9da1;
+  --s-line: #222;
+  --s-acc: #c9ff2f;
+  --s-hot: #ff9d63;
+  --s-disp: var(--font-display);
+  --s-e: cubic-bezier(0.62, 0, 0.24, 1);
+}
+
+/* base.css pose `overflow: hidden` sur le corps (l'ancienne application
+   défilait dans un conteneur) et un fond fixe dégradé : la page, elle, défile
+   avec le document. */
+html { scrollbar-gutter: stable; background: var(--s-bg); color-scheme: dark; }
+html, body { height: auto; min-height: 0; }
+body {
+  overflow: visible;
+  overflow-x: clip;
+  background: var(--s-bg);
+  color: var(--s-fg);
+  -webkit-font-smoothing: antialiased;
+}
+body::after { display: none; } /* le grain de l'ancien fond */
+html.intro-lock { overflow: hidden; }
+
+.site { font: 400 16px/1.6 var(--font-sans); }
+.site a { color: inherit; text-decoration: none; }
+/* `bolder` d'un gras est le 900, que la police ne charge pas : le navigateur en
+   prendrait un autre sans le dire. Le gras est donc fixé, jamais relatif. */
+.site strong, .site b { font-weight: 700; }
+.site ::selection { background: var(--s-acc); color: #000; }
+.s-mono { font: 500 12px/1.5 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* ---------- Barre ---------------------------------------------------- */
+.s-top {
+  position: fixed; inset: 0 0 auto; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 22px;
+  padding: 18px 28px 34px;
+  background: linear-gradient(var(--s-bg) 52%, transparent);
+  pointer-events: none;
+}
+.s-top > * { pointer-events: auto; }
+.s-brand { color: var(--s-fg); white-space: nowrap; }
+.s-nav { display: flex; gap: 6px 22px; }
+.s-nav-item, .s-cmd {
+  background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--s-fg);
+  font: inherit; letter-spacing: inherit; text-transform: inherit; white-space: nowrap;
+  border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
+}
+.s-nav-item { color: var(--s-dim); }
+.s-nav-item:hover, .s-cmd:hover { color: var(--s-acc); }
+.s-nav-item.active { color: var(--s-acc); border-bottom-color: var(--s-acc); }
+.s-cmds { display: flex; gap: 22px; }
+.s-short { display: none; }
+.site :is(button, summary, a):focus-visible { outline: 2px solid var(--s-acc); outline-offset: 4px; }
+
+/* ---------- Affiche ---------------------------------------------------- */
+.s-hero {
+  min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; position: relative;
+  padding: 96px 0 90px; overflow: hidden; --px: 0; --py: 0;
+}
+.s-name {
+  display: flex; flex-direction: column; align-items: center;
+  font-family: var(--s-disp); text-transform: uppercase; color: var(--s-acc);
+  line-height: 0.8; letter-spacing: -0.035em; font-size: clamp(54px, 16.2vw, 300px);
+  font-weight: 800; text-align: center; position: relative; white-space: nowrap; margin: 0;
+}
+/* Chaque mot porte une marge intérieure compensée par une marge négative de
+   même valeur : la boîte ne change pas de place, mais le masque de l'ouverture
+   (qui rogne tout ce qui sort de sa boîte) ne coupe ni l'accent du É ni le
+   crochet du J. En colonne flex pour que les marges négatives des deux mots ne
+   fusionnent pas — des marges de blocs adjacents se confondent, celles d'un flex
+   non. */
+.s-w { display: block; padding: 0.24em 0.12em 0.14em; margin: -0.24em -0.12em -0.14em; }
+.s-l {
+  display: inline-block; font-stretch: 125%;
+  font-variation-settings: "wdth" var(--w), "wght" var(--wg);
+  transition: --w 0.35s var(--s-e), --wg 0.35s var(--s-e);
+}
+.s-photo {
+  position: absolute; left: 50%; top: 50%; width: clamp(120px, 19vw, 300px); aspect-ratio: 1;
+  border-radius: 50%; overflow: hidden; z-index: 3; box-shadow: 0 0 0 6px var(--s-bg);
+  transform: translate(calc(-50% + var(--px) * 22px), calc(-52% + var(--py) * 22px));
+  transition: transform 0.5s var(--s-e);
+}
+.s-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.2) brightness(1.12); }
+/* La photo est en niveaux de gris, puis l'accent — mélangé à un blanc cassé —
+   lui est multiplié : le noir reste noir, le blanc prend la teinte du lettrage.
+   Une teinte pleine saturait les clairs (81 %) ; à 25 % ils tombent à 23 %. */
+.s-photo::after {
+  content: ""; position: absolute; inset: 0; mix-blend-mode: multiply;
+  background: color-mix(in srgb, var(--s-acc) 25%, #e8e8e4);
+}
+.s-tag { position: absolute; bottom: 44px; left: 0; right: 0; text-align: center; color: var(--s-dim); z-index: 4; padding: 0 20px; margin: 0; }
+.s-tag b { color: var(--s-fg); font-weight: 500; }
+.s-arrow { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); font-size: 18px; color: var(--s-dim); animation: s-bob 2.2s ease-in-out infinite; }
+@keyframes s-bob { 50% { transform: translate(-50%, 6px); } }
+
+/* Pas de pointeur sur téléphone : le nom respire de lui-même, peu, pour ne pas
+   changer de largeur d'un tiers. */
+@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 14); --wg: 680; } }
+@media (hover: none), (max-width: 760px) {
+  .s-name { --w0: 76; font-size: min(23vw, 150px); }
+  .s-l { --w: var(--w0); }
+  .s-photo { top: auto; bottom: 128px; width: min(34vw, 150px); transform: translate(-50%, 0); }
+  .s-hero { padding-bottom: 130px; }
+}
+
+/* ---------- Bandeau ---------------------------------------------------- */
+.s-ticker { background: var(--s-bg); color: var(--s-acc); overflow: hidden; white-space: nowrap; padding: 14px 0; border-block: 1px solid var(--s-line); }
+.s-ticker div { display: inline-block; animation: s-tick 40s linear infinite; font: 800 clamp(18px, 2.4vw, 30px)/1 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.01em; }
+.s-ticker span { margin: 0 44px; }
+@keyframes s-tick { to { transform: translateX(-50%); } }
+
+/* ---------- Profil ----------------------------------------------------- */
+.s-wrap { padding: 0 28px; max-width: 1500px; margin: 0 auto; }
+.s-big { font: 800 clamp(30px, 6vw, 88px)/1.02 var(--s-disp); font-stretch: 125%; letter-spacing: -0.03em; text-transform: uppercase; padding: 110px 0 24px; max-width: 18ch; margin: 0; }
+.s-big em { font-style: normal; color: var(--s-acc); }
+.s-lead { max-width: 62ch; color: #d6d7d4; font-size: 18px; margin: 0 0 40px; }
+.s-profile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--s-line); }
+.s-block { padding: 26px 0 30px; border-bottom: 1px solid var(--s-line); max-width: 62ch; display: grid; gap: 10px; align-content: start; }
+.s-block p { margin: 0; color: #d6d7d4; }
+.s-wide { grid-column: 1 / -1; max-width: 84ch; }
+.s-strong { color: var(--s-fg); font-weight: 700; margin: 0; }
+.s-dim { color: var(--s-dim); font-size: 14.5px; margin: 0; }
+
+/* ---------- Sections --------------------------------------------------- */
+.s-sec { padding: 140px 0 0; scroll-margin-top: 20px; }
+.s-sh { display: flex; gap: 14px; color: var(--s-dim); margin-bottom: 6px; }
+.s-sec > h2 {
+  font: 800 clamp(30px, 8vw, 128px)/0.9 var(--s-disp); font-stretch: 125%; text-transform: uppercase;
+  letter-spacing: -0.04em; margin: 0 0 46px; color: transparent; -webkit-text-stroke: 1.5px var(--s-acc);
+}
+/* Le remplissage suit le HAUT du titre : il commence quand ce haut franchit 80 %
+   de la hauteur d'écran (en comptant depuis le haut ; 20 % depuis le bas) et se
+   termine quand il atteint 20 %. `view(block 20% 20%)` rogne l'écran de 20 % en
+   haut et en bas ; `entry 0%` est l'instant où le haut du titre entre dans cette
+   zone par le bas, `contain 100%` celui où il touche son bord haut. Ces bornes
+   ne dépendent pas de la hauteur du titre, ce qu'un pourcentage de `cover` ne
+   garantissait pas. Course : 60 % de l'écran. */
+@supports (animation-timeline: view()) {
+  .s-sec > h2 {
+    background: linear-gradient(var(--s-acc), var(--s-acc)) no-repeat 0 0 / 0% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    animation: s-fill linear both; animation-timeline: view(block 20% 20%); animation-range: entry 0% contain 100%;
+  }
+  @keyframes s-fill { to { background-size: 100% 100%; } }
+}
+/* Repli : les navigateurs sans `animation-timeline` reçoivent la même progression
+   par script (--p, de 0 à 1), même plage. */
+html.no-timeline .s-sec > h2 {
+  background: linear-gradient(var(--s-acc), var(--s-acc)) no-repeat 0 0 / calc(var(--p, 0) * 100%) 100%;
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* ---------- Lignes d'index --------------------------------------------- */
+.s-row { border-top: 1px solid var(--s-line); position: relative; }
+.s-row:last-of-type { border-bottom: 1px solid var(--s-line); }
+.s-row summary {
+  list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(96px, 10%) 1fr auto 28px;
+  gap: 18px; align-items: baseline; padding: 22px 0; position: relative;
+  transition: padding 0.35s var(--s-e), color 0.2s;
+}
+.s-row summary::-webkit-details-marker { display: none; }
+.s-row summary::before { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--s-acc); transition: width 0.55s var(--s-e); }
+.s-row summary:hover::before, .s-row[open] > summary::before { width: 100%; }
+.s-n { color: var(--s-dim); }
+.s-t { min-width: 0; font: 800 clamp(26px, 5.2vw, 76px)/0.98 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.03em; }
+.s-t small { display: block; font: 500 12px/1.5 var(--font-mono); letter-spacing: 0.14em; color: var(--s-dim); margin-top: 10px; }
+.s-co { white-space: nowrap; }
+.s-s { color: var(--s-dim); text-align: right; max-width: 30ch; font-size: 14px; }
+.s-pm { font: 500 22px/1 var(--font-mono); color: var(--s-dim); text-align: right; transition: transform 0.35s var(--s-e), color 0.2s; }
+.s-row summary:hover { color: var(--s-acc); padding-left: 14px; }
+.s-row summary:hover .s-pm, .s-row[open] .s-pm { color: var(--s-acc); }
+.s-row[open] > summary { color: var(--s-acc); }
+.s-row[open] .s-pm { transform: rotate(45deg); }
+.s-body { display: grid; grid-template-columns: minmax(96px, 10%) 1fr; gap: 18px; padding: 6px 0 48px; animation: s-open 0.5s var(--s-e); }
+@keyframes s-open { from { opacity: 0; transform: translateY(-10px); } }
+.s-in { max-width: 84ch; display: grid; gap: 12px; color: #d6d7d4; }
+.s-in p { margin: 0; }
+.s-list { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
+.s-list li { padding-left: 22px; position: relative; }
+.s-list li::before { content: "→"; position: absolute; left: 0; color: var(--s-acc); }
+.s-list b, .s-in b { color: var(--s-fg); font-weight: 700; }
+.s-lab { color: var(--s-dim); margin-top: 10px; }
+.s-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.s-chips span { border: 1px solid #333; border-radius: 99px; padding: 3px 12px; font: 500 12px/1.6 var(--font-mono); letter-spacing: 0.06em; color: var(--s-dim); }
+.s-link { color: var(--s-acc); text-decoration: underline; text-underline-offset: 3px; }
+
+/* La preuve est un fait du poste, pas un titre : pastille discrète sur la ligne
+   fermée, paragraphe sobre dans la fiche, avec sa base de comparaison. */
+.s-pchip { display: block; font: 500 12px/1.4 var(--font-mono); letter-spacing: 0.06em; color: var(--s-hot); }
+.s-pf { border-left: 2px solid var(--s-hot); padding-left: 14px; display: grid; gap: 4px; }
+.s-pf b { color: var(--s-hot); font-weight: 700; }
+.s-pf small { color: var(--s-dim); font-size: 13.5px; }
+
+/* ---------- Pied ------------------------------------------------------- */
+.s-foot { margin: 150px 0 0; padding: 36px 0 110px; border-top: 1px solid var(--s-line); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+.s-contact { background: none; border: 0; padding: 0; cursor: pointer; font: 800 clamp(38px, 10vw, 150px)/0.9 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.04em; color: var(--s-acc); transition: letter-spacing 0.5s var(--s-e), color 0.2s; }
+.s-contact:hover { color: var(--s-fg); letter-spacing: -0.02em; }
+.s-foot-meta { display: grid; gap: 16px; color: var(--s-dim); text-align: right; }
+.s-live { display: flex; gap: 18px; justify-content: flex-end; flex-wrap: wrap; }
+
+/* ---------- Ouverture ---------------------------------------------------
+   La page d'accueil se compose sous les yeux. Il n'y a pas de séquence
+   séparée qui s'effacerait pour laisser la place au CV : l'ouverture joue SUR la
+   vraie page d'accueil. Les lettres sont à leur forme définitive dès la première
+   image ; seul un masque les révèle, du pied vers le haut, dans un fondu doux.
+   La dernière image est la page elle-même — pas une copie qui lui ressemble :
+   il n'y a rien à raccorder.
+
+   Trois règles font tenir cette garantie, et aucune ne se voit à l'écran quand
+   elle manque, sauf par un saut d'une image :
+   - chaque animation porte `backwards`, jamais `forwards` : l'état d'arrivée est
+     le style déjà déclaré, pas une valeur recopiée dans une keyframe ;
+   - tout démarre après le chargement des polices : sinon le nom serait recomposé
+     en pleine animation, quand Archivo remplace la police de repli ;
+   - la barre de défilement a sa place réservée (`scrollbar-gutter`) : sans elle
+     la page se décalerait de sa largeur quand le défilement est rendu. */
+html.intro-wait .site *, html.intro-wait .site *::before, html.intro-wait .site *::after { animation-play-state: paused !important; }
+@keyframes s-reveal { from { --r: 0%; } }
+@keyframes s-pop    { from { clip-path: circle(0% at 50% 50%); } 60% { clip-path: circle(54% at 50% 50%); } to { clip-path: circle(150% at 50% 50%); } }
+@keyframes s-settle { from { transform: scale(1.4); } }
+@keyframes s-up     { from { opacity: 0; transform: translateY(14px); } }
+@keyframes s-fade   { from { opacity: 0; } }
+
+/* Tout ce qui suit ne s'applique que si l'ouverture a lieu (`intro-play`, posé
+   par js/ui/intro.js avant le premier rendu). Sans elle, la page est à son état
+   de repos dès la première image. */
+@media (prefers-reduced-motion: no-preference) {
+  html.intro-play .s-w {
+    -webkit-mask-image: linear-gradient(to top, #000 calc(var(--r) - 45%), transparent var(--r));
+            mask-image: linear-gradient(to top, #000 calc(var(--r) - 45%), transparent var(--r));
+    animation: s-reveal 1.7s cubic-bezier(0.33, 0, 0.25, 1) backwards;
+  }
+  html.intro-play .s-w:nth-child(1) { animation-delay: 0.25s; }
+  html.intro-play .s-w:nth-child(2) { animation-delay: 0.4s; }
+  /* Une fois le nom entièrement révélé (fin à 2,1 s), la photo arrive. */
+  html.intro-play .s-photo { animation: s-pop 0.95s var(--s-e) 2.2s backwards; }
+  html.intro-play .s-photo img { animation: s-settle 1.3s var(--s-e) 2.2s backwards; }
+  html.intro-play .s-tag { animation: s-up 0.7s var(--s-e) 2.8s backwards; }
+  html.intro-play .s-top { animation: s-fade 0.6s ease 3s backwards; }
+  html.intro-play .s-arrow { animation: s-fade 0.6s ease 3.1s backwards, s-bob 2.2s ease-in-out 3.7s infinite; }
+}
+html.intro-done .s-w { -webkit-mask-image: none; mask-image: none; }
+/* Téléphone : la respiration du nom commence dès l'arrivée, ou une fois
+   l'ouverture finie si elle a lieu. */
+@media (prefers-reduced-motion: no-preference) and ((hover: none) or (max-width: 760px)) {
+  .s-l { animation: s-breathe 6s ease-in-out infinite; animation-delay: calc(var(--i) * 0.16s); }
+  html.intro-play .s-l { animation-delay: calc(3.8s + var(--i) * 0.16s); }
+}
+.s-skip { position: fixed; left: 28px; bottom: 20px; z-index: 50; background: none; border: 1px solid #333; color: var(--s-dim); border-radius: 99px; padding: 5px 14px; cursor: pointer; }
+.s-skip:hover { color: var(--s-fg); border-color: var(--s-fg); }
+html:not(.intro-lock) .s-skip { display: none; }
+
+/* ---------- Barre sur deux rangées ------------------------------------- *
+   Le nom, six entrées et deux commandes tiennent sur une rangée au-delà de
+   1100 px. En deçà, les entrées passent sur une seconde rangée qui défile. */
+@media (max-width: 1100px) {
+  .s-top { flex-wrap: wrap; gap: 8px 14px; padding: 14px 20px 26px; background: linear-gradient(var(--s-bg) 80%, transparent); }
+  .s-nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; gap: 22px; padding-bottom: 2px; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .s-nav::-webkit-scrollbar { display: none; }
+  .s-cmds { gap: 16px; margin-left: auto; }
+  .s-long { display: none; }
+  .s-short { display: inline; }
+  .s-hero { padding-top: 120px; }
+  .s-sec { scroll-margin-top: 70px; }
+}
+
+/* ---------- Téléphone -------------------------------------------------- */
+@media (max-width: 760px) {
+  .s-wrap { padding: 0 20px; }
+  .s-t { font-size: clamp(20px, 6.4vw, 40px); }
+  .s-profile { grid-template-columns: 1fr; }
+  .s-big { padding-top: 90px; }
+  .s-row summary { grid-template-columns: 1fr 28px; }
+  .s-n, .s-s { display: none; }
+  .s-body { grid-template-columns: 1fr; }
+  .s-body > span { display: none; }
+  .s-sec { padding-top: 110px; }
+  .s-foot-meta { text-align: left; }
+  .s-live { justify-content: flex-start; }
+  .s-skip { left: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Mouvement réduit : pas de remplissage progressif, les titres sont pleins. */
+  .s-sec > h2 { color: var(--s-acc) !important; -webkit-text-stroke: 0 !important; background: none !important; animation: none !important; }
+  .s-ticker div, .s-arrow, .s-l { animation: none !important; }
+  .s-body, .s-photo, .s-row summary::before { animation: none; transition: none; }
+}
+
+/* ---------- Papier ------------------------------------------------------ */
+@media print { .site { display: none !important; } }
