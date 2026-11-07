@@ -92,8 +92,15 @@ main { padding:0 28px; max-width:1500px; margin:0 auto; }
 .sec > h2 { font:800 clamp(30px,8vw,128px)/.9 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.04em; margin-bottom:46px;
   color:transparent; -webkit-text-stroke:1.5px var(--acc); }
 [data-titles="plein"] .sec > h2 { color:var(--acc); -webkit-text-stroke:0; }
+/* Le remplissage suit le HAUT du titre : il commence quand ce haut franchit 80 %
+   de la hauteur d'écran (en comptant depuis le haut ; 20 % depuis le bas) et se
+   termine quand il atteint 20 % (80 % depuis le bas). `view(block 20% 20%)`
+   rogne l'écran de 20 % en haut et en bas ; `entry 0%` est l'instant où le haut
+   du titre entre dans cette zone par le bas, `contain 100%` celui où il touche
+   son bord haut. Ces deux bornes ne dépendent pas de la hauteur du titre, ce
+   qu'un pourcentage de `cover` ne garantissait pas. Course : 60 % de l'écran. */
 @supports (animation-timeline:view()) {
-  [data-titles="contour"] .sec > h2 { background:linear-gradient(var(--acc),var(--acc)) no-repeat 0 0 / 0% 100%; -webkit-background-clip:text; background-clip:text; animation:fill linear both; animation-timeline:view(); animation-range:cover 33% cover 58%; }
+  [data-titles="contour"] .sec > h2 { background:linear-gradient(var(--acc),var(--acc)) no-repeat 0 0 / 0% 100%; -webkit-background-clip:text; background-clip:text; animation:fill linear both; animation-timeline:view(block 20% 20%); animation-range:entry 0% contain 100%; }
   @keyframes fill { to { background-size:100% 100%; } }
 }
 /* Repli : les navigateurs sans `animation-timeline` reçoivent la même progression
@@ -342,7 +349,7 @@ if (canMove) {
 if (!CSS.supports("animation-timeline: view()")) {
   document.documentElement.classList.add("no-timeline");
   const hs = [...document.querySelectorAll(".sec > h2")];
-  const upd = () => hs.forEach((h) => { const r = h.getBoundingClientRect(), vh = innerHeight; const p = Math.min(1, Math.max(0, (vh * 0.62 - r.top) / (vh * 0.28))); h.style.setProperty("--p", p.toFixed(3)); });
+  const upd = () => hs.forEach((h) => { const r = h.getBoundingClientRect(), vh = innerHeight; const p = Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (vh * 0.6))); h.style.setProperty("--p", p.toFixed(3)); });
   addEventListener("scroll", () => requestAnimationFrame(upd), { passive: true }); addEventListener("resize", upd); upd();
 }
 
