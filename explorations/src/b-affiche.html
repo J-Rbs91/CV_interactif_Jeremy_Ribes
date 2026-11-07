@@ -26,7 +26,7 @@
    Un seul accent, réglable. Le cuivre des preuves, lui, ne bouge pas. */
 @property --w  { syntax:"<number>"; inherits:false; initial-value:125; }
 @property --wg { syntax:"<number>"; inherits:false; initial-value:800; }
-:root { --bg:#0a0a0a; --fg:#f2f2ee; --dim:#9a9da1; --line:#222; --acc:#cfe3ff; --hot:#ff9d63; --disp:"Archivo","Manrope",sans-serif; --e:cubic-bezier(.62,0,.24,1); }
+:root { --bg:#0a0a0a; --fg:#f2f2ee; --dim:#9a9da1; --line:#222; --acc:#c9ff2f; --hot:#ff9d63; --disp:"Archivo","Manrope",sans-serif; --e:cubic-bezier(.62,0,.24,1); }
 * { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
 body { background:var(--bg); color:var(--fg); font:400 16px/1.6 "Manrope",sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
@@ -36,7 +36,7 @@ a { color:inherit; text-decoration:none; }
 .disp { font-family:var(--disp); font-stretch:125%; font-weight:800; text-transform:uppercase; }
 
 /* ---------- Barre ---------- */
-.top { position:fixed; inset:0 0 auto; display:flex; justify-content:space-between; padding:20px 28px; z-index:20; mix-blend-mode:difference; color:#fff; pointer-events:none; }
+.top { position:fixed; inset:0 0 auto; display:flex; justify-content:space-between; padding:20px 28px 34px; z-index:20; color:#fff; pointer-events:none; background:linear-gradient(var(--bg) 52%, transparent); }
 .top > * { pointer-events:auto; }
 .top nav { display:flex; gap:22px; }
 
@@ -76,13 +76,6 @@ a { color:inherit; text-decoration:none; }
 .ticker div { display:inline-block; animation:tick 40s linear infinite; font:800 clamp(18px,2.4vw,30px)/1 var(--disp); font-stretch:125%; text-transform:uppercase; letter-spacing:-.01em; }
 .ticker span { margin:0 28px; }
 @keyframes tick { to { transform:translateX(-50%); } }
-
-/* ---------- La preuve ---------- */
-.proofs { padding:120px 28px 20px; max-width:1500px; margin:0 auto; }
-.proofs .nums { display:flex; flex-wrap:wrap; gap:0 .9em; margin:18px 0 26px; font:800 clamp(56px,14vw,230px)/.9 var(--disp); font-stretch:125%; letter-spacing:-.045em; color:var(--hot); text-transform:uppercase; }
-.proofs .nums small { display:block; font:500 12px/1.4 "JetBrains Mono",monospace; letter-spacing:.14em; color:var(--dim); margin-top:12px; }
-.proofs .base { max-width:62ch; color:var(--dim); font-size:15px; }
-.proofs .base b { color:var(--fg); font-weight:500; }
 
 /* ---------- Sections ---------- */
 main { padding:0 28px; max-width:1500px; margin:0 auto; }
@@ -125,6 +118,13 @@ details[open] .pm { transform:rotate(45deg); }
 .body li { padding-left:22px; position:relative; }
 .body li::before { content:"→"; position:absolute; left:0; color:var(--acc); }
 .lab { color:var(--dim); margin-top:10px; }
+/* La preuve est un fait du poste, pas un titre : une pastille discrète sur la ligne
+   fermée, et un paragraphe sobre dans la fiche, avec sa base de comparaison. */
+.pchip { font:500 12px/1.4 "JetBrains Mono",monospace; letter-spacing:.06em; color:var(--hot); white-space:nowrap; }
+.pf { border-left:2px solid var(--hot); padding-left:14px; display:grid; gap:4px; }
+.pf b { color:var(--hot); font-weight:700; }
+.pf small { color:var(--dim); font-size:13.5px; }
+.pf a { color:var(--acc); text-decoration:underline; text-underline-offset:3px; }
 .chips { display:flex; flex-wrap:wrap; gap:8px; }
 .chips span { border:1px solid #333; border-radius:99px; padding:3px 12px; font:500 12px/1.6 "JetBrains Mono",monospace; letter-spacing:.06em; color:var(--dim); }
 .big { font:800 clamp(30px,6vw,88px)/1.02 var(--disp); font-stretch:125%; letter-spacing:-.03em; text-transform:uppercase; padding:70px 0 10px; max-width:18ch; }
@@ -150,8 +150,7 @@ details[open] .pm { transform:rotate(45deg); }
   summary .n, summary .s { display:none; }
   .body { grid-template-columns:1fr; }
   .body > span { display:none; }
-  .proofs { padding-top:90px; }
-  .tweaks { right:10px; bottom:10px; }
+    .tweaks { right:10px; bottom:10px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .ticker div, .arrow, .name .l { animation:none !important; }
@@ -171,7 +170,6 @@ details[open] .pm { transform:rotate(45deg); }
 </header>
 
 <div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
-<section class="proofs" id="preuves"></section>
 <main id="doc"></main>
 
 <aside class="tweaks mono" id="tweaks" data-closed="false" aria-label="Réglages de l’exploration">
@@ -203,22 +201,27 @@ $("#ticker").innerHTML = [...items, ...items, ...items, ...items].map((t) => `<s
 const nav = [["Expériences", "experiences"], ["Outils", "outils"], ["Projets", "projets"], ["Compétences", "competences"], ["Formation", "formation"]];
 $("#nav").innerHTML = nav.map(([l, id]) => `<a href="#${id}">${l}</a>`).join("");
 
-/* ---- la preuve ---- */
-const pe = C.experiences.find((e) => e.stats);
-$("#preuves").innerHTML = `<div class="mono" style="color:var(--dim)">Preuve mesurée · ${pe.company}</div><div class="nums">${pe.stats.map((s) => `<div>${s.value}${s.label ? `<small>${s.label}</small>` : ""}</div>`).join("")}</div><p class="base"><b>${pe.statsLabel}</b> — ${pe.statsBase}</p>`;
-
 /* ---- le document ---- */
-const row = (n, title, sub, side, body) => `<details><summary><span class="n mono">${n}</span><span class="t">${title}${sub ? `<small>${sub}</small>` : ""}</span><span class="s">${side || ""}</span><span class="pm">+</span></summary><div class="body"><span></span><div class="in">${body}</div></div></details>`;
+const row = (n, title, sub, side, body, id) => `<details${id ? ` id="${id}"` : ""}><summary><span class="n mono">${n}</span><span class="t">${title}${sub ? `<small>${sub}</small>` : ""}</span><span class="s">${side || ""}</span><span class="pm">+</span></summary><div class="body"><span></span><div class="in">${body}</div></div></details>`;
 const lab = (t) => `<div class="lab mono">${t}</div>`;
 const sec = (id, n, title, count, inner) => `<section class="sec" id="${id}"><div class="sh mono"><span>${n}</span><span>${count}</span></div><h2>${title}</h2>${inner}</section>`;
 
+const statsText = (e) => e.stats.map((x) => x.value + (x.label ? " " + x.label : ""));
+const expId = (e) => "exp-" + e.id;
 const exp = C.experiences.map((e) => {
-  const stats = e.stats ? `<p style="color:var(--hot);font-weight:700">${e.stats.map((s) => s.value + (s.label ? " " + s.label : "")).join(" · ")}</p><p style="color:var(--dim);font-size:14px">${e.statsLabel} — ${e.statsBase}</p>` : "";
-  return row(e.date, e.company, e.role, "", `${e.context ? `<p>${e.context}</p>` : ""}<ul>${e.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${stats}${e.result ? `<p>${e.result}</p>` : ""}`);
+  const stats = e.stats ? `<p class="pf"><span>${statsText(e).map((t) => `<b>${t}</b>`).join(" · ")}</span><small>${e.statsLabel} — ${e.statsBase}</small></p>` : "";
+  const chip = e.stats ? `<span class="pchip">${statsText(e).join(" · ")}</span>` : "";
+  return row(e.date, e.company, e.role, chip, `${e.context ? `<p>${e.context}</p>` : ""}<ul>${e.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${stats}${e.result ? `<p>${e.result}</p>` : ""}`, expId(e));
 }).join("");
 
+/* Opti'Profit a été conçu et utilisé pendant le poste de Générale d'Optique. Le
+   chiffre du poste est rappelé comme CONTEXTE : les données disent que relance,
+   équipe et réorganisation ont joué ensemble, donc il n'est pas présenté comme
+   le résultat de l'outil. */
+const opti = C.experiences.find((e) => e.stats);
+const ctxOpti = (o) => o.id === "optiprofit" && opti ? `${lab("Contexte mesuré")}<div class="pf"><span>Poste où il a servi : <a href="#${expId(opti)}" data-open="${expId(opti)}">${opti.company}, ${opti.date} ↗</a></span><span>${opti.statsLabel} ${statsText(opti).map((t) => `<b>${t}</b>`).join(" · ")}.</span><small>${opti.statsBase} Plusieurs actions ont joué ensemble : l’outil n’explique pas l’écart à lui seul.</small></div>` : "";
 const out = C.outils.map((o, i) => row(pad(i), o.title, o.category, o.status,
-  `<p>${o.summary}</p>${lab("Situation")}<p>${o.context}</p>${o.arbitrage ? lab("Décision") + `<p>${o.arbitrage}</p>` : ""}${lab("Réponse")}<p>${o.action}</p>${lab("Résultat")}<p>${o.results}</p><div class="chips">${o.chips.map((c) => `<span>${c}</span>`).join("")}</div>${o.link ? `<p><a style="color:var(--acc)" href="${o.link.url}">${o.link.label} ↗</a></p>` : ""}`)).join("");
+  `<p>${o.summary}</p>${lab("Situation")}<p>${o.context}</p>${o.arbitrage ? lab("Décision") + `<p>${o.arbitrage}</p>` : ""}${lab("Réponse")}<p>${o.action}</p>${lab("Résultat")}<p>${o.results}</p>${ctxOpti(o)}<div class="chips">${o.chips.map((c) => `<span>${c}</span>`).join("")}</div>${o.link ? `<p><a style="color:var(--acc)" href="${o.link.url}">${o.link.label} ↗</a></p>` : ""}`)).join("");
 
 const prj = C.projets.map((p, i) => row(pad(i), p.short, p.subtitle, "",
   `<ul>${p.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${lab("Compétences transférables")}<ul>${p.transferableSkills.map((t) => `<li><b>${t.title}</b> — ${t.text}</li>`).join("")}</ul>${p.link ? `<p><a style="color:var(--acc)" href="${p.link.url}">${p.link.label} ↗</a></p>` : ""}`)).join("");
@@ -233,6 +236,12 @@ $("#doc").innerHTML =
   `<p class="big">${C.profile.quote.replace("plus lisible", "<em>plus lisible</em>")}</p>` +
   sec("experiences", "01", "Expériences", `${C.experiences.length} postes`, exp) + sec("outils", "02", "Outils", `${C.outils.length} outils`, out) + sec("projets", "03", "Projets", `${C.projets.length} projets`, prj) + sec("competences", "04", "Compétences", `${C.competences.length} domaines`, comp) + sec("formation", "05", "Formation", f.year, form) +
   `<div class="contact"><a href="${C.contact.site.url}">Me contacter ↗</a><span class="mono" style="color:var(--dim)">${C.contact.name}<br>${C.contact.items[0].text}</span></div>`;
+
+/* ---- « Voir le poste » : ouvre la fiche visée avant d'y aller ---- */
+document.querySelectorAll("a[data-open]").forEach((a) => a.addEventListener("click", (ev) => {
+  ev.preventDefault(); const d = document.getElementById(a.dataset.open); if (!d) return;
+  d.open = true; d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" });
+}));
 
 /* ---- les lettres suivent le pointeur ----
    Distance au curseur → axe de chasse et graisse. Les centres sont mesurés une
@@ -266,14 +275,14 @@ if (!CSS.supports("animation-timeline: view()")) {
 
 /* ---- réglages ---- */
 const ACC = { fluo: "#c9ff2f", cuivre: "#ff9d63", glace: "#cfe3ff", blanc: "#f2f2ee" };
-let T = { acc: "glace", photo: "duo", titles: "contour" };
-try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-2") || "{}")); } catch (e) {}
+let T = { acc: "fluo", photo: "duo", titles: "contour" };
+try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-3") || "{}")); } catch (e) {}
 const q = new URLSearchParams(location.search); for (const k of ["acc", "photo", "titles"]) if (q.get(k)) T[k] = q.get(k);
 function apply() {
   document.documentElement.style.setProperty("--acc", ACC[T.acc] || ACC.fluo);
   document.body.dataset.photo = T.photo; document.body.dataset.titles = T.titles;
   document.querySelectorAll(".tweaks button").forEach((b) => b.setAttribute("aria-pressed", String(T[b.dataset.k] === b.dataset.v)));
-  try { localStorage.setItem("b-reglages-2", JSON.stringify(T)); } catch (e) {}
+  try { localStorage.setItem("b-reglages-3", JSON.stringify(T)); } catch (e) {}
 }
 document.querySelectorAll(".tweaks button").forEach((b) => b.addEventListener("click", () => { T[b.dataset.k] = b.dataset.v; apply(); }));
 if (innerWidth < 760) { $("#tweaks").dataset.closed = "true"; $("#tw-x").textContent = "+"; }
