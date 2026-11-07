@@ -12,26 +12,31 @@
    et rien dans le code ne le signalerait. */
 export const projetsTransverses = [
   {
-    id: "kut",
-    short: "KuT",
-    title: "KuT : logiciel de gestion pour salons et activités de bien-être",
-    subtitle: "Conception produit & pilotage · en ligne, développement continu",
+    id: "hub-opticien",
+    short: "Hub optique",
+    title: "Hub Outils Opticien : les tâches du magasin réunies dans une interface",
+    subtitle: "Conception d’outil métier · en usage quotidien en magasin",
     bullets: [
-      "Traduction des besoins d’un salon à prestations récurrentes en parcours, règles métier et fonctionnalités : clients, réservations, planning, fidélité, campagnes commerciales et indicateurs. Module de caisse et exports comptables en cours.",
-      "Écriture des règles métier, des cas limites et des plans de tests, pour vérifier de façon fiable le comportement des fonctions sensibles.",
-      "Pilotage du projet : cadrage fonctionnel, priorisation des évolutions, validation des usages et préparation du déploiement.",
+      "Réunion des tâches courtes et répétées d’un magasin d’optique dans une seule application web : documents pour les médecins, clôture de caisse et calculs d’épaisseur et de décentrement des verres.",
+      "Paramétrage unique des informations du magasin, documents standardisés, contrôle des écarts de caisse et calculs reproductibles pour limiter les ressaisies.",
+      "Mise en service dans le magasin où je travaille : l’équipe utilise quotidiennement ces outils. Le choix d’une interface simple évite d’ajouter de nouvelles procédures à des tâches rapides.",
     ],
-    link: { label: "Découvrir KuT", url: "https://kut.panum.fr/" },
+    /* Déjà présent dans les Outils : éviter un doublon dans « Produits en ligne ». */
+    liveProduct: false,
+    link: {
+      label: "Découvrir le Hub Outils Opticien",
+      url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
+    },
     transferableSkills: [
       {
         title: "Conception produit",
         nature: "produit",
-        text: "Partir d’un besoin métier réel et le traduire en parcours, règles fonctionnelles et priorités claires.",
+        text: "Transformer plusieurs besoins de terrain en une interface commune, sans multiplier les outils isolés.",
       },
       {
-        title: "Sécurisation fonctionnelle",
+        title: "Fiabilisation des pratiques",
         nature: "cadre",
-        text: "Écrire les règles et les cas limites avant le code, pour pouvoir vérifier ensuite que tout fonctionne comme prévu.",
+        text: "Uniformiser les documents et les calculs sans demander aux collaborateurs davantage de saisies.",
       },
     ],
   },
