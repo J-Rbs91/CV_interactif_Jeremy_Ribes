@@ -54,14 +54,13 @@ export const outils = [
     status: "En usage quotidien en magasin",
     detailLabel: "Supprimer la ressaisie",
     chips: ["Tâches récurrentes", "Fiabilisation des calculs", "Standardisation", "Données locales", "Application web"],
-    /* Exclu du bandeau « Produits en ligne » (cf. getLiveProducts). */
-    liveProduct: false,
     link: {
       label: "Découvrir le hub",
       url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
+      printLabel: "Hub Outils Opticien",
     },
     summary:
-      "Un point d’entrée unique pour les tâches courtes et répétées du magasin (demande au médecin, clôture de caisse, calcul d’épaisseur), paramétrées une fois et utilisables sans formation.",
+      "Un hub web utilisé chaque jour en magasin : demandes aux médecins, clôture de caisse et calculs optiques réunis dans une même interface pour éviter les ressaisies.",
     context:
       "Ces tâches s’appuyaient sur des documents dispersés, des calculs refaits à la main et les mêmes informations ressaisies chaque fois. Chacune paraît mineure, mais répétées chaque jour, elles prennent du temps et laissent passer des erreurs.",
     arbitrage:
