@@ -8,6 +8,17 @@ import {
   renderTagRow,
 } from "./renderUtils.js";
 
+/* Le lecteur voit d'abord les postes visés, puis la limite exacte de
+   l'expérience : les intitulés ne sont pas présentés comme acquis. */
+function renderTarget() {
+  const { context, ambition, roles, limits } = profileContent.target;
+  return `<p class="cv-target-context">${context}</p>
+      <p class="cv-target-ambition">${ambition}</p>
+      <p class="cv-target-label">Fonctions recherchées</p>
+      <ul class="cv-target-roles">${roles.map((role) => `<li>${role}</li>`).join("")}</ul>
+      <p class="cv-target-limits">${limits}</p>`;
+}
+
 /* La photo a rejoint l'identité, à droite du nom : elle y est visible depuis
    toutes les sections, pas seulement depuis celle-ci. La citation reprend
    donc l'ouverture pour elle seule. */
@@ -40,7 +51,7 @@ export function renderProfilSection() {
 
     <div class="card n-cadre">
       <div class="card-title"><div class="dot"></div>Ce que je vise</div>
-      <div class="card-text">${profileContent.target}</div>
+      <div class="card-text cv-target">${renderTarget()}</div>
     </div>
   `;
 }

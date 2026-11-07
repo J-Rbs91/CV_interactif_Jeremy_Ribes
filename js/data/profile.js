@@ -5,19 +5,13 @@
    Il était dispersé sur des fragments (« outils », « procédures », « irritant
    précis ») qui ne formaient aucune phrase : la couche attirait l'attention
    sans rien rendre, et hachait la lecture continue de ceux qui lisent tout.
-   Un passage par bloc, et il se suffit. Aucun texte métier n'a changé :
-   seules les bornes du gras ont bougé.
-
-   Un passage, pas deux, et c'est une contrainte de proportion autant que de
-   sens : un premier réglage tenait la phrase mais mettait 40 à 47 % du bloc
-   en gras. Une seconde couche qui couvre la moitié de la première ne
-   hiérarchise plus rien — elle rend seulement le bloc entier plus lourd.
-   Sous 30 %, le gras redevient un relief. */
+   Un seul passage fort par bloc, lisible isolément et nettement minoritaire.
+   Le texte éditorial reste la source de vérité pour le site et les exports. */
 export const profileContent = {
   quote:
     "Rendre une activité plus lisible et plus facile à piloter, sans l’alourdir.",
   intro:
-    "J’ai <strong>progressivement élargi mon rôle de la vente à l’organisation de l’activité</strong> : procédures, suivi des dossiers, plannings, accompagnement de l’équipe et indicateurs de pilotage. Cette part de mon travail, d’abord secondaire, est devenue centrale, et j’ai construit les outils qui manquaient pour la tenir.",
+    "Opticien de formation et ancien responsable de magasin, <strong>j’ai progressivement élargi mon activité à l’organisation et au pilotage</strong> : procédures, suivi des dossiers, plannings, indicateurs et outils métiers. Ce travail, d’abord complémentaire à la vente, est devenu celui que je souhaite exercer à titre principal.",
   cards: [
     {
       title: "Positionnement",
@@ -40,8 +34,16 @@ export const profileContent = {
     { label: "Organisation d’équipe", nature: "cadre" },
     { label: "Conduite du changement", nature: "cadre" },
   ],
-  target:
-    "<strong>Un rôle transverse dédié à l’organisation de l’activité</strong>, sur des fonctions organisation, process ou outils métiers. Je vise ce type de poste dans un réseau commercial, un service client, ou une entreprise en croissance soumise à de fortes contraintes opérationnelles.",
+  target: {
+    context: "L’optique est le secteur dans lequel j’ai acquis ma légitimité. C’est aussi celui où les possibilités d’évolution vers les fonctions qui m’intéressent sont limitées dans mon rayon de mobilité.",
+    ambition: "<strong>Je veux faire de l’organisation, du pilotage et des outils métiers le cœur de mon prochain poste</strong>, dans l’optique ou dans un autre secteur.",
+    roles: [
+      "Coordinateur opérationnel ou de performance",
+      "Chargé de projet organisation et méthodes",
+      "Chef de projet outils métiers",
+    ],
+    limits: "Je n’ai pas encore occupé ces fonctions sous ces intitulés. Je présente ici les responsabilités effectivement assumées, les résultats auxquels j’ai contribué et les compétences que je pourrais transposer, en apprenant les spécificités d’un nouvel environnement.",
+  },
 };
 
 /* Contenus propres au recto A4 (js/render/renderCv.js). Ils vivent ici et non
@@ -57,20 +59,13 @@ export const profileContent = {
 export const a4Content = {
   /* Un paragraphe, et c'est un resserrage assume. Il y en avait deux —
      le deplacement du profil, puis la methode — qui disaient juste et
-     tenaient six lignes en tete de page. Un lecteur qui accorde trente
-     secondes a une feuille n'en depense pas cinq sur une profession de foi :
-     les deux idees restent, dans une seule phrase chacune, et les trois
-     lignes rendues vont au blanc du bloc suivant.
+     tenaient six lignes en tete de page. Le recto doit désormais annoncer
+     à la fois la compétence construite sur le terrain et la transition vers
+     des fonctions transverses, sans revendiquer un poste déjà exercé.
 
-     Ce qui est parti n'est pas du sens, c'est de la redite : « suivi de la
-     performance et coordination entre objectifs de direction et contraintes
-     d'execution » enonce deux des cinq competences qui suivent, et
-     l'enumeration des quatre formes de reponse redisait la methode que le
-     verbe portait deja.
-
-     Le gras, relu seul, doit toujours former un enonce complet. */
+     Le gras, relu seul, doit toujours former un énoncé intelligible. */
   pitch: [
-    "Profil de terrain <strong>tourné vers l’organisation de l’activité</strong> : process formalisés, outils métiers conçus sur mesure, pilotage rendu possible. Je pars d’un problème concret et je choisis la réponse : changer une pratique, nommer un responsable ou construire l’outil qui manque.",
+    "Opticien de formation et ancien responsable de magasin, j’ai <strong>développé des compétences en organisation, pilotage et outils métiers</strong>. Les perspectives locales dans l’optique sont limitées : je vise des fonctions transversales de coordination ou de projet, dans l’optique ou ailleurs.",
   ],
   /* Trois preuves, et trois seulement : impact economique, adoption terrain,
      transferabilite. Elles ne se remplacent pas l'une l'autre — c'est leur
@@ -87,7 +82,7 @@ export const a4Content = {
     {
       nature: "produit",
       value: "3 outils en usage quotidien",
-      text: "Suivi des devis, brief quotidien et hub d’outils, utilisés chaque jour par l’équipe en magasin.",
+      text: "Suivi des devis, Brief’Maker et Hub Outils Opticien, utilisés chaque jour en magasin.",
     },
     /* Deux formulations ecartees avant celle-ci. « Repris hors de leur
        contexte » disait un concept, pas un fait, et se lisait comme un
@@ -104,23 +99,11 @@ export const a4Content = {
       text: "Gestionnaire de planning resté en service après mon départ, Opti’Profit transmis à une direction régionale, brief et suivi repris dans une autre enseigne.",
     },
   ],
-  /* Deux entrees, pas trois : ces projets prouvent que la methode se
-     transfere hors de l'optique, ils ne composent pas un second parcours.
-     L'Ortabels et Renta Menu se disent ensemble parce qu'ils prouvent la meme
-     chose — modeliser pour decider — et separes ils prendraient deux fois la
-     place pour une seule demonstration.
-
-     Une ligne chacun, et c'est une contrainte dure : a deux lignes le bloc
-     pesait autant que le parcours entier, pour une mention qui n'a qu'a
-     etablir que la methode se transfere hors optique. C'est ce qui a fait
-     tomber la categorie qui accompagnait chaque titre — « Conception produit
-     & pilotage », « Modelisation & aide a la decision » : elle nommait ce que
-     le texte juste apres decrivait deja, et cette redite coutait la ligne. */
+  /* Un seul bloc de projets transverses dans le recto A4 : L’Ortabels et
+     Renta Menu démontrent que la méthode de modélisation et d’aide à la
+     décision se transfère hors de l’optique. Leur détail reste accessible
+     dans le CV interactif. */
   projects: [
-    {
-      title: "KuT",
-      text: "Besoins métier traduits en parcours, règles fonctionnelles et plans de tests.",
-    },
     {
       title: "L’Ortabels · Renta Menu",
       text: "Données métier transformées en outils de décision.",
@@ -176,12 +159,12 @@ export const formationContent = {
     {
       title: "Développement web & desktop",
       nature: "produit",
-      text: "Hub d’outils magasin, interfaces d’aide à la vente, application de suivi commercial.",
+      text: "Hub Outils Opticien, interfaces d’aide à la vente, application de suivi commercial.",
     },
     {
       title: "Mise en production",
       nature: "cadre",
-      text: "Environnements, contrôles qualité et déploiements automatisés sur KuT, PANUM et L’Ortabels.",
+      text: "Environnements, contrôles qualité et déploiements automatisés sur PANUM et L’Ortabels.",
     },
   ],
   quote:

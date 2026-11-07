@@ -44,7 +44,7 @@ export const experiences = [
       "Mise en place d’un système de pilotage reliant suivi des devis et du tiers payant, prochaine action, charge par collaborateur et brief quotidien. Les outils s’alimentent entre eux : les dossiers à reprendre deviennent des priorités visibles, puis des actions attribuées à chacun. La direction voit où l’activité bloque et qui doit agir.",
       "Contrôles automatisés des saisies dans le suivi des devis, et comparaison avec le logiciel métier pour repérer les dossiers non suivis et mesurer l’écart.",
       "Méthode de back-office éprouvée chez Générale d’Optique, défendue auprès de la direction et de l’équipe en place jusqu’à son adoption : procédures de contrôle des commandes, de dispatch et de traitement des retards, vérifications à J+1, rendez-vous de livraison lissés sur la semaine.",
-      "Outillage des tâches courantes du magasin, regroupées en un point d’entrée unique pour supprimer les ressaisies et uniformiser les documents produits.",
+      "Conception du Hub Outils Opticien : documents pour les médecins, clôture de caisse et calculs optiques regroupés dans une interface commune pour limiter les ressaisies et uniformiser les documents.",
       "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
     ],
     a4Summary:
@@ -62,7 +62,7 @@ export const experiences = [
        une seule fois, par la première puce ; le résultat ne la redit pas, il
        établit qu'elle sert. */
     result:
-      "Trois outils utilisés chaque jour par l’équipe : suivi des devis, brief quotidien et hub d’outils du magasin. Les deux premiers, conçus dans mon poste précédent, ont été repris ici parce qu’ils servaient, sans que personne ne les ait demandés.",
+      "Trois outils utilisés chaque jour par l’équipe : suivi des devis, Brief’Maker et Hub Outils Opticien. Les deux premiers, conçus dans mon poste précédent, ont été repris ici parce qu’ils servaient, sans que personne ne les ait demandés.",
   },
   {
     id: "generale-optique",
