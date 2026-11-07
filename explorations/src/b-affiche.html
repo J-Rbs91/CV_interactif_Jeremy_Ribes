@@ -377,15 +377,15 @@ else {
 
 /* ---- réglages ---- */
 const ACC = { fluo: "#c9ff2f", cuivre: "#ff9d63", glace: "#cfe3ff", blanc: "#f2f2ee" };
-let T = { acc: "fluo", photo: "duo", titles: "contour", tint: "douce" };
+let T = { acc: "fluo", photo: "duo", titles: "contour", tint: "subtile" };
 const TINT = { pleine: "100%", douce: "50%", subtile: "25%" };
-try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-4") || "{}")); } catch (e) {}
+try { Object.assign(T, JSON.parse(localStorage.getItem("b-reglages-5") || "{}")); } catch (e) {}
 const q = new URLSearchParams(location.search); for (const k of ["acc", "photo", "titles", "tint"]) if (q.get(k)) T[k] = q.get(k);
 function apply() {
   document.documentElement.style.setProperty("--acc", ACC[T.acc] || ACC.fluo);
   document.documentElement.style.setProperty("--photo-sat", TINT[T.tint] || TINT.douce); document.body.dataset.photo = T.photo; document.body.dataset.titles = T.titles;
   document.querySelectorAll(".tweaks button").forEach((b) => b.setAttribute("aria-pressed", String(T[b.dataset.k] === b.dataset.v)));
-  try { localStorage.setItem("b-reglages-4", JSON.stringify(T)); } catch (e) {}
+  try { localStorage.setItem("b-reglages-5", JSON.stringify(T)); } catch (e) {}
 }
 document.querySelectorAll(".tweaks button").forEach((b) => b.addEventListener("click", () => { T[b.dataset.k] = b.dataset.v; apply(); }));
 if (innerWidth < 760) { $("#tweaks").dataset.closed = "true"; $("#tw-x").textContent = "+"; }
