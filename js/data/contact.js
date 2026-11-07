@@ -1,10 +1,16 @@
 export const contact = {
   name: "Jérémy Ribes",
   role: "Structuration de l’activité & outils métiers",
+  /* L’accueil annonce le parcours et la fonction recherchée dès le premier
+     écran, sans laisser croire que ce poste a déjà été occupé. */
+  hero: {
+    background: "Opticien · ancien responsable de magasin",
+    target: "Je vise : coordination opérationnelle ou projets métiers",
+  },
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
-    "Opticien de formation et ancien responsable de magasin, j’ai progressivement élargi mon activité à l’organisation, au pilotage et à la conception d’outils métiers. Je souhaite désormais en faire ma fonction principale, dans l’optique ou ailleurs, en m’appuyant sur des réalisations concrètes.",
+    "Opticien de formation et ancien responsable de magasin, j’ai progressivement élargi mon activité à l’organisation et au pilotage du travail. Je recherche aujourd’hui des fonctions de coordination opérationnelle ou de gestion de projets d’organisation et d’outils métiers, dans l’optique ou ailleurs.",
   /* L'adresse du CV en ligne. Elle ne sert à rien à l'écran — on y est déjà —
      mais le recto A4 se détache de son support : imprimé ou versé à un
      dossier, il ne porte plus aucun chemin de retour, et le formulaire de

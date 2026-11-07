@@ -143,6 +143,23 @@ html.intro-lock { overflow: hidden; }
 .s-strong { color: var(--s-fg); font-weight: 700; margin: 0; }
 .s-dim { color: var(--s-dim); font-size: 14.5px; margin: 0; }
 
+/* Profil : l'essentiel se lit d'abord. Les détails utilisent le même
+   composant natif que les fiches du CV, sans animation supplémentaire. */
+.s-first .s-big { padding-top: 64px; }
+.s-first .s-lead { margin-bottom: 28px; }
+.s-profile-more { border-bottom: 1px solid var(--s-line); }
+.s-profile-more > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 19px 0; cursor: pointer; list-style: none;
+  color: var(--s-acc); font: 500 13px/1.6 var(--font-mono);
+}
+.s-profile-more > summary::-webkit-details-marker { display: none; }
+.s-profile-more > summary::after { content: "+"; font-size: 22px; flex: 0 0 auto; }
+.s-profile-more[open] > summary::after { content: "−"; }
+.s-profile-more > summary:focus-visible { outline: 2px solid var(--s-acc); outline-offset: 4px; }
+.s-profile-more .s-profile { border-top: 1px solid var(--s-line); }
+
+
 /* ---------- Sections --------------------------------------------------- */
 .s-sec { padding: 140px 0 0; scroll-margin-top: 20px; }
 .s-sh { display: flex; gap: 14px; color: var(--s-dim); margin-bottom: 6px; }
@@ -292,6 +309,7 @@ html:not(.intro-lock) .s-skip { display: none; }
   .s-t { font-size: clamp(20px, 6.4vw, 40px); }
   .s-profile { grid-template-columns: 1fr; }
   .s-big { padding-top: 90px; }
+  .s-first .s-big { padding-top: 44px; }
   .s-row summary { grid-template-columns: 1fr 28px; }
   .s-n, .s-s { display: none; }
   .s-body { grid-template-columns: 1fr; }
