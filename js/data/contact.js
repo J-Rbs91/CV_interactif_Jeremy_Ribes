@@ -1,6 +1,12 @@
 export const contact = {
   name: "Jérémy Ribes",
   role: "Structuration de l’activité & outils métiers",
+  /* L’accueil annonce le parcours et la fonction recherchée dès le premier
+     écran, sans laisser croire que ce poste a déjà été occupé. */
+  hero: {
+    background: "Opticien · ancien responsable de magasin",
+    target: "Je vise : coordination opérationnelle ou projets métiers",
+  },
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
   intro:
