@@ -39,11 +39,11 @@ export const experiences = [
     date: "2025 → aujourd’hui",
     recency: "now",
     context:
-      "En plus de la vente, j’ai pris en charge une part croissante de l’organisation et de l’outillage du magasin.",
+      "En parallèle de la vente, j’organise le suivi des dossiers et développe des outils utilisés par l’équipe.",
     bullets: [
-      "Mise en place d’un système de pilotage reliant suivi des devis et du tiers payant, prochaine action, charge par collaborateur et brief quotidien. Les outils s’alimentent entre eux : les dossiers à reprendre deviennent des priorités visibles, puis des actions attribuées à chacun. La direction voit où l’activité bloque et qui doit agir.",
+      "J’ai relié le suivi des devis et du tiers payant au brief quotidien. Chaque dossier à reprendre apparaît avec sa prochaine action et le collaborateur chargé de la traiter. La direction peut consulter les retards et la charge de l’équipe.",
       "Contrôles automatisés des saisies dans le suivi des devis, et comparaison avec le logiciel métier pour repérer les dossiers non suivis et mesurer l’écart.",
-      "Méthode de back-office éprouvée chez Générale d’Optique, défendue auprès de la direction et de l’équipe en place jusqu’à son adoption : procédures de contrôle des commandes, de dispatch et de traitement des retards, vérifications à J+1, rendez-vous de livraison lissés sur la semaine.",
+      "J’ai fait adopter chez Krys des méthodes déjà utilisées chez Générale d’Optique : contrôle des commandes, répartition des dossiers, traitement des retards, vérifications à J+1 et rendez-vous de livraison répartis sur la semaine.",
       "Conception du Hub Outils Opticien : documents pour les médecins, clôture de caisse et calculs optiques regroupés dans une interface commune pour limiter les ressaisies et uniformiser les documents.",
       "Conception et envoi d’une campagne e-mail sur une base de plus de mille clients segmentée, consentements vérifiés avant envoi, 96,5 % de délivrabilité. Attribution suivie jusqu’à la prise de rendez-vous en magasin.",
     ],
@@ -62,7 +62,7 @@ export const experiences = [
        une seule fois, par la première puce ; le résultat ne la redit pas, il
        établit qu'elle sert. */
     result:
-      "Trois outils utilisés chaque jour par l’équipe : suivi des devis, Brief’Maker et Hub Outils Opticien. Les deux premiers, conçus dans mon poste précédent, ont été repris ici parce qu’ils servaient, sans que personne ne les ait demandés.",
+      "Le suivi des devis, Brief’Maker et le Hub Outils Opticien sont utilisés chaque jour par l’équipe. Les deux premiers avaient été conçus chez Générale d’Optique.",
   },
   {
     id: "generale-optique",
@@ -72,13 +72,13 @@ export const experiences = [
     date: "2024 → 2025",
     recency: "recent",
     context:
-      "Reprise d’un magasin en difficulté : relance commerciale, réorganisation du fonctionnement quotidien et constitution de l’équipe.",
+      "Responsable d’un magasin en difficulté, j’ai travaillé sur l’activité commerciale, l’organisation et le recrutement.",
     bullets: [
       "Rédaction de l’offre d’emploi, conduite des entretiens et formation des deux collaborateurs recrutés.",
-      "Stratégie de présence locale proposée et mise en place : actions ciblées, référencement local et collecte d’avis Google.",
+      "Mise en place d’actions commerciales locales, amélioration du référencement du magasin et collecte d’avis Google.",
       "Formalisation des procédures de contrôle, de dispatch et de traitement des retards. Refonte des horaires et des règles de présence pour aligner les effectifs sur la charge réelle.",
       "Instauration d’un brief de début de journée et d’un suivi commun des devis : tâches de back-office attribuées nommément, dossiers à reprendre visibles de toute l’équipe.",
-      "Conception d’Opti’Profit, un outil d’aide à la décision qui croise besoin technique, budget du client, réseau de soins, prix de vente et coût d’achat pour ne proposer que des solutions compatibles et préserver la marge. Pendant la vente, le prix final, la remise et la marge s’affichent immédiatement, ce qui permet d’ajuster l’offre sur place.",
+      "Conception d’Opti’Profit : pendant la vente, l’outil affiche les dix produits compatibles offrant la meilleure marge, selon les contraintes techniques, le réseau de soins, les préférences et le budget du client. Prix final et remise restent visibles pour ajuster l’offre.",
     ],
     a4Summary:
       "Redynamisation commerciale · organisation du point de vente · recrutement et formation · conception d’outils",
@@ -107,8 +107,8 @@ export const experiences = [
       "Onze ans en magasin, dans trois enseignes.",
     bullets: [
       "Vente conseil et traitement des dossiers complexes : contraintes techniques, réseaux de soins, tiers payant.",
-      "Trois façons différentes d’organiser un magasin, vécues de l’intérieur : c’est là que j’ai appris ce qui fonctionne vraiment en point de vente.",
-      "Bascule progressive vers les sujets d’organisation : méthodes de travail, fiabilisation des calculs récurrents et du suivi des dossiers.",
+      "Expérience de trois organisations de magasin, de leurs procédures commerciales et du traitement des dossiers.",
+      "Premières améliorations des méthodes de travail, des calculs récurrents et du suivi des dossiers.",
     ],
     a4Summary:
       "Onze ans de terrain, trois enseignes, trois organisations : vente, dossiers complexes, puis organisation et fiabilisation des méthodes.",
