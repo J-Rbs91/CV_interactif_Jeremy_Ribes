@@ -7,8 +7,8 @@ function buildClassName(baseClassName, itemClassName) {
   return [baseClassName, itemClassName].filter(Boolean).join(" ");
 }
 
-/* Bandeau des produits en ligne, dérivé des liens déclarés dans outils.js et
-   projets.js. `liveProduct: false` exclut une entrée du bandeau. */
+/* Les liens viennent des Outils et des Projets. Un projet déjà présenté
+   comme outil n'est listé qu'une fois (`liveProduct: false`). */
 export function getLiveProducts() {
   return [
     ...outils
@@ -20,7 +20,7 @@ export function getLiveProducts() {
         nature: "preuve",
       })),
     ...projetsTransverses
-      .filter((projet) => projet.link)
+      .filter((projet) => projet.link && projet.liveProduct !== false)
       .map((projet) => ({
         name: projet.title.split(" : ")[0],
         url: projet.link.url,

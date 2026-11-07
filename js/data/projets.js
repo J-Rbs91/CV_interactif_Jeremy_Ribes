@@ -1,16 +1,38 @@
-/* `id` et `short` — les projets se presentent en onglets (voir
-   js/render/renderProjets.js).
-
-   `id` relie l'onglet a son panneau (`aria-controls`, `aria-labelledby`).
-   `short` est le libelle de l'onglet : le nom du produit, sans sa
-   description.
-
-   Les deux sont declares, jamais derives du `title`. Le titre se decoupe a
-   « : » — `getLiveProducts()` le fait deja pour la ligne « Produits en
-   ligne » — mais ce decoupage suppose que chaque titre suive la meme forme.
-   Le jour ou un titre n'en a plus, l'onglet afficherait une phrase entiere,
-   et rien dans le code ne le signalerait. */
+/* `id` conserve une identité stable pour chaque projet ; `short` est
+   le libellé court affiché dans le registre de la page. Les détails
+   proviennent de ces données, également utilisées pour l'export complet.
+   `liveProduct: false` évite de doubler dans le pied de page un lien
+   déjà présent parmi les outils. */
 export const projetsTransverses = [
+  {
+    id: "hub-opticien",
+    short: "Hub optique",
+    title: "Hub Outils Opticien : les tâches du magasin réunies dans une interface",
+    subtitle: "Conception d’outil métier · en usage quotidien en magasin",
+    bullets: [
+      "Réunion des tâches courtes et répétées d’un magasin d’optique dans une seule application web : documents pour les médecins, clôture de caisse et calculs d’épaisseur et de décentrement des verres.",
+      "Paramétrage unique des informations du magasin, documents standardisés, contrôle des écarts de caisse et calculs reproductibles pour limiter les ressaisies.",
+      "Mise en service dans le magasin où je travaille : l’équipe utilise quotidiennement ces outils. Le choix d’une interface simple évite d’ajouter de nouvelles procédures à des tâches rapides.",
+    ],
+    /* Déjà présent dans les Outils : éviter un doublon dans « Produits en ligne ». */
+    liveProduct: false,
+    link: {
+      label: "Découvrir le Hub Outils Opticien",
+      url: "https://j-rbs91.github.io/Hub_Tools_N_Templates/",
+    },
+    transferableSkills: [
+      {
+        title: "Conception produit",
+        nature: "produit",
+        text: "Transformer plusieurs besoins de terrain en une interface commune, sans multiplier les outils isolés.",
+      },
+      {
+        title: "Fiabilisation des pratiques",
+        nature: "cadre",
+        text: "Uniformiser les documents et les calculs sans demander aux collaborateurs davantage de saisies.",
+      },
+    ],
+  },
   {
     id: "ortabels",
     short: "L’Ortabels",
