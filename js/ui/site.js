@@ -283,6 +283,12 @@ function bindToggleAll() {
 }
 
 function bindHeroHelpers() {
+  /* Rang de chaque lettre (retard de la respiration) : posé ici et non en attribut
+     `style`, pour que la politique de sécurité n'autorise pas les styles en ligne. */
+  document.querySelectorAll(".s-l").forEach((letter, index) => {
+    letter.style.setProperty("--i", index);
+  });
+
   const next = document.querySelector("[data-scroll-next]");
 
   next?.addEventListener("click", () => {

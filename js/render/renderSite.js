@@ -299,10 +299,9 @@ function renderFormation() {
 
 function renderHero() {
   const [first, ...rest] = contact.name.split(" ");
-  let index = 0;
   const word = (text) =>
     `<span class="s-w" aria-hidden="true">${[...text]
-      .map((letter) => `<span class="s-l" style="--i:${index++}">${letter}</span>`)
+      .map((letter) => `<span class="s-l">${letter}</span>`)
       .join("")}</span>`;
   const territories = contact.secondaryRole.split(" · ");
   /* La bande répète les quatre territoires pour boucler : seule la première

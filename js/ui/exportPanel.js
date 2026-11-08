@@ -9,6 +9,12 @@ const COPIED_MARK = boldIcon("check");
 let escapeListenerBound = false;
 let lastTrigger = null;
 let copyResetTimeoutId = 0;
+let openedAt = 0;
+
+/* Un double-clic sur le déclencheur envoie son second clic sur ce qui se trouve
+   alors sous le pointeur dans le tiroir — un document, c'est-à-dire une impression.
+   Pendant sa mise en place (0,45 s), le tiroir ignore donc tout clic. */
+const OPENING_MS = 400;
 
 function getPanel() {
   return document.getElementById("export-panel");
@@ -37,6 +43,11 @@ function openPanel(trigger) {
   panel.classList.add("is-open");
   panel.removeAttribute("inert");
   setExpanded(true);
+  openedAt = performance.now();
+
+  /* Un tiroir rouvert repart du haut, pas de là où le dernier focus l'avait
+     laissé défilé. */
+  panel.querySelector(".p-sheet")?.scrollTo({ top: 0 });
 
   /* Le premier canal, pas le bouton de fermeture : au clavier comme au
      lecteur d'ecran, on entre dans le panneau par ce qu'il propose. */
@@ -194,6 +205,17 @@ export function bindExportPanel() {
     bindEscapeClose();
     return;
   }
+
+  panel.addEventListener(
+    "click",
+    (event) => {
+      if (performance.now() - openedAt < OPENING_MS && !event.target.closest("[data-close-export]")) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    },
+    true,
+  );
 
   panel.querySelector("[data-close-export]")?.addEventListener("click", demanderFermeture);
 

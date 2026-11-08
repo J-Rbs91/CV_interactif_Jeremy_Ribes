@@ -58,7 +58,7 @@ try {
    voit pas (`aria-modal` promet ce confinement, il faut le tenir). Appelé
    AVANT que la couche ne rende le focus : un élément encore inerte ne le
    reçoit pas. */
-const ARRIERE_PLAN = ["main", ".s-top", "#skip"];
+const ARRIERE_PLAN = ["main", ".s-top", "#skip", ".s-skiplink"];
 
 function majArrierePlan() {
   const ouverte = pile.length > 0;

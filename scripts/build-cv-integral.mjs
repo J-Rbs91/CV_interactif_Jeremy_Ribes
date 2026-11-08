@@ -25,7 +25,7 @@
 
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 
 import { renderPrintDocument } from "../js/render/renderPrint.js";
 
@@ -63,6 +63,55 @@ function neutraliserCommandes(html) {
     .replace(/<\/button>/g, "</div>");
 }
 
+/* Préchargement des modules. Le graphe d'import de `js/main.js` descend sur six
+   niveaux : le navigateur ne découvre un module qu'après avoir lu celui qui
+   l'importe, soit six allers-retours en série avant le premier rendu — pendant
+   lesquels l'ouverture attend, sur un écran noir. Un `modulepreload` par module
+   les demande tous d'emblée. La liste est GÉNÉRÉE depuis les imports réels, comme
+   le texte intégral : écrite à la main, elle dériverait au premier ajout de
+   fichier. */
+const PRE_DEBUT = "<!-- MODULEPRELOAD:DEBUT — liste generee, ne pas editer a la main -->";
+const PRE_FIN = "<!-- MODULEPRELOAD:FIN -->";
+
+async function listerModules(entree, vus = new Set()) {
+  if (vus.has(entree)) {
+    return vus;
+  }
+
+  vus.add(entree);
+
+  const source = await readFile(entree, "utf8");
+
+  for (const [, chemin] of source.matchAll(/(?:from|import)\s*["'](\.{1,2}\/[^"']+\.js)["']/g)) {
+    await listerModules(resolve(dirname(entree), chemin), vus);
+  }
+
+  return vus;
+}
+
+async function construirePrechargement() {
+  const modules = [...(await listerModules(join(racine, "js/main.js")))]
+    .map((fichier) => `./${relative(racine, fichier).split("\\").join("/")}`)
+    .sort();
+
+  return [
+    PRE_DEBUT,
+    ...modules.map((href) => `    <link rel="modulepreload" href="${href}" />`),
+    `    ${PRE_FIN}`,
+  ].join("\n");
+}
+
+function remplacerPrechargement(source, liste) {
+  const debut = source.indexOf(PRE_DEBUT);
+  const fin = source.indexOf(PRE_FIN);
+
+  if (debut === -1 || fin === -1) {
+    throw new Error(`Marqueurs introuvables dans index.html :\n  ${PRE_DEBUT}\n  ${PRE_FIN}`);
+  }
+
+  return source.slice(0, debut) + liste + source.slice(fin + PRE_FIN.length);
+}
+
 function construireBloc() {
   const document = neutraliserCommandes(
     prefixerIdentifiants(renderPrintDocument()),
@@ -94,7 +143,10 @@ function remplacerBloc(source, bloc) {
 }
 
 const source = await readFile(cible, "utf8");
-const attendu = remplacerBloc(source, construireBloc());
+const attendu = remplacerPrechargement(
+  remplacerBloc(source, construireBloc()),
+  await construirePrechargement(),
+);
 
 if (process.argv.includes("--verify")) {
   if (source !== attendu) {

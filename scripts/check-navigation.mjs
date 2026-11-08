@@ -306,6 +306,59 @@ try {
       "revenue au geste retour",
     );
   }
+
+  /* 4. Ce qu'une couche fait du reste de la page ---------------------------
+     Ouverte, elle rend inerte l'arrière-plan (`aria-modal` promet un confinement
+     que seul `inert` tient) et fige le défilement. Fermée — quel que soit le
+     geste —, elle rend la page où le lecteur l'avait laissée, et le focus au
+     déclencheur : la traversée d'historique renvoyait en haut de la section
+     courante et laissait le focus sur <body>. Mesuré APRÈS le retour, jamais
+     avant la fin de la traversée. */
+  await ouvrir("/index.html#outils");
+  await evaluate("document.querySelectorAll('#outils details')[4].scrollIntoView({ block: 'center' })");
+  await wait(400);
+  const position = await evaluate("Math.round(window.scrollY)");
+
+  await cliquer("[data-open-export]");
+  verifier(
+    "couche ouverte — l'arriere-plan est inerte",
+    await evaluate("document.querySelector('main').inert && document.querySelector('.s-top').inert"),
+    "main ou la barre restent atteignables au clavier",
+  );
+  verifier(
+    "couche ouverte — le document ne defile plus",
+    await evaluate("getComputedStyle(document.documentElement).overflow === 'hidden'"),
+    "la molette defilerait la page derriere le voile",
+  );
+
+  for (const geste of ["interface", "retour"]) {
+    if (geste === "retour") {
+      await cliquer("[data-open-export]");
+      await retour();
+    } else {
+      await cliquer("[data-close-export]");
+    }
+
+    await wait(300);
+    verifier(
+      `fermeture par ${geste} — la position de lecture est conservee`,
+      (await evaluate("Math.round(window.scrollY)")) === position,
+      `${position} → ${await evaluate("Math.round(window.scrollY)")}`,
+    );
+    verifier(
+      `fermeture par ${geste} — l'arriere-plan n'est plus inerte`,
+      await evaluate("!document.querySelector('main').inert && !document.querySelector('.s-top').inert"),
+      "page restee inerte",
+    );
+
+    if (geste === "interface") {
+      verifier(
+        "fermeture par interface — le focus revient au declencheur",
+        await evaluate("document.activeElement?.hasAttribute('data-open-export') ?? false"),
+        String(await evaluate("document.activeElement?.tagName")),
+      );
+    }
+  }
 } finally {
   socket.close();
   browser.kill();

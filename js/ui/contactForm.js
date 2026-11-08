@@ -7,6 +7,8 @@ const EMAILJS_PUBLIC_KEY = "XaKCNJspsS14ZNmOl";
 let emailjsInitialized = false;
 let escapeListenerBound = false;
 let lastContactTrigger = null;
+let openedAt = 0;
+const OPENING_MS = 400; /* voir exportPanel.js : le second clic d'un double-clic */
 
 function ensureEmailJSInit() {
   if (emailjsInitialized || typeof emailjs === "undefined") {
@@ -38,6 +40,7 @@ function openContactModal() {
   modal.classList.add("is-open");
   modal.removeAttribute("inert");
   setExpanded(true);
+  openedAt = performance.now();
   modal.querySelector("input[name='from_name']")?.focus();
 
   /* Meme contrat que le panneau d'export : la modale est une couche posee sur
@@ -172,6 +175,17 @@ export function bindContactForm() {
     bindEscapeClose();
     return;
   }
+
+  modal.addEventListener(
+    "click",
+    (event) => {
+      if (performance.now() - openedAt < OPENING_MS && !event.target.closest("[data-close-contact]")) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    },
+    true,
+  );
 
   modal.querySelector("[data-close-contact]")
     ?.addEventListener("click", demanderFermetureContact);

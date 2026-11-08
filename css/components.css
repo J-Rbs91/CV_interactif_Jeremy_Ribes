@@ -541,6 +541,9 @@
 /* La puce marquait la nature quand le bloc était une boîte. Le rail le fait
    maintenant, en plus structurel : deux marques pour la même information
    se contredisent. css/print.css la masque déjà pour la même raison. */
+.card-title.ct-14 { font-size: 14px; }
+.card-title.ct-16 { font-size: 16px; }
+
 .card-title .dot {
   display: none;
 }

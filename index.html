@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://j-rbs.goatcounter.com; connect-src https://api.emailjs.com https://j-rbs.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://gc.zgo.at; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://j-rbs.goatcounter.com; connect-src https://api.emailjs.com https://j-rbs.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,8 +114,15 @@
     />
     <meta
       property="og:image"
-      content="https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/assets/img/favicon-round.png"
+      content="https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/assets/img/og-cv.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="J&eacute;r&eacute;my Ribes, en lettres vert fluo sur fond noir, avec son portrait en bichromie"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="profile:first_name" content="J&eacute;r&eacute;my" />
     <meta property="profile:last_name" content="Ribes" />
@@ -140,6 +147,33 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- MODULEPRELOAD:DEBUT — liste generee, ne pas editer a la main -->
+    <link rel="modulepreload" href="./js/data/competences.js" />
+    <link rel="modulepreload" href="./js/data/contact.js" />
+    <link rel="modulepreload" href="./js/data/experiences.js" />
+    <link rel="modulepreload" href="./js/data/outils.js" />
+    <link rel="modulepreload" href="./js/data/profile.js" />
+    <link rel="modulepreload" href="./js/data/projets.js" />
+    <link rel="modulepreload" href="./js/data/sections.js" />
+    <link rel="modulepreload" href="./js/main.js" />
+    <link rel="modulepreload" href="./js/render/renderCompetences.js" />
+    <link rel="modulepreload" href="./js/render/renderContact.js" />
+    <link rel="modulepreload" href="./js/render/renderCv.js" />
+    <link rel="modulepreload" href="./js/render/renderExperiences.js" />
+    <link rel="modulepreload" href="./js/render/renderExport.js" />
+    <link rel="modulepreload" href="./js/render/renderOutils.js" />
+    <link rel="modulepreload" href="./js/render/renderPrint.js" />
+    <link rel="modulepreload" href="./js/render/renderProjets.js" />
+    <link rel="modulepreload" href="./js/render/renderSite.js" />
+    <link rel="modulepreload" href="./js/render/renderUtils.js" />
+    <link rel="modulepreload" href="./js/ui/backNavigation.js" />
+    <link rel="modulepreload" href="./js/ui/contactForm.js" />
+    <link rel="modulepreload" href="./js/ui/exportPanel.js" />
+    <link rel="modulepreload" href="./js/ui/icons.js" />
+    <link rel="modulepreload" href="./js/ui/print.js" />
+    <link rel="modulepreload" href="./js/ui/share.js" />
+    <link rel="modulepreload" href="./js/ui/site.js" />
+    <!-- MODULEPRELOAD:FIN -->
     <!--
       Cinq feuilles ne servent qu'au papier et au texte intégral sans
       JavaScript : l'écran principal ne consomme que base.css (familles,
@@ -205,10 +239,10 @@
 
     <div class="grid-2 profile-cards">
       <div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:16px"><div class="dot"></div>Positionnement</div>
+    <div class="card-title ct-16"><div class="dot"></div>Positionnement</div>
     <div class="card-text">Je fais le lien entre les objectifs de la direction et les contraintes de terrain. J’adapte les méthodes et les outils à ce qui se passe réellement en magasin.</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:16px"><div class="dot"></div>Méthode</div>
+    <div class="card-title ct-16"><div class="dot"></div>Méthode</div>
     <div class="card-text">Quand un oubli, une ressaisie ou un retard revient souvent, je regarde comment le travail est organisé. Je peux revoir une procédure, préciser qui fait quoi ou développer un outil. Je vérifie ensuite avec l’équipe que la solution fonctionne au quotidien.</div>
   </div>
     </div>
@@ -935,10 +969,10 @@
     <div class="section-label">Compétences transférables</div>
     <div class="grid-2">
       <div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Conception produit</div>
+    <div class="card-title ct-14"><div class="dot"></div>Conception produit</div>
     <div class="card-text dim">Regrouper des tâches différentes dans une application adaptée aux usages du magasin.</div>
   </div><div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Fiabilisation des pratiques</div>
+    <div class="card-title ct-14"><div class="dot"></div>Fiabilisation des pratiques</div>
     <div class="card-text dim">Utiliser les mêmes modèles de documents et les mêmes calculs dans toute l’équipe.</div>
   </div>
     </div>
@@ -955,10 +989,10 @@
     <div class="section-label">Compétences transférables</div>
     <div class="grid-2">
       <div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Modèles prédictifs</div>
+    <div class="card-title ct-14"><div class="dot"></div>Modèles prédictifs</div>
     <div class="card-text dim">Estimer les périodes de semis et de récolte à partir des températures locales.</div>
   </div><div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Organisation</div>
+    <div class="card-title ct-14"><div class="dot"></div>Organisation</div>
     <div class="card-text dim">Organiser les rotations, les séries et les différentes étapes des cultures.</div>
   </div>
     </div>
@@ -975,10 +1009,10 @@
     <div class="section-label">Compétences transférables</div>
     <div class="grid-2">
       <div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Analyse de données</div>
+    <div class="card-title ct-14"><div class="dot"></div>Analyse de données</div>
     <div class="card-text dim">Rapprocher coûts, prix et volumes pour calculer les marges et le seuil de rentabilité.</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Rentabilité</div>
+    <div class="card-title ct-14"><div class="dot"></div>Rentabilité</div>
     <div class="card-text dim">Mesurer les effets du prix de vente, du coût matière et des effectifs sur la marge.</div>
   </div>
     </div>
@@ -997,25 +1031,25 @@
     <div class="section-label">Compétences acquises en autodidacte</div>
     <div class="grid-2">
       <div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Formalisation de process</div>
+    <div class="card-title ct-14"><div class="dot"></div>Formalisation de process</div>
     <div class="card-text dim">Procédures de back-office et guides de traitement, priorisés selon le modèle de Kano.</div>
   </div><div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Attribution des responsabilités</div>
+    <div class="card-title ct-14"><div class="dot"></div>Attribution des responsabilités</div>
     <div class="card-text dim">Nommer qui traite quoi, et pour quand. Le brief quotidien et le suivi des devis rendent les responsables et les échéances visibles.</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Indicateurs avancés & retardés</div>
+    <div class="card-title ct-14"><div class="dot"></div>Indicateurs avancés & retardés</div>
     <div class="card-text dim">Distinguer les chiffres qui constatent un résultat de ceux sur lesquels on peut encore agir (délais, relances, dossiers à risque). C’est la logique de PANUM.</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Analyse de données & modélisation</div>
+    <div class="card-title ct-14"><div class="dot"></div>Analyse de données & modélisation</div>
     <div class="card-text dim">Indicateurs causaux (PANUM), modèles de croissance thermique (L’Ortabels), régressions de prix (Renta Menu).</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Google Apps Script</div>
+    <div class="card-title ct-14"><div class="dot"></div>Google Apps Script</div>
     <div class="card-text dim">Développement des outils internes présentés en section Outils.</div>
   </div><div class="card-sm n-produit">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Développement web & desktop</div>
+    <div class="card-title ct-14"><div class="dot"></div>Développement web & desktop</div>
     <div class="card-text dim">Hub Outils Opticien, interfaces d’aide à la vente, application de suivi commercial.</div>
   </div><div class="card-sm n-cadre">
-    <div class="card-title" style="font-size:14px"><div class="dot"></div>Mise en production</div>
+    <div class="card-title ct-14"><div class="dot"></div>Mise en production</div>
     <div class="card-text dim">Environnements, contrôles qualité et déploiements automatisés sur PANUM et L’Ortabels.</div>
   </div>
     </div>
