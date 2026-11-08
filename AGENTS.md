@@ -71,6 +71,15 @@
   (segno installé hors projet : le dépôt reste sans dépendance). Symbole 4-M,
   37 modules ; à 18 mm de côté chaque module fait 0,49 mm, au-dessus du seuil
   de lecture d'un téléphone. Le réduire le rendrait décoratif.
+- `assets/img/favicon.svg`, `favicon.ico`, `apple-touch-icon.png` : le monogramme
+  « JR » — contours d'Archivo 900 à chasse 125 % extraits de la police (aucun
+  texte dans le SVG : il ne dépend d'aucune police installée), encre #0a0a0a sur
+  fluo #c9ff2f, coins arrondis à 22 %. Fluo plutôt que noir : un onglet sombre
+  avalerait une pastille noire. Fichiers figés, pas des rendus à la volée ; ils se
+  régénèrent depuis le fichier variable de Google Fonts avec fontTools
+  (`instantiateVariableFont({'wght': 900, 'wdth': 125})`, glyphes J et R, écart
+  de −8 unités, marge de 56/512), puis Chromium pour les PNG et Pillow pour l'ICO.
+  Le favicon n'est plus la photo : elle reste dans `portrait/`.
 - `assets/img/portrait/` : la photo affichée dans le CV. Elle est distincte
   du favicon et de l'`og:image`, qui ont leurs propres contraintes de
   cadrage — les confondre ferait dépendre trois usages d'un seul fichier.
