@@ -34,20 +34,20 @@ export const sections = [
     nature: "produit",
   },
   {
-    id: "projet",
-    icon: "sprout",
-    label: "Projets transverses",
-    short: "Projets",
-    sub: "Conception produit & modélisation",
-    nature: "produit",
-  },
-  {
     id: "competences",
     icon: "check",
     label: "Compétences",
     short: "Compétences",
     sub: "Domaines de prédilection",
     nature: "cadre",
+  },
+  {
+    id: "projet",
+    icon: "sprout",
+    label: "Projets transverses",
+    short: "Projets",
+    sub: "Conception produit & modélisation",
+    nature: "produit",
   },
   {
     id: "formation",

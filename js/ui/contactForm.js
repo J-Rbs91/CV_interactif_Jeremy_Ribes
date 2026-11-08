@@ -1,4 +1,4 @@
-import { fermerCouche, ouvrirCouche } from "./backNavigation.js";
+import { coucheOuverte, fermerCouche, ouvrirCouche } from "./backNavigation.js";
 
 const EMAILJS_SERVICE_ID = "service_tpynp8t";
 const EMAILJS_TEMPLATE_ID = "template_k8zwk94";
@@ -21,16 +21,23 @@ function getContactModal() {
   return document.getElementById("contact-modal");
 }
 
+function setExpanded(value) {
+  document
+    .querySelectorAll("[data-open-contact]")
+    .forEach((trigger) => trigger.setAttribute("aria-expanded", String(value)));
+}
+
 function openContactModal() {
   ensureEmailJSInit();
   const modal = getContactModal();
 
-  if (!modal) {
+  if (!modal || coucheOuverte()) {
     return;
   }
 
   modal.classList.add("is-open");
   modal.removeAttribute("inert");
+  setExpanded(true);
   modal.querySelector("input[name='from_name']")?.focus();
 
   /* Meme contrat que le panneau d'export : la modale est une couche posee sur
@@ -65,6 +72,7 @@ function closeContactModal() {
   }
 
   modal.classList.remove("is-open");
+  setExpanded(false);
 
   /* Rendre le focus avant de poser `inert`, et dans cet ordre. Un element
      qui devient inerte pendant qu'il porte le focus le perd au profit du
@@ -78,13 +86,13 @@ function closeContactModal() {
   modal.setAttribute("inert", "");
   lastContactTrigger = null;
 
-  const form = modal.querySelector("form");
-  if (form) {
-    form.reset();
-  }
-
+  /* Le formulaire n'est PAS remis à zéro ici : le message en cours reste, que
+     la couche soit fermée par le bouton, Échap ou le geste retour — et surtout
+     après une erreur d'envoi, où fermer ne doit pas détruire ce qu'on invite à
+     renvoyer. Il ne se vide qu'au succès (`handleContactSubmit`). Seul un
+     retour de succès, devenu sans objet, s'efface. */
   const feedback = modal.querySelector("[data-contact-feedback]");
-  if (feedback) {
+  if (feedback?.classList.contains("is-success")) {
     feedback.textContent = "";
     feedback.className = "contact-feedback";
   }
@@ -117,11 +125,19 @@ async function handleContactSubmit(event) {
     feedback.classList.add("is-success");
     form.reset();
   } catch (error) {
-    feedback.textContent = "Erreur lors de l'envoi. Réessayez ou contactez-moi sur LinkedIn.";
+    /* Aucun autre canal n'existe sur le site : le message promet donc
+       seulement ce qui est vrai — le texte est conservé, on peut renvoyer. */
+    feedback.textContent = "Erreur lors de l'envoi. Votre message est conservé : réessayez dans un instant.";
     feedback.classList.add("is-error");
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "Envoyer";
+
+    /* Le bouton désactivé portait le focus : il retombait sur <body>. Le retour
+       reçoit le focus pour que le clavier et le lecteur d'écran restent dans la
+       couche, au bon endroit. */
+    feedback.tabIndex = -1;
+    feedback.focus({ preventScroll: true });
   }
 }
 
@@ -143,6 +159,8 @@ function bindEscapeClose() {
 
 export function bindContactForm() {
   document.querySelectorAll("[data-open-contact]").forEach((button) => {
+    button.setAttribute("aria-controls", "contact-modal");
+    button.setAttribute("aria-expanded", "false");
     button.addEventListener("click", () => {
       lastContactTrigger = button;
       openContactModal();

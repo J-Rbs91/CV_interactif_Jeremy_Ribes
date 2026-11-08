@@ -14,7 +14,10 @@
    ========================================================================= */
 @property --w  { syntax:"<number>"; inherits:false; initial-value:125; }
 @property --wg { syntax:"<number>"; inherits:false; initial-value:800; }
-@property --r  { syntax:"<percentage>"; inherits:false; initial-value:145%; }
+/* 125 % et non 145 % : le dégradé du masque a 45 % de bord, et au-delà de 125 %
+   le fondu est entièrement au-dessus des lettres — plus rien ne change à l'écran
+   alors que l'animation court encore. La course visible tient dans 125 %. */
+@property --r  { syntax:"<percentage>"; inherits:false; initial-value:125%; }
 
 :root {
   --s-bg: #0a0a0a;
@@ -25,7 +28,32 @@
   --s-hot: #ff9d63;
   --s-disp: var(--font-display);
   --s-e: cubic-bezier(0.62, 0, 0.24, 1);
+  /* Courbe douce de la révélation du nom : la seule qui ne soit pas --s-e. */
+  --s-e-soft: cubic-bezier(0.33, 0, 0.25, 1);
+
+  /* Jetons nés de l'inventaire des écarts : chacun remplace des valeurs
+     littérales qui avaient dérivé (quatre #333, trois #d6d7d4, cinq #000, six
+     corps de lecture de 13,5 à 18 px, quatre interlettrages mono). */
+  --s-text: #d6d7d4;             /* prose : entre le blanc cassé et l'atténué */
+  --s-on-acc: #000;              /* texte posé sur l'accent */
+  --s-surface: #161616;          /* pastilles d'étiquette */
+  --s-veil: rgba(10, 10, 10, 0.8);
+  --s-line-ui: #606060;          /* bordure d'un contrôle : 3,15:1, seuil WCAG 1.4.11 */
+  --s-t-fast: 0.2s;              /* couleur, bordure, fond */
+  --s-t-move: 0.35s;             /* décalage, rotation, hauteur */
+  --s-t-slow: 0.55s;             /* filet qui grandit, interlettrage */
+  --s-fs-mono: 12px;
+  --s-fs-small: 14px;
+  --s-fs-body: 16px;
+  --s-fs-lead: 18px;
+  --s-bar-h: 79px;               /* barre fixe : tout calage s'y réfère */
+  interpolate-size: allow-keywords;
+  /* Flèche vers la droite en masque : la puce des listes. Une flèche de texte
+     était composée par une police de repli, différente d'un appareil à l'autre. */
+  --s-i-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z'/%3E%3C/svg%3E");
+  --s-i-arrow-ne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M204,64V168a12,12,0,0,1-24,0V93L72.49,200.49a12,12,0,0,1-17-17L163,76H88a12,12,0,0,1,0-24H192A12,12,0,0,1,204,64Z'/%3E%3C/svg%3E");
 }
+@media (max-width: 1100px) { :root { --s-bar-h: 104px; } }
 
 /* base.css pose `overflow: hidden` sur le corps (l'ancienne application
    défilait dans un conteneur) et un fond fixe dégradé : la page, elle, défile
@@ -40,34 +68,56 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 body::after { display: none; } /* le grain de l'ancien fond */
-html.intro-lock { overflow: hidden; }
+html.intro-lock { overflow: hidden; touch-action: none; overscroll-behavior: none; }
+/* Une couche ouverte (tiroir, modale) fige le document : la molette sur le voile
+   faisait défiler la page derrière, puis tout sautait à la fermeture. La gouttière
+   est réservée (`scrollbar-gutter`), donc rien ne se décale. */
+html.couche-ouverte { overflow: hidden; }
 
 .site { font: 400 16px/1.6 var(--font-sans); }
 .site a { color: inherit; text-decoration: none; }
 /* `bolder` d'un gras est le 900, que la police ne charge pas : le navigateur en
    prendrait un autre sans le dire. Le gras est donc fixé, jamais relatif. */
 .site strong, .site b { font-weight: 700; }
-.site ::selection { background: var(--s-acc); color: #000; }
-.s-mono { font: 500 12px/1.5 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.site ::selection { background: var(--s-acc); color: var(--s-on-acc); }
+.s-mono { font: 500 var(--s-fs-mono)/1.5 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+/* Texte pour les lecteurs d'écran seulement. */
+.s-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Segment insécable : une coupe ne tombe qu'entre deux. */
+.s-nb { white-space: nowrap; }
+/* Signe de direction en vecteur, calé sur la ligne de base du texte voisin. */
+.s-ico { display: inline-block; flex: none; width: 0.8em; height: 0.8em; margin-left: 0.3em; vertical-align: -0.1em; }
+.site .s-skiplink {
+  position: fixed; left: 16px; top: -80px; z-index: 60; padding: 10px 16px;
+  background: var(--s-acc); color: var(--s-on-acc); font: 500 var(--s-fs-mono)/1.5 var(--font-mono);
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.site .s-skiplink:focus { top: 12px; }
 
 /* ---------- Barre ---------------------------------------------------- */
 .s-top {
   position: fixed; inset: 0 0 auto; z-index: 20;
   display: flex; align-items: center; justify-content: space-between; gap: 22px;
-  padding: 18px 28px 34px;
-  background: linear-gradient(var(--s-bg) 52%, transparent);
+  /* Aligné sur la colonne de contenu : au-delà de 1556 px la barre restait
+     pleine largeur, à 200 px du bord du contenu qu'elle nomme. */
+  padding: 18px max(28px, calc((100% - 1500px) / 2 + 28px)) 34px;
+  background: linear-gradient(var(--s-bg) 62%, transparent);
   pointer-events: none;
 }
 .s-top > * { pointer-events: auto; }
+/* Pendant l'ouverture la barre est invisible : elle ne doit pas non plus recevoir
+   de clic (un clic précoce projetait dans une page qu'on ne peut pas faire défiler). */
+html.intro-lock .s-top > * { pointer-events: none; }
 .s-brand { color: var(--s-fg); white-space: nowrap; }
 .s-nav { display: flex; gap: 6px 22px; }
 .s-nav-item, .s-cmd {
   background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--s-fg);
   font: inherit; letter-spacing: inherit; text-transform: inherit; white-space: nowrap;
-  border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
+  border-bottom: 1px solid transparent; transition: color var(--s-t-fast), border-color var(--s-t-fast);
 }
 .s-nav-item { color: var(--s-dim); }
-.s-nav-item:hover, .s-cmd:hover { color: var(--s-acc); }
+@media (hover: hover) { .s-nav-item:hover, .s-cmd:hover { color: var(--s-acc); } }
+.s-nav-item:active, .s-cmd:active { color: var(--s-acc); }
 .s-nav-item.active { color: var(--s-acc); border-bottom-color: var(--s-acc); }
 .s-cmds { display: flex; gap: 22px; }
 .s-short { display: none; }
@@ -76,7 +126,7 @@ html.intro-lock { overflow: hidden; }
 /* ---------- Affiche ---------------------------------------------------- */
 .s-hero {
   min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; position: relative;
-  padding: 96px 0 90px; overflow: hidden; --px: 0; --py: 0;
+  padding: 96px 0 110px; overflow: hidden; --px: 0; --py: 0;
 }
 .s-name {
   display: flex; flex-direction: column; align-items: center;
@@ -97,12 +147,12 @@ html.intro-lock { overflow: hidden; }
   transition: --w 0.35s var(--s-e), --wg 0.35s var(--s-e);
 }
 .s-photo {
-  position: absolute; left: 50%; top: 50%; width: clamp(120px, 19vw, 300px); aspect-ratio: 1;
+  position: absolute; left: 50%; top: 50%; width: clamp(120px, 17vw, 260px); aspect-ratio: 1;
   border-radius: 50%; overflow: hidden; z-index: 3; box-shadow: 0 0 0 6px var(--s-bg);
   transform: translate(calc(-50% + var(--px) * 22px), calc(-52% + var(--py) * 22px));
   transition: transform 0.5s var(--s-e);
 }
-.s-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.2) brightness(1.12); }
+.s-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15) brightness(1.3); }
 /* La photo est en niveaux de gris, puis l'accent — mélangé à un blanc cassé —
    lui est multiplié : le noir reste noir, le blanc prend la teinte du lettrage.
    Une teinte pleine saturait les clairs (81 %) ; à 25 % ils tombent à 23 %. */
@@ -110,19 +160,40 @@ html.intro-lock { overflow: hidden; }
   content: ""; position: absolute; inset: 0; mix-blend-mode: multiply;
   background: color-mix(in srgb, var(--s-acc) 25%, #e8e8e4);
 }
-.s-tag { position: absolute; bottom: 44px; left: 0; right: 0; text-align: center; color: var(--s-dim); z-index: 4; padding: 0 20px; margin: 0; }
-.s-tag b { color: var(--s-fg); font-weight: 500; }
-.s-arrow { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); font-size: 18px; color: var(--s-dim); animation: s-bob 2.2s ease-in-out infinite; }
+/* La fonction visée se lit comme une phrase (Manrope, casse de phrase, blanc) ; le
+   parcours passe dessous, en registre mono atténué. Elle était la plus petite et
+   la moins contrastée du premier écran : 12 px, capitales, gris. */
+.s-tag { position: absolute; bottom: 52px; left: 0; right: 0; text-align: center; z-index: 4; padding: 0 20px; margin: 0; display: grid; gap: 6px; }
+.s-tag-main { font: 500 clamp(15px, 1.3vw, 19px)/1.4 var(--font-sans); color: var(--s-fg); }
+.s-tag-sub { color: var(--s-dim); }
+.s-arrow {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  background: none; border: 0; padding: 8px 12px; cursor: pointer; line-height: 0;
+  color: var(--s-dim); animation: s-bob 2.2s ease-in-out infinite;
+}
+.s-arrow .icon-bold { width: 18px; height: 18px; }
+.s-arrow:hover { color: var(--s-acc); }
 @keyframes s-bob { 50% { transform: translate(-50%, 6px); } }
 
-/* Pas de pointeur sur téléphone : le nom respire de lui-même, peu, pour ne pas
-   changer de largeur d'un tiers. */
+/* Pas de pointeur : le nom respire de lui-même, peu, pour ne pas changer de
+   largeur d'un tiers. Seule la RESPIRATION dépend de l'absence de survol ; la
+   composition (nom plus petit, photo sous le nom) dépend de la LARGEUR — un iPad
+   n'est pas un téléphone. */
 @keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 14); --wg: 680; } }
-@media (hover: none), (max-width: 760px) {
+@media (hover: none) {
+  .s-name { --w0: 100; }
+  .s-l { --w: var(--w0); }
+}
+/* Téléphone : nom et photo se composent EN FLUX, avec un écart constant, au lieu
+   d'être ancrés chacun à un bord (l'écart variait de 3 à 95 px selon la hauteur
+   d'écran, et la photo frôlait le nom quand le navigateur montrait sa barre). */
+@media (max-width: 760px) {
   .s-name { --w0: 76; font-size: min(23vw, 150px); }
   .s-l { --w: var(--w0); }
-  .s-photo { top: auto; bottom: 128px; width: min(34vw, 150px); transform: translate(-50%, 0); }
-  .s-hero { padding-bottom: 130px; }
+  .s-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 120px 0 176px; }
+  /* `relative` et non `static` : la teinte (::after) se cale sur la photo. */
+  .s-photo { position: relative; left: auto; top: auto; transform: none; width: min(34vw, 150px); flex: none; }
+  .s-tag { bottom: 58px; }
 }
 
 /* ---------- Bandeau ---------------------------------------------------- */
@@ -135,13 +206,13 @@ html.intro-lock { overflow: hidden; }
 .s-wrap { padding: 0 28px; max-width: 1500px; margin: 0 auto; }
 .s-big { font: 800 clamp(30px, 6vw, 88px)/1.02 var(--s-disp); font-stretch: 125%; letter-spacing: -0.03em; text-transform: uppercase; padding: 110px 0 24px; max-width: 18ch; margin: 0; }
 .s-big em { font-style: normal; color: var(--s-acc); }
-.s-lead { max-width: 62ch; color: #d6d7d4; font-size: 18px; margin: 0 0 40px; }
+.s-lead { max-width: 56ch; color: var(--s-text); font-size: var(--s-fs-lead); margin: 0 0 40px; }
 .s-profile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--s-line); }
 .s-block { padding: 26px 0 30px; border-bottom: 1px solid var(--s-line); max-width: 62ch; display: grid; gap: 10px; align-content: start; }
-.s-block p { margin: 0; color: #d6d7d4; }
+.s-block p { margin: 0; color: var(--s-text); }
 .s-wide { grid-column: 1 / -1; max-width: 84ch; }
 .s-strong { color: var(--s-fg); font-weight: 700; margin: 0; }
-.s-dim { color: var(--s-dim); font-size: 14.5px; margin: 0; }
+.s-dim { color: var(--s-dim); font-size: var(--s-fs-small); margin: 0; }
 
 /* Profil : l'essentiel se lit d'abord. Les détails utilisent le même
    composant natif que les fiches du CV, sans animation supplémentaire. */
@@ -151,21 +222,37 @@ html.intro-lock { overflow: hidden; }
 .s-profile-more > summary {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 19px 0; cursor: pointer; list-style: none;
-  color: var(--s-acc); font: 500 13px/1.6 var(--font-mono);
+  color: var(--s-fg); font: 500 var(--s-fs-mono)/1.5 var(--font-mono);
+  letter-spacing: 0.14em; text-transform: uppercase; transition: color var(--s-t-fast);
 }
 .s-profile-more > summary::-webkit-details-marker { display: none; }
-.s-profile-more > summary::after { content: "+"; font-size: 22px; flex: 0 0 auto; }
-.s-profile-more[open] > summary::after { content: "−"; }
-.s-profile-more > summary:focus-visible { outline: 2px solid var(--s-acc); outline-offset: 4px; }
+.s-profile-more[open] > summary, .s-profile-more > summary:active { color: var(--s-acc); }
+@media (hover: hover) { .s-profile-more > summary:hover { color: var(--s-acc); } }
+.s-profile-more[open] .s-pm { transform: rotate(45deg); color: var(--s-acc); }
 .s-profile-more .s-profile { border-top: 1px solid var(--s-line); }
 
 
 /* ---------- Sections --------------------------------------------------- */
-.s-sec { padding: 140px 0 0; scroll-margin-top: 20px; }
+/* L'espace entre sections est une MARGE, pas un remplissage : le calage d'un clic
+   ou d'un lien profond se fait alors sous la barre (`--s-bar-h`), et non 140 px
+   plus bas — l'écran d'arrivée n'était qu'à moitié plein. */
+.s-sec { margin-top: 140px; scroll-margin-top: calc(var(--s-bar-h) + 24px); }
 .s-sh { display: flex; gap: 14px; color: var(--s-dim); margin-bottom: 6px; }
+/* Une commande par section : dix-neuf portes pour trois mille mots. */
+.s-toggle-all {
+  margin-left: auto; background: none; border: 0; padding: 6px 0; cursor: pointer;
+  color: var(--s-dim); font: inherit; letter-spacing: inherit; text-transform: inherit;
+  transition: color var(--s-t-fast);
+}
+.s-toggle-all:active { color: var(--s-acc); }
+@media (hover: hover) { .s-toggle-all:hover { color: var(--s-acc); } }
 .s-sec > h2 {
   font: 800 clamp(30px, 8vw, 128px)/0.9 var(--s-disp); font-stretch: 125%; text-transform: uppercase;
-  letter-spacing: -0.04em; margin: 0 0 46px; color: transparent; -webkit-text-stroke: 1.5px var(--s-acc);
+  letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.5px var(--s-acc);
+  /* Le remplissage ne couvre que la boîte du titre : avec un interligne de 0,9,
+     l'accent du É dépassait et restait un simple trait au-dessus de lettres
+     pleines. Le remplissage compense par un retrait intérieur annulé en marge. */
+  padding-top: 0.22em; margin: -0.22em 0 46px;
 }
 /* Le remplissage suit le HAUT du titre : il commence quand ce haut franchit 80 %
    de la hauteur d'écran (en comptant depuis le haut ; 20 % depuis le bas) et se
@@ -190,52 +277,83 @@ html.no-timeline .s-sec > h2 {
 }
 
 /* ---------- Lignes d'index --------------------------------------------- */
-.s-row { border-top: 1px solid var(--s-line); position: relative; }
+.s-row { border-top: 1px solid var(--s-line); position: relative; scroll-margin-top: calc(var(--s-bar-h) + 20px); }
 .s-row:last-of-type { border-bottom: 1px solid var(--s-line); }
 .s-row summary {
   list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(96px, 10%) 1fr auto 28px;
   gap: 18px; align-items: baseline; padding: 22px 0; position: relative;
-  transition: padding 0.35s var(--s-e), color 0.2s;
+  transition: padding var(--s-t-move) var(--s-e), color var(--s-t-fast);
 }
 .s-row summary::-webkit-details-marker { display: none; }
-.s-row summary::before { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--s-acc); transition: width 0.55s var(--s-e); }
-.s-row summary:hover::before, .s-row[open] > summary::before { width: 100%; }
+.s-row summary::before { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--s-acc); transition: width var(--s-t-slow) var(--s-e); }
+.s-row[open] > summary::before { width: 100%; }
 .s-n { color: var(--s-dim); }
-.s-t { min-width: 0; font: 800 clamp(26px, 5.2vw, 76px)/0.98 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.03em; }
-.s-t small { display: block; font: 500 12px/1.5 var(--font-mono); letter-spacing: 0.14em; color: var(--s-dim); margin-top: 10px; }
+.s-t { min-width: 0; margin: 0; overflow-wrap: break-word; font: 800 clamp(26px, 5.2vw, 76px)/0.98 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.03em; }
+.s-t small { display: block; font: 500 13px/1.5 var(--font-mono); letter-spacing: 0.14em; color: var(--s-text); margin-top: 10px; }
 .s-co { white-space: nowrap; }
-.s-s { color: var(--s-dim); text-align: right; max-width: 30ch; font-size: 14px; }
-.s-pm { font: 500 22px/1 var(--font-mono); color: var(--s-dim); text-align: right; transition: transform 0.35s var(--s-e), color 0.2s; }
-.s-row summary:hover { color: var(--s-acc); padding-left: 14px; }
-.s-row summary:hover .s-pm, .s-row[open] .s-pm { color: var(--s-acc); }
-.s-row[open] > summary { color: var(--s-acc); }
-.s-row[open] .s-pm { transform: rotate(45deg); }
+.s-s { color: var(--s-dim); text-align: right; max-width: 36ch; font-size: var(--s-fs-small); }
+.s-pm { display: flex; justify-content: flex-end; color: var(--s-dim); transition: transform var(--s-t-move) var(--s-e), color var(--s-t-fast); }
+.s-pm .icon-bold { width: 18px; height: 18px; }
+.s-row[open] > summary, .s-row summary:active { color: var(--s-acc); }
+.s-row[open] .s-pm { color: var(--s-acc); transform: rotate(45deg); }
+/* Le survol (décalage, filet) n'existe que là où il y a un survol : sur tactile il
+   collait à la ligne touchée, qui restait décalée et colorée une fois refermée. */
+@media (hover: hover) {
+  .s-row summary:hover { color: var(--s-acc); padding-left: 14px; }
+  .s-row summary:hover::before { width: 100%; }
+  .s-row summary:hover .s-pm { color: var(--s-acc); }
+}
+/* Au clavier, la ligne s'allume comme au survol : un cadre de 1 400 px de large
+   traversait l'écran, à côté d'un geste de souris qui n'en dessinait pas. */
+.site .s-row summary:focus-visible { outline: none; color: var(--s-acc); padding-left: 14px; }
+.site .s-row summary:focus-visible::before { width: 100%; }
 .s-body { display: grid; grid-template-columns: minmax(96px, 10%) 1fr; gap: 18px; padding: 6px 0 48px; animation: s-open 0.5s var(--s-e); }
 @keyframes s-open { from { opacity: 0; transform: translateY(-10px); } }
-.s-in { max-width: 84ch; display: grid; gap: 12px; color: #d6d7d4; }
+/* La fiche se ferme comme elle s'ouvre. Amélioration progressive, sans script :
+   les navigateurs sans `::details-content` gardent la fermeture sèche. */
+@supports selector(::details-content) {
+  .s-row::details-content { height: 0; overflow: clip; transition: height var(--s-t-move) var(--s-e), content-visibility var(--s-t-move) allow-discrete; }
+  .s-row[open]::details-content { height: auto; }
+}
+/* 60ch : à 84ch la fiche composait 105 à 113 signes par ligne, le double du
+   plafond de confort — sur le texte qu'on ouvre justement pour vérifier. */
+.s-in { max-width: 60ch; display: grid; gap: 12px; color: var(--s-text); }
 .s-in p { margin: 0; }
 .s-list { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
-.s-list li { padding-left: 22px; position: relative; }
-.s-list li::before { content: "→"; position: absolute; left: 0; color: var(--s-acc); }
+.s-list li { padding-left: 24px; position: relative; }
+.s-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em; width: 0.9em; height: 0.9em; background: var(--s-acc);
+  -webkit-mask: var(--s-i-arrow-right) center / contain no-repeat; mask: var(--s-i-arrow-right) center / contain no-repeat;
+}
 .s-list b, .s-in b { color: var(--s-fg); font-weight: 700; }
 .s-lab { color: var(--s-dim); margin-top: 10px; }
 .s-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.s-chips span { border: 1px solid #333; border-radius: 99px; padding: 3px 12px; font: 500 12px/1.6 var(--font-mono); letter-spacing: 0.06em; color: var(--s-dim); }
+/* Étiquette : un aplat, sans bordure ni rayon de commande. La pilule bordée est
+   réservée à ce qui se clique — 53 étiquettes passives avaient le dessin de
+   « Passer » et de « Copier ». */
+.s-chips span { border-radius: 4px; background: var(--s-surface); padding: 4px 12px; font: 500 var(--s-fs-mono)/1.6 var(--font-mono); letter-spacing: 0.06em; color: var(--s-dim); }
 .s-link { color: var(--s-acc); text-decoration: underline; text-underline-offset: 3px; }
 
 /* La preuve est un fait du poste, pas un titre : pastille discrète sur la ligne
    fermée, paragraphe sobre dans la fiche, avec sa base de comparaison. */
-.s-pchip { display: block; font: 500 12px/1.4 var(--font-mono); letter-spacing: 0.06em; color: var(--s-hot); }
+.s-pchip { display: block; font: 500 13px/1.4 var(--font-mono); letter-spacing: 0.06em; color: var(--s-hot); }
 .s-pf { border-left: 2px solid var(--s-hot); padding-left: 14px; display: grid; gap: 4px; }
 .s-pf b { color: var(--s-hot); font-weight: 700; }
-.s-pf small { color: var(--s-dim); font-size: 13.5px; }
+.s-pf small { color: var(--s-dim); font-size: var(--s-fs-small); }
 
 /* ---------- Pied ------------------------------------------------------- */
-.s-foot { margin: 150px 0 0; padding: 36px 0 110px; border-top: 1px solid var(--s-line); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
-.s-contact { background: none; border: 0; padding: 0; cursor: pointer; font: 800 clamp(38px, 10vw, 150px)/0.9 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.04em; color: var(--s-acc); transition: letter-spacing 0.5s var(--s-e), color 0.2s; }
-.s-contact:hover { color: var(--s-fg); letter-spacing: -0.02em; }
-.s-foot-meta { display: grid; gap: 16px; color: var(--s-dim); text-align: right; }
-.s-live { display: flex; gap: 18px; justify-content: flex-end; flex-wrap: wrap; }
+/* Le pied tient en colonne à toutes les largeurs : « Me contacter » ne tient pas
+   sur une ligne à côté de la méta (il fait 1 369 px de large), et le texte centré
+   par défaut d'un <button> indentait « ME » de 545 px dans une page fer à gauche. */
+.s-foot { margin: 150px 0 0; padding: 36px 0 110px; border-top: 1px solid var(--s-line); display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+.s-contact { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 0; cursor: pointer; font: 800 clamp(38px, 10vw, 150px)/0.9 var(--s-disp); font-stretch: 125%; text-transform: uppercase; letter-spacing: -0.04em; color: var(--s-acc); transition: letter-spacing var(--s-t-slow) var(--s-e); }
+.s-contact .s-ico { width: 0.6em; height: 0.6em; margin-left: 0.12em; vertical-align: 0.02em; }
+@media (hover: hover) { .s-contact:hover { letter-spacing: -0.02em; } }
+.s-contact:active { letter-spacing: -0.02em; }
+.s-foot-meta { display: grid; gap: 16px; color: var(--s-dim); text-align: left; }
+.s-live { display: flex; gap: 18px; flex-wrap: wrap; }
+.s-live .s-link { padding: 4px 0; }
+.s-foot-cmd { background: none; border: 0; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit; }
 
 /* ---------- Ouverture ---------------------------------------------------
    La page d'accueil se compose sous les yeux. Il n'y a pas de séquence
@@ -267,26 +385,48 @@ html.intro-wait .site *, html.intro-wait .site *::before, html.intro-wait .site 
   html.intro-play .s-w {
     -webkit-mask-image: linear-gradient(to top, #000 calc(var(--r) - 45%), transparent var(--r));
             mask-image: linear-gradient(to top, #000 calc(var(--r) - 45%), transparent var(--r));
-    animation: s-reveal 1.7s cubic-bezier(0.33, 0, 0.25, 1) backwards;
+    animation: s-reveal 1.45s var(--s-e-soft) backwards;
   }
-  html.intro-play .s-w:nth-child(1) { animation-delay: 0.25s; }
-  html.intro-play .s-w:nth-child(2) { animation-delay: 0.4s; }
-  /* Une fois le nom entièrement révélé (fin à 2,1 s), la photo arrive. */
-  html.intro-play .s-photo { animation: s-pop 0.95s var(--s-e) 2.2s backwards; }
-  html.intro-play .s-photo img { animation: s-settle 1.3s var(--s-e) 2.2s backwards; }
-  html.intro-play .s-tag { animation: s-up 0.7s var(--s-e) 2.8s backwards; }
-  html.intro-play .s-top { animation: s-fade 0.6s ease 3s backwards; }
-  html.intro-play .s-arrow { animation: s-fade 0.6s ease 3.1s backwards, s-bob 2.2s ease-in-out 3.7s infinite; }
+  html.intro-play .s-w:nth-child(1) { animation-delay: 0.15s; }
+  html.intro-play .s-w:nth-child(2) { animation-delay: 0.3s; }
+  /* Le nom est entièrement révélé à 1,75 s : la photo arrive juste après, puis la
+     ligne de poste, la barre et la flèche. Les délais suivent la fin VISIBLE du
+     balayage — ils étaient calés sur la fin de la keyframe, 0,6 s plus tard, et
+     la page restait immobile entre les deux. Verrou levé à ≈ 3,3 s. */
+  html.intro-play .s-photo { animation: s-pop 0.95s var(--s-e) 1.8s backwards; }
+  html.intro-play .s-photo img { animation: s-settle 1.3s var(--s-e) 1.8s backwards; }
+  html.intro-play .s-tag { animation: s-up 0.7s var(--s-e) 2.3s backwards; }
+  html.intro-play .s-top { animation: s-fade 0.6s ease 2.5s backwards; }
+  html.intro-play .s-arrow { animation: s-fade 0.6s ease 2.6s backwards, s-bob 2.2s ease-in-out 3.2s infinite; }
+  /* Sans @property (Safari < 16.4, Firefox < 128), --r ne s'interpole pas : le
+     balayage deviendrait une bascule sèche. Un simple fondu le remplace. */
+  html.no-property.intro-play .s-w { -webkit-mask-image: none; mask-image: none; animation: s-fade 1.2s ease 0.15s backwards; }
+  html.no-property .s-l { animation: none !important; transition: none; }
 }
 html.intro-done .s-w { -webkit-mask-image: none; mask-image: none; }
 /* Téléphone : la respiration du nom commence dès l'arrivée, ou une fois
    l'ouverture finie si elle a lieu. */
 @media (prefers-reduced-motion: no-preference) and ((hover: none) or (max-width: 760px)) {
   .s-l { animation: s-breathe 6s ease-in-out infinite; animation-delay: calc(var(--i) * 0.16s); }
-  html.intro-play .s-l { animation-delay: calc(3.8s + var(--i) * 0.16s); }
+  html.intro-play .s-l { animation-delay: calc(3.3s + var(--i) * 0.16s); }
+  /* Après « Passer », flèche et respiration ne gardent pas leur délai d'ouverture. */
+  html.intro-skipped .s-l { animation-delay: calc(var(--i) * 0.16s); }
+  /* Hors écran, la respiration ne coûte plus rien. */
+  html.hero-off .s-l { animation-play-state: paused; }
 }
-.s-skip { position: fixed; left: 28px; bottom: 20px; z-index: 50; background: none; border: 1px solid #333; color: var(--s-dim); border-radius: 99px; padding: 5px 14px; cursor: pointer; }
-.s-skip:hover { color: var(--s-fg); border-color: var(--s-fg); }
+@media (prefers-reduced-motion: no-preference) {
+  html.intro-skipped .s-arrow { animation: s-bob 2.2s ease-in-out infinite; }
+}
+/* « Passer » parle la langue des tiroirs : texte mono et croix, accent au survol —
+   plus la pilule bordée, qui était indiscernable d'une étiquette. */
+.s-skip {
+  position: fixed; left: 20px; bottom: 6px; z-index: 50; display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 0 12px 0 0; background: none; border: 0; color: var(--s-dim); cursor: pointer;
+  transition: color var(--s-t-fast);
+}
+.s-skip .icon-bold { width: 14px; height: 14px; }
+.s-skip:active { color: var(--s-acc); }
+@media (hover: hover) { .s-skip:hover { color: var(--s-acc); } }
 html:not(.intro-lock) .s-skip { display: none; }
 
 /* ---------- Barre sur deux rangées ------------------------------------- *
@@ -294,36 +434,102 @@ html:not(.intro-lock) .s-skip { display: none; }
    1100 px. En deçà, les entrées passent sur une seconde rangée qui défile. */
 @media (max-width: 1100px) {
   .s-top { flex-wrap: wrap; gap: 8px 14px; padding: 14px 20px 26px; background: linear-gradient(var(--s-bg) 80%, transparent); }
-  .s-nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; gap: 22px; padding-bottom: 2px; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  /* Le rail réserve 44 px en fin de course : la dernière entrée sort ainsi du
+     fondu (elle s'y trouvait à moitié effacée), et le fondu disparaît en butée
+     (classe `is-end`) plutôt que d'annoncer une suite qui n'existe pas. */
+  .s-nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; gap: 22px; padding: 0 44px 2px 0; scroll-padding-inline-end: 44px; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .s-nav.is-end { -webkit-mask-image: none; mask-image: none; }
   .s-nav::-webkit-scrollbar { display: none; }
   .s-cmds { gap: 16px; margin-left: auto; }
   .s-long { display: none; }
   .s-short { display: inline; }
   .s-hero { padding-top: 120px; }
-  .s-sec { scroll-margin-top: 70px; }
+}
+
+/* Entre 761 et 1100 px la grille à quatre colonnes laissait 256 à 330 px au titre
+   de fiche : les mots longs (FORMALISATION, COORDINATION) débordaient jusqu'à
+   136 px sur la colonne de droite. Le statut passe sous le titre. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .s-row summary { grid-template-columns: minmax(96px, 10%) minmax(0, 1fr) 28px; grid-template-areas: "n t pm" ". s pm"; }
+  .s-n { grid-area: n; }
+  .s-t { grid-area: t; }
+  .s-s { grid-area: s; text-align: left; max-width: none; justify-self: start; margin-top: 8px; }
+  .s-s:empty { display: none; }
+  .s-pm { grid-area: pm; }
 }
 
 /* ---------- Téléphone -------------------------------------------------- */
 @media (max-width: 760px) {
   .s-wrap { padding: 0 20px; }
-  .s-t { font-size: clamp(20px, 6.4vw, 40px); }
+  /* Titre de section 31 px contre titre de fiche 25 px : on ne distinguait les
+     deux niveaux que par la couleur. 8,8vw est le plafond : « COMPÉTENCES » fait
+     9,7 px de large par pixel de corps, soit 334 px à 390 et 308 px à 360. */
+  .s-sec > h2 { font-size: clamp(28px, 8.8vw, 64px); }
+  .s-t { font-size: clamp(20px, 5.6vw, 40px); }
+  /* Rôle et catégorie en police de lecture : sur téléphone, sans colonne latérale,
+     le registre mono 12 px capitales portait aussi ce qui affirme (le poste
+     occupé) — 36 % des mots visibles. */
+  .s-t small { font: 500 13px/1.45 var(--font-sans); letter-spacing: 0; text-transform: none; margin-top: 6px; }
   .s-profile { grid-template-columns: 1fr; }
   .s-big { padding-top: 90px; }
   .s-first .s-big { padding-top: 44px; }
-  .s-row summary { grid-template-columns: 1fr 28px; }
-  .s-n, .s-s { display: none; }
+  /* Les colonnes latérales se REPLIENT sous le titre au lieu d'être masquées :
+     dates des postes, pastille +83 %, statuts d'adoption, résumés de compétence
+     n'existaient plus nulle part sur téléphone. */
+  .s-row summary { grid-template-columns: 1fr 28px; grid-template-areas: "t pm" "s pm"; row-gap: 6px; align-items: start; padding: 18px 0; }
+  #experience .s-row summary, #formation .s-row summary { grid-template-areas: "n pm" "t pm" "s pm"; }
+  .s-n { display: none; }
+  #experience .s-n, #formation .s-n { display: block; grid-area: n; }
+  .s-t { grid-area: t; }
+  .s-s { grid-area: s; text-align: left; max-width: none; margin: 0; }
+  .s-s:empty { display: none; }
+  .s-pm { grid-area: pm; align-self: start; margin-top: 4px; }
   .s-body { grid-template-columns: 1fr; }
   .s-body > span { display: none; }
-  .s-sec { padding-top: 110px; }
-  .s-foot-meta { text-align: left; }
-  .s-live { justify-content: flex-start; }
-  .s-skip { left: 20px; }
+  .s-sec { margin-top: 110px; }
+  #formation .s-big { padding-top: 56px; }
+}
+
+/* Écran bas (téléphone couché, zoom 200 %) : tout se dimensionne sur la hauteur.
+   Placé après les blocs de largeur, qu'il doit surcharger. */
+@media (max-height: 520px) {
+  .s-name { font-size: min(16.2vw, 21vh); }
+  .s-photo { width: min(19vw, 30vh); }
+  .s-hero { padding-top: 84px; padding-bottom: 84px; }
+  .s-arrow, .s-tag-sub { display: none; }
+}
+@media (max-height: 520px) and (max-width: 760px) {
+  .s-name { font-size: min(23vw, 21vh); }
+  .s-photo { display: none; }
+  .s-hero { padding-top: 120px; padding-bottom: 96px; }
+}
+/* Portable court : le grand titre de section garde sa course, moins de hauteur. */
+@media (max-height: 720px) and (min-width: 761px) {
+  .s-sec > h2 { font-size: clamp(30px, 6vw, 96px); }
+}
+
+/* Citation de Formation : 24ch et un corps plus bas — six lignes de 88 px dont
+   deux d'un seul mot occupaient les trois quarts d'un écran pour treize mots. */
+#formation .s-big { max-width: 24ch; font-size: clamp(28px, 4.6vw, 64px); }
+
+/* Cibles tactiles : la barre et le pied gagnent de la hauteur de zone sans
+   changer de mise en page (la barre porte ses 27 px de rangée). */
+@media (hover: none) {
+  .s-cmd { padding: 8px 0; }
+  .s-brand { padding: 8px 0; }
+  .s-live .s-link { padding: 10px 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   /* Mouvement réduit : pas de remplissage progressif, les titres sont pleins. */
   .s-sec > h2 { color: var(--s-acc) !important; -webkit-text-stroke: 0 !important; background: none !important; animation: none !important; }
   .s-ticker div, .s-arrow, .s-l { animation: none !important; }
+  /* Bande statique : une seule série, qui se replie — au lieu d'une piste figée
+     coupée au bord (un item au téléphone, trois au bureau dont le dernier tronqué). */
+  .s-ticker { white-space: normal; text-align: center; padding: 10px 20px; }
+  .s-ticker div { display: block; }
+  .s-ticker span { display: inline-block; margin: 4px 22px; }
+  .s-ticker span[aria-hidden] { display: none; }
   .s-body, .s-photo, .s-row summary::before { animation: none; transition: none; }
 }
 

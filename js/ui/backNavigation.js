@@ -42,6 +42,38 @@ const MARQUE = "cvCouche";
 const pile = [];
 let aIgnorer = 0;
 
+/* Sans ceci, la traversée d'historique qui referme une couche fait défiler la
+   page vers le fragment de l'entrée retrouvée (`#outils`) : le lecteur qui
+   ouvrait un tiroir au milieu d'une section se retrouvait en haut de cette
+   section, le focus perdu sur <body>. L'adresse suit le défilement
+   (`poserSection`) ; la position, elle, appartient au lecteur. */
+try {
+  window.history.scrollRestoration = "manual";
+} catch (error) {
+  /* historique indisponible : rien à régler */
+}
+
+/* Tant qu'une couche est ouverte, le reste du document n'existe plus : ni
+   défilement derrière le voile, ni parcours clavier vers une page qu'on ne
+   voit pas (`aria-modal` promet ce confinement, il faut le tenir). Appelé
+   AVANT que la couche ne rende le focus : un élément encore inerte ne le
+   reçoit pas. */
+const ARRIERE_PLAN = ["main", ".s-top", "#skip"];
+
+function majArrierePlan() {
+  const ouverte = pile.length > 0;
+
+  document.documentElement.classList.toggle("couche-ouverte", ouverte);
+
+  ARRIERE_PLAN.forEach((selecteur) => {
+    const element = document.querySelector(selecteur);
+
+    if (element) {
+      element.inert = ouverte;
+    }
+  });
+}
+
 /* Une traversee d'historique ne leve qu'un seul `popstate`, quelle que soit sa
    profondeur : on n'en ignore donc qu'un par appel, pas un par entree. */
 function traverser(entrees) {
@@ -67,6 +99,7 @@ window.addEventListener("popstate", () => {
   const couche = pile.pop();
 
   if (couche) {
+    majArrierePlan();
     couche.fermer();
   }
 });
@@ -95,6 +128,7 @@ export function ouvrirCouche(nom, fermer) {
   }
 
   pile.push({ nom, fermer, empile });
+  majArrierePlan();
 }
 
 /* Fermeture demandee par l'interface. On ferme d'abord — l'ordre des
@@ -108,6 +142,7 @@ export function fermerCouche() {
     return false;
   }
 
+  majArrierePlan();
   couche.fermer();
   traverser(couche.empile ? 1 : 0);
   return true;
