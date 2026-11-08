@@ -34,7 +34,7 @@
   commande d'impression. `js/ui/print.js` choisit entre les deux selon le mode
   demandé (voir « Deux documents », plus bas).
 - `js/render/renderExport.js` + `js/ui/exportPanel.js` + `css/panels.css` : le
-  panneau **« Partager & Exporter »**, seule porte vers le lien et vers les
+  panneau **« Exporter & Partager »** (les documents d'abord), seule porte vers le lien et vers les
   deux documents (voir la section dédiée). `css/panels.css` habille aussi la
   modale « Me contacter » : mêmes tiroirs, mêmes classes `p-*`.
 - `js/ui/share.js` : la charge de partage, les six canaux et la copie du lien.
@@ -103,21 +103,23 @@ pas dans le code — seulement à l'écran, quand ça manque.
   dette à purger par morceaux, pas à étendre.
 - **`renderSite.js` ne rédige rien.** Chaque chaîne vient de `js/data/`. Trois
   exceptions, toutes des phrases d'appui : la mise en valeur d'un groupe de mots
-  dans les deux citations (`<em>`, sans effet si la phrase change), « Voir le
-  poste », et la phrase d'Opti'Profit (voir plus bas).
+  dans l'accroche du Profil et dans la citation de Formation (`<em>`, sans effet
+  si la phrase change), la mention « Poste où il a servi : … » (le lien interne
+  de la fiche Opti'Profit), et la phrase d'Opti'Profit (voir plus bas).
 - **Un seul accent : le fluo (`--s-acc`).** Le cuivre (`--s-hot`) est réservé aux
   chiffres mesurés. La page est **noire quel que soit le réglage de l'appareil** :
-  c'est son parti pris. `editorial-signal.css` porte les jetons sombres sous
-  `@media screen` (et non plus `prefers-color-scheme`) pour que le panneau
-  d'export et la modale, qui les consomment, lui ressemblent. Le papier n'a pas de
-  thème : la borne `screen` empêche d'imprimer du texte clair sur du blanc.
+  c'est son parti pris. `editorial-signal.css` ne sert plus qu'au papier et au
+  texte intégral sans JavaScript : le panneau d'export et la modale consomment les
+  jetons `--s-*` de `site.css` (zéro occurrence de `--ink`, `--bg`, `--text` dans
+  `panels.css`). Les cinq feuilles historiques sont chargées en `media="print"`
+  (avec un `<noscript>`) : elles ne bloquent plus le premier rendu.
 - **La preuve est rattachée au poste, pas jetée en tête de page.** Le +83 % vit
   dans la fiche Générale d'Optique : pastille discrète sur la ligne fermée,
   paragraphe avec sa base de comparaison dans la fiche. Un chiffre sans son
   contexte ne vaut rien.
 - **Opti'Profit rappelle le chiffre comme CONTEXTE, jamais comme résultat.** Les
   données disent que relance, équipe et réorganisation ont joué ensemble : la
-  fiche renvoie au poste (« Voir le poste ») et le dit en une phrase. Cette
+  fiche renvoie au poste (« Poste où il a servi : … ») et le dit en une phrase. Cette
   phrase est la seule qui ne vient pas des données ; la retirer ferait attribuer
   +83 % à un outil, ce qu'aucun entretien ne tiendrait.
 - **Les enseignes ne se coupent qu'entre elles** — mais seulement quand il y en a
@@ -130,8 +132,9 @@ pas dans le code — seulement à l'écran, quand ça manque.
   Un remplissage sur 28 % de l'écran était « trop rapide », et dans la moitié
   basse il n'était pas remarqué. Repli par script (`--p`) pour les navigateurs
   sans `animation-timeline`, même plage ; mouvement réduit : titres pleins.
-- **Les lettres du nom suivent le pointeur** : chasse (62–125 %) et graisse
-  d'Archivo varient avec la distance. C'est ce qui impose de charger Archivo
+- **Les lettres du nom suivent le pointeur** : chasse (93–125 %) et graisse
+  d'Archivo varient avec la distance (amplitude bornée : à 73 % le nom se pinçait de
+  15 % et devenait moins lisible). C'est ce qui impose de charger Archivo
   **à axes variables** (`wdth,wght@62..125,100..900`) dans `index.html`. Les
   centres des lettres se mesurent une fois, au repos : mesurés en mouvement, ils
   bougeraient avec l'effet. Souris seulement, jamais pendant l'ouverture. Sur
@@ -157,7 +160,10 @@ il n'y a rien à raccorder.
 - **Révélation par balayage en dégradé.** Les lettres sont à leur forme définitive
   dès la première image ; seul un masque (`mask-image`, bord de 45 % de la hauteur)
   monte du pied des lettres, mot par mot. La photo n'arrive qu'une fois le nom
-  entièrement révélé, puis la ligne de poste, la barre et la flèche. 3,7 s.
+  entièrement révélé, puis la ligne de poste, la barre et la flèche. **≈ 3,3 s**
+  (verrou levé 3,2 à 3,3 s après le départ, mesuré). Les délais suivent la fin
+  VISIBLE du balayage : `--r` vaut 125 % au repos, pas 145 % — au-delà de 125 % le
+  fondu est entièrement au-dessus des lettres et la page restait immobile 0,6 s.
 - **`backwards`, jamais `forwards`.** L'état d'arrivée est celui que la feuille
   déclare déjà ; seuls les `from` sont écrits. Une valeur recopiée dans une
   keyframe finale divergerait au premier réglage, et ce serait un saut d'une image.
@@ -181,7 +187,12 @@ il n'y a rien à raccorder.
   module principal ne charge jamais.
 - **Jouée une fois par session** (`cv-intro-played`), ignorée sur lien profond
   (`#outils`) et en mouvement réduit ; `#intro` la force. « Passer », Échap et
-  Entrée sautent à l'état final.
+  Entrée sautent à l'état final — **pendant l'ouverture seulement** : l'écouteur
+  est retiré à la fin (il finissait toutes les transitions de la session). Sans
+  `@property` (`html.no-property`, posé par `intro.js`), le balayage devient un
+  fondu. Les polices sont demandées dès `intro.js` (`document.fonts.load`), et le
+  script de build génère un `modulepreload` par module (`MODULEPRELOAD` dans
+  `index.html`) : la chaîne d'import ne coûte plus six allers-retours.
 - **Mesuré, pas estimé** : l'image de fin est comparée à la page au repos
   (mouvement réduit = aucune animation) — 0 pixel de différence sur grand écran,
   et 0 pixel au premier instant de la respiration sur téléphone. **Le verrou se
@@ -287,6 +298,55 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 - **La navigation porte `short`, pas `label`.** En étroit elle défile sur une
   seconde rangée ; des libellés longs la rendraient interminable, et `aria-label`
   garde le nom complet pour les lecteurs d'écran.
+
+## Ce que l'analyse de novembre 2026 a changé (et pourquoi ça ne se voit pas)
+
+Détail et mesures : `docs/analyse-animations-mise-en-page-interactions.md`.
+
+- **Téléphone : les colonnes latérales se replient, elles ne se masquent pas.**
+  Sous 760 px, `.s-n` (dates) et `.s-s` (pastille +83 %, statuts, résumés) passent
+  sous le titre (grille à zones). Les masquer retirait des postes leurs dates et le
+  seul chiffre de la page. Entre 761 et 1100 px, le statut passe aussi sous le
+  titre : les mots longs débordaient sur lui. Le hero se compose **en flux** sous
+  760 px (écart constant entre nom et photo) ; la composition dépend de la
+  largeur, seule la respiration dépend de `(hover: none)`.
+- **Une couche ouverte fige le reste.** `backNavigation.js` pose `inert` sur
+  `main`, la barre et le lien d'évitement, et `couche-ouverte` sur `<html>`
+  (défilement figé), AVANT que la couche ne rende le focus. `history.scrollRestoration`
+  est `manual` : sans cela, la traversée d'historique qui referme une couche
+  renvoyait en haut de la section courante et laissait le focus sur `<body>`.
+  `check:nav` le mesure APRÈS le retour. Le tiroir et la modale ignorent tout clic
+  (sauf « Fermer ») pendant 400 ms : le second clic d'un double-clic tombait sur
+  un document, donc une impression.
+- **Le calage sous la barre fixe passe par `--s-bar-h`** (79, 104 ou 112 px). Les
+  sections ont une MARGE de 140 px (et non un remplissage) : le titre arrive
+  sous la barre après un clic, pas 140 px plus bas. `.s-row` a son propre
+  `scroll-margin-top`.
+- **Le formulaire ne se vide qu'au succès.** Fermer la modale conserve le message.
+  L'erreur n'invente aucun canal (il n'y en a pas d'autre) : « votre message est
+  conservé ».
+- **Les signes de direction sont des vecteurs** (`boldIcon`: flèches, plus), la
+  puce des listes un masque : aucune des trois familles ne couvre → ni ↗, la
+  police de repli changeait leur dessin d'un appareil à l'autre. ↗ ne signifie
+  qu'une chose : ce lien sort du site.
+- **La pilule bordée est réservée aux commandes.** Les étiquettes sont des aplats.
+  « Passer » et « Fermer » partagent la forme (texte mono + croix, accent au survol).
+- **Les survols qui déplacent sont sous `@media (hover: hover)`**, avec un `:active`
+  miroir : sur tactile ils collaient à la ligne touchée.
+- **CSP sans `'unsafe-inline'`** : les lettres reçoivent `--i` par script, les tailles
+  de carte sont des classes. Ne pas réintroduire d'attribut `style` dans les rendus.
+- **La carte de partage est `assets/img/og-cv.png`** (1200×630, `npm run build:og`),
+  distincte du favicon. Un rendu figé : il se régénère si le nom, la fonction ou le
+  portrait changent.
+- **Fiches** : la preuve suit le contexte ; le libellé de commande (`detailLabel`)
+  est dans la ligne fermée ; `::details-content` anime la fermeture ; une commande
+  « Tout ouvrir » par section ; le corps est à 60ch (76 signes mesurés).
+- **Sections** : Compétences avant Projets (la matière différenciante avant les
+  projets hors optique). L'index « 01–05 » est dérivé de la position.
+
+Restent des décisions de contenu, non prises ici : un e-mail ou un lien de profil
+(le formulaire est le seul canal), l'intitulé unique du poste visé (sept
+formulations), le doublon du Hub entre Outils et Projets, un portrait 810 px.
 
 ## Règles de modification
 - Conserver les textes métier validés sans en modifier le sens.
@@ -400,8 +460,9 @@ et `font-stretch: 125%` se déclare partout où Archivo est consommé.
 - **Une graisse absente ne rate pas, elle glisse.** Demander un 600 à
   JetBrains Mono, chargée en 400, 500 et 700, donne un 700 — et le CSS
   continue d'afficher 600. Les graisses réellement servies sont celles de
-  l'adresse de `index.html`, et rien d'autre : Archivo 700 et 800, JetBrains
-  Mono 400, 500 et 700, Manrope de 400 à 800. Elles ne coûtent pas un fichier
+  l'adresse de `index.html`, et rien d'autre : Archivo de 100 à 900 (axes
+  variables : chasse 62–125 %), JetBrains Mono 400, 500 et 700, Manrope de 400 à 800.
+  `check:typo` et `check:cv` lisent cette adresse dans `index.html`. Elles ne coûtent pas un fichier
   chacune, les trois familles étant servies en variable — le nombre n'est
   donc pas un budget, mais toute valeur hors liste est un défaut silencieux.
   `npm run check:typo` en fait échouer le contrôle.
@@ -430,8 +491,10 @@ et `font-stretch: 125%` se déclare partout où Archivo est consommé.
 - **La page est noire, à un accent.** `css/site.css` porte ses propres jetons
   (`--s-bg`, `--s-fg`, `--s-dim`, `--s-acc` fluo, `--s-hot` cuivre). Contrastes
   sur le fond (#0a0a0a) : texte courant 13,7:1, atténué 7,3:1, accent 16,8:1,
-  cuivre 9,7:1. Le panneau d'export et la modale consomment, eux, les jetons
-  d'`editorial-signal.css` (échelle d'encre retournée, sous `@media screen`).
+  cuivre 9,7:1. Le panneau d'export et la modale consomment les mêmes jetons.
+  Jetons ajoutés à `site.css` : `--s-text` (prose), `--s-on-acc`, `--s-surface`,
+  `--s-veil`, `--s-line-ui` (bordure de contrôle, 3,15:1 — le filet `--s-line`
+  reste pour les séparateurs), `--s-t-fast/move/slow`, `--s-fs-*`, `--s-bar-h`.
   Les paragraphes « forêt / flamme » ci-dessus décrivent le modèle de données et le
   papier ; à l'écran, `nature` n'a plus de couleur.
 - Pas d'emoji dans l'interface : ils sont multicolores et contredisent la
