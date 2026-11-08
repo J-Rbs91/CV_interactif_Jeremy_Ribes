@@ -38,7 +38,7 @@ function renderChannel(channel) {
   return `<a class="p-channel" href="${channel.href}"${target} data-share-channel="${channel.id}">
     <span class="p-mark">${boldIcon(channel.icon)}</span>
     <span class="p-channel-label">${channel.label}</span>
-    <span class="p-arrow" aria-hidden="true">${channel.newTab ? "↗" : "→"}</span>
+    <span class="p-arrow" aria-hidden="true">${boldIcon(channel.newTab ? "arrow-up-right" : "arrow-right")}</span>
   </a>`;
 }
 
@@ -54,7 +54,7 @@ function renderNativeShare() {
   return `<button type="button" class="p-channel p-native" data-native-share>
     <span class="p-mark">${boldIcon("device-mobile")}</span>
     <span class="p-channel-label">Partager depuis l’appareil</span>
-    <span class="p-arrow" aria-hidden="true">→</span>
+    <span class="p-arrow" aria-hidden="true">${boldIcon("arrow-right")}</span>
   </button>`;
 }
 
@@ -63,7 +63,7 @@ function renderDocument(mode, key, title, text) {
     <span class="p-doc-key s-mono">${key}</span>
     <span class="p-doc-title">${title}</span>
     <span class="p-doc-text">${text}</span>
-    <span class="p-arrow" aria-hidden="true">↓</span>
+    <span class="p-arrow" aria-hidden="true">${boldIcon("arrow-down")}</span>
   </button>`;
 }
 
@@ -85,29 +85,17 @@ function renderQr() {
 export function renderExportPanel() {
   return `<div id="export-panel" class="p-overlay" inert>
     <div class="p-sheet" role="dialog" aria-modal="true" aria-labelledby="export-panel-title">
-      <button type="button" class="p-close s-mono" data-close-export aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button>
+      <div class="p-bar"><button type="button" class="p-close s-mono" data-close-export aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button></div>
 
       <header class="p-head">
         <div class="p-kicker s-mono">CV interactif</div>
-        <h2 class="p-title" id="export-panel-title">Partager<br />&amp; Exporter</h2>
+        <h2 class="p-title" id="export-panel-title">Exporter<br />&amp; Partager</h2>
         <div class="p-subject s-mono">${contact.name} · ${contact.role}</div>
       </header>
 
       <section class="p-part">
-        <h3 class="p-part-title s-mono"><span>01</span>Partager le lien</h3>
-        <div class="p-channels">${shareChannels.map(renderChannel).join("")}${renderNativeShare()}</div>
-        <div class="p-link">
-          <span class="p-url s-mono">${contact.site.host}</span>
-          <button type="button" class="p-copy s-mono" data-copy-link>
-            <span class="p-copy-mark" data-copy-mark>${boldIcon("copy")}</span>
-            <span data-copy-label>Copier</span>
-          </button>
-        </div>
-        ${renderQr()}
-      </section>
-
-      <section class="p-part">
-        <h3 class="p-part-title s-mono"><span>02</span>Exporter</h3>
+        <h3 class="p-part-title s-mono"><span>01</span>Exporter</h3>
+        <p class="p-note p-note-top">S’ouvre dans la fenêtre d’impression : choisir « Enregistrer en PDF » ou imprimer.</p>
         ${renderDocument(
           "cv",
           "PDF · 1 page",
@@ -120,7 +108,19 @@ export function renderExportPanel() {
           "Présentation complète",
           "Toutes les sections, toutes les fiches dépliées, dans l’ordre du site.",
         )}
-        <p class="p-note">Les deux s’ouvrent dans la fenêtre d’impression : imprimer, ou enregistrer en PDF.</p>
+      </section>
+
+      <section class="p-part">
+        <h3 class="p-part-title s-mono"><span>02</span>Partager le lien</h3>
+        <div class="p-channels">${shareChannels.map(renderChannel).join("")}${renderNativeShare()}</div>
+        <div class="p-link">
+          <span class="p-url s-mono">${contact.site.host}</span>
+          <button type="button" class="p-copy s-mono" data-copy-link aria-live="polite">
+            <span class="p-copy-mark" data-copy-mark>${boldIcon("copy")}</span>
+            <span data-copy-label>Copier</span>
+          </button>
+        </div>
+        ${renderQr()}
       </section>
     </div>
   </div>`;

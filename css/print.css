@@ -10,10 +10,6 @@
    des sections numérotées, et la flamme uniquement sur la preuve.
    ========================================================================= */
 
-#print-view {
-  display: none;
-}
-
 @media print {
   @page {
     size: A4;

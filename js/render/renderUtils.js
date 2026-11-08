@@ -74,12 +74,15 @@ export function renderBulletList(items) {
 
 export function renderSmallCard(item, options = {}) {
   const { titleSize = "14px", dimText = true } = options;
+  /* Une classe et non un attribut `style` : la politique de sécurité du site n'a
+     plus à autoriser les styles en ligne. */
+  const sizeClass = titleSize === "16px" ? "ct-16" : "ct-14";
   const textClassName = ["card-text", dimText ? "dim" : ""]
     .filter(Boolean)
     .join(" ");
 
   return `<div class="card-sm ${natureClass(item.nature)}">
-    <div class="card-title" style="font-size:${titleSize}"><div class="dot"></div>${item.title}</div>
+    <div class="card-title ${sizeClass}"><div class="dot"></div>${item.title}</div>
     <div class="${textClassName}">${item.text}</div>
   </div>`;
 }

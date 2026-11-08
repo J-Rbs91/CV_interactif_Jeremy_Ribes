@@ -55,8 +55,12 @@ if (!chromium || !existsSync(chromium)) {
 }
 
 /* La même adresse que dans `index.html` et `scripts/check-cv-a4.mjs`. */
-const fontQuery =
-  "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap";
+/* Lue dans index.html et non recopiée : les contrôles certifiaient une adresse
+   (Archivo en instances 700/800) que la page ne chargeait plus — elle charge
+   l'axe variable —, donc un fichier qu'aucun lecteur ne télécharge. */
+const fontQuery = readFileSync(new URL("../index.html", import.meta.url), "utf8")
+  .match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/)[1]
+  .replace(/&amp;/g, "&");
 
 const browserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36";
@@ -417,6 +421,17 @@ const surfaces = [
 
 const failures = [];
 
+/* Une police variable déclare une PLAGE de graisses (« 100 900 »), une instance
+   statique une valeur. Tester l'égalité de chaînes déclarait absente toute graisse
+   qu'une plage servait pourtant. */
+function covers(weights, wanted) {
+  return [...weights].some((declared) => {
+    const [low, high = low] = String(declared).split(/\s+/).map(Number);
+
+    return Number(wanted) >= low && Number(wanted) <= high;
+  });
+}
+
 for (const [label, path, media] of surfaces) {
   const { faces, rows } = await inspect(path, media);
   const served = new Map();
@@ -448,7 +463,7 @@ for (const [label, path, media] of surfaces) {
         failures.push(
           `${label} : ${row.samples.join(" ")} composé en ${row.family}, qui n'est pas une des trois familles du projet.`,
         );
-      } else if (weights && !weights.has(row.weight)) {
+      } else if (weights && !covers(weights, row.weight)) {
         flag = "  ← graisse non chargée";
         failures.push(
           `${label} : ${row.samples.join(" ")} demande ${row.family} ${row.weight}, qui n'est pas servie — le navigateur en prend une autre.`,

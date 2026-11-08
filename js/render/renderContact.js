@@ -102,7 +102,7 @@ export function renderIntroStrip(options = {}) {
 export function renderContactModal() {
   return `<div id="contact-modal" class="p-overlay" inert>
     <div class="p-sheet contact-modal-body" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
-      <button type="button" class="p-close s-mono" data-close-contact aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button>
+      <div class="p-bar"><button type="button" class="p-close s-mono" data-close-contact aria-label="Fermer"><span>Fermer</span>${boldIcon("close")}</button></div>
 
       <header class="p-head">
         <div class="p-kicker s-mono">CV interactif</div>

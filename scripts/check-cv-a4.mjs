@@ -52,8 +52,12 @@ if (!chromium || !existsSync(chromium)) {
 
    Sans reseau, le controle s'arrete : mesurer avec des polices de
    substitution reviendrait a valider un autre document. */
-const fontQuery =
-  "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap";
+/* Lue dans index.html et non recopiée : les contrôles certifiaient une adresse
+   (Archivo en instances 700/800) que la page ne chargeait plus — elle charge
+   l'axe variable —, donc un fichier qu'aucun lecteur ne télécharge. */
+const fontQuery = readFileSync(new URL("../index.html", import.meta.url), "utf8")
+  .match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/)[1]
+  .replace(/&amp;/g, "&");
 
 const browserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36";

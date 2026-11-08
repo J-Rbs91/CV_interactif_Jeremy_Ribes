@@ -25,6 +25,7 @@ import { a4Content, formationContent, profileContent } from "../data/profile.js"
 import { sections } from "../data/sections.js";
 import { getLiveProducts, renderContactModal } from "./renderContact.js";
 import { renderExportPanel } from "./renderExport.js";
+import { boldIcon } from "../ui/icons.js";
 import { linkHost } from "./renderUtils.js";
 
 /* ---------- Briques ---------------------------------------------------- */
@@ -36,9 +37,22 @@ const label = (text) => `<div class="s-lab s-mono">${text}</div>`;
 const chips = (items) =>
   `<div class="s-chips">${items.map((item) => `<span>${item}</span>`).join("")}</div>`;
 
+/* Les signes de direction sont des vecteurs (`boldIcon`), jamais des caractères
+   de texte : aucune des trois familles servies ne couvre → ni ↗, et la police de
+   repli changeait leur dessin d'un appareil à l'autre. Un seul signe pour « ce
+   lien sort du site » : ↗, et il ne sert qu'à cela. */
+const arrow = (name = "arrow-up-right") => boldIcon(name, { className: "s-ico" });
+
+const sr = (text) => `<span class="s-sr">${text}</span>`;
+
+const NEW_WINDOW = sr(" (nouvelle fenêtre)");
+
 function externalLink(link) {
-  return `<p><a class="s-link" href="${link.url}" target="_blank" rel="noopener noreferrer" data-host="${linkHost(link.url)}">${link.label} ↗</a></p>`;
+  return `<p><a class="s-link" href="${link.url}" target="_blank" rel="noopener noreferrer" data-host="${linkHost(link.url)}">${link.label}${arrow()}${NEW_WINDOW}</a></p>`;
 }
+
+/* « 2025 → aujourd'hui » : la flèche de texte des données devient un tiret. */
+const period = (date) => date.replace(" → ", " – ");
 
 /* Une ligne d'index qui s'ouvre en place. <details> plutôt qu'un composant :
    le clavier, le lecteur d'écran et la recherche dans la page sont gérés par le
@@ -48,18 +62,22 @@ function row({ id, meta, title, sub, side = "", body }) {
   return `<details class="s-row"${id ? ` id="${id}"` : ""}>
     <summary>
       <span class="s-n s-mono">${meta}</span>
-      <span class="s-t">${title}${sub ? `<small>${sub}</small>` : ""}</span>
+      <h3 class="s-t">${title}${sub ? `<small>${sub}</small>` : ""}</h3>
       <span class="s-s">${side}</span>
-      <span class="s-pm" aria-hidden="true">+</span>
+      <span class="s-pm" aria-hidden="true">${boldIcon("plus")}</span>
     </summary>
     <div class="s-body"><span></span><div class="s-in">${body}</div></div>
   </details>`;
 }
 
-function section({ id, index, title, count, inner }) {
-  return `<section class="s-sec" id="${id}" data-spy>
-    <div class="s-sh s-mono"><span>${index}</span><span>${count}</span></div>
-    <h2>${title}</h2>
+function section({ id, index, title, count, inner, toggleAll = true }) {
+  return `<section class="s-sec" id="${id}" data-spy aria-labelledby="${id}-titre">
+    <div class="s-sh s-mono"><span>${index}</span><span>${count}</span>${
+      toggleAll
+        ? `<button type="button" class="s-toggle-all" data-toggle-all="${id}" aria-pressed="false">Tout ouvrir</button>`
+        : ""
+    }</div>
+    <h2 id="${id}-titre">${title}</h2>
     ${inner}
   </section>`;
 }
@@ -98,7 +116,7 @@ function renderProfile() {
   const proof = a4Content.proofs.find((item) => item.value === "3 outils en usage quotidien");
 
   return `
-    <p class="s-big">${profileContent.headline}</p>
+    <h2 class="s-big">${profileContent.headline.replace("outils métiers", "<em>outils métiers</em>")}</h2>
     <p class="s-lead">${contact.intro}</p>
     <div class="s-profile">
       <div class="s-block">
@@ -112,7 +130,7 @@ function renderProfile() {
       </div>
     </div>
     <details class="s-profile-more">
-      <summary>Mon parcours et ma façon de travailler</summary>
+      <summary><span>Mon parcours et ma façon de travailler</span><span class="s-pm" aria-hidden="true">${boldIcon("plus")}</span></summary>
       <div class="s-profile">
         <div class="s-block">
           ${label("Mon orientation")}
@@ -147,10 +165,13 @@ function renderProfile() {
 function renderExperiences() {
   return experiences
     .map((experience) => {
+      /* Le libellé précède les valeurs, la base de comparaison les suit : la phrase
+         se lit « ces actions ont contribué à +83 % CA · +5,6 pts de marge », puis
+         sur quoi on compare. Elle se terminait sur « à — » avant les valeurs. */
       const proof = experience.stats
-        ? `<p class="s-pf"><span>${statsText(experience)
+        ? `<p class="s-pf"><small>${experience.statsLabel}</small><span>${statsText(experience)
             .map((text) => `<b>${text}</b>`)
-            .join(" · ")}</span><small>${experience.statsLabel} — ${experience.statsBase}</small></p>`
+            .join(" · ")}</span><small>${experience.statsBase}</small></p>`
         : "";
       const chip = experience.stats
         ? `<span class="s-pchip">${statsText(experience).join(" · ")}</span>`
@@ -158,14 +179,20 @@ function renderExperiences() {
 
       return row({
         id: experienceId(experience),
-        meta: experience.date,
+        meta: period(experience.date),
         title: company(experience.company),
-        sub: experience.role,
+        /* Le libellé de commande que les données écrivent « pour la ligne
+           fermée » y est enfin : le poste actuel ne se lit plus comme un poste
+           de vente ordinaire. */
+        sub: experience.detailLabel
+          ? `${experience.role} · ${experience.detailLabel}`
+          : experience.role,
         side: chip,
-        body: `${experience.detailLabel ? label(experience.detailLabel) : ""}
-          ${experience.context ? `<p>${experience.context}</p>` : ""}
-          <ul class="s-list">${experience.bullets.map((bullet) => `<li>${bullet}</li>`).join("")}</ul>
+        /* La preuve vient juste après le contexte : le lecteur qui ouvre la
+           fiche pour vérifier un chiffre le trouve sans traverser le récit. */
+        body: `${experience.context ? `<p>${experience.context}</p>` : ""}
           ${proof}
+          <ul class="s-list">${experience.bullets.map((bullet) => `<li>${bullet}</li>`).join("")}</ul>
           ${experience.result ? `<p>${experience.result}</p>` : ""}`,
       });
     })
@@ -187,7 +214,7 @@ function renderOptiProfitContext(outil) {
 
   return `${label("Contexte mesuré")}
     <div class="s-pf">
-      <span>Poste où il a servi : <a class="s-link" href="#${experienceId(poste)}" data-open="${experienceId(poste)}">${poste.company}, ${poste.date} ↗</a></span>
+      <span>Poste où il a servi : <a class="s-link" href="#${experienceId(poste)}" data-open="${experienceId(poste)}">${poste.company}, ${period(poste.date)}${arrow("arrow-right")}</a></span>
       <span>${poste.statsLabel} ${statsText(poste).map((text) => `<b>${text}</b>`).join(" · ")}.</span>
       <small>${poste.statsBase} Plusieurs actions ont joué ensemble : l’outil n’explique pas l’écart à lui seul.</small>
     </div>`;
@@ -240,9 +267,9 @@ function renderCompetences() {
       row({
         meta: pad(index),
         title: competence.title,
+        sub: competence.detailLabel,
         side: competence.summary,
-        body: `${competence.detailLabel ? label(competence.detailLabel) : ""}
-          ${label("Enjeu traité")}<p>${competence.enjeu}</p>
+        body: `${label("Enjeu traité")}<p>${competence.enjeu}</p>
           ${label("Ce que j’ai mis en place")}<p>${competence.miseEnPlace}</p>
           ${label("Exemple concret")}<p>${competence.exemple}</p>
           ${label("Résultat observable")}<p>${competence.resultat}</p>
@@ -254,8 +281,8 @@ function renderCompetences() {
 
 function renderFormation() {
   const quote = formationContent.quote.replace(
-    "problèmes",
-    "<em>problèmes</em>",
+    "besoins rencontrés en magasin",
+    "<em>besoins rencontrés en magasin</em>",
   );
 
   return `${row({
@@ -272,26 +299,39 @@ function renderFormation() {
 
 function renderHero() {
   const [first, ...rest] = contact.name.split(" ");
-  let index = 0;
   const word = (text) =>
     `<span class="s-w" aria-hidden="true">${[...text]
-      .map((letter) => `<span class="s-l" style="--i:${index++}">${letter}</span>`)
+      .map((letter) => `<span class="s-l">${letter}</span>`)
       .join("")}</span>`;
   const territories = contact.secondaryRole.split(" · ");
-  const strip = [...territories, ...territories, ...territories, ...territories];
+  /* La bande répète les quatre territoires pour boucler : seule la première
+     série est lue par un lecteur d'écran, les trois autres sont des copies
+     décoratives. C'est la seule ligne de l'écran qui porte « 14 ans » et les
+     territoires : la rendre muette la retirait aux lecteurs d'écran. */
+  const strip = [0, 1, 2, 3].flatMap((copy) =>
+    territories.map((item) => `<span${copy ? ' aria-hidden="true"' : ""}>${item}</span>`),
+  );
+  /* La ligne de poste vient d'abord et se lit comme une phrase ; le parcours
+     passe en second, en registre mono. Chaque segment est insécable : la coupe
+     ne peut tomber qu'entre deux. */
+  const background = contact.hero.background
+    .split(" · ")
+    .map((part) => `<span class="s-nb">${part}</span>`)
+    .join(" · ");
 
   return `
     <header class="s-hero" id="accueil">
       <h1 class="s-name" aria-label="${contact.name}">${word(first)}${word(rest.join(" "))}</h1>
       <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
-      <p class="s-tag s-mono"><b>${contact.hero.background}</b><br />${contact.hero.target}</p>
-      <div class="s-arrow" aria-hidden="true">↓</div>
+      <p class="s-tag"><span class="s-tag-main">${contact.hero.target}</span><span class="s-tag-sub s-mono">${background}</span></p>
+      <button type="button" class="s-arrow" data-scroll-next aria-label="Lire la suite">${boldIcon("arrow-down")}</button>
     </header>
-    <div class="s-ticker" aria-hidden="true"><div>${strip.map((item) => `<span>${item}</span>`).join("")}</div></div>`;
+    <div class="s-ticker"><div>${strip.join("")}</div></div>`;
 }
 
 function renderTop() {
-  return `<div class="s-top">
+  return `<a class="s-skiplink" href="#contenu">Aller au contenu</a>
+  <div class="s-top">
     <a class="s-brand s-mono" href="#profil" data-section-link="profil">${contact.name}</a>
     <nav class="s-nav s-mono" aria-label="Sections du CV">
       ${sections
@@ -302,7 +342,7 @@ function renderTop() {
         .join("")}
     </nav>
     <div class="s-cmds s-mono">
-      <button type="button" class="s-cmd" data-open-export aria-haspopup="dialog"><span class="s-long">Partager &amp; Exporter</span><span class="s-short">Exporter</span></button>
+      <button type="button" class="s-cmd" data-open-export aria-haspopup="dialog"><span class="s-long">Exporter &amp; Partager</span><span class="s-short">CV · PDF</span></button>
       <button type="button" class="s-cmd" data-open-contact aria-haspopup="dialog">Contact</button>
     </div>
   </div>`;
@@ -312,15 +352,19 @@ function renderFooter() {
   const live = getLiveProducts();
 
   return `<footer class="s-foot">
-    <button type="button" class="s-contact" data-open-contact aria-haspopup="dialog">Me contacter ↗</button>
+    <button type="button" class="s-contact" data-open-contact aria-haspopup="dialog">Me <span class="s-nb">contacter${boldIcon("arrow-up-right", { className: "s-ico" })}</span></button>
     <div class="s-foot-meta s-mono">
       <span>${contact.name}<br />${contact.items[0].text}</span>
       <span class="s-live">${live
         .map(
           (product) =>
-            `<a class="s-link" href="${product.url}" target="_blank" rel="noopener noreferrer">${product.name} ↗</a>`,
+            `<a class="s-link" href="${product.url}" target="_blank" rel="noopener noreferrer">${product.name}${arrow()}${NEW_WINDOW}</a>`,
         )
         .join("")}</span>
+      <span class="s-live">
+        <button type="button" class="s-link s-foot-cmd" data-open-export aria-haspopup="dialog">CV · recto A4 (PDF)</button>
+        <button type="button" class="s-link s-foot-cmd" data-open-export aria-haspopup="dialog">Partager</button>
+      </span>
     </div>
   </footer>`;
 }
@@ -330,22 +374,26 @@ export function renderSite() {
 
   return `<div class="site">
     ${renderTop()}
-    <main>
+    <main id="contenu" tabindex="-1">
       <div class="s-first" id="profil" data-spy>
         ${renderHero()}
         <div class="s-wrap">${renderProfile()}</div>
       </div>
       <div class="s-wrap">
-        ${section({ id: "experience", index: "01", title: byId.experience.label, count: `${experiences.length} postes`, inner: renderExperiences() })}
-        ${section({ id: "outils", index: "02", title: byId.outils.label, count: `${outils.length} outils`, inner: renderOutils() })}
-        ${section({ id: "projet", index: "03", title: byId.projet.short, count: `${projetsTransverses.length} projets`, inner: renderProjets() })}
-        ${section({ id: "competences", index: "04", title: byId.competences.label, count: `${competences.length} domaines`, inner: renderCompetences() })}
-        ${section({ id: "formation", index: "05", title: byId.formation.label, count: formationContent.year, inner: renderFormation() })}
+        ${[
+          { id: "experience", title: byId.experience.label, count: `${experiences.length} postes`, inner: renderExperiences() },
+          { id: "outils", title: byId.outils.label, count: `${outils.length} outils`, inner: renderOutils() },
+          { id: "competences", title: byId.competences.label, count: `${competences.length} domaines`, inner: renderCompetences() },
+          { id: "projet", title: byId.projet.short, count: `${projetsTransverses.length} projets`, inner: renderProjets() },
+          { id: "formation", title: byId.formation.label, count: formationContent.year, inner: renderFormation() },
+        ]
+          .map((item, position) => section({ ...item, index: pad(position) }))
+          .join("")}
         ${renderFooter()}
       </div>
     </main>
     ${renderContactModal()}
     ${renderExportPanel()}
-    <button type="button" class="s-skip s-mono" id="skip">Passer</button>
+    <button type="button" class="s-skip s-mono" id="skip"><span>Passer</span>${boldIcon("close")}</button>
   </div>`;
 }

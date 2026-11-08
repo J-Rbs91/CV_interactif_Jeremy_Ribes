@@ -53,6 +53,26 @@
     played = false;
   }
 
+  /* @property enregistre les variables animées du nom (révélation, chasse) :
+     sans elle (Safari < 16.4, Firefox < 128) elles ne s'interpolent pas et le
+     balayage deviendrait une bascule sèche. Le CSS remplace alors le balayage
+     par un simple fondu et coupe la respiration. */
+  if (!(window.CSS && typeof window.CSS.registerProperty === "function")) {
+    root.classList.add("no-property");
+  }
+
+  /* Les polices n'étaient demandées qu'au premier texte composé avec elles,
+     donc après le rendu JavaScript, derrière tout le graphe de modules : le
+     nom était parfois révélé en police de repli puis recomposé. La feuille de
+     polices est déjà analysée à ce stade (elle précède ce script) : on lance
+     les téléchargements tout de suite, en parallèle du JavaScript. */
+  if (document.fonts && typeof document.fonts.load === "function") {
+    ['800 1em "Archivo"', '500 1em "JetBrains Mono"', '400 1em "Manrope"'].forEach(
+      function (face) {
+        document.fonts.load(face).catch(function () {});
+      },
+    );
+  }
   var deepLink = hash !== "" && hash !== "profil" && hash !== "intro";
   var shouldPlay = !reduced && (hash === "intro" || (!played && !deepLink));
 

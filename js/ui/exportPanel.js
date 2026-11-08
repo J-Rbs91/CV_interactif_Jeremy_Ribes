@@ -1,5 +1,5 @@
 import { boldIcon } from "./icons.js";
-import { fermerCouche, ouvrirCouche } from "./backNavigation.js";
+import { coucheOuverte, fermerCouche, ouvrirCouche } from "./backNavigation.js";
 import { printDocument } from "./print.js";
 import { canShareNatively, copyShareUrl, shareNatively } from "./share.js";
 
@@ -9,6 +9,12 @@ const COPIED_MARK = boldIcon("check");
 let escapeListenerBound = false;
 let lastTrigger = null;
 let copyResetTimeoutId = 0;
+let openedAt = 0;
+
+/* Un double-clic sur le déclencheur envoie son second clic sur ce qui se trouve
+   alors sous le pointeur dans le tiroir — un document, c'est-à-dire une impression.
+   Pendant sa mise en place (0,45 s), le tiroir ignore donc tout clic. */
+const OPENING_MS = 400;
 
 function getPanel() {
   return document.getElementById("export-panel");
@@ -18,16 +24,30 @@ function isOpen() {
   return getPanel()?.classList.contains("is-open") ?? false;
 }
 
+function setExpanded(value) {
+  document
+    .querySelectorAll("[data-open-export]")
+    .forEach((trigger) => trigger.setAttribute("aria-expanded", String(value)));
+}
+
 function openPanel(trigger) {
   const panel = getPanel();
 
-  if (!panel) {
+  /* Une couche ne s'ouvre pas par-dessus elle-même (une entrée d'historique
+     de trop), ni derrière une autre. */
+  if (!panel || coucheOuverte()) {
     return;
   }
 
   lastTrigger = trigger ?? null;
   panel.classList.add("is-open");
   panel.removeAttribute("inert");
+  setExpanded(true);
+  openedAt = performance.now();
+
+  /* Un tiroir rouvert repart du haut, pas de là où le dernier focus l'avait
+     laissé défilé. */
+  panel.querySelector(".p-sheet")?.scrollTo({ top: 0 });
 
   /* Le premier canal, pas le bouton de fermeture : au clavier comme au
      lecteur d'ecran, on entre dans le panneau par ce qu'il propose. */
@@ -68,6 +88,7 @@ function closePanel() {
   }
 
   panel.classList.remove("is-open");
+  setExpanded(false);
 
   if (panel.contains(document.activeElement)) {
     (lastTrigger ?? document.querySelector("[data-open-export]"))?.focus();
@@ -173,6 +194,8 @@ function bindEscapeClose() {
    repose deux fois. */
 export function bindExportPanel() {
   document.querySelectorAll("[data-open-export]").forEach((trigger) => {
+    trigger.setAttribute("aria-controls", "export-panel");
+    trigger.setAttribute("aria-expanded", "false");
     trigger.addEventListener("click", () => openPanel(trigger));
   });
 
@@ -182,6 +205,17 @@ export function bindExportPanel() {
     bindEscapeClose();
     return;
   }
+
+  panel.addEventListener(
+    "click",
+    (event) => {
+      if (performance.now() - openedAt < OPENING_MS && !event.target.closest("[data-close-export]")) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    },
+    true,
+  );
 
   panel.querySelector("[data-close-export]")?.addEventListener("click", demanderFermeture);
 
