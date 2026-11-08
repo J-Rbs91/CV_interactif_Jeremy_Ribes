@@ -127,7 +127,12 @@ html.intro-lock .s-top > * { pointer-events: none; }
 
 /* ---------- Affiche ---------------------------------------------------- */
 .s-hero {
-  min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; position: relative;
+  /* `svh` (hauteur de fenêtre la plus petite, barre d'adresse DÉPLOYÉE) et non
+     `dvh` : sur téléphone, `dvh` change au premier défilement, quand la barre
+     d'adresse se replie. L'affiche changeait alors de hauteur en plein geste —
+     le nom, centré dedans, sautait, et tout ce qui suit avec lui. `svh` ne bouge
+     pas, et garde la ligne de poste et la flèche au-dessus de la barre. */
+  min-height: 100vh; min-height: 100svh; display: grid; place-items: center; position: relative;
   padding: 96px 0 110px; overflow: hidden; --px: 0; --py: 0;
 }
 .s-name {
