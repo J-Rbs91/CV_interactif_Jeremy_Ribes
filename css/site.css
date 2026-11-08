@@ -329,3 +329,8 @@ html:not(.intro-lock) .s-skip { display: none; }
 
 /* ---------- Papier ------------------------------------------------------ */
 @media print { .site { display: none !important; } }
+
+/* La vue d'impression est montée au clic sur un document d'export et démontée
+   après l'impression : à l'écran elle ne doit jamais se voir. La règle vivait
+   dans print.css, désormais chargé pour le seul papier. */
+#print-view { display: none; }
