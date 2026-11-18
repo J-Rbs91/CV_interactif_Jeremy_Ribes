@@ -298,27 +298,24 @@ function renderFormation() {
 /* ---------- Page ------------------------------------------------------- */
 
 function renderHero() {
-  /* Le positionnement est la première information ; le nom reste dans la barre
-     de navigation. Le titre vient des données, sans dupliquer un intitulé en dur. */
-  const words = contact.hero.target.split(" ");
+  const [first, ...rest] = contact.hero.target.split(" ");
   const word = (text) =>
     `<span class="s-w" aria-hidden="true">${[...text.toLocaleUpperCase("fr")]
       .map((letter) => `<span class="s-l">${letter}</span>`)
       .join("")}</span>`;
   const territories = contact.secondaryRole.split(" · ");
+  /* La bande répète les quatre territoires pour boucler : seule la première
+     série est lue par un lecteur d'écran, les trois autres sont des copies
+     décoratives. C'est la seule ligne de l'écran qui porte « 14 ans » et les
+     territoires : la rendre muette la retirait aux lecteurs d'écran. */
   const strip = [0, 1, 2, 3].flatMap((copy) =>
     territories.map((item) => `<span${copy ? ' aria-hidden="true"' : ""}>${item}</span>`),
   );
 
   return `
     <header class="s-hero" id="accueil">
-      <div class="s-hero-main">
-        <div class="s-hero-copy">
-          <h1 class="s-name" aria-label="${contact.hero.target}">${words.map(word).join(" ")}</h1>
-          <p class="s-hero-subtitle">${contact.hero.subtitle}</p>
-        </div>
-        <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
-      </div>
+      <h1 class="s-name" aria-label="${contact.hero.target}">${word(first)}${word(rest.join(" "))}</h1>
+      <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
       <button type="button" class="s-arrow" data-scroll-next aria-label="Lire la suite">${boldIcon("arrow-down")}</button>
     </header>
     <div class="s-ticker"><div>${strip.join("")}</div></div>`;
