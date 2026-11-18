@@ -496,7 +496,7 @@ html:not(.intro-lock) .s-skip { display: none; }
 /* Écran bas (téléphone couché, zoom 200 %) : tout se dimensionne sur la hauteur.
    Placé après les blocs de largeur, qu'il doit surcharger. */
 @media (max-height: 520px) {
-  .s-name { font-size: min(7.8vw, 13vh); row-gap: min(19vw, 30vh); }
+  .s-name { font-size: min(7.8vw, 13vh); row-gap: calc(min(19vw, 30vh) + 36px); }
   .s-photo { width: min(19vw, 30vh); }
   .s-hero { padding-top: 84px; padding-bottom: 84px; }
   .s-arrow { display: none; }
