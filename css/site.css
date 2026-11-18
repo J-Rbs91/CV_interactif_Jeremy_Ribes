@@ -212,7 +212,8 @@ html.intro-lock .s-top > * { pointer-events: none; }
 .s-wrap { padding: 0 28px; max-width: 1500px; margin: 0 auto; }
 .s-big { font: 800 clamp(30px, 6vw, 88px)/1.02 var(--s-disp); font-stretch: 125%; letter-spacing: -0.03em; text-transform: uppercase; padding: 110px 0 24px; max-width: 18ch; margin: 0; }
 .s-big em { font-style: normal; color: var(--s-acc); }
-.s-lead { max-width: 56ch; color: var(--s-text); font-size: var(--s-fs-lead); margin: 0 0 40px; }
+/* Même typographie que le contexte des fiches d'expérience (.s-in p). */
+.s-lead { max-width: 56ch; color: var(--s-text); font: 400 var(--s-fs-body)/1.6 var(--font-sans); margin: 0 0 40px; }
 .s-profile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--s-line); }
 .s-block { padding: 26px 0 30px; border-bottom: 1px solid var(--s-line); max-width: 62ch; display: grid; gap: 10px; align-content: start; }
 .s-block p { margin: 0; color: var(--s-text); }
