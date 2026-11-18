@@ -13,7 +13,7 @@
    (print.css) et ne voit jamais `.site`, qui est masqué à l'impression.
    ========================================================================= */
 @property --w  { syntax:"<number>"; inherits:false; initial-value:125; }
-@property --wg { syntax:"<number>"; inherits:false; initial-value:800; }
+@property --wg { syntax:"<number>"; inherits:false; initial-value:900; }
 /* 125 % et non 145 % : le dégradé du masque a 45 % de bord, et au-delà de 125 %
    le fondu est entièrement au-dessus des lettres — plus rien ne change à l'écran
    alors que l'animation court encore. La course visible tient dans 125 %. */
@@ -138,8 +138,8 @@ html.intro-lock .s-top > * { pointer-events: none; }
 .s-name {
   display: flex; flex-direction: column; align-items: center;
   font-family: var(--s-disp); text-transform: uppercase; color: var(--s-acc);
-  line-height: 0.8; letter-spacing: -0.035em; font-size: clamp(32px, 7.8vw, 156px);
-  font-weight: 800; text-align: center; position: relative; white-space: nowrap; margin: 0;
+  line-height: 0.8; letter-spacing: -0.05em; font-size: clamp(32px, 7.8vw, 156px);
+  font-weight: 900; text-align: center; position: relative; white-space: nowrap; margin: 0;
   /* La photo conserve sa position : l'intervalle entre les mots la dégage. */
   row-gap: clamp(156px, calc(17vw + 32px), 292px);
 }
@@ -184,7 +184,7 @@ html.intro-lock .s-top > * { pointer-events: none; }
    n'est pas un téléphone. */
 /* Respiration continue volontairement discrète : amplitude réduite de 90 %,
    sans toucher à la révélation d'ouverture, au rythme ni au portrait. */
-@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 1.4); --wg: 788; } }
+@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 900; } 50% { --w: calc(var(--w0) + 1.4); --wg: 888; } }
 @media (hover: none) {
   .s-name { --w0: 100; }
   .s-l { --w: var(--w0); }
@@ -195,7 +195,7 @@ html.intro-lock .s-top > * { pointer-events: none; }
 @media (max-width: 760px) {
   /* +30 % sur la plage fluide mobile (8,2 -> 10,66 vw).
    Sans plancher fixe, les ecrans tres etroits ne rognent pas OPERATIONNELLE. */
-  .s-name { --w0: 76; font-size: min(10.66vw, 83.2px); row-gap: 0; }
+  .s-name { --w0: 68; font-size: min(10.66vw, 83.2px); row-gap: 0; }
   .s-l { --w: var(--w0); }
   .s-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 120px 0 176px; }
   /* `relative` et non `static` : la teinte (::after) se cale sur la photo. */
