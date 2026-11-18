@@ -222,7 +222,9 @@ html.intro-lock .s-top > * { pointer-events: none; }
 
 /* Profil : l'essentiel se lit d'abord. Les détails utilisent le même
    composant natif que les fiches du CV, sans animation supplémentaire. */
-.s-first .s-big { padding-top: 64px; }
+/* La flèche vise ce titre directement : compenser la barre fixe comme pour
+   les autres sections, sinon scrollIntoView le place derrière la navigation. */
+.s-first .s-big { padding-top: 64px; scroll-margin-top: calc(var(--s-bar-h) + 24px); }
 .s-first .s-lead { margin-bottom: 28px; }
 .s-profile-more { border-bottom: 1px solid var(--s-line); }
 .s-profile-more > summary {
