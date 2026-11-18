@@ -195,7 +195,9 @@ html.intro-lock .s-top > * { pointer-events: none; }
 @media (max-width: 760px) {
   /* +30 % sur la plage fluide mobile (8,2 -> 10,66 vw).
    Sans plancher fixe, les ecrans tres etroits ne rognent pas OPERATIONNELLE. */
-  .s-name { --w0: 68; font-size: min(10.66vw, 83.2px); row-gap: 0; }
+  /* Chasse plus large pour retrouver la presence de l'affiche d'origine,
+     sans grossir le corps du titre ni deplacer le portrait. */
+  .s-name { --w0: 88; font-size: min(10.66vw, 83.2px); row-gap: 0; }
   .s-l { --w: var(--w0); }
   .s-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 120px 0 176px; }
   /* `relative` et non `static` : la teinte (::after) se cale sur la photo. */
