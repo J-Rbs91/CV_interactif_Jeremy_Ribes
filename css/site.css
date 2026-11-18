@@ -233,7 +233,7 @@ html.intro-lock .s-top > * { pointer-events: none; }
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
-  .s-name { --w0: 76; font-size: clamp(24px, 7.25vw, 54px); }
+  .s-name { --w0: 76; font-size: clamp(22px, 6.6vw, 50px); }
   .s-l { --w: var(--w0); }
   .s-hero-subtitle { font-size: clamp(14px, 3.9vw, 18px); margin-top: 20px; }
   .s-photo { width: min(34vw, 150px); justify-self: start; }
@@ -543,7 +543,7 @@ html:not(.intro-lock) .s-skip { display: none; }
   .s-arrow { display: none; }
 }
 @media (max-height: 520px) and (max-width: 760px) {
-  .s-name { font-size: min(7.25vw, 13vh); }
+  .s-name { font-size: min(6.6vw, 13vh); }
   .s-photo { width: min(23vw, 22vh); }
   .s-hero { padding-top: 120px; padding-bottom: 46px; }
 }
