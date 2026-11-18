@@ -125,82 +125,118 @@ html.intro-lock .s-top > * { pointer-events: none; }
 .s-short { display: none; }
 .site :is(button, summary, a):focus-visible { outline: 2px solid var(--s-acc); outline-offset: 4px; }
 
-/* ---------- Affiche ---------------------------------------------------- */
+/* ---------- Accueil : la fonction d'abord -------------------------------
+   Deux colonnes indépendantes pour que la photo ne recouvre jamais le titre.
+   Les corps suivent la largeur disponible, avec un plafond sur grand écran.
+   Sur écran étroit, les colonnes se replient sans positionnement absolu. */
 .s-hero {
-  /* `svh` (hauteur de fenêtre la plus petite, barre d'adresse DÉPLOYÉE) et non
-     `dvh` : sur téléphone, `dvh` change au premier défilement, quand la barre
-     d'adresse se replie. L'affiche changeait alors de hauteur en plein geste —
-     le nom, centré dedans, sautait, et tout ce qui suit avec lui. `svh` ne bouge
-     pas, et garde la ligne de poste et la flèche au-dessus de la barre. */
-  min-height: 100vh; min-height: 100svh; display: grid; place-items: center; position: relative;
-  padding: 96px 0 110px; overflow: hidden; --px: 0; --py: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  padding: 120px 0 96px;
+  --px: 0;
+  --py: 0;
 }
+.s-hero-main {
+  width: min(calc(100% - clamp(40px, 6vw, 96px)), 1450px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 22%);
+  gap: clamp(24px, 4vw, 80px);
+  align-items: center;
+  margin-inline: auto;
+}
+.s-hero-copy { min-width: 0; }
 .s-name {
-  display: flex; flex-direction: column; align-items: center;
-  font-family: var(--s-disp); text-transform: uppercase; color: var(--s-acc);
-  line-height: 0.8; letter-spacing: -0.035em; font-size: clamp(54px, 16.2vw, 300px);
-  font-weight: 800; text-align: center; position: relative; white-space: nowrap; margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--s-disp);
+  text-transform: uppercase;
+  color: var(--s-acc);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-size: clamp(32px, 5.15vw, 86px);
+  font-weight: 800;
+  text-align: left;
+  white-space: nowrap;
+  margin: 0;
 }
-/* Chaque mot porte une marge intérieure compensée par une marge négative de
-   même valeur : la boîte ne change pas de place, mais le masque de l'ouverture
-   (qui rogne tout ce qui sort de sa boîte) ne coupe ni l'accent du É ni le
-   crochet du J. En colonne flex pour que les marges négatives des deux mots ne
-   fusionnent pas — des marges de blocs adjacents se confondent, celles d'un flex
-   non. */
+/* Le masque animé doit laisser la place aux accents et aux jambages. */
 .s-w { display: block; padding: 0.24em 0.12em 0.14em; margin: -0.24em -0.12em -0.14em; }
 .s-l {
-  display: inline-block; font-stretch: 125%;
+  display: inline-block;
+  font-stretch: 125%;
   font-variation-settings: "wdth" var(--w), "wght" var(--wg);
   transition: --w 0.35s var(--s-e), --wg 0.35s var(--s-e);
 }
-.s-photo {
-  position: absolute; left: 50%; top: 50%; width: clamp(120px, 17vw, 260px); aspect-ratio: 1;
-  border-radius: 50%; overflow: hidden; z-index: 3; box-shadow: 0 0 0 6px var(--s-bg);
-  transform: translate(calc(-50% + var(--px) * 22px), calc(-52% + var(--py) * 22px));
-  transition: transform 0.5s var(--s-e);
+.s-hero-subtitle {
+  margin: clamp(20px, 3.2vw, 40px) 0 0;
+  max-width: 46ch;
+  font: 500 clamp(15px, 1.5vw, 20px)/1.45 var(--font-sans);
+  color: var(--s-fg);
 }
-.s-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15) brightness(1.3); }
-/* La photo est en niveaux de gris, puis l'accent — mélangé à un blanc cassé —
-   lui est multiplié : le noir reste noir, le blanc prend la teinte du lettrage.
-   Une teinte pleine saturait les clairs (81 %) ; à 25 % ils tombent à 23 %. */
+.s-photo {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  justify-self: end;
+  box-shadow: 0 0 0 6px var(--s-bg);
+}
+.s-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1.15) brightness(1.3);
+}
 .s-photo::after {
-  content: ""; position: absolute; inset: 0; mix-blend-mode: multiply;
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
   background: color-mix(in srgb, var(--s-acc) 25%, #e8e8e4);
 }
-/* La fonction visée se lit comme une phrase (Manrope, casse de phrase, blanc) ; le
-   parcours passe dessous, en registre mono atténué. Elle était la plus petite et
-   la moins contrastée du premier écran : 12 px, capitales, gris. */
-.s-tag { position: absolute; bottom: 52px; left: 0; right: 0; text-align: center; z-index: 4; padding: 0 20px; margin: 0; display: grid; gap: 6px; }
-.s-tag-main { font: 500 clamp(15px, 1.3vw, 19px)/1.4 var(--font-sans); color: var(--s-fg); }
-.s-tag-sub { color: var(--s-dim); }
 .s-arrow {
-  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
-  background: none; border: 0; padding: 8px 12px; cursor: pointer; line-height: 0;
-  color: var(--s-dim); animation: s-bob 2.2s ease-in-out infinite;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  line-height: 0;
+  color: var(--s-dim);
+  animation: s-bob 2.2s ease-in-out infinite;
 }
 .s-arrow .icon-bold { width: 18px; height: 18px; }
 .s-arrow:hover { color: var(--s-acc); }
 @keyframes s-bob { 50% { transform: translate(-50%, 6px); } }
 
-/* Pas de pointeur : le nom respire de lui-même, peu, pour ne pas changer de
-   largeur d'un tiers. Seule la RESPIRATION dépend de l'absence de survol ; la
-   composition (nom plus petit, photo sous le nom) dépend de la LARGEUR — un iPad
-   n'est pas un téléphone. */
-@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 14); --wg: 680; } }
+@keyframes s-breathe {
+  0%, 100% { --w: var(--w0); --wg: 800; }
+  50% { --w: calc(var(--w0) + 14); --wg: 680; }
+}
 @media (hover: none) {
   .s-name { --w0: 100; }
   .s-l { --w: var(--w0); }
 }
-/* Téléphone : nom et photo se composent EN FLUX, avec un écart constant, au lieu
-   d'être ancrés chacun à un bord (l'écart variait de 3 à 95 px selon la hauteur
-   d'écran, et la photo frôlait le nom quand le navigateur montrait sa barre). */
 @media (max-width: 760px) {
-  .s-name { --w0: 76; font-size: min(23vw, 150px); }
+  .s-hero { padding: 132px 0 76px; }
+  .s-hero-main {
+    width: calc(100% - 40px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .s-name { --w0: 76; font-size: clamp(24px, 7.25vw, 54px); }
   .s-l { --w: var(--w0); }
-  .s-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 120px 0 176px; }
-  /* `relative` et non `static` : la teinte (::after) se cale sur la photo. */
-  .s-photo { position: relative; left: auto; top: auto; transform: none; width: min(34vw, 150px); flex: none; }
-  .s-tag { bottom: 58px; }
+  .s-hero-subtitle { font-size: clamp(14px, 3.9vw, 18px); margin-top: 20px; }
+  .s-photo { width: min(34vw, 150px); justify-self: start; }
 }
 
 /* ---------- Bandeau ---------------------------------------------------- */
@@ -396,13 +432,13 @@ html.intro-wait .site *, html.intro-wait .site *::before, html.intro-wait .site 
   }
   html.intro-play .s-w:nth-child(1) { animation-delay: 0.15s; }
   html.intro-play .s-w:nth-child(2) { animation-delay: 0.3s; }
-  /* Le nom est entièrement révélé à 1,75 s : la photo arrive juste après, puis la
-     ligne de poste, la barre et la flèche. Les délais suivent la fin VISIBLE du
+  /* Le titre est révélé avant la photo, puis le sous-titre,
+     la barre et la flèche. Les délais suivent la fin VISIBLE du
      balayage — ils étaient calés sur la fin de la keyframe, 0,6 s plus tard, et
      la page restait immobile entre les deux. Verrou levé à ≈ 3,3 s. */
   html.intro-play .s-photo { animation: s-pop 0.95s var(--s-e) 1.8s backwards; }
   html.intro-play .s-photo img { animation: s-settle 1.3s var(--s-e) 1.8s backwards; }
-  html.intro-play .s-tag { animation: s-up 0.7s var(--s-e) 2.3s backwards; }
+  html.intro-play .s-hero-subtitle { animation: s-up 0.7s var(--s-e) 2.3s backwards; }
   html.intro-play .s-top { animation: s-fade 0.6s ease 2.5s backwards; }
   html.intro-play .s-arrow { animation: s-fade 0.6s ease 2.6s backwards, s-bob 2.2s ease-in-out 3.2s infinite; }
   /* Sans @property (Safari < 16.4, Firefox < 128), --r ne s'interpole pas : le
@@ -501,15 +537,15 @@ html:not(.intro-lock) .s-skip { display: none; }
 /* Écran bas (téléphone couché, zoom 200 %) : tout se dimensionne sur la hauteur.
    Placé après les blocs de largeur, qu'il doit surcharger. */
 @media (max-height: 520px) {
-  .s-name { font-size: min(16.2vw, 21vh); }
-  .s-photo { width: min(19vw, 30vh); }
-  .s-hero { padding-top: 84px; padding-bottom: 84px; }
-  .s-arrow, .s-tag-sub { display: none; }
+  .s-name { font-size: min(5.15vw, 14vh); }
+  .s-photo { width: min(22vw, 30vh); }
+  .s-hero { padding-top: 96px; padding-bottom: 66px; }
+  .s-arrow { display: none; }
 }
 @media (max-height: 520px) and (max-width: 760px) {
-  .s-name { font-size: min(23vw, 21vh); }
-  .s-photo { display: none; }
-  .s-hero { padding-top: 120px; padding-bottom: 96px; }
+  .s-name { font-size: min(7.25vw, 13vh); }
+  .s-photo { width: min(23vw, 22vh); }
+  .s-hero { padding-top: 120px; padding-bottom: 46px; }
 }
 /* Portable court : le grand titre de section garde sa course, moins de hauteur. */
 @media (max-height: 720px) and (min-width: 761px) {
