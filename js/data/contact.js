@@ -5,7 +5,8 @@ export const contact = {
      écran, sans laisser croire que ce poste a déjà été occupé. */
   hero: {
     background: "Opticien depuis 2012 · expérience en management",
-    target: "Projet professionnel : coordination et outils métiers",
+    target: "Coordination opérationnelle",
+    subtitle: "Projets d’organisation & outils métiers",
   },
   secondaryRole:
     "14 ans en réseau d’optique · Organisation & process · Outils d’aide à la décision · Pilotage par la donnée",
