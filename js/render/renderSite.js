@@ -298,32 +298,27 @@ function renderFormation() {
 /* ---------- Page ------------------------------------------------------- */
 
 function renderHero() {
-  const [first, ...rest] = contact.name.split(" ");
+  /* Le positionnement est la première information ; le nom reste dans la barre
+     de navigation. Le titre vient des données, sans dupliquer un intitulé en dur. */
+  const words = contact.hero.target.split(" ");
   const word = (text) =>
-    `<span class="s-w" aria-hidden="true">${[...text]
+    `<span class="s-w" aria-hidden="true">${[...text.toLocaleUpperCase("fr")]
       .map((letter) => `<span class="s-l">${letter}</span>`)
       .join("")}</span>`;
   const territories = contact.secondaryRole.split(" · ");
-  /* La bande répète les quatre territoires pour boucler : seule la première
-     série est lue par un lecteur d'écran, les trois autres sont des copies
-     décoratives. C'est la seule ligne de l'écran qui porte « 14 ans » et les
-     territoires : la rendre muette la retirait aux lecteurs d'écran. */
   const strip = [0, 1, 2, 3].flatMap((copy) =>
     territories.map((item) => `<span${copy ? ' aria-hidden="true"' : ""}>${item}</span>`),
   );
-  /* La ligne de poste vient d'abord et se lit comme une phrase ; le parcours
-     passe en second, en registre mono. Chaque segment est insécable : la coupe
-     ne peut tomber qu'entre deux. */
-  const background = contact.hero.background
-    .split(" · ")
-    .map((part) => `<span class="s-nb">${part}</span>`)
-    .join(" · ");
 
   return `
     <header class="s-hero" id="accueil">
-      <h1 class="s-name" aria-label="${contact.name}">${word(first)}${word(rest.join(" "))}</h1>
-      <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
-      <p class="s-tag"><span class="s-tag-main">${contact.hero.target}</span><span class="s-tag-sub s-mono">${background}</span></p>
+      <div class="s-hero-main">
+        <div class="s-hero-copy">
+          <h1 class="s-name" aria-label="${contact.hero.target}">${words.map(word).join(" ")}</h1>
+          <p class="s-hero-subtitle">${contact.hero.subtitle}</p>
+        </div>
+        <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
+      </div>
       <button type="button" class="s-arrow" data-scroll-next aria-label="Lire la suite">${boldIcon("arrow-down")}</button>
     </header>
     <div class="s-ticker"><div>${strip.join("")}</div></div>`;
