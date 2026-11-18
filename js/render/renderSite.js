@@ -314,7 +314,7 @@ function renderHero() {
     <header class="s-hero" id="accueil">
       <div class="s-hero-main">
         <div class="s-hero-copy">
-          <h1 class="s-name" aria-label="${contact.hero.target}">${words.map(word).join("")}</h1>
+          <h1 class="s-name" aria-label="${contact.hero.target}">${words.map(word).join(" ")}</h1>
           <p class="s-hero-subtitle">${contact.hero.subtitle}</p>
         </div>
         <div class="s-photo"><img src="${contact.portrait.src}" width="${contact.portrait.width}" height="${contact.portrait.height}" alt="Portrait de ${contact.name}" /></div>
