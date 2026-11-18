@@ -182,7 +182,9 @@ html.intro-lock .s-top > * { pointer-events: none; }
    largeur d'un tiers. Seule la RESPIRATION dépend de l'absence de survol ; la
    composition (nom plus petit, photo sous le nom) dépend de la LARGEUR — un iPad
    n'est pas un téléphone. */
-@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 14); --wg: 680; } }
+/* Respiration continue volontairement discrète : amplitude réduite de 90 %,
+   sans toucher à la révélation d'ouverture, au rythme ni au portrait. */
+@keyframes s-breathe { 0%, 100% { --w: var(--w0); --wg: 800; } 50% { --w: calc(var(--w0) + 1.4); --wg: 788; } }
 @media (hover: none) {
   .s-name { --w0: 100; }
   .s-l { --w: var(--w0); }
