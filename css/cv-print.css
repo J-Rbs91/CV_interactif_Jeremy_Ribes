@@ -1,0 +1,40 @@
+
+/* Ajustements minimaux du site principal. La direction artistique vient de css/site.css. */
+html {scroll-behavior:smooth}
+.s-top .s-nav-item {display:inline-block}
+.s-top .s-cmd {display:inline-block}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print {
+.site{display:block!important;color:#111!important}
+html,body{background:#fff!important;color:#111!important}
+.s-top,.s-hero,.s-ticker,.s-foot{display:none!important}
+.s-wrap{max-width:none;padding:0}
+.s-sec{margin-top:24px;break-before:page}
+.s-sec>h2,.s-big,.s-t,.s-n,.s-lead,.s-in,.s-block p{color:#111!important;-webkit-text-stroke:0!important;background:none!important;animation:none!important}
+.s-sec>h2{font-size:32px}
+.s-t{font-size:22px}
+}
+
+/* Le bouton Contact conserve le style des commandes de navigation. */
+.s-cmds button.s-cmd { color: var(--s-fg); }
+.s-cmds button.s-cmd:hover { color: var(--s-acc); }
+@media print {
+  @page { size: A4; margin: 13mm; }
+  html, body { background: #fff !important; }
+  .s-sec { margin-top: 26px !important; break-before: auto !important; }
+  .s-sec > h2 { margin: 0 0 12px !important; padding: 0 !important; font-size: 25px !important; }
+  .s-big { font-size: 28px !important; padding: 14px 0 12px !important; }
+  .s-first .s-big { padding: 10px 0 12px !important; }
+  .s-row summary { padding: 10px 0 !important; }
+  .s-t { font-size: 18px !important; }
+  .s-body { padding: 6px 0 12px !important; animation: none !important; }
+  .s-in { max-width: none; gap: 5px; }
+  .s-in, .s-lead, .s-block p, .s-list { font-size: 11px !important; line-height: 1.3 !important; }
+  .s-row, .s-profile { break-inside: avoid; }
+  .s-profile-more > summary { display: none !important; }
+  .s-profile-more > .s-profile { display: block !important; }
+  .s-sh, .s-toggle-all { display: none !important; }
+  .site a { text-decoration: none; }
+  .s-contact { display: none !important; }
+  .p-overlay { display: none !important; }
+}
