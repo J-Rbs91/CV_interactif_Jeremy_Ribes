@@ -68,7 +68,7 @@ function renderStat(item) {
 
 /* Les chiffres restent visibles fermés. C'est la règle du CV : un résultat
    mesuré sort du corps de texte, et il ne doit pas attendre un clic pour se
-   lire — le lecteur qui n'ouvre rien doit quand même repartir avec +83 %.
+   lire — le lecteur qui n'ouvre rien doit quand même repartir avec amélioration commerciale.
 
    Ils sont posés **hors du bouton** : un <div> dans un <button> n'est pas du
    contenu admis, et le résumé ne porte que du contenu de phrasé. Leur base de
