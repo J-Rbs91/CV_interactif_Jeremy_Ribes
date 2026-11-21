@@ -8,8 +8,8 @@ body{margin:0;color:var(--ink);font:400 10.4px/1.45 var(--sans)}
 .head{border-bottom:3px solid var(--accent);padding:0 0 14px}
 .head-main{display:grid;grid-template-columns:minmax(0,1fr) 31mm;gap:10mm;align-items:center}
 .head-copy{min-width:0}
-.head-photo{width:31mm;height:31mm;justify-self:end;overflow:hidden;border-radius:2mm;background:#e7e7e2}
-.head-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(1) contrast(1.1)}
+.head-photo{width:31mm;height:31mm;justify-self:end;overflow:hidden;border-radius:50%;background:#e7e7e2}
+.head-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:50%;filter:grayscale(1) contrast(1.1)}
 .eyebrow,.period,.place,footer,h3{font-family:var(--mono);letter-spacing:.08em}
 .eyebrow{text-transform:uppercase;font-size:9px;margin:0 0 7px}
 h1{font:900 36px/.88 var(--display);font-stretch:125%;margin:0;letter-spacing:-.035em}

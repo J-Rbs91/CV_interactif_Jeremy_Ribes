@@ -35,10 +35,13 @@ const printCss = read("css/cv-print.css");
 assert(a4.includes('class="head-photo"') && a4.includes('src="' + portrait + '"'), "Portrait absent du CV A4");
 assert(a4Css.includes(".head-photo img") && a4Css.includes("object-fit:cover"), "Portrait A4 non cadré");
 assert(a4Css.includes(".head-photo,.head-photo img{display:block}"), "Portrait A4 non garanti à l'impression");
+assert(/\.head-photo\{[^}]*border-radius:50%/.test(a4Css), "Portrait A4 non circulaire");
+assert(/\.head-photo img\{[^}]*border-radius:50%/.test(a4Css), "Image A4 non découpée en cercle");
 assert(site.includes('class="cv-print-head"') && site.includes('class="cv-print-photo"'), "En-tête du CV complet imprimable absent");
 assert(site.includes('class="cv-print-photo" src="' + portrait + '"'), "Portrait absent de la présentation imprimable");
 assert(printCss.includes(".cv-print-head") && printCss.includes("display: grid !important"), "En-tête d'impression masqué");
 assert(printCss.includes(".cv-print-photo") && printCss.includes("display: block !important"), "Portrait masqué à l'impression");
+assert(/\.cv-print-photo\s*\{[^}]*border-radius:\s*50%/.test(printCss), "Portrait de l'impression complète non circulaire");
 assert(workflow.includes("css/cv-print.css css/cv-a4.css"), "Feuilles d'impression non déployées");
 
 const commercialNumber = /\b30\s*800\s*€|\+\s*(?:83|82[.,]99|81[.,]39)\s*%|\+\s*5[.,](?:6|54)\s*(?:points?|pts)\b/i;
