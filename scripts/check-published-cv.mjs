@@ -27,6 +27,20 @@ assert(site.includes("Content-Security-Policy"), "CSP absente");
 assert(!/ style="--i:\d+"/g.test(site), "Style inline CSP-incompatible");
 assert(a4.includes("BTS Opticien-Lunetier") && a4.includes("COORDINATION OPÉRATIONNELLE"), "CV A4 incomplet");
 
+// Le portrait est présent dans les deux documents et demeure visible
+// dans les règles d'impression, même si l'affiche interactive est masquée.
+const portrait = "./assets/img/portrait/me.jpg";
+const a4Css = read("css/cv-a4.css");
+const printCss = read("css/cv-print.css");
+assert(a4.includes('class="head-photo"') && a4.includes('src="' + portrait + '"'), "Portrait absent du CV A4");
+assert(a4Css.includes(".head-photo img") && a4Css.includes("object-fit:cover"), "Portrait A4 non cadré");
+assert(a4Css.includes(".head-photo,.head-photo img{display:block}"), "Portrait A4 non garanti à l'impression");
+assert(site.includes('class="cv-print-head"') && site.includes('class="cv-print-photo"'), "En-tête du CV complet imprimable absent");
+assert(site.includes('class="cv-print-photo" src="' + portrait + '"'), "Portrait absent de la présentation imprimable");
+assert(printCss.includes(".cv-print-head") && printCss.includes("display: grid !important"), "En-tête d'impression masqué");
+assert(printCss.includes(".cv-print-photo") && printCss.includes("display: block !important"), "Portrait masqué à l'impression");
+assert(workflow.includes("css/cv-print.css css/cv-a4.css"), "Feuilles d'impression non déployées");
+
 const commercialNumber = /\b30\s*800\s*€|\+\s*(?:83|82[.,]99|81[.,]39)\s*%|\+\s*5[.,](?:6|54)\s*(?:points?|pts)\b/i;
 for (const [path, text] of [["index.html", site], ["cv-a4.html", a4], ["README.md", read("README.md")]]) {
   assert(!commercialNumber.test(text), "Chiffres commerciaux sensibles dans " + path);
@@ -35,4 +49,4 @@ assert(workflow.includes("npm run check:site"), "Workflow sans validation du nou
 assert(workflow.includes("cp js/cv-root.js _site/js/"), "Script de contact non publié");
 assert(workflow.includes("cp -r maquette-positionnement _site/"), "La maquette historique n'est plus accessible");
 
-console.log("PASS: chemins, 18 fiches, 5 sections, contact, export A4, CSP et confidentialité.");
+console.log("PASS: chemins, 18 fiches, 5 sections, contact, portraits A4/impression, CSS, CSP et confidentialité.");
