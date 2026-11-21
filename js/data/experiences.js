@@ -52,7 +52,7 @@ export const experiences = [
     /* La campagne portait deux chiffres en flamme (771 envois, 9 RDV) : un
        volume d'envoi et une conversion CRM ordinaire, pas ce dont ce poste
        tire sa fierté. Les faire vivre au même corps que le résultat de
-       Générale d'Optique (+83 % CA) les mettait en concurrence avec un
+       Générale d'Optique (amélioration commerciale CA) les mettait en concurrence avec un
        chiffre qui, lui, mérite la flamme — et brouillait ce qui distingue
        vraiment ce poste : des outils utilisés, imbriqués en système, et
        fiabilisés par des contrôles automatiques.
@@ -90,7 +90,7 @@ export const experiences = [
        réorganisation ont joué ensemble — aucun de ces leviers n'explique
        l'écart à lui seul. */
     statsLabel: "Sur les deux mois qui ont suivi, ces actions ont contribué à",
-    stats: [{ value: "+83 % CA" }, { value: "+5,6 pts", label: "de marge" }],
+    stats: undefined,
     statsBase:
       "Écarts mesurés par rapport à la moyenne des seize mois précédents.",
     result:
