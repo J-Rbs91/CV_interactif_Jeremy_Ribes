@@ -2,13 +2,14 @@
   "name": "cv-interactif-jeremy-ribes",
   "private": true,
   "type": "module",
-  "description": "CV interactif — site statique. Aucune dépendance : `type: module` sert uniquement à ce que Node lise js/**/*.js comme les modules ES que le navigateur y voit déjà, afin que scripts/build-cv-integral.mjs puisse en tirer le texte intégral.",
+  "description": "CV interactif statique en HTML/CSS/JavaScript ; page principale et CV A4 alignés sur le nouveau positionnement professionnel.",
   "scripts": {
     "build": "node scripts/build-cv-integral.mjs",
-    "verify": "node scripts/build-cv-integral.mjs --verify",
-    "check:cv": "node scripts/check-cv-a4.mjs",
+    "verify": "node scripts/check-published-cv.mjs",
+    "check:cv": "node scripts/check-published-cv.mjs",
     "check:typo": "node scripts/check-typo.mjs",
     "check:nav": "node scripts/check-navigation.mjs",
-    "build:og": "node scripts/build-og-card.mjs"
+    "build:og": "node scripts/build-og-card.mjs",
+    "check:site": "node scripts/check-published-cv.mjs"
   }
 }
