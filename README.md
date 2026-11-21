@@ -1,64 +1,60 @@
-![Jérémy Ribes, CV interactif : une affiche noire au lettrage vert fluo](assets/img/readme-hero.svg)
+![CV interactif de Jérémy Ribes : typographie vert fluorescent sur fond noir](assets/img/readme-hero.svg)
 
 # Jérémy Ribes
 
-**Opticien depuis 2012, ancien responsable de magasin, concepteur d’outils métiers.**
+**Coordination opérationnelle · Organisation et méthodes · Projets d'outils métiers**
 
-J’ai travaillé sur l’organisation des magasins, les méthodes de suivi et les outils utilisés par les équipes. Aujourd’hui, je cherche à évoluer vers la **coordination opérationnelle, l’amélioration des méthodes ou les projets d’outils métiers**, dans l’optique ou dans un autre secteur.
+Le parcours professionnel présenté ici s'est construit en magasin, puis s'est élargi à l'organisation des équipes, la conception d'outils métiers et le pilotage de projets numériques assistés par IA.
 
-**[Consulter mon CV interactif](https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/)** · Le parcours, les réalisations, les expériences et les versions à imprimer sont accessibles depuis le site.
+**[Consulter le CV interactif](https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/)** · **[CV synthétique A4, à imprimer ou enregistrer en PDF](https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/cv-a4.html)**
 
----
+## Les réalisations
 
-## Du terrain aux outils
+### Outils utilisés en magasin
 
-Je fais le lien entre les objectifs de la direction et les contraintes de terrain. Quand une tâche se répète, qu’un dossier se perd ou qu’une information est saisie plusieurs fois, j’examine d’abord la façon de travailler. Selon le problème, je revois la procédure, la répartition des responsabilités ou l’outil.
+Le **Suivi des devis et du tiers payant** rend visibles les dossiers, les échéances et les personnes responsables. **Brief'Maker** réunit planning, rendez-vous et tâches du jour. Le **Hub Outils Opticien** centralise les documents destinés aux médecins, les contrôles de caisse et les calculs optiques.
 
-Le développement fait partie des moyens que j’utilise. Mon point de départ reste le fonctionnement du magasin et les personnes qui utilisent ces outils.
+Ces trois outils sont utilisés quotidiennement par l'équipe, selon les observations rapportées.
 
-## Quelques réalisations
+[Découvrir le Hub Outils Opticien](https://j-rbs91.github.io/Hub_Tools_N_Templates/)
 
-### 01 / Hub Outils Opticien
+### Organisation et management
 
-Une interface qui rassemble plusieurs tâches quotidiennes : documents destinés aux médecins, clôture de caisse, calculs d’épaisseur et de décentrement. Les informations du magasin sont renseignées une seule fois. **Le hub est utilisé chaque jour par l’équipe.**
+Ancien responsable de magasin chez Générale d'Optique : recrutement, formation, plannings, procédures et activité commerciale. Des méthodes d'atelier rédigées à Saint-Jean-de-Védas ont continué d'être utilisées après son départ, selon un témoignage direct rapporté.
 
-[Voir le Hub Outils Opticien](https://j-rbs91.github.io/Hub_Tools_N_Templates/)
+**Les données de chiffre d'affaires et de marge propres aux employeurs ne sont pas publiées.**
 
-### 02 / Suivi des devis et Brief’Maker
+### Projets numériques
 
-Deux outils conçus pour que les dossiers à reprendre, les prochaines actions, les rendez-vous et les tâches attribuées soient visibles par toute l’équipe. Créés dans une enseigne, ils sont aujourd’hui utilisés dans une autre.
+**PANUM** prolonge un outil Google Sheets de suivi des devis vers une application web destinée à plusieurs magasins. Son efficacité dans le fonctionnement réel d'un point de vente reste à confirmer par un pilote.
 
-### 03 / PANUM
+[Découvrir PANUM](https://panum.fr/)
 
-Une application de suivi commercial pensée pour les magasins d’optique : dossiers centralisés, relances priorisées, historique des blocages et indicateurs de pilotage. **Le déploiement pilote reste à valider sur des données réelles.**
+**ARCLINE, SECURIX, UXER et GUARDIAN** sont des projets personnels qui structurent le travail avec des agents IA : exécution et qualification de missions, contrôles de sécurité, recherche UX et protection ciblée des secrets.
 
-[Voir le projet PANUM](https://panum.fr/)
+D'autres projets, dont [L'Ortabels](https://app.ortabels.fr/) et Renta Menu, appliquent l'analyse et la modélisation à l'agriculture et à la restauration.
 
-### 04 / Réorganisation d’un magasin
+## Architecture actuelle
 
-Comme responsable chez Générale d’Optique, j’ai travaillé sur le recrutement, la formation, les plannings, les procédures et l’activité commerciale. Sur les deux mois suivant ces actions, le magasin a enregistré **+83 % de chiffre d’affaires et +5,6 points de marge** par rapport à la moyenne des seize mois précédents. Ces résultats reflètent plusieurs actions menées ensemble, pas l’effet d’un seul outil.
+Le site public est une page statique, issue de la maquette éditoriale validée. Il conserve les styles `css/base.css` et `css/site.css`, le portrait et l'identité visuelle existants.
 
-### 05 / L’Ortabels
+- `index.html` : CV interactif principal, sans chiffre d'affaires confidentiel, avec 18 fiches dépliables et formulaire de contact.
+- `cv-a4.html` : CV synthétique indépendant, imprimable depuis le navigateur.
+- `maquette-positionnement/` : copie de travail, conservée pour comparaison.
+- `js/cv-root.js` : contact, partage et impression complète.
+- `css/cv-print.css` et `css/cv-a4.css` : compléments nécessaires à la publication et à l'impression.
+- `scripts/check-published-cv.mjs` : validation statique des ressources, du contenu public et des principaux points de régression.
 
-Un projet maraîcher accompagné d’une application d’aide à la décision. Elle exploite notamment les températures locales et les degrés-jours pour aider à organiser semis, développement des cultures et récoltes.
+Les anciens modules `js/data/`, `js/render/` et leurs exports restent dans l'historique du dépôt pour la maintenance et les possibilités de retour arrière. Ils **ne sont plus inclus dans l'artefact GitHub Pages**.
 
-[Voir L’Ortabels](https://app.ortabels.fr/)
+### Vérifications
 
----
+```bash
+npm run check:site
+node --check js/cv-root.js
+node --check maquette-positionnement/maquette.js
+```
 
-## À propos de ce dépôt
+Le workflow [Déploiement GitHub Pages](.github/workflows/deploy-pages.yml) n'envoie que les fichiers explicitement nécessaires au CV actuel.
 
-Ce dépôt contient le CV interactif. Le site est développé en **HTML, CSS et JavaScript natifs**, sans framework ni dépendance d’exécution. Il présente le parcours sur une page, avec des fiches détaillées et deux formats d’impression : un CV A4 d’une page et une présentation complète.
-
-<details>
-<summary>Structure et vérifications techniques</summary>
-
-Les contenus du CV sont définis dans `js/data/`. Le rendu est assuré par `js/render/`, et l’identité visuelle actuelle de la page se trouve principalement dans `css/site.css`. Les choix de couleurs et de typographie sont documentés dans `docs/charte-couleurs.md` et `docs/charte-typographique.md`.
-
-Après modification des données, `npm run build` régénère le contenu intégral de `index.html` pour les lecteurs qui n’exécutent pas JavaScript. `npm run verify` en contrôle la synchronisation. Les contrôles complémentaires sont `npm run check:nav`, `npm run check:cv` et `npm run check:typo` ; les deux derniers nécessitent un environnement de rendu navigateur et l’accès aux polices.
-
-La publication du site est assurée par GitHub Pages.
-
-</details>
-
-Pour me joindre, utilise le formulaire de contact disponible sur le **[CV interactif](https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/)**.
+Pour me contacter, utilise le formulaire du [site interactif](https://j-rbs91.github.io/CV_interactif_Jeremy_Ribes/).
