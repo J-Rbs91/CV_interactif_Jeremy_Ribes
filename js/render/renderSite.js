@@ -166,7 +166,7 @@ function renderExperiences() {
   return experiences
     .map((experience) => {
       /* Le libellé précède les valeurs, la base de comparaison les suit : la phrase
-         se lit « ces actions ont contribué à +83 % CA · +5,6 pts de marge », puis
+         se lit « ces actions ont contribué à amélioration commerciale CA · amélioration de marge de marge », puis
          sur quoi on compare. Elle se terminait sur « à — » avant les valeurs. */
       const proof = experience.stats
         ? `<p class="s-pf"><small>${experience.statsLabel}</small><span>${statsText(experience)
