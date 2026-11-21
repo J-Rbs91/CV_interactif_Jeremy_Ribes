@@ -57,6 +57,8 @@ jobs:
           mkdir -p _site
           cp index.html robots.txt sitemap.xml _site/
           cp -r css js assets _site/
+          # Aperçu éditorial isolé ; le CV principal et les explorations restent inchangés.
+          cp -r maquette-positionnement _site/
 
       - name: Configurer Pages
         uses: actions/configure-pages@v6
