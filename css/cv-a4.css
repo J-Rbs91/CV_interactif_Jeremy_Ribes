@@ -6,6 +6,10 @@ body{margin:0;color:var(--ink);font:400 10.4px/1.45 var(--sans)}
 .actions a,.actions button{color:var(--accent);background:none;border:1px solid var(--accent);padding:10px 14px;border-radius:2px;font:500 11px var(--mono);cursor:pointer;text-decoration:none}
 .sheet{width:210mm;min-height:297mm;margin:0 auto 32px;background:#f8f8f4;padding:14mm 15mm 10mm;box-shadow:0 20px 80px #0009;position:relative}
 .head{border-bottom:3px solid var(--accent);padding:0 0 14px}
+.head-main{display:grid;grid-template-columns:minmax(0,1fr) 31mm;gap:10mm;align-items:center}
+.head-copy{min-width:0}
+.head-photo{width:31mm;height:31mm;justify-self:end;overflow:hidden;border-radius:2mm;background:#e7e7e2}
+.head-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(1) contrast(1.1)}
 .eyebrow,.period,.place,footer,h3{font-family:var(--mono);letter-spacing:.08em}
 .eyebrow{text-transform:uppercase;font-size:9px;margin:0 0 7px}
 h1{font:900 36px/.88 var(--display);font-stretch:125%;margin:0;letter-spacing:-.035em}
@@ -35,6 +39,10 @@ footer span:first-child{font-weight:700;color:#111}
   @page{size:A4;margin:0}
   html,body{background:#fff;print-color-adjust:exact;-webkit-print-color-adjust:exact}
   .actions{display:none}
+  .head-main{display:grid;grid-template-columns:minmax(0,1fr) 31mm;gap:10mm;align-items:center}
+  .head-photo,.head-photo img{display:block}
+  .head-photo{width:31mm;height:31mm;break-inside:avoid}
+  .head-photo img{width:100%;height:100%;object-fit:cover}
   .sheet{margin:0;box-shadow:none;width:210mm;height:297mm;min-height:0;padding:14mm 15mm 10mm;overflow:hidden;break-after:avoid}
   footer{left:15mm;right:15mm;bottom:9mm}
 }
