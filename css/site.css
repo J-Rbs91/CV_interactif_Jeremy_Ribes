@@ -485,7 +485,7 @@ html:not(.intro-lock) .s-skip { display: none; }
   .s-big { padding-top: 90px; }
   .s-first .s-big { padding-top: 44px; }
   /* Les colonnes latérales se REPLIENT sous le titre au lieu d'être masquées :
-     dates des postes, pastille +83 %, statuts d'adoption, résumés de compétence
+     dates des postes, pastille amélioration commerciale, statuts d'adoption, résumés de compétence
      n'existaient plus nulle part sur téléphone. */
   .s-row summary { grid-template-columns: 1fr 28px; grid-template-areas: "t pm" "s pm"; row-gap: 6px; align-items: start; padding: 18px 0; }
   #experience .s-row summary, #formation .s-row summary { grid-template-areas: "n pm" "t pm" "s pm"; }

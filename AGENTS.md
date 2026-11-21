@@ -1,5 +1,7 @@
 # CV interactif
 
+> **État actuel (21 novembre 2026) :** le CV public est désormais le document statique `index.html` fondé sur la maquette validée, avec `js/cv-root.js`, `css/cv-print.css` et `cv-a4.html`. Les sections historiques ci-dessous décrivent l'ancienne architecture, conservée pour étude et retour arrière, **non publiée**. Ne pas régénérer le CV principal à partir de `js/data/` ni présenter d'indicateurs commerciaux confidentiels.
+
 ## Structure
 - `index.html` : point d'entrée statique.
 - `css/` : styles globaux et par section.
@@ -122,7 +124,7 @@ pas dans le code — seulement à l'écran, quand ça manque.
   jetons `--s-*` de `site.css` (zéro occurrence de `--ink`, `--bg`, `--text` dans
   `panels.css`). Les cinq feuilles historiques sont chargées en `media="print"`
   (avec un `<noscript>`) : elles ne bloquent plus le premier rendu.
-- **La preuve est rattachée au poste, pas jetée en tête de page.** Le +83 % vit
+- **La preuve est rattachée au poste, pas jetée en tête de page.** Le amélioration commerciale vit
   dans la fiche Générale d'Optique : pastille discrète sur la ligne fermée,
   paragraphe avec sa base de comparaison dans la fiche. Un chiffre sans son
   contexte ne vaut rien.
@@ -130,7 +132,7 @@ pas dans le code — seulement à l'écran, quand ça manque.
   données disent que relance, équipe et réorganisation ont joué ensemble : la
   fiche renvoie au poste (« Poste où il a servi : … ») et le dit en une phrase. Cette
   phrase est la seule qui ne vient pas des données ; la retirer ferait attribuer
-  +83 % à un outil, ce qu'aucun entretien ne tiendrait.
+  amélioration commerciale à un outil, ce qu'aucun entretien ne tiendrait.
 - **Les enseignes ne se coupent qu'entre elles** — mais seulement quand il y en a
   plusieurs (`company()`). Un nom à une seule enseigne en `nowrap` débordait sur
   la colonne voisine à toute largeur.
@@ -313,7 +315,7 @@ quand ils sont défaits. Ils se constatent à l'usage, et seulement là.
 Détail et mesures : `docs/analyse-animations-mise-en-page-interactions.md`.
 
 - **Téléphone : les colonnes latérales se replient, elles ne se masquent pas.**
-  Sous 760 px, `.s-n` (dates) et `.s-s` (pastille +83 %, statuts, résumés) passent
+  Sous 760 px, `.s-n` (dates) et `.s-s` (pastille amélioration commerciale, statuts, résumés) passent
   sous le titre (grille à zones). Les masquer retirait des postes leurs dates et le
   seul chiffre de la page. Entre 761 et 1100 px, le statut passe aussi sous le
   titre : les mots longs débordaient sur lui. Le hero se compose **en flux** sous

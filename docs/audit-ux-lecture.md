@@ -252,7 +252,7 @@ Or ce registre porte, entre autres :
 
 Ces trois énoncés ne donnent pas du contexte. **Ce sont les arguments les plus forts du
 document** : un outil réclamé par une direction régionale, un outil encore utilisé après le
-départ de son auteur, et la base de comparaison qui rend le +83 % défendable. Ils sont
+départ de son auteur, et la base de comparaison qui rend le amélioration commerciale défendable. Ils sont
 typographiés comme des métadonnées.
 
 Part de signes dans ce registre, par section : Profil 21 %, Compétences 17 %, Outils 13 %,
@@ -277,8 +277,8 @@ un tiers est composé dans la police de lecture, en bas de casse.
 
 ### I4 — Les chiffres sont noyés dans la prose, sauf un — et c'est celui qui marche
 
-**Constat.** La fiche « Responsable de magasin » sort ses chiffres du texte : `+83 % CA` et
-`+5,6 pts` en grand, en flamme, avec leur libellé et leur base de comparaison. C'est le seul
+**Constat.** La fiche « Responsable de magasin » sort ses chiffres du texte : `amélioration commerciale CA` et
+`amélioration de marge` en grand, en flamme, avec leur libellé et leur base de comparaison. C'est le seul
 endroit du CV qu'on ne peut pas rater en lisant en diagonale, et c'est le traitement le plus
 réussi du document.
 

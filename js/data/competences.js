@@ -27,7 +27,7 @@ export const competences = [
     exemple:
       "Opti’Profit classe les dix produits compatibles les plus rentables, en tenant compte du besoin technique, du réseau de soins, des préférences et du budget du client.",
     resultat:
-      "Chez Générale d’Optique, ces actions ont contribué à +83 % de chiffre d’affaires et +5,6 points de marge sur les deux mois qui ont suivi, mesurés par rapport à la moyenne des seize mois précédents.",
+      "Chez Générale d’Optique, ces actions ont contribué à amélioration commerciale de chiffre d’affaires et amélioration de marge de marge sur les deux mois qui ont suivi, mesurés par rapport à la moyenne des seize mois précédents.",
     a4Rank: 3,
     a4Statement:
       "Développer l’activité tout en maintenant la qualité économique des ventes.",

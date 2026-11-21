@@ -40,13 +40,15 @@ jobs:
         with:
           node-version: 22
 
-      # Le bloc de texte intégral d'index.html est généré depuis js/data/*.js.
-      # On ne le régénère pas ici : on vérifie qu'il est à jour, et on échoue
-      # sinon. Régénérer en silence publierait un contenu que personne n'a
-      # relu et qui ne serait pas dans le dépôt — le CV doit être exactement
-      # ce qui a été commité.
-      - name: Vérifier que le texte intégral est à jour
-        run: npm run verify
+      # La page principale utilise désormais le contenu statique de la
+      # maquette validée. Les modules de l'ancien CV ne sont plus publiés.
+      - name: Qualifier les fichiers du CV publié
+        run: |
+          npm run check:site
+          node --check js/cv-root.js
+          node --check maquette-positionnement/maquette.js
+          node --check js/ui/contactForm.js
+          node --check js/ui/backNavigation.js
 
       # Liste explicite plutôt que la racine entière : la documentation de
       # travail (`AGENTS.md`, `docs/`, `skills-lock.json`, `.agents/`,
@@ -54,10 +56,13 @@ jobs:
       # CV.
       - name: Assembler le site à publier
         run: |
-          mkdir -p _site
-          cp index.html robots.txt sitemap.xml _site/
-          cp -r css js assets _site/
-          # Aperçu éditorial isolé ; le CV principal et les explorations restent inchangés.
+          mkdir -p _site/css _site/js/ui
+          cp index.html cv-a4.html robots.txt sitemap.xml _site/
+          cp css/base.css css/site.css css/panels.css css/cv-print.css css/cv-a4.css _site/css/
+          cp js/cv-root.js _site/js/
+          cp js/ui/intro.js js/ui/contactForm.js js/ui/backNavigation.js _site/js/ui/
+          cp -r assets _site/
+          # La version de travail reste disponible pour comparaison.
           cp -r maquette-positionnement _site/
 
       - name: Configurer Pages

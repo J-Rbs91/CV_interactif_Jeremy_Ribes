@@ -36,7 +36,7 @@ Lecteur cible retenu, hypothèses du projet (`docs/audit-ux-lecture.md`) : recru
 
 **Ce qui casse, par ordre.**
 
-1. **Sur téléphone, la page perd son information.** Sous 760 px les deux colonnes latérales des lignes d'index sont masquées : les dates des trois postes, la pastille « +83 % CA · +5,6 pts de marge », les six statuts d'adoption des outils et les cinq résumés de compétence quittent l'écran. Douze de ces textes ne réapparaissent nulle part, même fiche ouverte. Un recruteur sur téléphone lit un CV sans dates et sans chiffre. C'est le seul bloquant, et il se corrige en une règle CSS.
+1. **Sur téléphone, la page perd son information.** Sous 760 px les deux colonnes latérales des lignes d'index sont masquées : les dates des trois postes, la pastille « amélioration commerciale CA · amélioration de marge de marge », les six statuts d'adoption des outils et les cinq résumés de compétence quittent l'écran. Douze de ces textes ne réapparaissent nulle part, même fiche ouverte. Un recruteur sur téléphone lit un CV sans dates et sans chiffre. C'est le seul bloquant, et il se corrige en une règle CSS.
 2. **Cinq défauts de mécanique à effort S.** Toute fermeture d'un tiroir ou de la modale, par n'importe quel geste, ramène la page en haut de la section courante (saut de 689 px au bureau, 371 px sur téléphone) et fait tomber le focus sur le corps de page : la fiche qu'on lisait est hors écran. « Voir le poste » et tout défilement vers une fiche la calent sous la barre fixe. Les deux dialogues `aria-modal` ne retiennent pas le focus, ce qui permet d'ouvrir une couche sur elle-même ou la modale derrière le tiroir. Fermer la modale de contact efface le message en cours, à l'inverse de ce que le code promet. Entre 761 et 820 px, les mots longs des titres de fiche s'impriment par-dessus les statuts de la colonne de droite.
 3. **L'arrivée coûte 4 à 4,5 secondes** avant le premier mot sur le poste : écran noir d'environ 1,3 s (scripts puis délai), puis une ouverture dont près de la moitié du temps ne change aucun pixel. Et le raccourci clavier de l'ouverture reste branché toute la session : après une première visite, Échap et Entrée coupent toutes les transitions en cours.
 4. **Le téléphone ouvre « Exporter » sur six réseaux sociaux** : les documents sont à 905 px pour un écran de 844.
@@ -55,8 +55,8 @@ Hypothèses : défilement 1,5 s par écran, lecture 220 mots par minute, ouvertu
 |---|---|---|---|
 | **Arrivée** (première visite) | Noir ~1,3 s, nom seul jusqu'à ~2,8 s, ligne de poste lisible à ~3,5 s, défilement libre à ~4,4 s | Mêmes jalons, verrou ~4,1 s | Friction : 4 s sans information sur le poste, « Passer » 83×30 px en bas à gauche |
 | **Premier écran au repos** | 26 mots : barre, nom, deux lignes de 12 px au pied. L'accroche de 86 px est 63 px sous le pli | 23 mots, ligne de poste sur 4 lignes, 41 % d'écran vide au-dessus du nom | Friction : la fonction visée est le texte le moins lisible de l'écran |
-| **Trois écrans suivants** | Bandeau, accroche, chapeau, deux blocs, repli « Mon parcours », titre Expériences à 1,0 écran, première enseigne à 1,2, pastille +83 % à 1,4 | Titre Expériences à 1,3 écran, enseignes à 1,45, **aucune date, aucun chiffre** | Fluide au bureau, friction sur téléphone |
-| **« Je cherche la preuve »** (+83 % et sa base) | 3 gestes : nav Expériences, clic sur la ligne, un défilement (la base arrive après 140 mots) | 3 à 4 gestes, sans pastille pour signaler qu'un chiffre existe | Friction / rupture partielle |
+| **Trois écrans suivants** | Bandeau, accroche, chapeau, deux blocs, repli « Mon parcours », titre Expériences à 1,0 écran, première enseigne à 1,2, pastille amélioration commerciale à 1,4 | Titre Expériences à 1,3 écran, enseignes à 1,45, **aucune date, aucun chiffre** | Fluide au bureau, friction sur téléphone |
+| **« Je cherche la preuve »** (amélioration commerciale et sa base) | 3 gestes : nav Expériences, clic sur la ligne, un défilement (la base arrive après 140 mots) | 3 à 4 gestes, sans pastille pour signaler qu'un chiffre existe | Friction / rupture partielle |
 | **« Je veux le PDF »** | 3 gestes : « Partager & Exporter », document, fenêtre d'impression | 4 gestes : « Exporter », défiler 562 px dans le tiroir, document, aperçu système | Friction ; sur téléphone le tiroir s'ouvre sur les réseaux |
 | **« Je veux le contacter »** | 1 geste vers le formulaire (barre ou pied) ; ni e-mail ni téléphone | Idem | Fluide pour le formulaire, rupture pour qui veut appeler ou transférer |
 | **Lien profond, deuxième visite** | Pas d'ouverture, titre sous la barre, hash qui suit | Idem, 44 % d'écran sans contenu sous la barre à l'atterrissage | Fluide |
@@ -65,7 +65,7 @@ Hypothèses : défilement 1,5 s par écran, lecture 220 mots par minute, ouvertu
 | **Partage** | Carte LinkedIn / WhatsApp : titre et description justes, image = favicon couleur de 256 px | Idem | Rupture de DA avant le clic |
 | **Coût de lecture** | 423 mots visibles lignes fermées (≈ 2 min), 2 594 mots derrière 19 portes (≈ 12 min) | 300 mots visibles | — |
 
-**Ce que le lecteur emporte.** À 30 s, bureau comme téléphone : le nom, « opticien depuis 2012 », le projet de coordination et outils métiers, trois intitulés de fonction, sans enseigne ni chiffre. À 90 s au bureau : trois enseignes datées, le +83 %, quatre statuts d'adoption. À 90 s sur téléphone : trois enseignes sans dates et six noms d'outils. À 5 minutes : quatre ou cinq fiches ouvertes au bureau, trois sur téléphone.
+**Ce que le lecteur emporte.** À 30 s, bureau comme téléphone : le nom, « opticien depuis 2012 », le projet de coordination et outils métiers, trois intitulés de fonction, sans enseigne ni chiffre. À 90 s au bureau : trois enseignes datées, le amélioration commerciale, quatre statuts d'adoption. À 90 s sur téléphone : trois enseignes sans dates et six noms d'outils. À 5 minutes : quatre ou cinq fiches ouvertes au bureau, trois sur téléphone.
 
 ---
 
@@ -439,7 +439,7 @@ Hypothèses : défilement 1,5 s par écran, lecture 220 mots par minute, ouvertu
   Proposition : `.s-in { max-width: 56ch }` (≈ 75 signes), `.s-lead { 54ch }`, `.s-block { 56ch }` ; vérifier en comptant une ligne rendue.
   Gravité mineur, revue à la vérification (majeur au relevé) · défaut · effort S · Vérif. : contradictoire nuancé (B3) : mesures identiques ; cible révisée : .s-in 60ch, .s-lead 56ch, .s-block inchangé · re-mesuré (105 et 113 signes dans la fiche Krys, 80 dans le chapeau)
 
-- [x] **B6 — La pastille +83 % (12 px) et les statuts d'outil (14 px) sont à 330–660 px du titre qu'ils qualifient, alignés à droite.**
+- [x] **B6 — La pastille amélioration commerciale (12 px) et les statuts d'outil (14 px) sont à 330–660 px du titre qu'ils qualifient, alignés à droite.**
   Constat : distance titre → statut à 1440 : Générale d'Optique 428 px, PANUM 596 ; statuts sur deux lignes pour 3 outils sur 6 et 5 compétences sur 5. Le seul chiffre de la page a la taille d'une date.
   Proposition : (a) rapprocher le statut du titre (`auto minmax(0, 30ch) 1fr`, aligné à gauche) ; (b) ou le descendre sous le sous-titre ; (c) `.s-pchip` à 15 px dans tous les cas.
   Gravité mineur, revue à la vérification (majeur au relevé) · **choix à revisiter** (« pastille discrète sur la ligne fermée », en tension avec « le chiffre est le plus fort aimant visuel d'une page ») · effort M · Vérif. : contradictoire nuancé (B6) : distances confirmées ; garder la colonne de droite, l'élargir à 36ch au-dessus de 1100 px, pastille à 13 px au plus
@@ -468,7 +468,7 @@ Hypothèses : défilement 1,5 s par écran, lecture 220 mots par minute, ouvertu
   Proposition : `::details-content` avec transition de hauteur (`interpolate-size: allow-keywords`, Chromium 131+, les autres gardent le comportement actuel), sans script ; désactivé en mouvement réduit.
   Gravité mineur · amélioration · effort M · Vérif. : relevé seul
 
-- [x] **D10 — La base de comparaison du +83 % est le huitième bloc de la fiche : 140 mots et un défilement après l'ouverture.**
+- [x] **D10 — La base de comparaison du amélioration commerciale est le huitième bloc de la fiche : 140 mots et un défilement après l'ouverture.**
   Proposition : rendre `${proof}` juste après le contexte, avant les puces.
   Gravité mineur · défaut · effort S · Vérif. : relevé seul
 
@@ -663,7 +663,7 @@ Les correctifs des dix lots ont été appliqués sur la branche, sauf ce qui dem
 | A3 · F16 · F2 | Polices demandées dès `intro.js`, `modulepreload` généré par le script de build, feuilles historiques en `media="print"`. L'attente des polices avant le départ reste (décision documentée). |
 | E7 | « Passer » reste en bas à gauche (en haut à droite il recouvrirait « Contact » pendant le fondu de la barre) mais prend la forme de « Fermer » : texte mono, croix, accent au survol, 44 px de haut. |
 | B4 · D3 | La ligne de poste vient d'abord, en police de lecture, blanche ; le parcours passe dessous en mono. Aucune ligne ajoutée sous le nom. |
-| B5 · B6 | Rôle remonté d'un niveau (13 px, ton de prose), statut limité à 36ch, pastille +83 % à 13 px. Taille des titres de fiche et colonne de droite inchangées. |
+| B5 · B6 | Rôle remonté d'un niveau (13 px, ton de prose), statut limité à 36ch, pastille amélioration commerciale à 13 px. Taille des titres de fiche et colonne de droite inchangées. |
 | B13 · E19 | Photo à `17vw` (260 px au plus) au lieu de `19vw` (300) ; luminance moyenne de la photo 0,13 → 0,18, bichromie à 25 % conservée. |
 | A13 | Chasse des lettres 93–125 % au lieu de 73–125 %. |
 | B10 · C10 · D14 | Rail : 44 px de réserve en fin de course et fondu retiré en butée ; il reste un rail qui défile (pas de seconde rangée). |

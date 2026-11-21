@@ -77,7 +77,7 @@ export const a4Content = {
   proofs: [
     {
       nature: "preuve",
-      value: "+83 % CA · +5,6 pts de marge",
+      value: "amélioration commerciale CA · amélioration de marge de marge",
       text: "Redynamisation d’un magasin en difficulté.",
       note: "Sur les deux mois qui ont suivi, comparés à la moyenne des seize mois précédents.",
     },
